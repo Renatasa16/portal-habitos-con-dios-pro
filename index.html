@@ -1,95 +1,1358 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Hábitos con Dios</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hábitos con Dios | Portal Premium</title>
+  <meta name="description" content="Portal premium de Hábitos con Dios para acceder a recursos digitales, micro aplicaciones devocionales y experiencias de crecimiento espiritual." />
 
-<style>
-body{
-font-family:Arial,sans-serif;
-background:#F5F0E7;
-margin:0;
-padding:0;
-}
+  <style>
+    :root {
+      --green: #3F4A35;
+      --olive: #556544;
+      --gold: #C9A65A;
+      --beige: #F5F0E7;
+      --cream: #FAF7F0;
+      --ink: #1F2937;
+      --white: #FFFFFF;
+      --muted: #6B7280;
+      --line: #E8DECC;
+      --soft-green: #EEF3EA;
+      --soft-gold: #F7EAC7;
+      --soft-rose: #F5E3DD;
+      --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
+      --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.10);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
 
-header{
-background:#3F4A35;
-color:white;
-padding:30px;
-text-align:center;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:40px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.card{
-background:white;
-border-radius:12px;
-padding:25px;
-margin-bottom:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-}
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
+        radial-gradient(circle at 80% 10%, rgba(85, 101, 68, 0.14), transparent 28%),
+        linear-gradient(145deg, var(--cream), var(--beige));
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-h1{
-margin:0;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.button{
-display:inline-block;
-background:#3F4A35;
-color:white;
-padding:12px 22px;
-border-radius:8px;
-text-decoration:none;
-margin-top:15px;
-}
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-.locked{
-background:#dddddd;
-color:#666666;
-}
-</style>
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
 
+    .announcement {
+      width: 100%;
+      background: var(--green);
+      color: var(--cream);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(250, 247, 240, 0.84);
+      border-bottom: 1px solid rgba(232, 222, 204, 0.85);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: fit-content;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-text small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--olive);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .brand-text strong {
+      display: block;
+      color: var(--green);
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--olive);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      line-height: 1;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 14px 28px rgba(63, 74, 53, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--green);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green);
+      box-shadow: 0 12px 26px rgba(201, 166, 90, 0.26);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .hero {
+      padding: 72px 0 48px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--olive);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.18);
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      color: var(--green);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(19px, 2.4vw, 27px);
+      line-height: 1.22;
+      color: var(--ink);
+      font-weight: 800;
+      max-width: 680px;
+      margin-bottom: 16px;
+    }
+
+    .hero-description {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      max-width: 650px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+    }
+
+    .trust-item {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 15px;
+      box-shadow: 0 8px 24px rgba(63, 74, 53, 0.06);
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--green);
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .trust-item span {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .hero-panel {
+      position: relative;
+    }
+
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(232, 222, 204, 0.96);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.14);
+      top: -70px;
+      right: -58px;
+      pointer-events: none;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 4px 2px 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .profile small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .profile strong {
+      display: block;
+      color: var(--green);
+      font-size: 15px;
+    }
+
+    .status-pill {
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: var(--soft-green);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .progress-box {
+      background: var(--green);
+      color: var(--white);
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-box::after {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.2);
+      right: -42px;
+      top: -52px;
+    }
+
+    .progress-box small {
+      color: #EFE7D8;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-box h3 {
+      font-size: 25px;
+      line-height: 1.05;
+      margin: 8px 0 16px;
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar span {
+      display: block;
+      width: 38%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), #F2D487);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mini-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 126px;
+      box-shadow: 0 10px 24px rgba(63, 74, 53, 0.06);
+    }
+
+    .mini-card .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: var(--soft-gold);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .mini-card h4 {
+      color: var(--green);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .mini-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .floating-note {
+      position: absolute;
+      left: -22px;
+      bottom: 36px;
+      width: 190px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .floating-note .spark {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      background: var(--green);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+
+    .floating-note p {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    section {
+      padding: 58px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      color: var(--olive);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 14px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: 0.2s ease;
+      min-height: 245px;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      background: var(--green);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+
+    .benefit-card h3 {
+      color: var(--green);
+      font-size: 20px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .benefit-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .resources-section {
+      position: relative;
+    }
+
+    .resources-wrapper {
+      background: rgba(63, 74, 53, 0.96);
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .resources-wrapper::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.14);
+      right: -120px;
+      top: -120px;
+    }
+
+    .resources-top {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .resources-top h2 {
+      color: var(--white);
+      font-size: clamp(32px, 4.7vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      margin-bottom: 10px;
+    }
+
+    .resources-top p {
+      color: #EDE5D6;
+      max-width: 640px;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .resource-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 20px;
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .resource-card.featured {
+      background: linear-gradient(145deg, var(--cream), #FFFFFF);
+      outline: 2px solid rgba(201, 166, 90, 0.34);
+    }
+
+    .resource-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--soft-green);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+
+    .resource-card.featured .resource-tag {
+      background: var(--soft-gold);
+    }
+
+    .resource-card h3 {
+      color: var(--green);
+      font-size: 21px;
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .resource-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .resource-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--olive);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .coming-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .coming-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+    }
+
+    .coming-card::after {
+      content: "";
+      position: absolute;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.12);
+      right: -38px;
+      top: -42px;
+    }
+
+    .lock-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 18px;
+      background: var(--soft-gold);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .coming-card h3 {
+      color: var(--green);
+      font-size: 22px;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .coming-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section {
+      padding: 48px 0 70px;
+    }
+
+    .cta-box {
+      background:
+        linear-gradient(145deg, rgba(63, 74, 53, 0.95), rgba(85, 101, 68, 0.96)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.22), transparent 30%);
+      border-radius: var(--radius-xl);
+      padding: 44px;
+      color: var(--white);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(32px, 4.8vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin-bottom: 12px;
+    }
+
+    .cta-box p {
+      color: #EDE5D6;
+      line-height: 1.7;
+      font-size: 16px;
+      max-width: 690px;
+    }
+
+    footer {
+      background: var(--green);
+      color: var(--cream);
+      padding: 32px 0;
+      margin-top: 22px;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+
+    footer strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    footer p {
+      color: #EDE5D6;
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #EDE5D6;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: var(--white);
+      color: var(--green);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mobile-nav {
+      display: none;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 16px;
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav-inner {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    @media (max-width: 1040px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 54px;
+      }
+
+      .hero-panel {
+        max-width: 720px;
+      }
+
+      .floating-note {
+        display: none;
+      }
+
+      .benefits-grid,
+      .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .resources-top,
+      .cta-box,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .resources-top .btn {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links,
+      .nav-actions {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: inline-flex;
+      }
+
+      .hero {
+        padding: 42px 0 34px;
+      }
+
+      .hero h1 {
+        font-size: 52px;
+      }
+
+      .hero-subtitle {
+        font-size: 21px;
+      }
+
+      .trust-row {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 42px 0;
+      }
+
+      .benefits-grid,
+      .resource-grid,
+      .coming-grid,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resources-wrapper,
+      .cta-box {
+        padding: 24px;
+        border-radius: 26px;
+      }
+
+      .dashboard-card {
+        padding: 18px;
+        border-radius: 26px;
+      }
+
+      .progress-box {
+        padding: 20px;
+      }
+
+      .section-heading {
+        text-align: left;
+      }
+
+      .section-heading h2 {
+        font-size: 40px;
+      }
+
+      .resource-card,
+      .benefit-card,
+      .coming-card {
+        min-height: auto;
+      }
+
+      .footer-links {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page-shell,
+      .nav-inner,
+      .mobile-nav,
+      .footer-inner {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand-text strong {
+        font-size: 16px;
+      }
+
+      .hero h1 {
+        font-size: 46px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="announcement">
+    Portal premium en construcción para la línea Hábitos con Dios en skool.renovae.store
+  </div>
 
-<header>
-<h1>Portal Hábitos con Dios</h1>
-<p>Bienvenida al ecosistema digital premium</p>
-</header>
+  <nav class="navbar">
+    <div class="nav-inner">
+      #inicio
+        <div class="brand-mark">HD</div>
+        <div class="brand-text">
+          <small>Portal Premium</small>
+          <strong>Hábitos con Dios</strong>
+        </div>
+      </a>
 
-<div class="container">
+      <div class="nav-links">
+        #beneficiosBeneficios</a>
+        #recursosRecursos</a>
+        #proximamentePróximamente</a>
+        #accesoAcceso</a>
+      </div>
 
-<div class="card">
-<h2>Mi Tiempo con Dios</h2>
-<p>Micro aplicación devocional de 21 días.</p>
-<a class="button" href="#">
-Abrir aplicación
-</a>
-</div>
+      <div class="nav-actions">
+        #accesoIngresar</a>
+        #recursosExplorar Recursos</a>
+      </div>
 
-<div class="card">
-<h2>Tarjetas de Fe Digitales</h2>
-<p>Disponible próximamente.</p>
-<a class="button locked">
-Bloqueado
-</a>
-</div>
+      <button class="mobile-menu" type="button" aria-label="Abrir menú" onclick="toggleMenu()">
+        Menú
+      </button>
+    </div>
 
-<div class="card">
-<h2>Banco de Promesas Bíblicas</h2>
-<p>Disponible próximamente.</p>
-<a class="button locked">
-Bloqueado
-</a>
-</div>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav-inner">
+        #beneficiosBeneficios</a>
+        #recursosRecursos</a>
+        #proximamentePróximamente</a>
+        #accesoIngresar</a>
+      </div>
+    </div>
+  </nav>
 
-</div>
+  <main id="inicio">
+    <section class="hero page-shell">
+      <div>
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          Ecosistema devocional digital
+        </div>
 
+        <h1>
+          Hábitos con Dios
+          <span>Premium</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Transforma tu tiempo con Dios en un hábito real.
+        </p>
+
+        <p class="hero-description">
+          Un portal digital diseñado para acompañarte con micro aplicaciones, recursos devocionales, biblioteca espiritual y experiencias prácticas para crecer en la fe un día a la vez.
+        </p>
+
+        <div class="hero-actions">
+          #accesoIngresar</a>
+          #recursosExplorar Recursos</a>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-item">
+            <strong>21</strong>
+            <span>Días guiados</span>
+          </div>
+
+          <div class="trust-item">
+            <strong>6</strong>
+            <span>Recursos iniciales</span>
+          </div>
+
+          <div class="trust-item">
+            <strong>1</strong>
+            <span>Portal unificado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="dashboard-card">
+          <div class="dashboard-header">
+            <div class="profile">
+              <div class="profile-avatar">HD</div>
+              <div>
+                <small>Bienvenida nuevamente</small>
+                <strong>Tu espacio con Dios</strong>
+              </div>
+            </div>
+
+            <div class="status-pill">
+              Miembro Premium
+            </div>
+          </div>
+
+          <div class="progress-box">
+            <small>Tu recorrido devocional</small>
+            <h3>Un paso pequeño también cuenta.</h3>
+            <div class="progress-bar" aria-label="Progreso del recorrido">
+              <span></span>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="mini-card">
+              <div class="icon">01</div>
+              <h4>Mi Tiempo con Dios</h4>
+              <p>Seguimiento diario para construir un hábito espiritual sostenible.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="icon">02</div>
+              <h4>Tarjetas de Fe</h4>
+              <p>Inspiración visual para guardar, compartir y recordar promesas.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="icon">03</div>
+              <h4>Promesas Bíblicas</h4>
+              <p>Busca palabras de fe por tema, necesidad o etapa de vida.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="icon">04</div>
+              <h4>Oraciones Guiadas</h4>
+              <p>Oraciones breves para momentos cotidianos y decisiones importantes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-note">
+          <div class="spark">✦</div>
+          <p>Diseñado para que la fe se vuelva práctica, simple y constante.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="beneficios">
+      <div class="page-shell">
+        <div class="section-heading">
+          <div class="section-kicker">Beneficios</div>
+          <h2>Una experiencia digital creada para acompañar tu vida espiritual.</h2>
+          <p>
+            Cada recurso está pensado para ayudarte a pasar de la intención a la práctica, con herramientas simples, cálidas y fáciles de usar.
+          </p>
+        </div>
+
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <div class="benefit-icon">✓</div>
+            <h3>Hábitos diarios guiados</h3>
+            <p>
+              Recorridos claros para leer, orar, reflexionar y sostener pequeños pasos con Dios cada día.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon">✦</div>
+            <h3>Recursos digitales premium</h3>
+            <p>
+              Micro aplicaciones, devocionales, tarjetas y herramientas diseñadas con estética cuidada y propósito espiritual.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon">⌂</div>
+            <h3>Biblioteca espiritual</h3>
+            <p>
+              Un espacio unificado para organizar recursos, ebooks, bonos y futuras experiencias de crecimiento.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon">↗</div>
+            <h3>Acceso desde cualquier dispositivo</h3>
+            <p>
+              Una experiencia pensada para celular, tablet y escritorio, para acompañarte donde estés.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos" class="resources-section">
+      <div class="page-shell">
+        <div class="resources-wrapper">
+          <div class="resources-top">
+            <div>
+              <h2>Dashboard Preview</h2>
+              <p>
+                Vista inicial del ecosistema de recursos. Esta estructura está preparada para crecer hacia login, membresías, biblioteca y acceso por producto.
+              </p>
+            </div>
+
+            #accesoIngresar al portal</a>
+          </div>
+
+          <div class="resource-grid">
+            <article class="resource-card featured">
+              <span class="resource-tag">Disponible</span>
+              <h3>Mi Tiempo con Dios</h3>
+              <p>
+                Micro aplicación devocional para acompañar un recorrido de 21 días con oración, gratitud, reflexión y progreso.
+              </p>
+              <div class="resource-meta">
+                <span>21 días</span>
+                <span>Activo</span>
+              </div>
+            </article>
+
+            <article class="resource-card">
+              <span class="resource-tag">Premium</span>
+              <h3>Tarjetas de Fe</h3>
+              <p>
+                Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la rutina diaria.
+              </p>
+              <div class="resource-meta">
+                <span>Visual</span>
+                <span>Próximo</span>
+              </div>
+            </article>
+
+            <article class="resource-card">
+              <span class="resource-tag">Biblioteca</span>
+              <h3>Banco de Promesas</h3>
+              <p>
+                Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.
+              </p>
+              <div class="resource-meta">
+                <span>Por tema</span>
+                <span>Próximo</span>
+              </div>
+            </article>
+
+            <article class="resource-card">
+              <span class="resource-tag">Guía</span>
+              <h3>Generador de Oraciones</h3>
+              <p>
+                Oraciones breves, cálidas y responsables para acompañar momentos de gratitud, paz, familia y decisión.
+              </p>
+              <div class="resource-meta">
+                <span>Interactivo</span>
+                <span>Próximo</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proximamente">
+      <div class="page-shell">
+        <div class="section-heading">
+          <div class="section-kicker">Próximamente</div>
+          <h2>Un ecosistema preparado para crecer contigo.</h2>
+          <p>
+            Los próximos recursos permitirán expandir Hábitos con Dios hacia jóvenes, familias, devocionales temáticos y experiencias de membresía.
+          </p>
+        </div>
+
+        <div class="coming-grid">
+          <article class="coming-card">
+            <div class="lock-badge">🔒</div>
+            <h3>Diario de Paz</h3>
+            <p>
+              Herramienta de acompañamiento devocional para registrar emociones, pausas digitales y oraciones breves.
+            </p>
+          </article>
+
+          <article class="coming-card">
+            <div class="lock-badge">🔒</div>
+            <h3>Momentos con Dios en Familia</h3>
+            <p>
+              Actividades simples para crear conversaciones, oración y recuerdos de fe en casa.
+            </p>
+          </article>
+
+          <article class="coming-card">
+            <div class="lock-badge">✦</div>
+            <h3>Nuevos recursos</h3>
+            <p>
+              Espacio preparado para ebooks, bonos, audios, cursos, imprimibles y futuras membresías.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="acceso" class="cta-section">
+      <div class="page-shell">
+        <div class="cta-box">
+          <div>
+            <h2>Tu portal espiritual, en un solo lugar.</h2>
+            <p>
+              Esta es la base del ecosistema premium de Hábitos con Dios. Próximamente podrás acceder con tu cuenta, ver tus recursos comprados y continuar tu recorrido desde cualquier dispositivo.
+            </p>
+          </div>
+
+          https://mi-tiempo-con-dios.vercel.app
+            Abrir Mi Tiempo con Dios
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>Hábitos con Dios</strong>
+        <p>
+          Recursos digitales de acompañamiento devocional. Este portal no reemplaza terapia, atención médica, apoyo psicológico, consejería pastoral responsable ni ayuda de emergencia cuando corresponda.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        #inicioInicio</a>
+        #beneficiosBeneficios</a>
+        #recursosRecursos</a>
+        #accesoAcceso</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const mobileNav = document.getElementById("mobileNav");
+      mobileNav.classList.toggle("open");
+    }
+  </script>
 </body>
 </html>
