@@ -432,14 +432,8 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .resource-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .roadmap-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
+    .resource-grid,
+    .roadmap-grid,
     .updates-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -636,6 +630,7 @@
       color: var(--muted);
       line-height: 1.55;
       font-size: 14px;
+      margin: 0;
     }
 
     .check {
@@ -805,7 +800,7 @@
 
   <nav class="navbar" aria-label="Navegación principal del dashboard">
     <div class="nav-inner">
-      <a class="brand" href="dashboard.html" aria-label="Ir al dashboard de Hábitos con Dios">
+      <a class="brand" href="dashboard.html" aria-label="Ir al dashboard de Hábitos con Dios Pro">
         <div class="brand-mark" aria-hidden="true">HD</div>
         <div class="brand-text">
           <small>Dashboard Premium</small>
