@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Hábitos con Dios | Portal Premium</title>
-  <meta name="description" content="Portal premium de Hábitos con Dios para acceder a recursos digitales, micro aplicaciones devocionales y experiencias de crecimiento espiritual." />
+
+  <meta
+    name="description"
+    content="Portal premium de Hábitos con Dios para acceder a recursos digitales, micro aplicaciones devocionales y experiencias de crecimiento espiritual."
+  />
 
   <style>
     :root {
@@ -35,6 +40,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 96px;
     }
 
     body {
@@ -51,6 +57,12 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(201, 166, 90, 0.85);
+      outline-offset: 4px;
     }
 
     img {
@@ -79,7 +91,7 @@
       top: 0;
       z-index: 50;
       backdrop-filter: blur(16px);
-      background: rgba(250, 247, 240, 0.84);
+      background: rgba(250, 247, 240, 0.88);
       border-bottom: 1px solid rgba(232, 222, 204, 0.85);
     }
 
@@ -111,6 +123,7 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       box-shadow: var(--shadow-soft);
+      flex: 0 0 auto;
     }
 
     .brand-text small {
@@ -132,7 +145,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       color: var(--olive);
       font-weight: 800;
       font-size: 14px;
@@ -140,6 +153,7 @@
 
     .nav-links a {
       transition: 0.2s ease;
+      line-height: 1;
     }
 
     .nav-links a:hover {
@@ -165,6 +179,8 @@
       cursor: pointer;
       transition: 0.2s ease;
       line-height: 1;
+      text-align: center;
+      min-height: 44px;
     }
 
     .btn-primary {
@@ -200,6 +216,51 @@
       filter: brightness(1.03);
     }
 
+    .mobile-menu {
+      display: none;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--green);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .mobile-nav {
+      display: none;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 16px;
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav-inner {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      color: var(--green);
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mobile-nav-inner a {
+      padding: 12px 10px;
+      border-radius: 12px;
+      transition: 0.2s ease;
+    }
+
+    .mobile-nav-inner a:hover {
+      background: var(--soft-green);
+    }
+
     .hero {
       padding: 72px 0 48px;
       display: grid;
@@ -230,6 +291,7 @@
       border-radius: 50%;
       background: var(--gold);
       box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.18);
+      flex: 0 0 auto;
     }
 
     .hero h1 {
@@ -310,6 +372,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
       overflow: hidden;
+      position: relative;
     }
 
     .dashboard-card::before {
@@ -349,6 +412,7 @@
       display: grid;
       place-items: center;
       font-weight: 900;
+      flex: 0 0 auto;
     }
 
     .profile small {
@@ -373,6 +437,7 @@
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .progress-box {
@@ -845,38 +910,12 @@
       font-size: 13px;
     }
 
-    .mobile-menu {
-      display: none;
-      border: none;
-      background: var(--white);
-      color: var(--green);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-weight: 900;
-      cursor: pointer;
+    .footer-links a {
+      transition: 0.2s ease;
     }
 
-    .mobile-nav {
-      display: none;
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 0 0 16px;
-    }
-
-    .mobile-nav.open {
-      display: block;
-    }
-
-    .mobile-nav-inner {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 14px;
-      display: grid;
-      gap: 10px;
-      color: var(--green);
-      font-weight: 900;
+    .footer-links a:hover {
+      color: var(--gold);
     }
 
     @media (max-width: 1040px) {
@@ -1022,29 +1061,38 @@
     Portal premium en construcción para la línea Hábitos con Dios en skool.renovae.store
   </div>
 
-  <nav class="navbar">
+  <nav class="navbar" aria-label="Navegación principal">
     <div class="nav-inner">
       #inicio
-        <div class="brand-mark">HD</div>
+        <div class="brand-mark" aria-hidden="true">HD</div>
         <div class="brand-text">
           <small>Portal Premium</small>
           <strong>Hábitos con Dios</strong>
         </div>
       </a>
 
-      <div class="nav-links">
+      <div class="nav-links" aria-label="Secciones del portal">
         #beneficiosBeneficios</a>
         #recursosRecursos</a>
-        #proximamentePróximamente</a>
-        #accesoAcceso</a>
+        <a href="dashboard.html">Mis Recursos</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="acerca.html">Acerca de</a>
       </div>
 
       <div class="nav-actions">
-        #accesoIngresar</a>
+        <a class="btn btn-primary" href="dashboard.html">Ingresar</a>
         #recursosExplorar Recursos</a>
       </div>
 
-      <button class="mobile-menu" type="button" aria-label="Abrir menú" onclick="toggleMenu()">
+      <button
+        class="mobile-menu"
+        type="button"
+        aria-label="Abrir menú de navegación"
+        aria-controls="mobileNav"
+        aria-expanded="false"
+        onclick="toggleMenu()"
+        id="mobileMenuButton"
+      >
         Menú
       </button>
     </div>
@@ -1053,21 +1101,23 @@
       <div class="mobile-nav-inner">
         #beneficiosBeneficios</a>
         #recursosRecursos</a>
-        #proximamentePróximamente</a>
-        #accesoIngresar</a>
+        <a href="dashboard.html" onclick="closeMenu()">Mis Recursos</a>
+        <a href="biblioteca.html" onclick="closeMenu()">Biblioteca</a>
+        <a href="acerca.html" onclick="closeMenu()">Acerca de</a>
+        <a href="dashboard.html" onclick="closeMenu()">Ingresar</a>
       </div>
     </div>
   </nav>
 
   <main id="inicio">
-    <section class="hero page-shell">
+    <section class="hero page-shell" aria-labelledby="hero-title">
       <div>
         <div class="eyebrow">
-          <span class="eyebrow-dot"></span>
+          <span class="eyebrow-dot" aria-hidden="true"></span>
           Ecosistema devocional digital
         </div>
 
-        <h1>
+        <h1 id="hero-title">
           Hábitos con Dios
           <span>Premium</span>
         </h1>
@@ -1081,11 +1131,11 @@
         </p>
 
         <div class="hero-actions">
-          #accesoIngresar</a>
+          <a class="btn btn-primary" href="dashboard.html">Ingresar</a>
           #recursosExplorar Recursos</a>
         </div>
 
-        <div class="trust-row">
+        <div class="trust-row" aria-label="Resumen del portal">
           <div class="trust-item">
             <strong>21</strong>
             <span>Días guiados</span>
@@ -1103,11 +1153,11 @@
         </div>
       </div>
 
-      <div class="hero-panel">
+      <div class="hero-panel" aria-label="Vista previa del dashboard">
         <div class="dashboard-card">
           <div class="dashboard-header">
             <div class="profile">
-              <div class="profile-avatar">HD</div>
+              <div class="profile-avatar" aria-hidden="true">HD</div>
               <div>
                 <small>Bienvenida nuevamente</small>
                 <strong>Tu espacio con Dios</strong>
@@ -1129,25 +1179,25 @@
 
           <div class="dashboard-grid">
             <div class="mini-card">
-              <div class="icon">01</div>
+              <div class="icon" aria-hidden="true">01</div>
               <h4>Mi Tiempo con Dios</h4>
               <p>Seguimiento diario para construir un hábito espiritual sostenible.</p>
             </div>
 
             <div class="mini-card">
-              <div class="icon">02</div>
+              <div class="icon" aria-hidden="true">02</div>
               <h4>Tarjetas de Fe</h4>
               <p>Inspiración visual para guardar, compartir y recordar promesas.</p>
             </div>
 
             <div class="mini-card">
-              <div class="icon">03</div>
+              <div class="icon" aria-hidden="true">03</div>
               <h4>Promesas Bíblicas</h4>
               <p>Busca palabras de fe por tema, necesidad o etapa de vida.</p>
             </div>
 
             <div class="mini-card">
-              <div class="icon">04</div>
+              <div class="icon" aria-hidden="true">04</div>
               <h4>Oraciones Guiadas</h4>
               <p>Oraciones breves para momentos cotidianos y decisiones importantes.</p>
             </div>
@@ -1155,7 +1205,7 @@
         </div>
 
         <div class="floating-note">
-          <div class="spark">✦</div>
+          <div class="spark" aria-hidden="true">✦</div>
           <p>Diseñado para que la fe se vuelva práctica, simple y constante.</p>
         </div>
       </div>
@@ -1173,7 +1223,7 @@
 
         <div class="benefits-grid">
           <article class="benefit-card">
-            <div class="benefit-icon">✓</div>
+            <div class="benefit-icon" aria-hidden="true">✓</div>
             <h3>Hábitos diarios guiados</h3>
             <p>
               Recorridos claros para leer, orar, reflexionar y sostener pequeños pasos con Dios cada día.
@@ -1181,7 +1231,7 @@
           </article>
 
           <article class="benefit-card">
-            <div class="benefit-icon">✦</div>
+            <div class="benefit-icon" aria-hidden="true">✦</div>
             <h3>Recursos digitales premium</h3>
             <p>
               Micro aplicaciones, devocionales, tarjetas y herramientas diseñadas con estética cuidada y propósito espiritual.
@@ -1189,7 +1239,7 @@
           </article>
 
           <article class="benefit-card">
-            <div class="benefit-icon">⌂</div>
+            <div class="benefit-icon" aria-hidden="true">⌂</div>
             <h3>Biblioteca espiritual</h3>
             <p>
               Un espacio unificado para organizar recursos, ebooks, bonos y futuras experiencias de crecimiento.
@@ -1197,7 +1247,7 @@
           </article>
 
           <article class="benefit-card">
-            <div class="benefit-icon">↗</div>
+            <div class="benefit-icon" aria-hidden="true">↗</div>
             <h3>Acceso desde cualquier dispositivo</h3>
             <p>
               Una experiencia pensada para celular, tablet y escritorio, para acompañarte donde estés.
@@ -1218,7 +1268,7 @@
               </p>
             </div>
 
-            #accesoIngresar al portal</a>
+            <a class="btn btn-gold" href="dashboard.html">Ingresar al portal</a>
           </div>
 
           <div class="resource-grid">
@@ -1286,7 +1336,7 @@
 
         <div class="coming-grid">
           <article class="coming-card">
-            <div class="lock-badge">🔒</div>
+            <div class="lock-badge" aria-hidden="true">🔒</div>
             <h3>Diario de Paz</h3>
             <p>
               Herramienta de acompañamiento devocional para registrar emociones, pausas digitales y oraciones breves.
@@ -1294,7 +1344,7 @@
           </article>
 
           <article class="coming-card">
-            <div class="lock-badge">🔒</div>
+            <div class="lock-badge" aria-hidden="true">🔒</div>
             <h3>Momentos con Dios en Familia</h3>
             <p>
               Actividades simples para crear conversaciones, oración y recuerdos de fe en casa.
@@ -1302,7 +1352,7 @@
           </article>
 
           <article class="coming-card">
-            <div class="lock-badge">✦</div>
+            <div class="lock-badge" aria-hidden="true">✦</div>
             <h3>Nuevos recursos</h3>
             <p>
               Espacio preparado para ebooks, bonos, audios, cursos, imprimibles y futuras membresías.
@@ -1322,7 +1372,12 @@
             </p>
           </div>
 
-          https://mi-tiempo-con-dios.vercel.app
+          <a
+            class="btn btn-gold"
+            href="https://mi-tiempo-con-dios.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Abrir Mi Tiempo con Dios
           </a>
         </div>
@@ -1339,11 +1394,13 @@
         </p>
       </div>
 
-      <div class="footer-links">
+      <div class="footer-links" aria-label="Enlaces del pie de página">
         #inicioInicio</a>
         #beneficiosBeneficios</a>
         #recursosRecursos</a>
-        #accesoAcceso</a>
+        <a href="dashboard.html">Mis Recursos</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="acerca.html">Acerca de</a>
       </div>
     </div>
   </footer>
@@ -1351,7 +1408,20 @@
   <script>
     function toggleMenu() {
       const mobileNav = document.getElementById("mobileNav");
-      mobileNav.classList.toggle("open");
+      const menuButton = document.getElementById("mobileMenuButton");
+      const isOpen = mobileNav.classList.toggle("open");
+
+      menuButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      menuButton.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+    }
+
+    function closeMenu() {
+      const mobileNav = document.getElementById("mobileNav");
+      const menuButton = document.getElementById("mobileMenuButton");
+
+      mobileNav.classList.remove("open");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Abrir menú de navegación");
     }
   </script>
 </body>
