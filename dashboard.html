@@ -373,48 +373,46 @@
       position: relative;
       z-index: 1;
     }
-.premium-status {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 30px;
-}
 
-.status-card {
-  background: rgba(255,255,255,0.78);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 18px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  transition: .25s ease;
-}
+    .premium-status {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
 
-.status-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-soft);
-}
+    .status-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: 0.25s ease;
+    }
 
-.status-card strong {
-  display: block;
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--green);
-  margin-bottom: 6px;
-}
+    .status-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
 
-.status-card span {
-  display: block;
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 700;
-}
+    .status-card strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
 
-@media (max-width: 760px) {
-  .premium-status {
-    grid-template-columns: 1fr;
-  }
-}
+    .status-card span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
     .stats-card {
       background: var(--green);
       color: var(--white);
@@ -529,6 +527,8 @@
       place-items: center;
       font-weight: 900;
       margin-bottom: 16px;
+      font-size: 22px;
+      line-height: 1;
     }
 
     .card h3 {
@@ -792,6 +792,7 @@
         font-size: 46px;
       }
 
+      .premium-status,
       .quick-grid,
       .resource-grid,
       .roadmap-grid,
@@ -915,42 +916,35 @@
     <section class="dashboard-hero page-shell" aria-labelledby="dashboard-title">
       <div class="hero-card">
         <div class="eyebrow">
-  <span class="eyebrow-dot" aria-hidden="true"></span>
-  MIEMBRO PREMIUM
-</div>
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          MIEMBRO PREMIUM
+        </div>
 
-<h1 id="dashboard-title">
-  Bienvenida Renata
-  <span>continúa tu camino espiritual</span>
-</h1>
-
-<p>
-  Accede a tus recursos devocionales, herramientas espirituales y contenidos exclusivos desde un único lugar diseñado para acompañar tu crecimiento diario.
-</p>
-
-<div class="premium-status">
-
-  <div class="status-card">
-    <strong>4</strong>
-    <span>Recursos Activos</span>
-  </div>
-
-  <div class="status-card">
-    <strong>1</strong>
-    <span>Hábito Iniciado</span>
-  </div>
-
-  <div class="status-card">
-    <strong>Premium</strong>
-    <span>Membresía Activa</span>
-  </div>
-
-</div>
-``
+        <h1 id="dashboard-title">
+          Te damos la bienvenida
+          <span>continúa tu camino espiritual</span>
+        </h1>
 
         <p>
-          Administra tus recursos digitales, accede a herramientas exclusivas y acompaña tu crecimiento espiritual desde un solo lugar.
+          Accede a tus recursos devocionales, herramientas espirituales y contenidos exclusivos desde un único lugar diseñado para acompañar tu crecimiento diario.
         </p>
+
+        <div class="premium-status">
+          <div class="status-card">
+            <strong>4</strong>
+            <span>Recursos Activos</span>
+          </div>
+
+          <div class="status-card">
+            <strong>1</strong>
+            <span>Hábito Iniciado</span>
+          </div>
+
+          <div class="status-card">
+            <strong>Premium</strong>
+            <span>Membresía Activa</span>
+          </div>
+        </div>
 
         <div class="hero-actions">
           <a class="btn btn-primary" href="apps/mi-tiempo-con-dios.html">
@@ -992,7 +986,7 @@
       <div class="grid quick-grid">
         <article class="card">
           <span class="badge badge-available">Disponible</span>
-          <div class="card-icon" aria-hidden="true">01</div>
+          <div class="card-icon" aria-hidden="true">🙏</div>
           <h3>Mi Tiempo con Dios</h3>
           <p>Micro aplicación devocional para acompañar tu recorrido de 21 días con oración, gratitud y reflexión.</p>
           <a class="btn btn-primary" href="apps/mi-tiempo-con-dios.html">Abrir</a>
@@ -1000,7 +994,7 @@
 
         <article class="card">
           <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">02</div>
+          <div class="card-icon" aria-hidden="true">✨</div>
           <h3>Tarjetas de Fe</h3>
           <p>Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la vida diaria.</p>
           <a class="btn btn-secondary" href="apps/tarjetas-fe.html">Abrir</a>
@@ -1008,7 +1002,7 @@
 
         <article class="card">
           <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">03</div>
+          <div class="card-icon" aria-hidden="true">📖</div>
           <h3>Banco de Promesas</h3>
           <p>Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.</p>
           <a class="btn btn-secondary" href="apps/banco-promesas.html">Abrir</a>
@@ -1016,7 +1010,7 @@
 
         <article class="card">
           <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">04</div>
+          <div class="card-icon" aria-hidden="true">💛</div>
           <h3>Generador de Oraciones</h3>
           <p>Oraciones breves y guiadas para momentos de gratitud, paz, familia y decisiones importantes.</p>
           <a class="btn btn-secondary" href="apps/oraciones.html">Abrir</a>
@@ -1024,7 +1018,7 @@
 
         <article class="card">
           <span class="badge badge-available">Disponible</span>
-          <div class="card-icon" aria-hidden="true">05</div>
+          <div class="card-icon" aria-hidden="true">📚</div>
           <h3>Biblioteca</h3>
           <p>Accede a devocionales, ebooks, bonos, imprimibles y recursos espirituales organizados por categoría.</p>
           <a class="btn btn-primary" href="biblioteca.html">Abrir</a>
@@ -1032,7 +1026,7 @@
 
         <article class="card">
           <span class="badge badge-premium">Premium</span>
-          <div class="card-icon" aria-hidden="true">06</div>
+          <div class="card-icon" aria-hidden="true">👑</div>
           <h3>Recursos Premium</h3>
           <p>Acceso especial a contenidos, actualizaciones y nuevas herramientas del ecosistema Hábitos con Dios.</p>
           <a class="btn btn-gold" href="biblioteca.html">Abrir</a>
@@ -1251,25 +1245,34 @@
     const mobileLinks = document.querySelectorAll(".mobile-nav a");
 
     function setExpanded(value) {
+      if (!menuButton || !mobileNav) return;
+
       menuButton.setAttribute("aria-expanded", value ? "true" : "false");
       menuButton.setAttribute(
         "aria-label",
         value ? "Cerrar menú de navegación" : "Abrir menú de navegación"
       );
+
       mobileNav.setAttribute("aria-hidden", value ? "false" : "true");
     }
 
     function toggleMenu() {
+      if (!mobileNav) return;
+
       const isOpen = mobileNav.classList.toggle("open");
       setExpanded(isOpen);
     }
 
     function closeMenu() {
+      if (!mobileNav) return;
+
       mobileNav.classList.remove("open");
       setExpanded(false);
     }
 
-    menuButton.addEventListener("click", toggleMenu);
+    if (menuButton) {
+      menuButton.addEventListener("click", toggleMenu);
+    }
 
     mobileLinks.forEach(function (link) {
       link.addEventListener("click", closeMenu);
