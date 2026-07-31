@@ -373,7 +373,48 @@
       position: relative;
       z-index: 1;
     }
+.premium-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 30px;
+}
 
+.status-card {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: .25s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+
+.status-card strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.status-card span {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .premium-status {
+    grid-template-columns: 1fr;
+  }
+}
     .stats-card {
       background: var(--green);
       color: var(--white);
@@ -874,14 +915,38 @@
     <section class="dashboard-hero page-shell" aria-labelledby="dashboard-title">
       <div class="hero-card">
         <div class="eyebrow">
-          <span class="eyebrow-dot" aria-hidden="true"></span>
-          Bienvenida nuevamente
-        </div>
+  <span class="eyebrow-dot" aria-hidden="true"></span>
+  MIEMBRO PREMIUM
+</div>
 
-        <h1 id="dashboard-title">
-          Tu ecosistema de
-          <span>crecimiento espiritual</span>
-        </h1>
+<h1 id="dashboard-title">
+  Bienvenida Renata
+  <span>continúa tu camino espiritual</span>
+</h1>
+
+<p>
+  Accede a tus recursos devocionales, herramientas espirituales y contenidos exclusivos desde un único lugar diseñado para acompañar tu crecimiento diario.
+</p>
+
+<div class="premium-status">
+
+  <div class="status-card">
+    <strong>4</strong>
+    <span>Recursos Activos</span>
+  </div>
+
+  <div class="status-card">
+    <strong>1</strong>
+    <span>Hábito Iniciado</span>
+  </div>
+
+  <div class="status-card">
+    <strong>Premium</strong>
+    <span>Membresía Activa</span>
+  </div>
+
+</div>
+``
 
         <p>
           Administra tus recursos digitales, accede a herramientas exclusivas y acompaña tu crecimiento espiritual desde un solo lugar.
