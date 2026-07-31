@@ -4,43 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Biblioteca | Hábitos con Dios Pro</title>
+<title>Biblioteca Premium | Hábitos con Dios Pro</title>
+
+<meta
+name="description"
+content="Biblioteca Premium de Hábitos con Dios. Accede a ebooks, recursos espirituales y materiales exclusivos."
+>
 
 <style>
+:root{
+--green:#3F4A35;
+--olive:#556544;
+--gold:#C9A65A;
+--beige:#F5F0E7;
+--cream:#FAF7F0;
+--ink:#1F2937;
+--white:#FFFFFF;
+--muted:#6B7280;
+--line:#E8DECC;
+--shadow:0 22px 60px rgba(63,74,53,.14);
+--shadow-soft:0 12px 34px rgba(63,74,53,.10);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#F5F0E7;
-    color:#1F2937;
+font-family:Inter,Arial,sans-serif;
+background:
+radial-gradient(circle at top left, rgba(201,166,90,.18), transparent 35%),
+linear-gradient(145deg,#FAF7F0,#F5F0E7);
+color:var(--ink);
+min-height:100vh;
+}
+
+a{
+text-decoration:none;
+color:inherit;
 }
 
 .container{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
 }
 
-h1{
-    color:#3F4A35;
+.hero{
+background:white;
+border-radius:32px;
+padding:50px;
+box-shadow:var(--shadow);
+margin-bottom:40px;
+position:relative;
+overflow:hidden;
 }
 
-.card{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    margin-top:20px;
-    box-shadow:0 10px 20px rgba(0,0,0,.08);
+.hero::after{
+content:"";
+position:absolute;
+width:260px;
+height:260px;
+right:-100px;
+top:-100px;
+border-radius:50%;
+background:rgba(201,166,90,.12);
 }
 
-.button{
-    display:inline-block;
-    margin-top:12px;
-    padding:12px 18px;
-    border-radius:999px;
-    background:#3F4A35;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
+.eyebrow{
+display:inline-flex;
+padding:8px 14px;
+border-radius:999px;
+background:#F7EAC7;
+color:#3F4A35;
+font-size:12px;
+font-weight:900;
+margin-bottom:18px;
+text-transform:uppercase;
+}
+
+.hero h1{
+font-size:clamp(40px,6vw,70px);
+line-height:.95;
+letter-spacing:-0.06em;
+color:var(--green);
+margin-bottom:18px;
+}
+
+.hero h1 span{
+display:block;
+color:var(--gold);
+}
+
+.hero p{
+max-width:700px;
+line-height:1.8;
+color:var(--muted);
+font-size:16px;
+}
+
+.actions{
+margin-top:25px;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:14px 24px;
+border-radius:999px;
+font-weight:800;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+}
+
+.btn-primary{
+background:var(--green);
+color:white;
+}
+
+.btn-secondary{
+background:white;
+border:1px solid var(--line);
+color:var(--green);
+}
+
+.section-title{
+margin-bottom:25px;
+}
+
+.section-title h2{
+font-size:40px;
+color:var(--green);
+margin-bottom:8px;
+}
+
+.section-title p{
+color:var(--muted);
+}
+
+.library-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:22px;
+}
+
+.resource-card{
+background:white;
+border-radius:26px;
+overflow:hidden;
+box-shadow:var(--shadow-soft);
+transition:.25s ease;
+}
+
+.resource-card:hover{
+transform:translateY(-5px);
+box-shadow:var(--shadow);
+}
+
+.cover{
+height:220px;
+padding:22px;
+display:flex;
+align-items:flex-end;
+font-size:28px;
+font-weight:900;
+color:white;
+}
+
+.cover-1{
+background:linear-gradient(135deg,#3F4A35,#556544);
+}
+
+.cover-2{
+background:linear-gradient(135deg,#8A7553,#C9A65A);
+}
+
+.cover-3{
+background:linear-gradient(135deg,#6A5D4A,#967B5C);
+}
+
+.cover-4{
+background:linear-gradient(135deg,#2F3A2C,#556544);
+}
+
+.resource-body{
+padding:22px;
+}
+
+.badge{
+display:inline-block;
+padding:7px 10px;
+border-radius:999px;
+font-size:11px;
+font-weight:900;
+margin-bottom:12px;
+text-transform:uppercase;
+}
+
+.available{
+background:#EEF3EA;
+color:#3F4A35;
+}
+
+.premium{
+background:#3F4A35;
+color:#C9A65A;
+}
+
+.resource-body h3{
+font-size:22px;
+margin-bottom:12px;
+color:var(--green);
+}
+
+.resource-body p{
+font-size:14px;
+line-height:1.7;
+color:var(--muted);
+margin-bottom:18px;
+}
+
+.resource-button{
+display:inline-flex;
+padding:12px 18px;
+border-radius:999px;
+background:var(--green);
+color:white;
+font-weight:800;
+}
+
+.footer{
+margin-top:50px;
+text-align:center;
+}
+
+.footer a{
+display:inline-flex;
+padding:14px 22px;
+border-radius:999px;
+background:var(--green);
+color:white;
+font-weight:800;
+}
+
+@media(max-width:768px){
+
+.hero{
+padding:28px;
+}
+
+.hero h1{
+font-size:46px;
+}
+
+.actions{
+flex-direction:column;
+}
+
+.btn{
+width:100%;
+}
+
 }
 </style>
 </head>
@@ -49,31 +277,155 @@ h1{
 
 <div class="container">
 
-<h1>Biblioteca de Recursos</h1>
+<section class="hero">
 
-<div class="card">
-<h2>21 Días Más Cerca de Dios</h2>
-<p>Disponible próximamente.</p>
+<div class="eyebrow">
+Biblioteca Premium
 </div>
 
-<div class="card">
-<h2>Pequeños Momentos con Dios</h2>
-<p>Disponible próximamente.</p>
-</div>
+<h1>
+Tus recursos
+<span>espirituales</span>
+</h1>
 
-<div class="card">
-<h2>Cuando las Palabras Duelen</h2>
-<p>Disponible próximamente.</p>
-</div>
+<p>
+Accede a tu colección de ebooks, devocionales y herramientas digitales creadas para acompañar tu crecimiento espiritual diario.
+</p>
 
-<div class="card">
-<h2>El Hombre que Edifica su Hogar</h2>
-<p>Disponible próximamente.</p>
-</div>
-
-<a class="button" href="dashboard.html">
+<div class="actions">
+<a class="btn btn-primary" href="dashboard.html">
 Volver al Dashboard
 </a>
+
+<a class="btn btn-secondary" href="apps/mi-tiempo-con-dios.html">
+Mi Tiempo con Dios
+</a>
+</div>
+
+</section>
+
+<section>
+
+<div class="section-title">
+<h2>Biblioteca</h2>
+<p>Todos tus recursos disponibles en un único lugar.</p>
+</div>
+
+<div class="library-grid">
+
+<div class="resource-card">
+
+<div class="cover cover-1">
+21 Días
+</div>
+
+<div class="resource-body">
+
+<span class="badge available">
+Disponible
+</span>
+
+<h3>21 Días Más Cerca de Dios</h3>
+
+<p>
+Devocional guiado para ayudarte a desarrollar el hábito diario de acercarte a Dios.
+</p>
+
+<a class="resource-button" href="#">
+Abrir Recurso
+</a>
+
+</div>
+
+</div>
+
+<div class="resource-card">
+
+<div class="cover cover-2">
+Momentos
+</div>
+
+<div class="resource-body">
+
+<span class="badge available">
+Disponible
+</span>
+
+<h3>Pequeños Momentos con Dios</h3>
+
+<p>
+Reflexiones cortas pensadas para acompañarte durante la rutina diaria.
+</p>
+
+<a class="resource-button" href="#">
+Abrir Recurso
+</a>
+
+</div>
+
+</div>
+
+<div class="resource-card">
+
+<div class="cover cover-3">
+Palabras
+</div>
+
+<div class="resource-body">
+
+<span class="badge premium">
+Premium
+</span>
+
+<h3>Cuando las Palabras Duelen</h3>
+
+<p>
+Contenido devocional diseñado para atravesar momentos difíciles desde una perspectiva de fe.
+</p>
+
+<a class="resource-button" href="#">
+Abrir Recurso
+</a>
+
+</div>
+
+</div>
+
+<div class="resource-card">
+
+<div class="cover cover-4">
+Hogar
+</div>
+
+<div class="resource-body">
+
+<span class="badge premium">
+Premium
+</span>
+
+<h3>El Hombre que Edifica su Hogar</h3>
+
+<p>
+Material enfocado en liderazgo espiritual, familia y propósito.
+</p>
+
+<a class="resource-button" href="#">
+Abrir Recurso
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<div class="footer">
+<a href="dashboard.html">
+Volver al Dashboard
+</a>
+</div>
 
 </div>
 
