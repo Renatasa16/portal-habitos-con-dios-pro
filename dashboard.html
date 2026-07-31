@@ -16,7 +16,7 @@
   <meta property="og:title" content="Dashboard | Hábitos con Dios Pro" />
   <meta
     property="og:description"
-    content="Dashboard premium para acceder a recursos digitales, micro aplicaciones, biblioteca espiritual y herramientas devocionales."
+    content="Dashboard premium de Hábitos con Dios Pro para acceder a recursos digitales, micro aplicaciones, biblioteca espiritual y herramientas de crecimiento devocional."
   />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Hábitos con Dios Pro" />
@@ -852,26 +852,25 @@
         aria-label="Abrir menú de navegación"
         aria-controls="mobileNav"
         aria-expanded="false"
-        onclick="toggleMenu()"
         id="mobileMenuButton"
       >
         Menú
       </button>
     </div>
 
-    <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <div class="mobile-nav-inner">
-        <a href="index.html" onclick="closeMenu()">Inicio</a>
-        <a href="biblioteca.html" onclick="closeMenu()">Biblioteca</a>
-        <a href="#recursos" onclick="closeMenu()">Recursos</a>
+        <a href="index.html">Inicio</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="#recursos">Recursos</a>
         #comunidadComunidad</a>
         #cuentaMi Cuenta</a>
-        <a href="index.html" onclick="closeMenu()">Volver al Portal</a>
+        <a href="index.html">Volver al Portal</a>
       </div>
     </div>
   </nav>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <section class="dashboard-hero page-shell" aria-labelledby="dashboard-title">
       <div class="hero-card">
         <div class="eyebrow">
@@ -931,9 +930,7 @@
           <div class="card-icon" aria-hidden="true">01</div>
           <h3>Mi Tiempo con Dios</h3>
           <p>Micro aplicación devocional para acompañar tu recorrido de 21 días con oración, gratitud y reflexión.</p>
-          apps/mi-tiempo-con-dios.html
-            Abrir
-          </a>
+          apps/mi-tiempo-con-dios.htmlAbrir</a>
         </article>
 
         <article class="card">
@@ -941,9 +938,7 @@
           <div class="card-icon" aria-hidden="true">02</div>
           <h3>Tarjetas de Fe</h3>
           <p>Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la vida diaria.</p>
-          apps/tarjetas-fe.html
-            Abrir
-          </a>
+          apps/tarjetas-fe.htmlAbrir</a>
         </article>
 
         <article class="card">
@@ -951,9 +946,7 @@
           <div class="card-icon" aria-hidden="true">03</div>
           <h3>Banco de Promesas</h3>
           <p>Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.</p>
-          apps/banco-promesas.html
-            Abrir
-          </a>
+          apps/banco-promesas.htmlAbrir</a>
         </article>
 
         <article class="card">
@@ -961,9 +954,7 @@
           <div class="card-icon" aria-hidden="true">04</div>
           <h3>Generador de Oraciones</h3>
           <p>Oraciones breves y guiadas para momentos de gratitud, paz, familia y decisiones importantes.</p>
-          apps/oraciones.html
-            Abrir
-          </a>
+          apps/oraciones.htmlAbrir</a>
         </article>
 
         <article class="card">
@@ -971,9 +962,7 @@
           <div class="card-icon" aria-hidden="true">05</div>
           <h3>Biblioteca</h3>
           <p>Accede a devocionales, ebooks, bonos, imprimibles y recursos espirituales organizados por categoría.</p>
-          <a class="btn btn-primary" href="biblioteca.html">
-            Abrir
-          </a>
+          <a class="btn btn-primary" href="biblioteca.html">Abrir</a>
         </article>
 
         <article class="card">
@@ -981,9 +970,7 @@
           <div class="card-icon" aria-hidden="true">06</div>
           <h3>Recursos Premium</h3>
           <p>Acceso especial a contenidos, actualizaciones y nuevas herramientas del ecosistema Hábitos con Dios.</p>
-          <a class="btn btn-gold" href="biblioteca.html">
-            Abrir
-          </a>
+          <a class="btn btn-gold" href="biblioteca.html">Abrir</a>
         </article>
       </div>
     </section>
@@ -1004,7 +991,7 @@
             <h3>21 Días Más Cerca de Dios</h3>
             <p>Devocional guiado para construir un hábito espiritual práctico y sostenible.</p>
             <a class="btn btn-secondary" href="biblioteca.html">
-              Ver 21 Días Más Cerca de Dios
+              Ver Recurso
             </a>
           </div>
         </article>
@@ -1016,7 +1003,7 @@
             <h3>Pequeños Momentos con Dios</h3>
             <p>Recursos breves para conectar con Dios durante momentos simples del día.</p>
             <a class="btn btn-secondary" href="biblioteca.html">
-              Ver Pequeños Momentos con Dios
+              Ver Recurso
             </a>
           </div>
         </article>
@@ -1028,7 +1015,7 @@
             <h3>Cuando las Palabras Duelen</h3>
             <p>Contenido devocional de acompañamiento para procesar palabras difíciles desde una perspectiva de fe.</p>
             <a class="btn btn-secondary" href="biblioteca.html">
-              Ver Cuando las Palabras Duelen
+              Ver Recurso
             </a>
           </div>
         </article>
@@ -1040,7 +1027,7 @@
             <h3>El Hombre que Edifica su Hogar</h3>
             <p>Recurso para acompañar hábitos espirituales y familiares con propósito.</p>
             <a class="btn btn-secondary" href="biblioteca.html">
-              Ver El Hombre que Edifica su Hogar
+              Ver Recurso
             </a>
           </div>
         </article>
@@ -1204,6 +1191,7 @@
   <script>
     const mobileNav = document.getElementById("mobileNav");
     const menuButton = document.getElementById("mobileMenuButton");
+    const mobileLinks = document.querySelectorAll(".mobile-nav a");
 
     function setExpanded(value) {
       menuButton.setAttribute("aria-expanded", value ? "true" : "false");
@@ -1211,6 +1199,7 @@
         "aria-label",
         value ? "Cerrar menú de navegación" : "Abrir menú de navegación"
       );
+      mobileNav.setAttribute("aria-hidden", value ? "false" : "true");
     }
 
     function toggleMenu() {
@@ -1222,6 +1211,12 @@
       mobileNav.classList.remove("open");
       setExpanded(false);
     }
+
+    menuButton.addEventListener("click", toggleMenu);
+
+    mobileLinks.forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
