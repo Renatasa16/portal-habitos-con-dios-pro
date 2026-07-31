@@ -13,6 +13,14 @@
 
   <meta name="theme-color" content="#3F4A35" />
 
+  <meta property="og:title" content="Dashboard | Hábitos con Dios Pro" />
+  <meta
+    property="og:description"
+    content="Dashboard premium para acceder a recursos digitales, micro aplicaciones, biblioteca espiritual y herramientas devocionales."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hábitos con Dios Pro" />
+
   <style>
     :root {
       --green: #3F4A35;
@@ -64,6 +72,22 @@
     button:focus-visible {
       outline: 3px solid rgba(201, 166, 90, 0.88);
       outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      z-index: 999;
+      background: var(--gold);
+      color: var(--green);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 900;
+    }
+
+    .skip-link:focus {
+      left: 12px;
     }
 
     .page-shell {
@@ -794,6 +818,8 @@
 </head>
 
 <body>
+  #mainSaltar al contenido</a>
+
   <div class="announcement">
     Dashboard premium de Hábitos con Dios Pro
   </div>
@@ -845,7 +871,7 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main">
     <section class="dashboard-hero page-shell" aria-labelledby="dashboard-title">
       <div class="hero-card">
         <div class="eyebrow">
@@ -863,8 +889,13 @@
         </p>
 
         <div class="hero-actions">
-          apps/mi-tiempo-con-dios.htmlAbrir Mi Tiempo con Dios</a>
-          <a class="btn btn-secondary" href="biblioteca.html">Explorar Biblioteca</a>
+          apps/mi-tiempo-con-dios.html
+            Abrir Mi Tiempo con Dios
+          </a>
+
+          <a class="btn btn-secondary" href="biblioteca.html">
+            Explorar Biblioteca
+          </a>
         </div>
       </div>
 
@@ -886,10 +917,10 @@
       </aside>
     </section>
 
-    <section id="recursos" class="page-shell">
+    <section id="recursos" class="page-shell" aria-labelledby="quick-title">
       <div class="section-heading">
         <div>
-          <h2>Accesos rápidos</h2>
+          <h2 id="quick-title">Accesos rápidos</h2>
           <p>Herramientas principales del ecosistema Hábitos con Dios.</p>
         </div>
       </div>
@@ -900,7 +931,9 @@
           <div class="card-icon" aria-hidden="true">01</div>
           <h3>Mi Tiempo con Dios</h3>
           <p>Micro aplicación devocional para acompañar tu recorrido de 21 días con oración, gratitud y reflexión.</p>
-          apps/mi-tiempo-con-dios.htmlAbrir</a>
+          apps/mi-tiempo-con-dios.html
+            Abrir
+          </a>
         </article>
 
         <article class="card">
@@ -908,7 +941,9 @@
           <div class="card-icon" aria-hidden="true">02</div>
           <h3>Tarjetas de Fe</h3>
           <p>Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la vida diaria.</p>
-          apps/tarjetas-fe.htmlAbrir</a>
+          apps/tarjetas-fe.html
+            Abrir
+          </a>
         </article>
 
         <article class="card">
@@ -916,7 +951,9 @@
           <div class="card-icon" aria-hidden="true">03</div>
           <h3>Banco de Promesas</h3>
           <p>Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.</p>
-          apps/banco-promesas.htmlAbrir</a>
+          apps/banco-promesas.html
+            Abrir
+          </a>
         </article>
 
         <article class="card">
@@ -924,7 +961,9 @@
           <div class="card-icon" aria-hidden="true">04</div>
           <h3>Generador de Oraciones</h3>
           <p>Oraciones breves y guiadas para momentos de gratitud, paz, familia y decisiones importantes.</p>
-          apps/oraciones.htmlAbrir</a>
+          apps/oraciones.html
+            Abrir
+          </a>
         </article>
 
         <article class="card">
@@ -932,7 +971,9 @@
           <div class="card-icon" aria-hidden="true">05</div>
           <h3>Biblioteca</h3>
           <p>Accede a devocionales, ebooks, bonos, imprimibles y recursos espirituales organizados por categoría.</p>
-          <a class="btn btn-primary" href="biblioteca.html">Abrir</a>
+          <a class="btn btn-primary" href="biblioteca.html">
+            Abrir
+          </a>
         </article>
 
         <article class="card">
@@ -940,15 +981,17 @@
           <div class="card-icon" aria-hidden="true">06</div>
           <h3>Recursos Premium</h3>
           <p>Acceso especial a contenidos, actualizaciones y nuevas herramientas del ecosistema Hábitos con Dios.</p>
-          <a class="btn btn-gold" href="biblioteca.html">Abrir</a>
+          <a class="btn btn-gold" href="biblioteca.html">
+            Abrir
+          </a>
         </article>
       </div>
     </section>
 
-    <section class="page-shell">
+    <section class="page-shell" aria-labelledby="resources-title">
       <div class="section-heading">
         <div>
-          <h2>Mis recursos</h2>
+          <h2 id="resources-title">Mis recursos</h2>
           <p>Productos destacados dentro de la experiencia Hábitos con Dios Pro.</p>
         </div>
       </div>
@@ -960,7 +1003,9 @@
             <span class="badge badge-available">Recurso principal</span>
             <h3>21 Días Más Cerca de Dios</h3>
             <p>Devocional guiado para construir un hábito espiritual práctico y sostenible.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <a class="btn btn-secondary" href="biblioteca.html">
+              Ver 21 Días Más Cerca de Dios
+            </a>
           </div>
         </article>
 
@@ -970,7 +1015,9 @@
             <span class="badge badge-available">Devocional</span>
             <h3>Pequeños Momentos con Dios</h3>
             <p>Recursos breves para conectar con Dios durante momentos simples del día.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <a class="btn btn-secondary" href="biblioteca.html">
+              Ver Pequeños Momentos con Dios
+            </a>
           </div>
         </article>
 
@@ -980,7 +1027,9 @@
             <span class="badge badge-premium">Premium</span>
             <h3>Cuando las Palabras Duelen</h3>
             <p>Contenido devocional de acompañamiento para procesar palabras difíciles desde una perspectiva de fe.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <a class="btn btn-secondary" href="biblioteca.html">
+              Ver Cuando las Palabras Duelen
+            </a>
           </div>
         </article>
 
@@ -990,7 +1039,9 @@
             <span class="badge badge-premium">Premium</span>
             <h3>El Hombre que Edifica su Hogar</h3>
             <p>Recurso para acompañar hábitos espirituales y familiares con propósito.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <a class="btn btn-secondary" href="biblioteca.html">
+              Ver El Hombre que Edifica su Hogar
+            </a>
           </div>
         </article>
       </div>
@@ -1031,11 +1082,13 @@
       </div>
     </section>
 
-    <section id="cuenta" class="page-shell">
+    <section id="cuenta" class="page-shell" aria-labelledby="premium-title">
       <div class="membership">
         <div class="membership-card">
           <span class="premium-pill">Premium activo</span>
-          <h2>Miembro Premium</h2>
+
+          <h2 id="premium-title">Miembro Premium</h2>
+
           <p>
             Esta área está preparada para mostrar el estado de membresía, accesos vigentes, recursos comprados y futuras actualizaciones del ecosistema Hábitos con Dios.
           </p>
@@ -1094,10 +1147,10 @@
       </div>
     </section>
 
-    <section class="page-shell">
+    <section class="page-shell" aria-labelledby="news-title">
       <div class="section-heading">
         <div>
-          <h2>Novedades</h2>
+          <h2 id="news-title">Novedades</h2>
           <p>Espacio preparado para futuros lanzamientos del ecosistema.</p>
         </div>
       </div>
@@ -1152,16 +1205,22 @@
     const mobileNav = document.getElementById("mobileNav");
     const menuButton = document.getElementById("mobileMenuButton");
 
+    function setExpanded(value) {
+      menuButton.setAttribute("aria-expanded", value ? "true" : "false");
+      menuButton.setAttribute(
+        "aria-label",
+        value ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+      );
+    }
+
     function toggleMenu() {
       const isOpen = mobileNav.classList.toggle("open");
-      menuButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      menuButton.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+      setExpanded(isOpen);
     }
 
     function closeMenu() {
       mobileNav.classList.remove("open");
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.setAttribute("aria-label", "Abrir menú de navegación");
+      setExpanded(false);
     }
 
     document.addEventListener("keydown", function (event) {
