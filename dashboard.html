@@ -21,7 +21,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Hábitos con Dios Pro" />
 
-  <style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></>
     :root {
       --green: #3F4A35;
       --olive: #556544;
@@ -587,11 +587,6 @@
       color: var(--gold);
     }
 
-    .badge-locked {
-      background: var(--soft-red);
-      color: var(--red);
-    }
-
     .resource-card {
       padding: 0;
       overflow: hidden;
@@ -963,8 +958,8 @@
         </div>
 
         <h1 id="dashboard-title">
-          Te damos la bienvenida
-          <span>continúa tu camino espiritual</span>
+          Te damos la bienvenida,
+          <span id="userName">Cargando...</span>
         </h1>
 
         <p>
@@ -1341,6 +1336,9 @@
   </footer>
 
   <script>
+    const SUPABASE_URL = "PEGA_AQUI_TU_PROJECT_URL";
+    const SUPABASE_PUBLISHABLE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+
     const mobileNav = document.getElementById("mobileNav");
     const menuButton = document.getElementById("mobileMenuButton");
     const mobileLinks = document.querySelectorAll(".mobile-nav a");
@@ -1384,6 +1382,76 @@
         closeMenu();
       }
     });
+
+    function getFriendlyNameFromEmail(email) {
+      if (!email || typeof email !== "string") return "continúa tu camino espiritual";
+
+      const firstPart = email.split("@")[0] || "";
+      const firstName = firstPart
+        .split(/[._-]/)
+        .filter(Boolean)[0];
+
+      if (!firstName) return email;
+
+      return firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    }
+
+    async function loadUserProfile() {
+      const userNameElement = document.getElementById("userName");
+
+      if (!userNameElement) return;
+
+      const configurationIsMissing =
+        SUPABASE_URL === "PEGA_AQUI_TU_PROJECT_URL" ||
+        SUPABASE_PUBLISHABLE_KEY === "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+
+      if (configurationIsMissing) {
+        userNameElement.textContent = "continúa tu camino espiritual";
+        console.warn("Supabase no está configurado todavía. Reemplaza SUPABASE_URL y SUPABASE_PUBLISHABLE_KEY.");
+        return;
+      }
+
+      if (!window.supabase) {
+        userNameElement.textContent = "continúa tu camino espiritual";
+        console.warn("No se pudo cargar Supabase desde el CDN.");
+        return;
+      }
+
+      const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+      const {
+        data: { user },
+        error
+      } = await supabaseClient.auth.getUser();
+
+      if (error) {
+        console.warn("No se pudo obtener el usuario autenticado:", error.message);
+        userNameElement.textContent = "continúa tu camino espiritual";
+        return;
+      }
+
+      if (!user) {
+        userNameElement.textContent = "continúa tu camino espiritual";
+        return;
+      }
+
+      const metadata = user.user_metadata || {};
+
+      const displayName =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.display_name ||
+        getFriendlyNameFromEmail(user.email) ||
+        user.email ||
+        "Usuario";
+
+      userNameElement.textContent = displayName;
+    }
+
+    loadUserProfile();
   </script>
 </body>
 </html>
