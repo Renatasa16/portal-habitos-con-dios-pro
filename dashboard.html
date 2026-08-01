@@ -1444,13 +1444,15 @@
           "Usuario";
 
         userNameElement.textContent = displayName;
-      } catch (error) {
+            } catch (error) {
         console.warn("Error al cargar el perfil del usuario:", error);
         userNameElement.textContent = "continúa tu camino espiritual";
       }
     }
 
-    loadUserProfile();
+    window.addEventListener("load", () => {
+      loadUserProfile();
+    });
   </script>
 </body>
 </html>
