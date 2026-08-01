@@ -196,8 +196,13 @@
       box-shadow: 0 14px 28px rgba(63, 74, 53, 0.22);
     }
 
-    .btn-primary:hover {
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .btn-gold:hover {
       transform: translateY(-2px);
+    }
+
+    .btn-primary:hover {
       filter: brightness(1.04);
     }
 
@@ -207,11 +212,6 @@
       border: 1px solid var(--line);
     }
 
-    .btn-secondary:hover {
-      background: var(--white);
-      transform: translateY(-2px);
-    }
-
     .btn-gold {
       background: var(--gold);
       color: var(--green);
@@ -219,7 +219,6 @@
     }
 
     .btn-gold:hover {
-      transform: translateY(-2px);
       filter: brightness(1.03);
     }
 
@@ -468,19 +467,22 @@
       top: -52px;
     }
 
+    .progress-box small,
+    .progress-box h3,
+    .progress-bar {
+      position: relative;
+      z-index: 1;
+    }
+
     .progress-box small {
       color: #EFE7D8;
       font-weight: 800;
-      position: relative;
-      z-index: 1;
     }
 
     .progress-box h3 {
       font-size: 25px;
       line-height: 1.05;
       margin: 8px 0 16px;
-      position: relative;
-      z-index: 1;
       color: var(--white);
     }
 
@@ -490,8 +492,6 @@
       background: rgba(255, 255, 255, 0.18);
       border-radius: 999px;
       overflow: hidden;
-      position: relative;
-      z-index: 1;
     }
 
     .progress-bar span {
@@ -624,10 +624,15 @@
       line-height: 1.7;
     }
 
-    .benefits-grid {
+    .benefits-grid,
+    .resource-grid,
+    .coming-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
+    }
+
+    .benefits-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .benefit-card {
@@ -640,7 +645,9 @@
       min-height: 245px;
     }
 
-    .benefit-card:hover {
+    .benefit-card:hover,
+    .resource-card:hover,
+    .coming-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow);
     }
@@ -658,22 +665,35 @@
       margin-bottom: 18px;
     }
 
-    .benefit-card h3 {
+    .benefit-card h3,
+    .resource-card h3,
+    .coming-card h3 {
       color: var(--green);
-      font-size: 20px;
       line-height: 1.15;
       margin-bottom: 12px;
     }
 
-    .benefit-card p {
+    .benefit-card h3 {
+      font-size: 20px;
+    }
+
+    .resource-card h3 {
+      font-size: 21px;
+    }
+
+    .coming-card h3 {
+      font-size: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .benefit-card p,
+    .resource-card p,
+    .coming-card p {
       color: var(--muted);
       font-size: 14px;
       line-height: 1.65;
       font-weight: 600;
-    }
-
-    .resources-section {
-      position: relative;
     }
 
     .resources-wrapper {
@@ -722,9 +742,7 @@
     }
 
     .resource-grid {
-      display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
       position: relative;
       z-index: 1;
     }
@@ -739,10 +757,6 @@
       box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.22);
       transition: 0.2s ease;
-    }
-
-    .resource-card:hover {
-      transform: translateY(-4px);
     }
 
     .resource-card.featured {
@@ -768,18 +782,7 @@
       background: var(--soft-gold);
     }
 
-    .resource-card h3 {
-      color: var(--green);
-      font-size: 21px;
-      line-height: 1.12;
-      margin-bottom: 10px;
-    }
-
     .resource-card p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-      font-weight: 600;
       flex: 1;
     }
 
@@ -797,9 +800,7 @@
     }
 
     .coming-grid {
-      display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
     }
 
     .coming-card {
@@ -812,11 +813,6 @@
       overflow: hidden;
       min-height: 220px;
       transition: 0.2s ease;
-    }
-
-    .coming-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
     }
 
     .coming-card::after {
@@ -844,20 +840,7 @@
       z-index: 1;
     }
 
-    .coming-card h3 {
-      color: var(--green);
-      font-size: 22px;
-      line-height: 1.15;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
     .coming-card p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-      font-weight: 600;
       position: relative;
       z-index: 1;
     }
@@ -995,19 +978,16 @@
         font-size: 21px;
       }
 
-      .trust-row {
-        grid-template-columns: 1fr;
-      }
-
-      section {
-        padding: 42px 0;
-      }
-
+      .trust-row,
       .benefits-grid,
       .resource-grid,
       .coming-grid,
       .dashboard-grid {
         grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 42px 0;
       }
 
       .resources-wrapper,
@@ -1129,23 +1109,22 @@
         aria-label="Abrir menú de navegación"
         aria-controls="mobileNav"
         aria-expanded="false"
-        onclick="toggleMenu()"
         id="mobileMenuButton"
       >
         Menú
       </button>
     </div>
 
-    <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <div class="mobile-nav-inner">
-        <a href="#inicio" onclick="closeMenu()">Inicio</a>
-        <a href="#beneficios" onclick="closeMenu()">Beneficios</a>
-        <a href="#recursos" onclick="closeMenu()">Recursos</a>
-        <a href="#proximamente" onclick="closeMenu()">Próximamente</a>
-        <a href="dashboard.html" onclick="closeMenu()">Mis Recursos</a>
-        <a href="biblioteca.html" onclick="closeMenu()">Biblioteca</a>
-        <a href="acerca.html" onclick="closeMenu()">Acerca de</a>
-        <a href="dashboard.html" onclick="closeMenu()">Ingresar</a>
+        <a href="#inicio">Inicio</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#proximamente">Próximamente</a>
+        <a href="dashboard.html">Mis Recursos</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="acerca.html">Acerca de</a>
+        <a href="dashboard.html">Ingresar</a>
       </div>
     </div>
   </nav>
@@ -1206,7 +1185,7 @@
             </div>
 
             <div class="status-pill">
-              Miembro Premium
+              Acceso inicial
             </div>
           </div>
 
@@ -1326,7 +1305,7 @@
             </article>
 
             <article class="resource-card">
-              <span class="resource-tag">Premium</span>
+              <span class="resource-tag">Próximo</span>
               <h3>Tarjetas de Fe</h3>
               <p>
                 Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la rutina diaria.
@@ -1338,7 +1317,7 @@
             </article>
 
             <article class="resource-card">
-              <span class="resource-tag">Biblioteca</span>
+              <span class="resource-tag">Próximo</span>
               <h3>Banco de Promesas</h3>
               <p>
                 Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.
@@ -1350,7 +1329,7 @@
             </article>
 
             <article class="resource-card">
-              <span class="resource-tag">Guía</span>
+              <span class="resource-tag">Próximo</span>
               <h3>Generador de Oraciones</h3>
               <p>
                 Oraciones breves, cálidas y responsables para acompañar momentos de gratitud, paz, familia y decisión.
@@ -1421,14 +1400,12 @@
             </p>
           </div>
 
-  <a
-  class="btn btn-gold"
-  href="https://mi-tiempo-con-dios.vercel.app"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Abrir Mi Tiempo con Dios
-</a>
+          <a
+            class="btn btn-gold"
+            href="apps/mi-tiempo-con-dios.html"
+          >
+            Abrir Mi Tiempo con Dios
+          </a>
         </div>
       </div>
     </section>
@@ -1458,18 +1435,41 @@
   <script>
     const mobileNav = document.getElementById("mobileNav");
     const menuButton = document.getElementById("mobileMenuButton");
+    const mobileLinks = document.querySelectorAll(".mobile-nav a");
+
+    function setExpanded(value) {
+      if (!menuButton || !mobileNav) return;
+
+      menuButton.setAttribute("aria-expanded", value ? "true" : "false");
+      menuButton.setAttribute(
+        "aria-label",
+        value ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+      );
+
+      mobileNav.setAttribute("aria-hidden", value ? "false" : "true");
+    }
 
     function toggleMenu() {
+      if (!mobileNav) return;
+
       const isOpen = mobileNav.classList.toggle("open");
-      menuButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      menuButton.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+      setExpanded(isOpen);
     }
 
     function closeMenu() {
+      if (!mobileNav) return;
+
       mobileNav.classList.remove("open");
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.setAttribute("aria-label", "Abrir menú de navegación");
+      setExpanded(false);
     }
+
+    if (menuButton) {
+      menuButton.addEventListener("click", toggleMenu);
+    }
+
+    mobileLinks.forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
@@ -1479,3 +1479,4 @@
   </script>
 </body>
 </html>
+``
