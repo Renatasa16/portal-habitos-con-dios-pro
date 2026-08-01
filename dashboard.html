@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Dashboard premium de Hábitos con Dios Pro para acceder a recursos digitales, micro aplicaciones, biblioteca espiritual y herramientas de crecimiento devocional."
+    content="Dashboard premium de Hábitos con Dios Pro para acceder a la colección 21 Días Más Cerca de Dios, sus bonos digitales y la App Devocional Mi Tiempo con Dios."
   />
 
   <meta name="theme-color" content="#3F4A35" />
@@ -16,7 +16,7 @@
   <meta property="og:title" content="Dashboard | Hábitos con Dios Pro" />
   <meta
     property="og:description"
-    content="Dashboard premium de Hábitos con Dios Pro para acceder a recursos digitales, micro aplicaciones, biblioteca espiritual y herramientas de crecimiento devocional."
+    content="Accede a la experiencia inicial de Hábitos con Dios Pro: 21 Días Más Cerca de Dios, bonos digitales y la App Devocional Mi Tiempo con Dios."
   />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Hábitos con Dios Pro" />
@@ -34,6 +34,8 @@
       --line: #E8DECC;
       --soft-green: #EEF3EA;
       --soft-gold: #F7EAC7;
+      --soft-red: #FCEEEE;
+      --red: #9F3A38;
       --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.10);
       --radius-xl: 32px;
@@ -198,7 +200,7 @@
       font-size: 14px;
       cursor: pointer;
       transition: 0.2s ease;
-      line-height: 1;
+      line-height: 1.2;
       text-align: center;
       min-height: 44px;
       white-space: nowrap;
@@ -235,6 +237,15 @@
     .btn-gold:hover {
       transform: translateY(-2px);
       filter: brightness(1.03);
+    }
+
+    .btn-disabled {
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--muted);
+      border: 1px solid var(--line);
+      cursor: not-allowed;
+      pointer-events: none;
+      box-shadow: none;
     }
 
     .mobile-menu {
@@ -482,7 +493,7 @@
     .section-heading p {
       color: var(--muted);
       line-height: 1.65;
-      max-width: 600px;
+      max-width: 640px;
       margin-top: 8px;
     }
 
@@ -515,6 +526,10 @@
     .card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow);
+    }
+
+    .card.soon {
+      opacity: 0.94;
     }
 
     .card-icon {
@@ -572,6 +587,11 @@
       color: var(--gold);
     }
 
+    .badge-locked {
+      background: var(--soft-red);
+      color: var(--red);
+    }
+
     .resource-card {
       padding: 0;
       overflow: hidden;
@@ -591,8 +611,30 @@
       font-size: 22px;
     }
 
+    .resource-image.soon-image {
+      filter: saturate(0.9);
+      opacity: 0.86;
+    }
+
     .resource-body {
       padding: 20px;
+    }
+
+    .mvp-note {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mvp-note strong {
+      color: var(--green);
     }
 
     .membership {
@@ -863,7 +905,7 @@
   <a class="skip-link" href="#main">Saltar al contenido</a>
 
   <div class="announcement">
-    Dashboard premium de Hábitos con Dios Pro
+    Lanzamiento inicial activo: 21 Días Más Cerca de Dios + bonos + App Devocional
   </div>
 
   <nav class="navbar" aria-label="Navegación principal del dashboard">
@@ -880,8 +922,8 @@
         <a href="index.html">Inicio</a>
         <a href="biblioteca.html">Biblioteca</a>
         <a href="#recursos">Recursos</a>
-        <a href="#comunidad">Comunidad</a>
-        <a href="#cuenta">Mi Cuenta</a>
+        <a href="#proximamente">Próximamente</a>
+        <a href="#cuenta">Mi Acceso</a>
       </div>
 
       <div class="nav-actions">
@@ -905,8 +947,8 @@
         <a href="index.html">Inicio</a>
         <a href="biblioteca.html">Biblioteca</a>
         <a href="#recursos">Recursos</a>
-        <a href="#comunidad">Comunidad</a>
-        <a href="#cuenta">Mi Cuenta</a>
+        <a href="#proximamente">Próximamente</a>
+        <a href="#cuenta">Mi Acceso</a>
         <a href="index.html">Volver al Portal</a>
       </div>
     </div>
@@ -917,7 +959,7 @@
       <div class="hero-card">
         <div class="eyebrow">
           <span class="eyebrow-dot" aria-hidden="true"></span>
-          MIEMBRO PREMIUM
+          COLECCIÓN ACTIVA
         </div>
 
         <h1 id="dashboard-title">
@@ -926,24 +968,31 @@
         </h1>
 
         <p>
-          Accede a tus recursos devocionales, herramientas espirituales y contenidos exclusivos desde un único lugar diseñado para acompañar tu crecimiento diario.
+          Accede a la experiencia inicial de Hábitos con Dios Pro: el ebook
+          <strong>21 Días Más Cerca de Dios</strong>, sus bonos digitales y la App Devocional
+          <strong>Mi Tiempo con Dios</strong>. Las demás colecciones se encuentran en preparación para próximos lanzamientos.
         </p>
 
-        <div class="premium-status">
+        <div class="premium-status" aria-label="Resumen de acceso actual">
           <div class="status-card">
-            <strong>4</strong>
-            <span>Recursos Activos</span>
+            <strong>1</strong>
+            <span>Colección Activa</span>
           </div>
 
           <div class="status-card">
             <strong>1</strong>
-            <span>Hábito Iniciado</span>
+            <span>App Disponible</span>
           </div>
 
           <div class="status-card">
-            <strong>Premium</strong>
-            <span>Membresía Activa</span>
+            <strong>3</strong>
+            <span>Estrenos Próximos</span>
           </div>
+        </div>
+
+        <div class="mvp-note">
+          <strong>Acceso actual:</strong> 21 Días Más Cerca de Dios, bonos digitales y App Devocional.
+          Para futuras compras, el acceso se validará con el mismo correo utilizado en Shopify.
         </div>
 
         <div class="hero-actions">
@@ -952,25 +1001,25 @@
           </a>
 
           <a class="btn btn-secondary" href="biblioteca.html">
-            Explorar Biblioteca
+            Ver Biblioteca
           </a>
         </div>
       </div>
 
       <aside class="stats-card" aria-label="Resumen del dashboard">
         <div class="stat">
-          <strong>4</strong>
-          <span>Recursos principales</span>
+          <strong>21</strong>
+          <span>Días de recorrido devocional</span>
         </div>
 
         <div class="stat">
-          <strong>6</strong>
-          <span>Herramientas planeadas</span>
+          <strong>4</strong>
+          <span>Bonos digitales incluidos</span>
         </div>
 
         <div class="stat">
           <strong>1</strong>
-          <span>Membresía premium</span>
+          <span>App devocional disponible</span>
         </div>
       </aside>
     </section>
@@ -979,7 +1028,9 @@
       <div class="section-heading">
         <div>
           <h2 id="quick-title">Accesos rápidos</h2>
-          <p>Herramientas principales del ecosistema Hábitos con Dios.</p>
+          <p>
+            Accede a los recursos disponibles del lanzamiento inicial y visualiza las herramientas que llegarán en próximas etapas.
+          </p>
         </div>
       </div>
 
@@ -988,48 +1039,60 @@
           <span class="badge badge-available">Disponible</span>
           <div class="card-icon" aria-hidden="true">🙏</div>
           <h3>Mi Tiempo con Dios</h3>
-          <p>Micro aplicación devocional para acompañar tu recorrido de 21 días con oración, gratitud y reflexión.</p>
-          <a class="btn btn-primary" href="apps/mi-tiempo-con-dios.html">Abrir</a>
-        </article>
-
-        <article class="card">
-          <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">✨</div>
-          <h3>Tarjetas de Fe</h3>
-          <p>Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la vida diaria.</p>
-          <a class="btn btn-secondary" href="apps/tarjetas-fe.html">Abrir</a>
-        </article>
-
-        <article class="card">
-          <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">📖</div>
-          <h3>Banco de Promesas</h3>
-          <p>Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.</p>
-          <a class="btn btn-secondary" href="apps/banco-promesas.html">Abrir</a>
-        </article>
-
-        <article class="card">
-          <span class="badge badge-soon">Próximamente</span>
-          <div class="card-icon" aria-hidden="true">💛</div>
-          <h3>Generador de Oraciones</h3>
-          <p>Oraciones breves y guiadas para momentos de gratitud, paz, familia y decisiones importantes.</p>
-          <a class="btn btn-secondary" href="apps/oraciones.html">Abrir</a>
+          <p>
+            App Devocional incluida en la colección 21 Días Más Cerca de Dios para acompañar tu recorrido diario con oración, gratitud y reflexión.
+          </p>
+          <a class="btn btn-primary" href="apps/mi-tiempo-con-dios.html">Abrir App</a>
         </article>
 
         <article class="card">
           <span class="badge badge-available">Disponible</span>
           <div class="card-icon" aria-hidden="true">📚</div>
           <h3>Biblioteca</h3>
-          <p>Accede a devocionales, ebooks, bonos, imprimibles y recursos espirituales organizados por categoría.</p>
-          <a class="btn btn-primary" href="biblioteca.html">Abrir</a>
+          <p>
+            Accede al ebook principal, sus bonos y la vista organizada de las colecciones actuales y futuras del ecosistema.
+          </p>
+          <a class="btn btn-primary" href="biblioteca.html">Abrir Biblioteca</a>
         </article>
 
         <article class="card">
-          <span class="badge badge-premium">Premium</span>
-          <div class="card-icon" aria-hidden="true">👑</div>
-          <h3>Recursos Premium</h3>
-          <p>Acceso especial a contenidos, actualizaciones y nuevas herramientas del ecosistema Hábitos con Dios.</p>
-          <a class="btn btn-gold" href="biblioteca.html">Abrir</a>
+          <span class="badge badge-premium">Incluido</span>
+          <div class="card-icon" aria-hidden="true">🎁</div>
+          <h3>Bonos Digitales</h3>
+          <p>
+            Recursos complementarios asociados al ebook 21 Días Más Cerca de Dios para enriquecer la experiencia devocional.
+          </p>
+          <a class="btn btn-gold" href="biblioteca.html">Ver Bonos</a>
+        </article>
+
+        <article class="card soon">
+          <span class="badge badge-soon">Estreno Próximamente</span>
+          <div class="card-icon" aria-hidden="true">✨</div>
+          <h3>Tarjetas de Fe</h3>
+          <p>
+            Próxima herramienta digital para guardar, inspirar y compartir mensajes de fe en la vida diaria.
+          </p>
+          <span class="btn btn-disabled" aria-disabled="true">En preparación</span>
+        </article>
+
+        <article class="card soon">
+          <span class="badge badge-soon">Estreno Próximamente</span>
+          <div class="card-icon" aria-hidden="true">📖</div>
+          <h3>Banco de Promesas</h3>
+          <p>
+            Próximo buscador temático de versículos y recordatorios espirituales para diferentes momentos del día.
+          </p>
+          <span class="btn btn-disabled" aria-disabled="true">En preparación</span>
+        </article>
+
+        <article class="card soon">
+          <span class="badge badge-soon">Estreno Próximamente</span>
+          <div class="card-icon" aria-hidden="true">💛</div>
+          <h3>Generador de Oraciones</h3>
+          <p>
+            Próxima herramienta para crear oraciones guiadas en momentos de gratitud, paz, familia y decisiones importantes.
+          </p>
+          <span class="btn btn-disabled" aria-disabled="true">En preparación</span>
         </article>
       </div>
     </section>
@@ -1038,7 +1101,9 @@
       <div class="section-heading">
         <div>
           <h2 id="resources-title">Mis recursos</h2>
-          <p>Productos destacados dentro de la experiencia Hábitos con Dios Pro.</p>
+          <p>
+            Estado actual de las colecciones digitales de Hábitos con Dios Pro.
+          </p>
         </div>
       </div>
 
@@ -1046,105 +1111,123 @@
         <article class="card resource-card">
           <div class="resource-image">21 Días</div>
           <div class="resource-body">
-            <span class="badge badge-available">Recurso principal</span>
+            <span class="badge badge-available">Lanzamiento activo</span>
             <h3>21 Días Más Cerca de Dios</h3>
-            <p>Devocional guiado para construir un hábito espiritual práctico y sostenible.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <p>
+              Devocional guiado para mujeres que desean construir un hábito espiritual práctico, íntimo y sostenible.
+            </p>
+            <a class="btn btn-primary" href="biblioteca.html">Ver Recurso</a>
           </div>
         </article>
 
-        <article class="card resource-card">
-          <div class="resource-image">Momentos</div>
+        <article class="card resource-card soon">
+          <div class="resource-image soon-image">Momentos</div>
           <div class="resource-body">
-            <span class="badge badge-available">Devocional</span>
+            <span class="badge badge-soon">Estreno Próximamente</span>
             <h3>Pequeños Momentos con Dios</h3>
-            <p>Recursos breves para conectar con Dios durante momentos simples del día.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <p>
+              Colección familiar en preparación para crear pausas de fe, conexión y reflexión en momentos simples del día.
+            </p>
+            <span class="btn btn-disabled" aria-disabled="true">Próximamente</span>
           </div>
         </article>
 
-        <article class="card resource-card">
-          <div class="resource-image">Palabras</div>
+        <article class="card resource-card soon">
+          <div class="resource-image soon-image">Palabras</div>
           <div class="resource-body">
-            <span class="badge badge-premium">Premium</span>
+            <span class="badge badge-soon">Estreno Próximamente</span>
             <h3>Cuando las Palabras Duelen</h3>
-            <p>Contenido devocional de acompañamiento para procesar palabras difíciles desde una perspectiva de fe.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <p>
+              Recurso en preparación para adolescentes y jóvenes que necesitan acompañamiento frente a palabras difíciles.
+            </p>
+            <span class="btn btn-disabled" aria-disabled="true">Próximamente</span>
           </div>
         </article>
 
-        <article class="card resource-card">
-          <div class="resource-image">Hogar</div>
+        <article class="card resource-card soon">
+          <div class="resource-image soon-image">Hogar</div>
           <div class="resource-body">
-            <span class="badge badge-premium">Premium</span>
+            <span class="badge badge-soon">Estreno Próximamente</span>
             <h3>El Hombre que Edifica su Hogar</h3>
-            <p>Recurso para acompañar hábitos espirituales y familiares con propósito.</p>
-            <a class="btn btn-secondary" href="biblioteca.html">Ver Recurso</a>
+            <p>
+              Colección en preparación para hombres que desean fortalecer hábitos espirituales, familiares y de propósito.
+            </p>
+            <span class="btn btn-disabled" aria-disabled="true">Próximamente</span>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="page-shell" aria-labelledby="roadmap-title">
+    <section id="proximamente" class="page-shell" aria-labelledby="roadmap-title">
       <div class="section-heading">
         <div>
-          <h2 id="roadmap-title">Próximamente</h2>
-          <p>Herramientas en desarrollo para ampliar la experiencia del portal.</p>
+          <h2 id="roadmap-title">Estrenos próximamente</h2>
+          <p>
+            Estas herramientas forman parte del ecosistema planificado, pero todavía no están disponibles en el lanzamiento inicial.
+          </p>
         </div>
       </div>
 
       <div class="grid roadmap-grid">
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">En desarrollo</span>
           <h3>Diario de Paz</h3>
-          <p>Espacio devocional para registrar pausas, pensamientos y oraciones breves.</p>
+          <p>
+            Espacio devocional futuro para registrar pausas, pensamientos y oraciones breves.
+          </p>
         </article>
 
-        <article class="card" id="comunidad">
+        <article class="card soon" id="comunidad">
           <span class="badge badge-soon">En desarrollo</span>
           <h3>Comunidad Privada</h3>
-          <p>Área futura para acompañamiento, novedades y conexión con nuevos contenidos.</p>
+          <p>
+            Área futura para acompañamiento, novedades y conexión con nuevos contenidos.
+          </p>
         </article>
 
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">En desarrollo</span>
           <h3>Nuevas Micro Apps</h3>
-          <p>Herramientas digitales adicionales para complementar los ebooks y recursos premium.</p>
+          <p>
+            Herramientas digitales adicionales que acompañarán las próximas colecciones del ecosistema.
+          </p>
         </article>
 
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">En desarrollo</span>
           <h3>Seguimiento de Hábitos</h3>
-          <p>Funcionalidad futura para visualizar avances y recorridos espirituales.</p>
+          <p>
+            Funcionalidad futura para visualizar avances, recorridos espirituales y progreso personal.
+          </p>
         </article>
       </div>
     </section>
 
-    <section id="cuenta" class="page-shell" aria-labelledby="premium-title">
+    <section id="cuenta" class="page-shell" aria-labelledby="access-title">
       <div class="membership">
         <div class="membership-card">
-          <span class="premium-pill">Premium activo</span>
+          <span class="premium-pill">Acceso inicial activo</span>
 
-          <h2 id="premium-title">Miembro Premium</h2>
+          <h2 id="access-title">Mi acceso</h2>
 
           <p>
-            Esta área está preparada para mostrar el estado de membresía, accesos vigentes, recursos comprados y futuras actualizaciones del ecosistema Hábitos con Dios.
+            Esta área está preparada para mostrar el estado de acceso del comprador, los recursos disponibles y las futuras actualizaciones del ecosistema Hábitos con Dios Pro.
           </p>
 
           <div class="premium-stats">
             <div class="premium-item">
+              <strong>1</strong>
+              <span>Colección activa</span>
+            </div>
+
+            <div class="premium-item">
               <strong>4</strong>
-              <span>Recursos activos</span>
+              <span>Bonos incluidos</span>
             </div>
 
             <div class="premium-item">
-              <strong>6</strong>
-              <span>Herramientas planificadas</span>
-            </div>
-
-            <div class="premium-item">
-              <strong>∞</strong>
-              <span>Actualizaciones futuras</span>
+              <strong>1</strong>
+              <span>App disponible</span>
             </div>
           </div>
         </div>
@@ -1153,69 +1236,87 @@
           <div class="benefit-row">
             <div class="check" aria-hidden="true">✓</div>
             <div>
-              <h3>Acceso a recursos actuales</h3>
-              <p>Biblioteca y herramientas disponibles dentro del portal.</p>
+              <h3>Acceso a 21 Días Más Cerca de Dios</h3>
+              <p>
+                Colección principal disponible en el lanzamiento inicial del portal.
+              </p>
             </div>
           </div>
 
           <div class="benefit-row">
             <div class="check" aria-hidden="true">✓</div>
             <div>
-              <h3>Acceso a futuras herramientas</h3>
-              <p>Base preparada para nuevas micro apps y recursos digitales.</p>
+              <h3>Acceso a bonos digitales</h3>
+              <p>
+                Recursos complementarios incluidos como parte del bundle de lanzamiento.
+              </p>
             </div>
           </div>
 
           <div class="benefit-row">
             <div class="check" aria-hidden="true">✓</div>
             <div>
-              <h3>Acceso a actualizaciones</h3>
-              <p>Sección lista para futuras mejoras, lanzamientos y ampliaciones.</p>
+              <h3>Acceso a Mi Tiempo con Dios</h3>
+              <p>
+                App Devocional disponible para acompañar el recorrido espiritual de 21 días.
+              </p>
             </div>
           </div>
 
           <div class="benefit-row">
             <div class="check" aria-hidden="true">✓</div>
             <div>
-              <h3>Acceso a nuevos contenidos</h3>
-              <p>Preparado para nuevos ebooks, bonos, apps y cursos.</p>
+              <h3>Base preparada para futuras colecciones</h3>
+              <p>
+                El portal queda listo para sumar nuevos ebooks, bonos, apps y membresías en próximas fases.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="page-shell" aria-labelledby="news-title">
+    <section id="novedades" class="page-shell" aria-labelledby="news-title">
       <div class="section-heading">
         <div>
           <h2 id="news-title">Novedades</h2>
-          <p>Espacio preparado para futuros lanzamientos del ecosistema.</p>
+          <p>
+            Próximos lanzamientos previstos para ampliar la experiencia de Hábitos con Dios Pro.
+          </p>
         </div>
       </div>
 
       <div class="grid updates-grid">
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">Próximo</span>
           <h3>Nuevos ebooks</h3>
-          <p>Área futura para incorporar nuevos productos devocionales.</p>
+          <p>
+            Área futura para incorporar nuevas colecciones devocionales con públicos específicos.
+          </p>
         </article>
 
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">Próximo</span>
-          <h3>Bonos</h3>
-          <p>Recursos complementarios, descargables e imprimibles.</p>
+          <h3>Nuevos bonos</h3>
+          <p>
+            Recursos complementarios, descargables e imprimibles para enriquecer cada colección.
+          </p>
         </article>
 
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">Próximo</span>
-          <h3>Apps</h3>
-          <p>Nuevas herramientas digitales para enriquecer la experiencia.</p>
+          <h3>Nuevas apps</h3>
+          <p>
+            Herramientas digitales para acompañar hábitos espirituales y experiencias guiadas.
+          </p>
         </article>
 
-        <article class="card">
+        <article class="card soon">
           <span class="badge badge-soon">Próximo</span>
-          <h3>Cursos</h3>
-          <p>Espacio preparado para entrenamientos, guías o experiencias formativas.</p>
+          <h3>Membresía futura</h3>
+          <p>
+            Posible acceso ampliado a todo el ecosistema cuando el primer flujo esté validado.
+          </p>
         </article>
       </div>
     </section>
