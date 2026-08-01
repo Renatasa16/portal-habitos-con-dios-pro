@@ -21,7 +21,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Hábitos con Dios Pro" />
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
     :root {
       --green: #3F4A35;
       --olive: #556544;
@@ -1384,7 +1386,9 @@
     });
 
     function getFriendlyNameFromEmail(email) {
-      if (!email || typeof email !== "string") return "continúa tu camino espiritual";
+      if (!email || typeof email !== "string") {
+        return "continúa tu camino espiritual";
+      }
 
       const firstPart = email.split("@")[0] || "";
       const firstName = firstPart
@@ -1401,54 +1405,49 @@
 
       if (!userNameElement) return;
 
-      const configurationIsMissing =
-        SUPABASE_URL === "PEGA_AQUI_TU_PROJECT_URL" ||
-        SUPABASE_PUBLISHABLE_KEY === "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+      try {
+        if (!window.supabase || !window.supabase.createClient) {
+          userNameElement.textContent = "continúa tu camino espiritual";
+          console.warn("Supabase no se cargó correctamente desde el CDN.");
+          return;
+        }
 
-      if (configurationIsMissing) {
+        const supabaseClient = window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+
+        const {
+          data: { user },
+          error
+        } = await supabaseClient.auth.getUser();
+
+        if (error) {
+          console.warn("No se pudo obtener el usuario autenticado:", error.message);
+          userNameElement.textContent = "continúa tu camino espiritual";
+          return;
+        }
+
+        if (!user) {
+          userNameElement.textContent = "continúa tu camino espiritual";
+          return;
+        }
+
+        const metadata = user.user_metadata || {};
+
+        const displayName =
+          metadata.full_name ||
+          metadata.name ||
+          metadata.display_name ||
+          getFriendlyNameFromEmail(user.email) ||
+          user.email ||
+          "Usuario";
+
+        userNameElement.textContent = displayName;
+      } catch (error) {
+        console.warn("Error al cargar el perfil del usuario:", error);
         userNameElement.textContent = "continúa tu camino espiritual";
-        console.warn("Supabase no está configurado todavía. Reemplaza SUPABASE_URL y SUPABASE_PUBLISHABLE_KEY.");
-        return;
       }
-
-      if (!window.supabase) {
-        userNameElement.textContent = "continúa tu camino espiritual";
-        console.warn("No se pudo cargar Supabase desde el CDN.");
-        return;
-      }
-
-      const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-      const {
-        data: { user },
-        error
-      } = await supabaseClient.auth.getUser();
-
-      if (error) {
-        console.warn("No se pudo obtener el usuario autenticado:", error.message);
-        userNameElement.textContent = "continúa tu camino espiritual";
-        return;
-      }
-
-      if (!user) {
-        userNameElement.textContent = "continúa tu camino espiritual";
-        return;
-      }
-
-      const metadata = user.user_metadata || {};
-
-      const displayName =
-        metadata.full_name ||
-        metadata.name ||
-        metadata.display_name ||
-        getFriendlyNameFromEmail(user.email) ||
-        user.email ||
-        "Usuario";
-
-      userNameElement.textContent = displayName;
     }
 
     loadUserProfile();
