@@ -187,5 +187,70 @@
       </a>
     </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL =
+    "https://cianhgmqhdnvwvjxtuji.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
+  async function validateSession() {
+    try {
+
+      if (!window.supabase?.createClient) {
+        console.error("Supabase no se cargó.");
+        return;
+      }
+
+      const supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+
+      const {
+        data: { user },
+        error
+      } = await supabaseClient.auth.getUser();
+
+      console.log("USER:", user);
+      console.log("ERROR:", error);
+
+      if (error || !user) {
+
+        alert(
+          "Debes iniciar sesión para acceder a Mi Tiempo con Dios."
+        );
+
+        window.location.href =
+          "../dashboard.html";
+
+        return;
+      }
+
+      console.log(
+        "Usuario autenticado:",
+        user.email
+      );
+
+    } catch (err) {
+
+      console.error(
+        "Error validando sesión:",
+        err
+      );
+
+      window.location.href =
+        "../dashboard.html";
+    }
+  }
+
+  window.addEventListener(
+    "load",
+    validateSession
+  );
+</script>
 </body>
 </html>
