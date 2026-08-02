@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Micro app premium Momentos con Dios en Familia, complementaria a Pequeños Momentos con Dios."
+    content="APP Familiar premium Momentos con Dios en Familia, complementaria a Pequeños Momentos con Dios."
   />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -28,7 +28,10 @@
       --line: #E8DECC;
       --soft-green: #EEF3EA;
       --soft-gold: #FBF1D5;
+      --soft-blue: #EAF2F5;
+      --soft-pink: #F8E7E2;
       --danger: #9F3A38;
+      --success: #3F6B3C;
       --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
       --radius-xl: 34px;
@@ -52,8 +55,9 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
-        radial-gradient(circle at top right, rgba(85, 101, 68, 0.12), transparent 30%),
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.25), transparent 34%),
+        radial-gradient(circle at top right, rgba(85, 101, 68, 0.14), transparent 30%),
+        radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.72), transparent 36%),
         linear-gradient(145deg, #FAF7F0, #F5F0E7);
     }
 
@@ -87,18 +91,19 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
 
     .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 19px;
+      width: 50px;
+      height: 50px;
+      border-radius: 20px;
       background: linear-gradient(135deg, var(--green), var(--olive));
       display: grid;
       place-items: center;
       color: var(--gold);
       box-shadow: var(--shadow-soft);
-      font-size: 22px;
+      font-size: 23px;
       flex: 0 0 auto;
     }
 
@@ -129,7 +134,9 @@
     .btn-soft,
     .btn-dark,
     .btn-gold,
-    .btn-danger {
+    .btn-danger,
+    .btn-kid,
+    .disabled-btn {
       border: 0;
       border-radius: 999px;
       min-height: 46px;
@@ -148,7 +155,8 @@
     .btn-soft:hover,
     .btn-dark:hover,
     .btn-gold:hover,
-    .btn-danger:hover {
+    .btn-danger:hover,
+    .btn-kid:hover {
       transform: translateY(-2px);
     }
 
@@ -192,13 +200,28 @@
       border: 1px solid rgba(159, 58, 56, 0.14);
     }
 
+    .btn-kid {
+      background: linear-gradient(135deg, #F4E6BE, #FFFFFF);
+      color: var(--green);
+      border: 1px solid rgba(201, 166, 90, 0.34);
+      box-shadow: 0 12px 28px rgba(201, 166, 90, 0.15);
+    }
+
+    .disabled-btn {
+      background: #F1E9DC;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
     .hero {
       overflow: hidden;
       position: relative;
       border-radius: var(--radius-xl);
       background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 240, 0.93)),
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.21), transparent 34%);
+        linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(250, 247, 240, 0.94)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.22), transparent 34%);
       border: 1px solid rgba(232, 222, 204, 0.90);
       box-shadow: var(--shadow);
       padding: clamp(28px, 5vw, 56px);
@@ -208,10 +231,10 @@
     .hero::before {
       content: "";
       position: absolute;
-      width: 300px;
-      height: 300px;
-      top: -130px;
-      right: -100px;
+      width: 310px;
+      height: 310px;
+      top: -132px;
+      right: -105px;
       border-radius: 50%;
       background: rgba(201, 166, 90, 0.17);
     }
@@ -225,6 +248,57 @@
       left: -80px;
       border-radius: 50%;
       background: rgba(85, 101, 68, 0.10);
+    }
+
+    .floating-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 999px;
+      opacity: 0.55;
+      animation: floaty 8s ease-in-out infinite;
+    }
+
+    .shape.one {
+      width: 42px;
+      height: 42px;
+      background: var(--soft-gold);
+      left: 6%;
+      top: 16%;
+    }
+
+    .shape.two {
+      width: 28px;
+      height: 28px;
+      background: var(--soft-green);
+      right: 21%;
+      bottom: 20%;
+      animation-delay: 1.5s;
+    }
+
+    .shape.three {
+      width: 34px;
+      height: 34px;
+      background: var(--soft-blue);
+      right: 11%;
+      top: 18%;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes floaty {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
     }
 
     .hero-inner {
@@ -313,6 +387,23 @@
       line-height: 1.55;
     }
 
+    .sticker-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .sticker {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 850;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -381,7 +472,7 @@
     .sidebar {
       position: sticky;
       top: 16px;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.91);
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
@@ -406,7 +497,7 @@
       background: white;
       color: var(--green);
       border-radius: 18px;
-      padding: 12px;
+      padding: 13px 12px;
       text-align: left;
       cursor: pointer;
       font-weight: 850;
@@ -414,6 +505,11 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateX(2px);
     }
 
     .nav-button.active {
@@ -428,7 +524,7 @@
     }
 
     .panel {
-      background: rgba(255, 255, 255, 0.90);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
@@ -512,7 +608,7 @@
       border: 1px solid var(--line);
       border-radius: 28px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 247, 240, 0.88));
+        linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(250, 247, 240, 0.90));
       box-shadow: 0 14px 34px rgba(63, 74, 53, 0.10);
       padding: 22px;
     }
@@ -523,6 +619,7 @@
       gap: 14px;
       align-items: flex-start;
       margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
     .moment-day {
@@ -563,6 +660,8 @@
       border: 1px solid var(--line);
       border-radius: 20px;
       padding: 16px;
+      position: relative;
+      overflow: hidden;
     }
 
     .mini-box.gold {
@@ -571,6 +670,14 @@
 
     .mini-box.green {
       background: var(--soft-green);
+    }
+
+    .mini-box.blue {
+      background: var(--soft-blue);
+    }
+
+    .mini-box.pink {
+      background: var(--soft-pink);
     }
 
     .mini-box small {
@@ -621,6 +728,11 @@
       color: var(--green);
       font-weight: 950;
       cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .day-chip:hover {
+      transform: translateY(-2px);
     }
 
     .day-chip.done {
@@ -629,10 +741,42 @@
       border-color: var(--green);
     }
 
+    .day-chip.favorite {
+      box-shadow: inset 0 0 0 2px var(--gold);
+    }
+
     .day-chip.active {
       background: var(--gold-soft);
       color: var(--green);
       border-color: rgba(201, 166, 90, 0.5);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .kid-card {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(63, 74, 53, 0.08);
+      min-height: 140px;
+    }
+
+    .kid-card strong {
+      color: var(--green);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .kid-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
     }
 
     .memory-list {
@@ -764,7 +908,8 @@
 
       .summary-grid,
       .filter-grid,
-      .moment-grid {
+      .moment-grid,
+      .cards-grid {
         grid-template-columns: 1fr;
       }
 
@@ -778,7 +923,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      ../biblioteca.html
+      <a class="brand" href="../biblioteca.html" aria-label="Volver a Biblioteca">
         <div class="brand-mark">✦</div>
         <div class="brand-text">
           <strong>Hábitos con Dios Pro</strong>
@@ -788,7 +933,7 @@
 
       <div class="top-actions">
         <span class="pill" id="userPill">Verificando acceso...</span>
-        ../biblioteca.htmlBiblioteca</a>
+        <a class="btn-soft" href="../biblioteca.html">Biblioteca</a>
         <button class="btn-danger" type="button" id="logoutBtn">Cerrar sesión</button>
       </div>
     </header>
@@ -800,31 +945,37 @@
     </section>
 
     <section id="errorState" class="error-state hide">
-      <strong>No pudimos cargar la app.</strong>
+      <strong>No pudimos cargar la APP Familiar.</strong>
       <p id="errorMessage">Intenta ingresar nuevamente desde la Biblioteca.</p>
-      <div style="margin-top:18px;">
-        ../login.htmlIr a Login</a>
-        ../biblioteca.htmlVolver a Biblioteca</a>
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <a class="btn" href="../login.html">Ir a Login</a>
+        <a class="btn-soft" href="../biblioteca.html">Volver a Biblioteca</a>
       </div>
     </section>
 
     <section id="lockedState" class="locked-state hide">
       <strong>Acceso no disponible</strong>
       <p>
-        Esta micro app forma parte del kit Pequeños Momentos con Dios.
+        Esta APP Familiar forma parte del kit Pequeños Momentos con Dios.
         Si ya realizaste la compra, inicia sesión con el mismo correo utilizado en tu acceso.
       </p>
       <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        ../login.htmlIniciar sesión</a>
+        <a class="btn" href="../login.html">Iniciar sesión</a>
         <a class="btn-gold" href="https://skoolrenovae.store/products/pequenos-momentos-con-dios" target="_blank" rel="noopener noreferrer">Comprar ahora</a>
       </div>
     </section>
 
     <section id="appContent" class="hide">
       <section class="hero">
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape one"></span>
+          <span class="shape two"></span>
+          <span class="shape three"></span>
+        </div>
+
         <div class="hero-inner">
           <div>
-            <div class="eyebrow">Micro app familiar</div>
+            <div class="eyebrow">APP Familiar</div>
 
             <h1>
               Momentos con Dios
@@ -833,12 +984,13 @@
 
             <p>
               Una experiencia breve, cálida y práctica para compartir la fe en casa con preguntas,
-              actividades simples, oración familiar y pequeños recuerdos espirituales.
+              actividades simples, oración familiar, recuerdos y pasos pequeños para crecer juntos.
             </p>
 
             <div class="hero-actions">
               <button class="btn" type="button" id="momentTodayBtn">✨ Ver momento del día</button>
-              #calendarioVer calendario</a>
+              <a class="btn-soft" href="#calendario">Ver calendario</a>
+              <button class="btn-kid" type="button" id="kidModeBtn">🎨 Modo niño</button>
             </div>
           </div>
 
@@ -846,6 +998,12 @@
             <small>Progreso familiar</small>
             <strong id="completedCount">0/14</strong>
             <span id="progressMessage">Cada pequeño momento cuenta.</span>
+
+            <div class="sticker-row">
+              <span class="sticker">🌿 Fe simple</span>
+              <span class="sticker">💛 Gratitud</span>
+              <span class="sticker">🙏 Oración</span>
+            </div>
           </aside>
         </div>
       </section>
@@ -879,6 +1037,7 @@
           <div class="nav-list">
             <button class="nav-button active" type="button" data-view="momento">Momento del día <span>🌿</span></button>
             <button class="nav-button" type="button" data-view="calendario">Calendario <span>📅</span></button>
+            <button class="nav-button" type="button" data-view="tarjetas">Tarjetas para niños <span>🎨</span></button>
             <button class="nav-button" type="button" data-view="cofre">Cofre familiar <span>💛</span></button>
             <button class="nav-button" type="button" data-view="legal">Aviso importante <span>🛡️</span></button>
           </div>
@@ -936,6 +1095,18 @@
 
             <div class="panel-body">
               <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+          </section>
+
+          <section id="viewTarjetas" class="panel hide">
+            <div class="panel-head">
+              <small>Para conversar y crear</small>
+              <h2>Tarjetas para niños</h2>
+              <p>Pequeñas frases y preguntas para usar como disparadores de conversación familiar.</p>
+            </div>
+
+            <div class="panel-body">
+              <div id="kidCards" class="cards-grid"></div>
             </div>
           </section>
 
@@ -1004,6 +1175,7 @@
     const STORAGE_FAVORITES = `${STORAGE_PREFIX}_favorites`;
     const STORAGE_MEMORIES = `${STORAGE_PREFIX}_memories`;
     const STORAGE_SELECTED_DAY = `${STORAGE_PREFIX}_selected_day`;
+    const STORAGE_KID_MODE = `${STORAGE_PREFIX}_kid_mode`;
 
     const momentos = [
       {
@@ -1210,7 +1382,7 @@
         objective: "Celebrar la fe como hábito familiar.",
         idea: "Como familia, podemos hacer espacio para Dios.",
         childPhrase: "Como familia, podemos buscar a Dios en momentos simples.",
-        adultGuide: "Celebra el proceso, aunque no haya sido perfecto. Lo valioso es crear momentos juntos.",
+        adultGuide: "Celebra el proceso aunque no haya sido perfecto. Lo valioso es crear momentos juntos.",
         question: "¿Qué momento con Dios te gustó más?",
         prayer: "Dios, gracias por nuestra familia. Ayúdanos a seguir buscándote juntos. Amén.",
         activity: "Elijan un día de la semana para tener un pequeño momento con Dios en familia.",
@@ -1229,6 +1401,33 @@
       "Rincón de oración: elijan un lugar pequeño para orar.",
       "Acto de bondad: hagan una acción amable como familia.",
       "¿Dónde vimos a Dios?: compartan gratitud, ayuda o paz."
+    ];
+
+    const kidCards = [
+      {
+        title: "Hoy agradezco por...",
+        text: "Digan una cosa pequeña o grande por la que quieran dar gracias."
+      },
+      {
+        title: "Dios me ama cuando...",
+        text: "Completen la frase con una situación de la vida diaria."
+      },
+      {
+        title: "Puedo hablar con Dios sobre...",
+        text: "Elijan una palabra, una preocupación o una alegría para orar."
+      },
+      {
+        title: "Una forma de amar hoy es...",
+        text: "Piensen en una acción amable para hacer en casa."
+      },
+      {
+        title: "Mi familia puede buscar a Dios cuando...",
+        text: "Conversen sobre un momento simple para orar juntos."
+      },
+      {
+        title: "Jesús está conmigo en...",
+        text: "Mencionen una actividad cotidiana donde quieren recordar a Jesús."
+      }
     ];
 
     if (!window.supabase) {
@@ -1254,10 +1453,12 @@
       metricFavorites: document.getElementById("metricFavorites"),
       metricMemories: document.getElementById("metricMemories"),
       momentTodayBtn: document.getElementById("momentTodayBtn"),
+      kidModeBtn: document.getElementById("kidModeBtn"),
       ageFilter: document.getElementById("ageFilter"),
       themeFilter: document.getElementById("themeFilter"),
       momentContainer: document.getElementById("momentContainer"),
       calendarGrid: document.getElementById("calendarGrid"),
+      kidCards: document.getElementById("kidCards"),
       memoryInput: document.getElementById("memoryInput"),
       saveMemoryBtn: document.getElementById("saveMemoryBtn"),
       clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"),
@@ -1269,6 +1470,7 @@
     let completed = [];
     let favorites = [];
     let memories = [];
+    let kidMode = localStorage.getItem(STORAGE_KID_MODE) === "true";
     let selectedDay = Number(localStorage.getItem(STORAGE_SELECTED_DAY)) || getSuggestedDay();
 
     init();
@@ -1304,6 +1506,7 @@
         loadLocalState();
         bindEvents();
         renderAll();
+        applyKidMode();
 
         showApp();
       } catch (error) {
@@ -1349,7 +1552,15 @@
         showToast("Momento del día preparado para tu familia.");
       });
 
+      els.kidModeBtn.addEventListener("click", () => {
+        kidMode = !kidMode;
+        localStorage.setItem(STORAGE_KID_MODE, String(kidMode));
+        applyKidMode();
+        showToast(kidMode ? "Modo niño activado." : "Modo familiar activado.");
+      });
+
       els.saveMemoryBtn.addEventListener("click", saveMemory);
+
       els.clearMemoryInputBtn.addEventListener("click", () => {
         els.memoryInput.value = "";
       });
@@ -1364,6 +1575,7 @@
       const views = {
         momento: document.getElementById("viewMomento"),
         calendario: document.getElementById("viewCalendario"),
+        tarjetas: document.getElementById("viewTarjetas"),
         cofre: document.getElementById("viewCofre"),
         legal: document.getElementById("viewLegal")
       };
@@ -1380,6 +1592,7 @@
     function renderAll() {
       renderMoment();
       renderCalendar();
+      renderKidCards();
       renderMemories();
       renderStats();
     }
@@ -1424,7 +1637,7 @@
               <p>${escapeHTML(selected.objective)}</p>
             </div>
 
-            <div class="mini-box">
+            <div class="mini-box blue">
               <small>Idea central</small>
               <p>${escapeHTML(selected.idea)}</p>
             </div>
@@ -1450,7 +1663,7 @@
             </div>
           </div>
 
-          <div class="mini-box" style="margin-top:12px;">
+          <div class="mini-box pink" style="margin-top:12px;">
             <small>Actividad simple</small>
             <p>${escapeHTML(selected.activity)}</p>
           </div>
@@ -1502,6 +1715,10 @@
           button.classList.add("done");
         }
 
+        if (favorites.includes(momento.day)) {
+          button.classList.add("favorite");
+        }
+
         if (selectedDay === momento.day) {
           button.classList.add("active");
         }
@@ -1514,6 +1731,20 @@
         });
 
         els.calendarGrid.appendChild(button);
+      });
+    }
+
+    function renderKidCards() {
+      els.kidCards.innerHTML = "";
+
+      kidCards.forEach((card) => {
+        const article = document.createElement("article");
+        article.className = "kid-card";
+        article.innerHTML = `
+          <strong>${escapeHTML(card.title)}</strong>
+          <p>${escapeHTML(card.text)}</p>
+        `;
+        els.kidCards.appendChild(article);
       });
     }
 
@@ -1637,6 +1868,26 @@
 
     function uniqueNumbers(values) {
       return [...new Set(values.map(Number))].filter(Boolean).sort((a, b) => a - b);
+    }
+
+    function applyKidMode() {
+      document.body.classList.toggle("kid-mode", kidMode);
+
+      if (els.kidModeBtn) {
+        els.kidModeBtn.textContent = kidMode ? "🌿 Modo familiar" : "🎨 Modo niño";
+      }
+
+      if (kidMode) {
+        document.documentElement.style.setProperty("--gold-soft", "#FFE8B6");
+        document.documentElement.style.setProperty("--soft-green", "#E7F7DF");
+        document.documentElement.style.setProperty("--soft-blue", "#E7F5FF");
+        document.documentElement.style.setProperty("--soft-pink", "#FFE8EA");
+      } else {
+        document.documentElement.style.setProperty("--gold-soft", "#F4E6BE");
+        document.documentElement.style.setProperty("--soft-green", "#EEF3EA");
+        document.documentElement.style.setProperty("--soft-blue", "#EAF2F5");
+        document.documentElement.style.setProperty("--soft-pink", "#F8E7E2");
+      }
     }
 
     function showLoading() {
