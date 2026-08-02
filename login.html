@@ -1,1 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Acceso | Hábitos con Dios Pro</title>
+
+<meta
+  name="description"
+  content="Accede a tu portal de Hábitos con Dios Pro mediante un enlace seguro enviado a tu correo electrónico."
+>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --green:#3F4A35;
+  --olive:#556544;
+  --gold:#C9A65A;
+  --beige:#F5F0E7;
+  --cream:#FAF7F0;
+  --ink:#1F2937;
+  --white:#FFFFFF;
+  --muted:#6B7280;
+  --line:#E8DECC;
+}
+
+*{
+  margin:0;
+  padding:0;
+  *ox-sizing:border-box;
+}
+
+body{
+  m*n-height:100vh;
+  display:flex;
+  *lign-items:center;
+  justify-conte*t:center;
+
+  background:
+    radia*-gradient(circle at top left, rgba*201,166,90,.18), transparent 34%),*    radial-gradient(circle at top *ight, rgba(85,101,68,.14), transpa*ent 28%),
+    linear-gradient(145d*g,var(--cream),var(--beige));
+
+  f*nt-family:Inter, Arial, sans-serif*
+  color:var(--ink);
+  padding:24p*;
+}
+
+.login-card{
+  width:100%;
+  *ax-width:540px;
+
+  background:rgba*255,255,255,.92);
+
+  border:1px so*id var(--line);
+
+  border-radius:3*px;
+
+  padding:40px;
+
+  text-align*center;
+
+  box-shadow:
+    0 20px *0px rgba(63,74,53,.15);
+}
+
+.logo{
+* width:72px;
+  height:72px;
+
+  bor*er-radius:50%;
+
+  background:var(-*green);
+
+  color:var(--gold);
+
+  d*splay:grid;
+  place-items:center;
+*  margin:0 auto 20px;
+
+  font-size*24px;
+  font-weight:900;
+}
+
+.badge*
+  display:inline-flex;
+
+  padding*8px 14px;
+
+  border-radius:999px;
+*  background:#F5F0E7;
+
+  color:var*--green);
+
+  font-size:12px;
+  fon*-weight:800;
+
+  margin-bottom:18px*
+}
+
+h1{
+  color:var(--green);
+
+  f*nt-size:42px;
+
+  line-height:1;
+
+ *margin-bottom:14px;
+
+  letter-spac*ng:-0.05em;
+}
+
+.description{
+  col*r:var(--muted);
+
+  line-height:1.7*
+
+  margin-bottom:28px;
+}
+
+.form-g*oup{
+  text-align:left;
+  margin-b*ttom:18px;
+}
+
+label{
+  display:block;
+
+  margin-bottom:8px;
+
+  color:var(--green);
+
+  font-size:14px;
+
+  font-weight:800;
+}
+
+input{
+  width:100%;
+
+  padding:14px 16px;
+
+  border-radius:14px;
+
+  border:1px solid var(--line);
+
+  font-size:16px;
+}
+
+input:focus{
+  outline:none;
+
+  border-color:var(--gold);
+}
+
+.btn{
+  width:100%;
+
+  border:none;
+
+  border-radius:999px;
+
+  padding:16px;
+
+  cursor:pointer;
+
+  background:var(--green);
+
+  color:white;
+
+  font-size:16px;
+
+  font-weight:900;
+}
+
+.btn:hover{
+  background:var(--olive);
+}
+
+.success{
+  display:none;
+
+  margin-top:20px;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  background:#EEF3EA;
+
+  color:var(--green);
+
+  font-weight:700;
+}
+
+.error{
+  display:none;
+
+  margin-top:20px;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  background:#FCEEEE;
+
+  color:#9F3A38;
+
+  font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <div class="logo">HD</div>
+
+  <div class="badge">
+    ✨ Acceso Seguro
+  </div>
+
+  <h1>Ingresar al Portal</h1>
+
+  <p class="description">
+    Ingresa el correo utilizado en tu compra.
+    Te enviaremos un enlace seguro para acceder a tu portal de Hábitos con Dios Pro.
+  </p>
+
+  <form id="loginForm">
+
+    <div class="form-group">
+      <label for="email">
+        Correo electrónico
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        required
+        placeholder="tu@email.com"
+      >
+    </div>
+
+    <button class="btn" type="submit">
+      Enviar enlace de acceso
+    </button>
+
+  </form>
+
+  <div class="success" id="successMessage">
+    ✅ Revisa tu correo. Te enviamos un enlace seguro para ingresar.
+  </div>
+
+  <div class="error" id="errorMessage">
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://cianhgmqhdnvwvjxtuji.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+const form =
+  document.getElementById("loginForm");
+
+const successMessage =
+  document.getElementById("successMessage");
+
+const errorMessage =
+  document.getElementById("errorMessage");
+
+form.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    errorMessage.style.display = "none";
+
+    const email =
+      document
+      .getElementById("email")
+      .value
+      .trim();
+
+    const { error } =
+      await supabaseClient.auth.signInWithOtp({
+
+        email,
+
+        options:{
+          emailRedirectTo:
+            "https://portal-habitos-con-dios-pro.vercel.app/dashboard.html"
+        }
+
+      });
+
+    if(error){
+
+      errorMessage.style.display = "block";
+
+      errorMessage.textContent =
+        error.message;
+
+      return;
+    }
+
+    successMessage.style.display = "block";
+  }
+);
+
+</script>
+
+</body>
+</html>
