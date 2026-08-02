@@ -20,7 +20,6 @@
       --olive: #556544;
       --gold: #C9A65A;
       --gold-soft: #F4E6BE;
-      --beige: #F5F0E7;
       --cream: #FAF7F0;
       --white: #FFFFFF;
       --ink: #1F2937;
@@ -59,6 +58,14 @@
         radial-gradient(circle at top right, rgba(85, 101, 68, 0.14), transparent 30%),
         radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.72), transparent 36%),
         linear-gradient(145deg, #FAF7F0, #F5F0E7);
+    }
+
+    body.kid-mode {
+      background:
+        radial-gradient(circle at top left, rgba(255, 218, 151, 0.36), transparent 34%),
+        radial-gradient(circle at top right, rgba(167, 216, 186, 0.24), transparent 30%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.85), transparent 40%),
+        linear-gradient(145deg, #FFF8EA, #F4F9EF);
     }
 
     a {
@@ -135,8 +142,7 @@
     .btn-dark,
     .btn-gold,
     .btn-danger,
-    .btn-kid,
-    .disabled-btn {
+    .btn-kid {
       border: 0;
       border-radius: 999px;
       min-height: 46px;
@@ -201,18 +207,10 @@
     }
 
     .btn-kid {
-      background: linear-gradient(135deg, #F4E6BE, #FFFFFF);
+      background: linear-gradient(135deg, #FFE8B6, #FFFFFF);
       color: var(--green);
       border: 1px solid rgba(201, 166, 90, 0.34);
       box-shadow: 0 12px 28px rgba(201, 166, 90, 0.15);
-    }
-
-    .disabled-btn {
-      background: #F1E9DC;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      cursor: not-allowed;
-      opacity: 0.92;
     }
 
     .hero {
@@ -348,9 +346,53 @@
 
     .hero-actions {
       margin-top: 26px;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    .hero-action-card {
+      min-height: 96px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--green);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(63, 74, 53, 0.08);
+      font-weight: 900;
+      text-align: left;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-action-card span {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .hero-action-card small {
+      color: var(--muted);
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .hero-action-card.primary {
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+    }
+
+    .hero-action-card.primary small {
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .family-card {
@@ -604,13 +646,20 @@
       line-height: 1.55;
     }
 
-    .moment-card {
+    .moment-card,
+    .kid-moment-card {
       border: 1px solid var(--line);
       border-radius: 28px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(250, 247, 240, 0.90));
       box-shadow: 0 14px 34px rgba(63, 74, 53, 0.10);
       padding: 22px;
+    }
+
+    .kid-moment-card {
+      background:
+        radial-gradient(circle at top right, rgba(255, 232, 182, 0.44), transparent 35%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 250, 236, 0.96));
     }
 
     .moment-top {
@@ -634,12 +683,17 @@
       letter-spacing: 0.05em;
     }
 
-    .moment-card h3 {
+    .moment-card h3,
+    .kid-moment-card h3 {
       color: var(--green);
       font-size: clamp(24px, 4vw, 38px);
       letter-spacing: -0.045em;
       line-height: 1.05;
       margin-bottom: 8px;
+    }
+
+    .kid-moment-card h3 {
+      font-size: clamp(30px, 8vw, 56px);
     }
 
     .verse {
@@ -648,7 +702,8 @@
       margin-bottom: 15px;
     }
 
-    .moment-grid {
+    .moment-grid,
+    .kid-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
@@ -696,6 +751,29 @@
       font-size: 14px;
     }
 
+    .kid-box {
+      min-height: 150px;
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
+    }
+
+    .kid-box strong {
+      color: var(--green);
+      font-size: 18px;
+    }
+
+    .kid-box p {
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
     .declaration {
       margin-top: 14px;
       border-radius: 20px;
@@ -705,6 +783,17 @@
       text-align: center;
       font-size: 18px;
       font-weight: 900;
+    }
+
+    .reward-box {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 22px;
+      background: var(--soft-gold);
+      border: 1px solid rgba(201, 166, 90, 0.28);
+      color: var(--green);
+      font-weight: 900;
+      line-height: 1.55;
     }
 
     .action-row {
@@ -862,6 +951,10 @@
       .summary-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .hero-actions {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 640px) {
@@ -909,6 +1002,7 @@
       .summary-grid,
       .filter-grid,
       .moment-grid,
+      .kid-grid,
       .cards-grid {
         grid-template-columns: 1fr;
       }
@@ -988,9 +1082,23 @@
             </p>
 
             <div class="hero-actions">
-              <button class="btn" type="button" id="momentTodayBtn">✨ Ver momento del día</button>
-              <a class="btn-soft" href="#calendario">Ver calendario</a>
-              <button class="btn-kid" type="button" id="kidModeBtn">🎨 Modo niño</button>
+              <button class="hero-action-card primary" type="button" id="momentTodayBtn">
+                <span>✨</span>
+                Comenzar momento de hoy
+                <small>Abre el devocional sugerido para compartir en familia.</small>
+              </button>
+
+              <button class="hero-action-card" type="button" id="goCalendarBtn">
+                <span>🗺️</span>
+                Explorar los 14 días
+                <small>Mira el camino completo y elige cualquier día.</small>
+              </button>
+
+              <button class="hero-action-card" type="button" id="kidModeBtn">
+                <span>🎨</span>
+                Activar modo niño
+                <small>Convierte el momento en tarjetas simples y visuales.</small>
+              </button>
             </div>
           </div>
 
@@ -1025,8 +1133,8 @@
         </article>
 
         <article class="summary-card">
-          <small>Estado</small>
-          <strong>Activo</strong>
+          <small>Recompensa</small>
+          <strong id="metricReward">🌱</strong>
         </article>
       </section>
 
@@ -1036,7 +1144,7 @@
 
           <div class="nav-list">
             <button class="nav-button active" type="button" data-view="momento">Momento del día <span>🌿</span></button>
-            <button class="nav-button" type="button" data-view="calendario">Calendario <span>📅</span></button>
+            <button class="nav-button" type="button" data-view="calendario">Camino de 14 días <span>📅</span></button>
             <button class="nav-button" type="button" data-view="tarjetas">Tarjetas para niños <span>🎨</span></button>
             <button class="nav-button" type="button" data-view="cofre">Cofre familiar <span>💛</span></button>
             <button class="nav-button" type="button" data-view="legal">Aviso importante <span>🛡️</span></button>
@@ -1088,7 +1196,7 @@
 
           <section id="viewCalendario" class="panel hide">
             <div class="panel-head">
-              <small id="calendario">Calendario familiar</small>
+              <small id="calendario">Camino familiar</small>
               <h2>14 días para acercarnos a Dios</h2>
               <p>Marca los momentos completados y vuelve a cualquiera de los días cuando quieras.</p>
             </div>
@@ -1452,7 +1560,9 @@
       metricCompleted: document.getElementById("metricCompleted"),
       metricFavorites: document.getElementById("metricFavorites"),
       metricMemories: document.getElementById("metricMemories"),
+      metricReward: document.getElementById("metricReward"),
       momentTodayBtn: document.getElementById("momentTodayBtn"),
+      goCalendarBtn: document.getElementById("goCalendarBtn"),
       kidModeBtn: document.getElementById("kidModeBtn"),
       ageFilter: document.getElementById("ageFilter"),
       themeFilter: document.getElementById("themeFilter"),
@@ -1552,10 +1662,19 @@
         showToast("Momento del día preparado para tu familia.");
       });
 
+      els.goCalendarBtn.addEventListener("click", () => {
+        setView("calendario");
+        document.getElementById("viewCalendario").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+
       els.kidModeBtn.addEventListener("click", () => {
         kidMode = !kidMode;
         localStorage.setItem(STORAGE_KID_MODE, String(kidMode));
         applyKidMode();
+        renderMoment();
         showToast(kidMode ? "Modo niño activado." : "Modo familiar activado.");
       });
 
@@ -1618,6 +1737,14 @@
         persistSelectedDay();
       }
 
+      if (kidMode) {
+        renderKidMoment(selected);
+      } else {
+        renderFamilyMoment(selected);
+      }
+    }
+
+    function renderFamilyMoment(selected) {
       const isDone = completed.includes(selected.day);
       const isFavorite = favorites.includes(selected.day);
 
@@ -1672,6 +1799,8 @@
             ${escapeHTML(selected.declaration)}
           </div>
 
+          ${renderRewardBox()}
+
           <div class="action-row">
             <button class="btn" type="button" id="completeMomentBtn">
               ${isDone ? "Marcar como pendiente" : "Marcar completado"}
@@ -1688,6 +1817,71 @@
         </article>
       `;
 
+      bindMomentButtons(selected);
+    }
+
+    function renderKidMoment(selected) {
+      const isDone = completed.includes(selected.day);
+      const isFavorite = favorites.includes(selected.day);
+
+      els.momentContainer.innerHTML = `
+        <article class="kid-moment-card">
+          <div class="moment-top">
+            <span class="moment-day">Día ${selected.day}</span>
+            <span class="moment-day">${isDone ? "Estrella ganada ⭐" : "Para hacer hoy"}</span>
+          </div>
+
+          <h3>${escapeHTML(selected.title)}</h3>
+          <div class="verse">${escapeHTML(selected.verse)}</div>
+
+          <div class="kid-grid">
+            <div class="kid-box" style="background: var(--soft-gold);">
+              <strong>💛 Recuerda</strong>
+              <p>${escapeHTML(selected.childPhrase)}</p>
+            </div>
+
+            <div class="kid-box" style="background: var(--soft-blue);">
+              <strong>🤔 Hablemos</strong>
+              <p>${escapeHTML(selected.question)}</p>
+            </div>
+
+            <div class="kid-box" style="background: var(--soft-pink);">
+              <strong>🎨 Hagamos algo</strong>
+              <p>${escapeHTML(selected.activity)}</p>
+            </div>
+
+            <div class="kid-box" style="background: var(--soft-green);">
+              <strong>🙏 Oremos</strong>
+              <p>${escapeHTML(selected.prayer)}</p>
+            </div>
+          </div>
+
+          <div class="declaration">
+            ${escapeHTML(selected.declaration)}
+          </div>
+
+          ${renderRewardBox()}
+
+          <div class="action-row">
+            <button class="btn" type="button" id="completeMomentBtn">
+              ${isDone ? "Quitar estrella" : "Gané mi estrella ⭐"}
+            </button>
+
+            <button class="btn-gold" type="button" id="favoriteMomentBtn">
+              ${isFavorite ? "Quitar favorito" : "Guardar favorito 💛"}
+            </button>
+
+            <button class="btn-soft" type="button" id="randomActivityBtn">
+              Sorpresa familiar ✨
+            </button>
+          </div>
+        </article>
+      `;
+
+      bindMomentButtons(selected);
+    }
+
+    function bindMomentButtons(selected) {
       document.getElementById("completeMomentBtn").addEventListener("click", () => {
         toggleCompleted(selected.day);
       });
@@ -1700,6 +1894,17 @@
         const activity = extraActivities[Math.floor(Math.random() * extraActivities.length)];
         showToast(activity);
       });
+    }
+
+    function renderRewardBox() {
+      const reward = getReward();
+
+      return `
+        <div class="reward-box">
+          ${reward.icon} ${escapeHTML(reward.title)}<br />
+          <span style="font-weight:700;">${escapeHTML(reward.description)}</span>
+        </div>
+      `;
     }
 
     function renderCalendar() {
@@ -1780,11 +1985,46 @@
       els.metricFavorites.textContent = favorites.length;
       els.metricMemories.textContent = memories.length;
 
+      const reward = getReward();
+      els.metricReward.textContent = reward.icon;
+
       const percentage = Math.round((completed.length / momentos.length) * 100);
 
       els.progressMessage.textContent = percentage > 0
         ? `${percentage}% del camino familiar completado.`
         : "Cada pequeño momento cuenta.";
+    }
+
+    function getReward() {
+      if (completed.length >= 14) {
+        return {
+          icon: "👑",
+          title: "Exploradores de fe",
+          description: "Completaron los 14 momentos familiares."
+        };
+      }
+
+      if (completed.length >= 7) {
+        return {
+          icon: "🌳",
+          title: "Árbol de fe creciendo",
+          description: "Ya compartieron varios momentos con Dios."
+        };
+      }
+
+      if (completed.length >= 3) {
+        return {
+          icon: "🌱",
+          title: "Semilla de fe",
+          description: "Los pequeños hábitos están comenzando a crecer."
+        };
+      }
+
+      return {
+        icon: "✨",
+        title: "Primeros pasos",
+        description: "Cada pequeño momento cuenta."
+      };
     }
 
     function toggleCompleted(day) {
@@ -1793,7 +2033,7 @@
         showToast("Momento marcado como pendiente.");
       } else {
         completed.push(day);
-        showToast("Momento completado. Qué lindo paso familiar.");
+        showToast(kidMode ? "¡Estrella de fe ganada! ⭐" : "Momento completado. Qué lindo paso familiar.");
       }
 
       saveLocalState();
@@ -1874,20 +2114,12 @@
       document.body.classList.toggle("kid-mode", kidMode);
 
       if (els.kidModeBtn) {
-        els.kidModeBtn.textContent = kidMode ? "🌿 Modo familiar" : "🎨 Modo niño";
+        els.kidModeBtn.innerHTML = kidMode
+          ? "<span>🌿</span> Modo familiar <small>Ver guía completa para adultos.</small>"
+          : "<span>🎨</span> Activar modo niño <small>Tarjetas simples y visuales para niños.</small>";
       }
 
-      if (kidMode) {
-        document.documentElement.style.setProperty("--gold-soft", "#FFE8B6");
-        document.documentElement.style.setProperty("--soft-green", "#E7F7DF");
-        document.documentElement.style.setProperty("--soft-blue", "#E7F5FF");
-        document.documentElement.style.setProperty("--soft-pink", "#FFE8EA");
-      } else {
-        document.documentElement.style.setProperty("--gold-soft", "#F4E6BE");
-        document.documentElement.style.setProperty("--soft-green", "#EEF3EA");
-        document.documentElement.style.setProperty("--soft-blue", "#EAF2F5");
-        document.documentElement.style.setProperty("--soft-pink", "#F8E7E2");
-      }
+      renderStats();
     }
 
     function showLoading() {
