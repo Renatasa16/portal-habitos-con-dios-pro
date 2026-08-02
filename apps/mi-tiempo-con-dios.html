@@ -1183,28 +1183,156 @@
       </section>
     </main>
 
-    <nav class="bottom-nav" aria-label="Navegación inferior mobile">
-      <a class="active" href="#inicio">
-        <span class="icon">🏠</span>
-        <span>Inicio</span>
+    <footer class="bottom-nav" role="navigation" aria-label="Barra de navegación inferior">
+  <ul class="bottom-nav__list">
+    <li>
+      <a href="../dashboard.html" class="bottom-nav__item" aria-label="Inicio">
+        <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+        <span class="bottom-nav__label">Inicio</span>
       </a>
-
-      #dias
-        <span class="icon">📅</span>
-        <span>Días</span>
+    </li>
+    <li>
+      <a href="../dias.html" class="bottom-nav__item" aria-label="Días">
+        <span class="bottom-nav__icon" aria-hidden="true">📅</span>
+        <span class="bottom-nav__label">Días</span>
       </a>
-
-      #diario
-        <span class="icon">✍️</span>
-        <span>Diario</span>
+    </li>
+    <li>
+      <a href="../diario.html" class="bottom-nav__item" aria-label="Diario">
+        <span class="bottom-nav__icon" aria-hidden="true">✍️</span>
+        <span class="bottom-nav__label">Diario</span>
       </a>
-
-      <button type="button" id="mobileLogoutButton">
-        <span class="icon">🚪</span>
-        <span>Salir</span>
+    </li>
+    <li>
+      <button id="btn-logout" class="bottom-nav__item bottom-nav__button" aria-label="Salir">
+        <span class="bottom-nav__icon" aria-hidden="true">🚪</span>
+        <span class="bottom-nav__label">Salir</span>
       </button>
-    </nav>
-  </div>
+    </li>
+  </ul>
+</footer>
+
+
+<style>
+  /* Barra inferior fija y segura para "safe area" (iPhone notch) */
+  .bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,247,240,0.98));
+    border-top: 1px solid var(--line, #E8DECC);
+    box-shadow: 0 -6px 18px rgba(31,41,55,0.06);
+    z-index: 1000;
+  }
+
+
+  .bottom-nav__list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8px 14px;
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    list-style: none;
+    align-items: center;
+  }
+
+
+  .bottom-nav__item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 8px;
+    min-width: 56px;
+    color: var(--ink, #1F2937);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    background: transparent;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+  }
+
+
+  .bottom-nav__item:focus-visible {
+    outline: 3px solid rgba(201,166,90,0.9);
+    outline-offset: 4px;
+  }
+
+
+  .bottom-nav__icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+
+  /* Estilo para el botón (Salir) para que se parezca a un enlace */
+  .bottom-nav__button {
+    background: transparent;
+  }
+
+
+  /* Estado activo (página actual) */
+  .bottom-nav__item[aria-current="page"] {
+    color: var(--green, #3F4A35);
+    background: rgba(63,74,53,0.06);
+  }
+
+
+  /* En pantallas pequeñas mostrar icono y etiqueta (pero ajustar tamaño) */
+  @media (max-width: 420px) {
+    .bottom-nav__label {
+      font-size: 11px;
+    }
+    .bottom-nav__icon {
+      font-size: 18px;
+    }
+  }
+</style>
+
+
+<script>
+  // Marcar el enlace activo comparando los pathname (maneja rutas relativas)
+  (function markActive() {
+    const items = document.querySelectorAll('.bottom-nav__item[href]');
+    const currentPath = window.location.pathname.replace(/\/$/, '');
+    items.forEach(el => {
+      try {
+        const itemPath = new URL(el.getAttribute('href'), location.origin).pathname.replace(/\/$/, '');
+        if (itemPath === currentPath) {
+          el.setAttribute('aria-current', 'page');
+        }
+      } catch (e) {
+        // ignore malformed URLs
+      }
+    });
+  })();
+
+
+  // Cerrar sesión: usa Supabase si está disponible, si no redirige al dashboard
+  document.getElementById('btn-logout').addEventListener('click', async () => {
+    const confirmExit = confirm('¿Deseas cerrar sesión?');
+    if (!confirmExit) return;
+
+
+    try {
+      if (window.supabase?.createClient && typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_PUBLISHABLE_KEY !== 'undefined') {
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        await client.auth.signOut();
+      }
+    } catch (err) {
+      console.error('Error al cerrar sesión con Supabase:', err);
+    } finally {
+      // Redirige al dashboard o página pública
+      window.location.href = '../dashboard.html';
+    }
+  });
+</script>
 
   <div class="toast" id="toast">Guardado</div>
 
