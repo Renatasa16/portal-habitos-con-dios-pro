@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Momentos con Dios en Familia | Hábitos con Dios Pro</title>
+
+  <meta
+    name="description"
+    content="Micro app premium Momentos con Dios en Familia, complementaria a Pequeños Momentos con Dios."
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --green: #3F4A35;
+      --green-dark: #2F3929;
+      --olive: #556544;
+      --gold: #C9A65A;
+      --gold-soft: #F4E6BE;
+      --beige: #F5F0E7;
+      --cream: #FAF7F0;
+      --white: #FFFFFF;
+      --ink: #1F2937;
+      --muted: #6B7280;
+      --line: #E8DECC;
+      --soft-green: #EEF3EA;
+      --soft-gold: #FBF1D5;
+      --danger: #9F3A38;
+      --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
+      --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
+        radial-gradient(circle at top right, rgba(85, 101, 68, 0.12), transparent 30%),
+        linear-gradient(145deg, #FAF7F0, #F5F0E7);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    .app-shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      box-shadow: var(--shadow-soft);
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    .brand-text strong {
+      display: block;
+      color: var(--green);
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill,
+    .btn,
+    .btn-soft,
+    .btn-dark,
+    .btn-gold,
+    .btn-danger {
+      border: 0;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 12px 18px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover,
+    .btn-soft:hover,
+    .btn-dark:hover,
+    .btn-gold:hover,
+    .btn-danger:hover {
+      transform: translateY(-2px);
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--green);
+      font-size: 12px;
+      box-shadow: 0 10px 24px rgba(63, 74, 53, 0.07);
+      cursor: default;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.22);
+    }
+
+    .btn-soft {
+      background: white;
+      color: var(--green);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
+    }
+
+    .btn-dark {
+      background: var(--green);
+      color: var(--gold);
+      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.20);
+    }
+
+    .btn-gold {
+      background: var(--gold-soft);
+      color: var(--green);
+      border: 1px solid rgba(201, 166, 90, 0.32);
+    }
+
+    .btn-danger {
+      background: #F7E4E1;
+      color: var(--danger);
+      border: 1px solid rgba(159, 58, 56, 0.14);
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 240, 0.93)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.21), transparent 34%);
+      border: 1px solid rgba(232, 222, 204, 0.90);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 56px);
+      margin-bottom: 22px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: -130px;
+      right: -100px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.17);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      bottom: -120px;
+      left: -80px;
+      border-radius: 50%;
+      background: rgba(85, 101, 68, 0.10);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-soft);
+      color: var(--green);
+      border: 1px solid rgba(201, 166, 90, 0.24);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      color: var(--green);
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold);
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 720px;
+      font-size: 16px;
+      line-height: 1.78;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .family-card {
+      background: linear-gradient(145deg, var(--green), var(--green-dark));
+      border-radius: 28px;
+      padding: 24px;
+      color: white;
+      box-shadow: 0 22px 48px rgba(63, 74, 53, 0.26);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .family-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .family-card strong {
+      display: block;
+      color: var(--gold);
+      font-size: 42px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .family-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0 28px;
+    }
+
+    .summary-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .summary-card small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      color: var(--green);
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .loading-state,
+    .error-state,
+    .locked-state {
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .loading-spinner {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 4px solid rgba(201, 166, 90, 0.22);
+      border-top-color: var(--green);
+      margin: 0 auto 18px;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-content {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+    }
+
+    .sidebar h2 {
+      color: var(--green);
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      margin-bottom: 13px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-button {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--green);
+      border-radius: 18px;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .nav-button.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .main-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.18), transparent 35%),
+        linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+    }
+
+    .panel-head small {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .panel-head h2 {
+      color: var(--gold);
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 9px;
+    }
+
+    .panel-head p {
+      color: rgba(255, 255, 255, 0.80);
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .panel-body {
+      padding: 22px;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 7px;
+    }
+
+    .field select,
+    .field textarea,
+    .field input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 18px;
+      color: var(--ink);
+      padding: 13px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .moment-card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 247, 240, 0.88));
+      box-shadow: 0 14px 34px rgba(63, 74, 53, 0.10);
+      padding: 22px;
+    }
+
+    .moment-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .moment-day {
+      display: inline-flex;
+      background: var(--soft-green);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .moment-card h3 {
+      color: var(--green);
+      font-size: clamp(24px, 4vw, 38px);
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+
+    .verse {
+      color: var(--gold);
+      font-weight: 950;
+      margin-bottom: 15px;
+    }
+
+    .moment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .mini-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-box.gold {
+      background: var(--soft-gold);
+    }
+
+    .mini-box.green {
+      background: var(--soft-green);
+    }
+
+    .mini-box small {
+      display: block;
+      color: var(--green);
+      font-weight: 950;
+      margin-bottom: 7px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mini-box p {
+      color: var(--ink);
+      line-height: 1.58;
+      font-size: 14px;
+    }
+
+    .declaration {
+      margin-top: 14px;
+      border-radius: 20px;
+      background: var(--green);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .action-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .day-chip {
+      min-height: 52px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--green);
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .day-chip.done {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .day-chip.active {
+      background: var(--gold-soft);
+      color: var(--green);
+      border-color: rgba(201, 166, 90, 0.5);
+    }
+
+    .memory-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .memory-item {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .notice {
+      margin-top: 14px;
+      border-radius: 22px;
+      border: 1px solid rgba(201, 166, 90, 0.35);
+      background: rgba(244, 230, 190, 0.35);
+      color: #514221;
+      padding: 16px;
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      max-width: min(92vw, 540px);
+      background: var(--green);
+      color: white;
+      border-radius: 999px;
+      padding: 13px 18px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 850;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.error {
+      background: var(--danger);
+    }
+
+    .footer {
+      margin-top: 38px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .footer strong {
+      color: var(--green);
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    @media (max-width: 960px) {
+      .hero-inner,
+      .app-content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        padding: 18px 14px 36px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .top-actions .pill,
+      .top-actions .btn-soft,
+      .top-actions .btn-danger {
+        flex: 1 1 auto;
+      }
+
+      .hero {
+        padding: 26px;
+        border-radius: 28px;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+
+      .hero-actions,
+      .action-row {
+        flex-direction: column;
+      }
+
+      .hero-actions a,
+      .hero-actions button,
+      .action-row button,
+      .action-row a {
+        width: 100%;
+      }
+
+      .summary-grid,
+      .filter-grid,
+      .moment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      ../biblioteca.html
+        <div class="brand-mark">✦</div>
+        <div class="brand-text">
+          <strong>Hábitos con Dios Pro</strong>
+          <span>Momentos con Dios en Familia</span>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <span class="pill" id="userPill">Verificando acceso...</span>
+        ../biblioteca.htmlBiblioteca</a>
+        <button class="btn-danger" type="button" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section id="loadingState" class="loading-state">
+      <div class="loading-spinner"></div>
+      <strong>Preparando la experiencia familiar...</strong>
+      <p>Estamos verificando tu sesión y el acceso a Pequeños Momentos con Dios.</p>
+    </section>
+
+    <section id="errorState" class="error-state hide">
+      <strong>No pudimos cargar la app.</strong>
+      <p id="errorMessage">Intenta ingresar nuevamente desde la Biblioteca.</p>
+      <div style="margin-top:18px;">
+        ../login.htmlIr a Login</a>
+        ../biblioteca.htmlVolver a Biblioteca</a>
+      </div>
+    </section>
+
+    <section id="lockedState" class="locked-state hide">
+      <strong>Acceso no disponible</strong>
+      <p>
+        Esta micro app forma parte del kit Pequeños Momentos con Dios.
+        Si ya realizaste la compra, inicia sesión con el mismo correo utilizado en tu acceso.
+      </p>
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        ../login.htmlIniciar sesión</a>
+        <a class="btn-gold" href="https://skoolrenovae.store/products/pequenos-momentos-con-dios" target="_blank" rel="noopener noreferrer">Comprar ahora</a>
+      </div>
+    </section>
+
+    <section id="appContent" class="hide">
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Micro app familiar</div>
+
+            <h1>
+              Momentos con Dios
+              <span>en Familia</span>
+            </h1>
+
+            <p>
+              Una experiencia breve, cálida y práctica para compartir la fe en casa con preguntas,
+              actividades simples, oración familiar y pequeños recuerdos espirituales.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn" type="button" id="momentTodayBtn">✨ Ver momento del día</button>
+              #calendarioVer calendario</a>
+            </div>
+          </div>
+
+          <aside class="family-card">
+            <small>Progreso familiar</small>
+            <strong id="completedCount">0/14</strong>
+            <span id="progressMessage">Cada pequeño momento cuenta.</span>
+          </aside>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Resumen familiar">
+        <article class="summary-card">
+          <small>Completados</small>
+          <strong id="metricCompleted">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Favoritos</small>
+          <strong id="metricFavorites">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Recuerdos</small>
+          <strong id="metricMemories">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Estado</small>
+          <strong>Activo</strong>
+        </article>
+      </section>
+
+      <section class="app-content">
+        <aside class="sidebar">
+          <h2>Navegación</h2>
+
+          <div class="nav-list">
+            <button class="nav-button active" type="button" data-view="momento">Momento del día <span>🌿</span></button>
+            <button class="nav-button" type="button" data-view="calendario">Calendario <span>📅</span></button>
+            <button class="nav-button" type="button" data-view="cofre">Cofre familiar <span>💛</span></button>
+            <button class="nav-button" type="button" data-view="legal">Aviso importante <span>🛡️</span></button>
+          </div>
+
+          <div class="notice">
+            Elige un momento tranquilo de 5 a 10 minutos. Escucha con calma, adapta cada actividad a la edad del niño y evita usar este recurso como obligación o castigo.
+          </div>
+        </aside>
+
+        <div class="main-panel">
+          <section id="viewMomento" class="panel">
+            <div class="panel-head">
+              <small>Momento guiado</small>
+              <h2>Momento del día</h2>
+              <p>Filtra por edad o tema, o avanza por los 14 días de la experiencia familiar.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="filter-grid">
+                <div class="field">
+                  <label for="ageFilter">Edad sugerida</label>
+                  <select id="ageFilter">
+                    <option value="todas">Todas las edades</option>
+                    <option value="3-5">3 a 5 años</option>
+                    <option value="6-8">6 a 8 años</option>
+                    <option value="9-12">9 a 12 años</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="themeFilter">Tema</label>
+                  <select id="themeFilter">
+                    <option value="todos">Todos los temas</option>
+                    <option value="amor">Amor de Dios</option>
+                    <option value="oracion">Oración</option>
+                    <option value="confianza">Confianza</option>
+                    <option value="gratitud">Gratitud</option>
+                    <option value="bondad">Bondad</option>
+                    <option value="perdon">Perdón</option>
+                    <option value="familia">Familia</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="momentContainer"></div>
+            </div>
+          </section>
+
+          <section id="viewCalendario" class="panel hide">
+            <div class="panel-head">
+              <small id="calendario">Calendario familiar</small>
+              <h2>14 días para acercarnos a Dios</h2>
+              <p>Marca los momentos completados y vuelve a cualquiera de los días cuando quieras.</p>
+            </div>
+
+            <div class="panel-body">
+              <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+          </section>
+
+          <section id="viewCofre" class="panel hide">
+            <div class="panel-head">
+              <small>Recuerdos de fe</small>
+              <h2>Cofre familiar</h2>
+              <p>Guarda frases, gratitudes, oraciones o pequeños recuerdos de lo vivido en familia.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="field">
+                <label for="memoryInput">Nuevo recuerdo</label>
+                <textarea id="memoryInput" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea>
+              </div>
+
+              <div class="action-row">
+                <button class="btn" type="button" id="saveMemoryBtn">Guardar recuerdo</button>
+                <button class="btn-soft" type="button" id="clearMemoryInputBtn">Limpiar</button>
+              </div>
+
+              <div id="memoryList" class="memory-list"></div>
+            </div>
+          </section>
+
+          <section id="viewLegal" class="panel hide">
+            <div class="panel-head">
+              <small>Aviso ético</small>
+              <h2>Acompañamiento devocional</h2>
+              <p>Este recurso fue creado para acompañar momentos de fe en casa con responsabilidad.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="notice">
+                Este recurso es de acompañamiento devocional familiar. No reemplaza acompañamiento pastoral,
+                psicológico, médico, educativo o profesional. En situaciones de crisis emocional, salud mental,
+                violencia, abuso, miedo intenso o necesidades especiales, se recomienda buscar ayuda profesional
+                o pastoral adecuada. El contenido debe ser utilizado bajo guía y supervisión de un adulto responsable.
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <strong>Hábitos con Dios Pro</strong><br />
+      Momentos pequeños, recuerdos de fe para toda la vida.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
+    const REQUIRED_PERMISSION = "access_familias";
+    const REQUIRED_SKU = "HCD_FAMILIAS_BUNDLE";
+    const SHOPIFY_URL = "https://skoolrenovae.store/products/pequenos-momentos-con-dios";
+
+    const STORAGE_PREFIX = "hcd_momentos_familia";
+    const STORAGE_COMPLETED = `${STORAGE_PREFIX}_completed`;
+    const STORAGE_FAVORITES = `${STORAGE_PREFIX}_favorites`;
+    const STORAGE_MEMORIES = `${STORAGE_PREFIX}_memories`;
+    const STORAGE_SELECTED_DAY = `${STORAGE_PREFIX}_selected_day`;
+
+    const momentos = [
+      {
+        day: 1,
+        title: "Dios me ama",
+        verse: "1 Juan 4:19",
+        age: "3-5",
+        theme: "amor",
+        objective: "Recordar que Dios ama a cada niño con ternura.",
+        idea: "Dios nos ama primero.",
+        childPhrase: "Dios te ama siempre. Puedes acercarte a Él con confianza.",
+        adultGuide: "Explícale que el amor de Dios no depende de hacerlo todo perfecto. Dios lo ama porque es Su creación.",
+        question: "¿Cómo te sientes al saber que Dios te ama?",
+        prayer: "Dios, gracias porque me amas. Ayúdame a recordar Tu amor cada día. Amén.",
+        activity: "Dibujen un corazón grande y escriban o digan: Dios me ama.",
+        declaration: "Dios me ama."
+      },
+      {
+        day: 2,
+        title: "Puedo hablar con Dios",
+        verse: "Jeremías 29:12",
+        age: "3-5",
+        theme: "oracion",
+        objective: "Descubrir que orar puede ser simple.",
+        idea: "Dios escucha cuando oramos.",
+        childPhrase: "Puedes hablar con Dios como hablas con alguien que te ama.",
+        adultGuide: "Explícale que orar es hablar con Dios con palabras sencillas, como con alguien que nos ama.",
+        question: "¿Qué te gustaría decirle hoy a Dios?",
+        prayer: "Dios, hoy quiero hablar contigo. Gracias por escucharme. Amén.",
+        activity: "Hagan una oración de una sola frase.",
+        declaration: "Puedo hablar con Dios."
+      },
+      {
+        day: 3,
+        title: "Jesús quiere acompañarme",
+        verse: "Juan 15:4",
+        age: "3-5",
+        theme: "confianza",
+        objective: "Presentar a Jesús como compañía cercana.",
+        idea: "Jesús quiere estar cerca de nosotros.",
+        childPhrase: "Jesús quiere acompañarte en tu día.",
+        adultGuide: "Explica que Jesús quiere estar presente en la vida diaria, no solo en momentos especiales.",
+        question: "¿En qué momento de hoy te gustaría recordar a Jesús?",
+        prayer: "Jesús, acompáñame hoy. Ayúdame a recordar que estás cerca. Amén.",
+        activity: "Elijan una actividad del día y digan: Jesús, acompáñanos en esto.",
+        declaration: "Jesús está conmigo."
+      },
+      {
+        day: 4,
+        title: "Dios escucha mi oración",
+        verse: "Salmo 116:1",
+        age: "6-8",
+        theme: "oracion",
+        objective: "Fortalecer la confianza en que Dios escucha.",
+        idea: "Dios presta atención a nuestras oraciones.",
+        childPhrase: "Dios escucha tu oración con amor.",
+        adultGuide: "Aclara que Dios escucha con amor, aunque la respuesta no llegue de inmediato o como esperamos.",
+        question: "¿Qué oración quieres hacer hoy?",
+        prayer: "Dios, gracias porque escuchas mi voz. Amén.",
+        activity: "Escriban o dibujen una oración en una tarjeta.",
+        declaration: "Dios escucha mi oración."
+      },
+      {
+        day: 5,
+        title: "Puedo confiar en Dios cuando tengo miedo",
+        verse: "Salmo 56:3",
+        age: "6-8",
+        theme: "confianza",
+        objective: "Llevar los miedos a Dios de forma segura.",
+        idea: "Cuando sentimos miedo, podemos confiar en Dios.",
+        childPhrase: "Cuando tienes miedo, puedes hablar con Dios y pedirle paz.",
+        adultGuide: "No minimices el miedo. Ayuda al niño a nombrarlo y a pedir paz a Dios.",
+        question: "¿Qué haces cuando tienes miedo?",
+        prayer: "Dios, cuando tengo miedo, ayúdame a recordar que estás conmigo. Amén.",
+        activity: "Dibujen una nube con un miedo y un sol que diga: Dios está conmigo.",
+        declaration: "Puedo confiar en Dios."
+      },
+      {
+        day: 6,
+        title: "El Espíritu Santo me ayuda",
+        verse: "Juan 14:26",
+        age: "6-8",
+        theme: "bondad",
+        objective: "Comprender que el Espíritu Santo ayuda y guía.",
+        idea: "El Espíritu Santo nos ayuda a recordar y hacer lo bueno.",
+        childPhrase: "El Espíritu Santo nos ayuda a hacer lo bueno.",
+        adultGuide: "Usa lenguaje simple: el Espíritu Santo nos ayuda a amar, obedecer y elegir lo bueno.",
+        question: "¿Qué cosa buena puedes hacer hoy?",
+        prayer: "Espíritu Santo, ayúdame a hacer lo bueno con amor. Amén.",
+        activity: "Elijan una acción amable para hacer hoy.",
+        declaration: "El Espíritu Santo me ayuda."
+      },
+      {
+        day: 7,
+        title: "Puedo agradecer cada día",
+        verse: "1 Tesalonicenses 5:18",
+        age: "3-5",
+        theme: "gratitud",
+        objective: "Practicar gratitud en familia.",
+        idea: "Podemos dar gracias a Dios en lo cotidiano.",
+        childPhrase: "Cada día podemos encontrar algo para agradecer.",
+        adultGuide: "Ayuda al niño a encontrar cosas simples por las cuales agradecer.",
+        question: "¿Por qué quieres darle gracias a Dios hoy?",
+        prayer: "Dios, gracias por las cosas buenas de este día. Amén.",
+        activity: "Dibujen tres cosas por las que están agradecidos.",
+        declaration: "Puedo agradecer cada día."
+      },
+      {
+        day: 8,
+        title: "Dios me ayuda a hacer lo bueno",
+        verse: "Gálatas 6:9",
+        age: "6-8",
+        theme: "bondad",
+        objective: "Vivir la bondad como respuesta al amor de Dios.",
+        idea: "Dios nos ayuda a hacer el bien.",
+        childPhrase: "Dios puede ayudarte a elegir lo bueno.",
+        adultGuide: "Habla de hacer lo bueno como una respuesta al amor de Dios, no como presión.",
+        question: "¿Qué cosa buena puedes hacer por alguien hoy?",
+        prayer: "Dios, ayúdame a elegir lo bueno hoy. Amén.",
+        activity: "Hagan juntos una acción amable.",
+        declaration: "Dios me ayuda a hacer lo bueno."
+      },
+      {
+        day: 9,
+        title: "Puedo pedir perdón",
+        verse: "1 Juan 1:9",
+        age: "9-12",
+        theme: "perdon",
+        objective: "Aprender a pedir perdón sin miedo.",
+        idea: "Podemos pedir perdón y recibir ayuda para cambiar.",
+        childPhrase: "Cuando nos equivocamos, podemos pedir perdón y volver a intentarlo.",
+        adultGuide: "Presenta el perdón como oportunidad para volver a hacer las cosas con amor.",
+        question: "¿Por qué es importante pedir perdón?",
+        prayer: "Dios, ayúdame a pedir perdón cuando me equivoco. Amén.",
+        activity: "Practiquen decir: Lo siento. ¿Me perdonas?",
+        declaration: "Puedo pedir perdón."
+      },
+      {
+        day: 10,
+        title: "Puedo perdonar con ayuda de Dios",
+        verse: "Efesios 4:32",
+        age: "9-12",
+        theme: "perdon",
+        objective: "Introducir el perdón de forma segura y sencilla.",
+        idea: "Dios nos enseña a perdonar con amor.",
+        childPhrase: "Dios puede ayudarnos a perdonar y a cuidar nuestro corazón.",
+        adultGuide: "Aclara que perdonar no significa permitir daño. Podemos pedir ayuda si algo nos duele.",
+        question: "¿Es difícil perdonar a veces?",
+        prayer: "Dios, ayúdame a perdonar con Tu amor. Amén.",
+        activity: "Dibujen un corazón y hablen de cómo Dios puede ayudar a sanarlo.",
+        declaration: "Puedo perdonar con ayuda de Dios."
+      },
+      {
+        day: 11,
+        title: "Dios me hizo con amor",
+        verse: "Salmo 139:14",
+        age: "6-8",
+        theme: "amor",
+        objective: "Fortalecer identidad en el amor de Dios.",
+        idea: "Dios nos creó con amor y propósito.",
+        childPhrase: "Dios te hizo con amor. Eres valioso para Él.",
+        adultGuide: "Evita comparaciones. Enfatiza que cada niño es valioso para Dios.",
+        question: "¿Qué cosa especial crees que Dios puso en ti?",
+        prayer: "Dios, gracias porque me hiciste con amor. Amén.",
+        activity: "Dibujen un autorretrato y escriban: Dios me hizo con amor.",
+        declaration: "Dios me hizo con amor."
+      },
+      {
+        day: 12,
+        title: "Puedo compartir amor con otros",
+        verse: "Juan 13:34",
+        age: "9-12",
+        theme: "bondad",
+        objective: "Practicar amor con acciones pequeñas.",
+        idea: "Jesús nos enseña a amar a otros.",
+        childPhrase: "Podemos mostrar el amor de Dios con acciones pequeñas.",
+        adultGuide: "Invita al niño a pensar en actos simples de amor: ayudar, escuchar, compartir o animar.",
+        question: "¿Cómo puedes mostrar amor hoy?",
+        prayer: "Jesús, ayúdame a compartir amor con otros. Amén.",
+        activity: "Hagan una tarjeta de ánimo para alguien.",
+        declaration: "Puedo compartir amor."
+      },
+      {
+        day: 13,
+        title: "La Biblia me enseña",
+        verse: "Salmo 119:105",
+        age: "9-12",
+        theme: "familia",
+        objective: "Presentar la Biblia como guía para conocer a Dios.",
+        idea: "La Palabra de Dios nos ayuda a caminar.",
+        childPhrase: "La Biblia nos ayuda a conocer más a Dios.",
+        adultGuide: "Explica que la Biblia nos enseña quién es Dios y cómo vivir con amor.",
+        question: "¿Qué historia bíblica te gusta?",
+        prayer: "Dios, ayúdame a aprender de Tu Palabra. Amén.",
+        activity: "Lean una historia bíblica corta y dibujen una parte.",
+        declaration: "La Biblia me enseña."
+      },
+      {
+        day: 14,
+        title: "Mi familia puede buscar a Dios junta",
+        verse: "Josué 24:15",
+        age: "todas",
+        theme: "familia",
+        objective: "Celebrar la fe como hábito familiar.",
+        idea: "Como familia, podemos hacer espacio para Dios.",
+        childPhrase: "Como familia, podemos buscar a Dios en momentos simples.",
+        adultGuide: "Celebra el proceso, aunque no haya sido perfecto. Lo valioso es crear momentos juntos.",
+        question: "¿Qué momento con Dios te gustó más?",
+        prayer: "Dios, gracias por nuestra familia. Ayúdanos a seguir buscándote juntos. Amén.",
+        activity: "Elijan un día de la semana para tener un pequeño momento con Dios en familia.",
+        declaration: "Mi familia puede buscar a Dios."
+      }
+    ];
+
+    const extraActivities = [
+      "Caja de gratitud: agreguen papelitos con motivos para agradecer.",
+      "Oración antes de dormir: una frase sencilla cada noche.",
+      "Versículo de la semana: repitan una referencia o idea bíblica.",
+      "Tarjeta de ánimo: preparen una palabra bonita para alguien.",
+      "Dibujo de bendiciones: dibujen tres cosas buenas.",
+      "Canción infantil: escuchen y conversen sobre una frase.",
+      "Momento de perdón: practiquen lo siento y te perdono.",
+      "Rincón de oración: elijan un lugar pequeño para orar.",
+      "Acto de bondad: hagan una acción amable como familia.",
+      "¿Dónde vimos a Dios?: compartan gratitud, ayuda o paz."
+    ];
+
+    if (!window.supabase) {
+      throw new Error("Supabase client was not loaded.");
+    }
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    const els = {
+      userPill: document.getElementById("userPill"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      loadingState: document.getElementById("loadingState"),
+      errorState: document.getElementById("errorState"),
+      lockedState: document.getElementById("lockedState"),
+      errorMessage: document.getElementById("errorMessage"),
+      appContent: document.getElementById("appContent"),
+      completedCount: document.getElementById("completedCount"),
+      progressMessage: document.getElementById("progressMessage"),
+      metricCompleted: document.getElementById("metricCompleted"),
+      metricFavorites: document.getElementById("metricFavorites"),
+      metricMemories: document.getElementById("metricMemories"),
+      momentTodayBtn: document.getElementById("momentTodayBtn"),
+      ageFilter: document.getElementById("ageFilter"),
+      themeFilter: document.getElementById("themeFilter"),
+      momentContainer: document.getElementById("momentContainer"),
+      calendarGrid: document.getElementById("calendarGrid"),
+      memoryInput: document.getElementById("memoryInput"),
+      saveMemoryBtn: document.getElementById("saveMemoryBtn"),
+      clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"),
+      memoryList: document.getElementById("memoryList"),
+      toast: document.getElementById("toast")
+    };
+
+    let currentUser = null;
+    let completed = [];
+    let favorites = [];
+    let memories = [];
+    let selectedDay = Number(localStorage.getItem(STORAGE_SELECTED_DAY)) || getSuggestedDay();
+
+    init();
+
+    async function init() {
+      try {
+        showLoading();
+
+        const { data: sessionData, error: sessionError } =
+          await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+          throw sessionError;
+        }
+
+        const session = sessionData && sessionData.session;
+
+        if (!session || !session.user) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        currentUser = session.user;
+        els.userPill.textContent = currentUser.email || "Sesión activa";
+
+        const hasAccess = await validateAccess();
+
+        if (!hasAccess) {
+          showLocked();
+          return;
+        }
+
+        loadLocalState();
+        bindEvents();
+        renderAll();
+
+        showApp();
+      } catch (error) {
+        console.error(error);
+        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde la Biblioteca.");
+      }
+    }
+
+    async function validateAccess() {
+      const { data, error } = await supabaseClient
+        .from("entitlements")
+        .select("permission_key, source_sku, active")
+        .eq("active", true);
+
+      if (error) {
+        throw error;
+      }
+
+      return (data || []).some((item) => {
+        return (
+          item.permission_key === REQUIRED_PERMISSION &&
+          item.source_sku === REQUIRED_SKU &&
+          item.active === true
+        ) || item.permission_key === "membership_all_access";
+      });
+    }
+
+    function bindEvents() {
+      document.querySelectorAll("[data-view]").forEach((button) => {
+        button.addEventListener("click", () => {
+          setView(button.dataset.view);
+        });
+      });
+
+      els.ageFilter.addEventListener("change", renderMoment);
+      els.themeFilter.addEventListener("change", renderMoment);
+
+      els.momentTodayBtn.addEventListener("click", () => {
+        selectedDay = getSuggestedDay();
+        persistSelectedDay();
+        setView("momento");
+        renderAll();
+        showToast("Momento del día preparado para tu familia.");
+      });
+
+      els.saveMemoryBtn.addEventListener("click", saveMemory);
+      els.clearMemoryInputBtn.addEventListener("click", () => {
+        els.memoryInput.value = "";
+      });
+
+      els.logoutBtn.addEventListener("click", async () => {
+        await supabaseClient.auth.signOut();
+        window.location.href = "../login.html";
+      });
+    }
+
+    function setView(viewName) {
+      const views = {
+        momento: document.getElementById("viewMomento"),
+        calendario: document.getElementById("viewCalendario"),
+        cofre: document.getElementById("viewCofre"),
+        legal: document.getElementById("viewLegal")
+      };
+
+      Object.entries(views).forEach(([key, el]) => {
+        el.classList.toggle("hide", key !== viewName);
+      });
+
+      document.querySelectorAll("[data-view]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.view === viewName);
+      });
+    }
+
+    function renderAll() {
+      renderMoment();
+      renderCalendar();
+      renderMemories();
+      renderStats();
+    }
+
+    function renderMoment() {
+      const age = els.ageFilter.value;
+      const theme = els.themeFilter.value;
+
+      let filtered = momentos.filter((momento) => {
+        const ageMatches = age === "todas" || momento.age === age || momento.age === "todas";
+        const themeMatches = theme === "todos" || momento.theme === theme;
+        return ageMatches && themeMatches;
+      });
+
+      if (!filtered.length) {
+        filtered = momentos;
+      }
+
+      const selected = filtered.find((item) => item.day === selectedDay) || filtered[0];
+
+      if (selected) {
+        selectedDay = selected.day;
+        persistSelectedDay();
+      }
+
+      const isDone = completed.includes(selected.day);
+      const isFavorite = favorites.includes(selected.day);
+
+      els.momentContainer.innerHTML = `
+        <article class="moment-card">
+          <div class="moment-top">
+            <span class="moment-day">Día ${selected.day}</span>
+            <span class="moment-day">${isDone ? "Completado" : "Pendiente"}</span>
+          </div>
+
+          <h3>${escapeHTML(selected.title)}</h3>
+          <div class="verse">${escapeHTML(selected.verse)}</div>
+
+          <div class="moment-grid">
+            <div class="mini-box green">
+              <small>Objetivo</small>
+              <p>${escapeHTML(selected.objective)}</p>
+            </div>
+
+            <div class="mini-box">
+              <small>Idea central</small>
+              <p>${escapeHTML(selected.idea)}</p>
+            </div>
+
+            <div class="mini-box">
+              <small>Frase para el niño</small>
+              <p>${escapeHTML(selected.childPhrase)}</p>
+            </div>
+
+            <div class="mini-box green">
+              <small>Para el adulto</small>
+              <p>${escapeHTML(selected.adultGuide)}</p>
+            </div>
+
+            <div class="mini-box gold">
+              <small>Pregunta para conversar</small>
+              <p>${escapeHTML(selected.question)}</p>
+            </div>
+
+            <div class="mini-box gold">
+              <small>Oración familiar</small>
+              <p>${escapeHTML(selected.prayer)}</p>
+            </div>
+          </div>
+
+          <div class="mini-box" style="margin-top:12px;">
+            <small>Actividad simple</small>
+            <p>${escapeHTML(selected.activity)}</p>
+          </div>
+
+          <div class="declaration">
+            ${escapeHTML(selected.declaration)}
+          </div>
+
+          <div class="action-row">
+            <button class="btn" type="button" id="completeMomentBtn">
+              ${isDone ? "Marcar como pendiente" : "Marcar completado"}
+            </button>
+
+            <button class="btn-gold" type="button" id="favoriteMomentBtn">
+              ${isFavorite ? "Quitar de favoritos" : "Guardar favorito"}
+            </button>
+
+            <button class="btn-soft" type="button" id="randomActivityBtn">
+              Actividad extra
+            </button>
+          </div>
+        </article>
+      `;
+
+      document.getElementById("completeMomentBtn").addEventListener("click", () => {
+        toggleCompleted(selected.day);
+      });
+
+      document.getElementById("favoriteMomentBtn").addEventListener("click", () => {
+        toggleFavorite(selected.day);
+      });
+
+      document.getElementById("randomActivityBtn").addEventListener("click", () => {
+        const activity = extraActivities[Math.floor(Math.random() * extraActivities.length)];
+        showToast(activity);
+      });
+    }
+
+    function renderCalendar() {
+      els.calendarGrid.innerHTML = "";
+
+      momentos.forEach((momento) => {
+        const button = document.createElement("button");
+        button.className = "day-chip";
+        button.type = "button";
+        button.textContent = momento.day;
+
+        if (completed.includes(momento.day)) {
+          button.classList.add("done");
+        }
+
+        if (selectedDay === momento.day) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", () => {
+          selectedDay = momento.day;
+          persistSelectedDay();
+          setView("momento");
+          renderAll();
+        });
+
+        els.calendarGrid.appendChild(button);
+      });
+    }
+
+    function renderMemories() {
+      els.memoryList.innerHTML = "";
+
+      if (!memories.length) {
+        els.memoryList.innerHTML = `
+          <div class="memory-item">
+            Todavía no guardaste recuerdos familiares. Puedes escribir una oración, una gratitud o una frase especial.
+          </div>
+        `;
+        return;
+      }
+
+      memories
+        .slice()
+        .reverse()
+        .forEach((memory) => {
+          const div = document.createElement("div");
+          div.className = "memory-item";
+          div.innerHTML = `
+            <strong>${escapeHTML(memory.date)}</strong><br />
+            ${escapeHTML(memory.text)}
+          `;
+          els.memoryList.appendChild(div);
+        });
+    }
+
+    function renderStats() {
+      els.completedCount.textContent = `${completed.length}/14`;
+      els.metricCompleted.textContent = completed.length;
+      els.metricFavorites.textContent = favorites.length;
+      els.metricMemories.textContent = memories.length;
+
+      const percentage = Math.round((completed.length / momentos.length) * 100);
+
+      els.progressMessage.textContent = percentage > 0
+        ? `${percentage}% del camino familiar completado.`
+        : "Cada pequeño momento cuenta.";
+    }
+
+    function toggleCompleted(day) {
+      if (completed.includes(day)) {
+        completed = completed.filter((item) => item !== day);
+        showToast("Momento marcado como pendiente.");
+      } else {
+        completed.push(day);
+        showToast("Momento completado. Qué lindo paso familiar.");
+      }
+
+      saveLocalState();
+      renderAll();
+    }
+
+    function toggleFavorite(day) {
+      if (favorites.includes(day)) {
+        favorites = favorites.filter((item) => item !== day);
+        showToast("Momento quitado de favoritos.");
+      } else {
+        favorites.push(day);
+        showToast("Momento guardado como favorito.");
+      }
+
+      saveLocalState();
+      renderAll();
+    }
+
+    function saveMemory() {
+      const text = els.memoryInput.value.trim();
+
+      if (!text) {
+        showToast("Escribe un pequeño recuerdo antes de guardar.", true);
+        return;
+      }
+
+      memories.push({
+        text,
+        date: new Date().toLocaleDateString("es-AR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        })
+      });
+
+      els.memoryInput.value = "";
+      saveLocalState();
+      renderAll();
+      showToast("Recuerdo familiar guardado.");
+    }
+
+    function getSuggestedDay() {
+      const day = new Date().getDate();
+      return ((day - 1) % 14) + 1;
+    }
+
+    function persistSelectedDay() {
+      localStorage.setItem(STORAGE_SELECTED_DAY, String(selectedDay));
+    }
+
+    function loadLocalState() {
+      completed = readStorageArray(STORAGE_COMPLETED);
+      favorites = readStorageArray(STORAGE_FAVORITES);
+      memories = readStorageArray(STORAGE_MEMORIES);
+    }
+
+    function saveLocalState() {
+      localStorage.setItem(STORAGE_COMPLETED, JSON.stringify(uniqueNumbers(completed)));
+      localStorage.setItem(STORAGE_FAVORITES, JSON.stringify(uniqueNumbers(favorites)));
+      localStorage.setItem(STORAGE_MEMORIES, JSON.stringify(memories));
+    }
+
+    function readStorageArray(key) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function uniqueNumbers(values) {
+      return [...new Set(values.map(Number))].filter(Boolean).sort((a, b) => a - b);
+    }
+
+    function showLoading() {
+      els.loadingState.classList.remove("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.add("hide");
+    }
+
+    function showApp() {
+      els.loadingState.classList.add("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.remove("hide");
+    }
+
+    function showLocked() {
+      els.loadingState.classList.add("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.remove("hide");
+      els.appContent.classList.add("hide");
+    }
+
+    function showError(message) {
+      els.loadingState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.add("hide");
+      els.errorState.classList.remove("hide");
+      els.errorMessage.textContent = message;
+    }
+
+    function showToast(message, isError = false) {
+      els.toast.textContent = message;
+      els.toast.classList.toggle("error", isError);
+      els.toast.classList.add("show");
+
+      window.clearTimeout(showToast.timer);
+
+      showToast.timer = window.setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 3600);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
