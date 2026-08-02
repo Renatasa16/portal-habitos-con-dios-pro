@@ -13,6 +13,8 @@
 
   <meta name="theme-color" content="#3F4A35" />
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --green: #3F4A35;
@@ -24,8 +26,15 @@
       --white: #FFFFFF;
       --muted: #6B7280;
       --line: #E8DECC;
-      --shadow: 0 18px 45px rgba(63, 74, 53, 0.14);
-      --radius-xl: 28px;
+      --soft-green: #EEF3EA;
+      --soft-gold: #F7EAC7;
+      --soft-red: #FCEEEE;
+      --red: #9F3A38;
+      --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
+      --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.10);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
     }
 
     * {
@@ -39,13 +48,14 @@
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(201, 166, 90, 0.18), transparent 34%),
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.20), transparent 34%),
+        radial-gradient(circle at 90% 0%, rgba(85, 101, 68, 0.14), transparent 28%),
         linear-gradient(145deg, var(--cream), var(--beige));
       color: var(--ink);
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     a {
@@ -53,204 +63,1333 @@
       text-decoration: none;
     }
 
-    a:focus-visible {
-      outline: 3px solid rgba(201, 166, 90, 0.9);
-      outline-offset: 4px;
+    button,
+    input,
+    textarea {
+      font: inherit;
     }
 
-    .container {
-      max-width: 900px;
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 20px;
     }
 
-    .card {
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(250, 247, 240, 0.92);
+      border-bottom: 1px solid rgba(232, 222, 204, 0.85);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: fit-content;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+      flex: 0 0 auto;
+    }
+
+    .brand-text small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--olive);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .brand-text strong {
+      display: block;
+      color: var(--green);
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--olive);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .nav-link,
+    .logout-btn {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover,
+    .logout-btn:hover {
       background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .logout-btn {
+      border: 1px solid rgba(159, 58, 56, 0.18);
+      color: var(--red);
+    }
+
+    .mobile-nav {
+      display: none;
+      padding: 12px 0 16px;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .mobile-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mobile-nav-grid a,
+    .mobile-nav-grid button {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--green);
+      border-radius: 14px;
+      padding: 12px 10px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .loading-screen,
+    .locked-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+    }
+
+    .status-card {
+      width: min(620px, 100%);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       padding: 34px;
       box-shadow: var(--shadow);
+      text-align: center;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 16px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(201, 166, 90, 0.16);
+    .status-card h1 {
       color: var(--green);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
     }
 
-    h1 {
-      color: var(--green);
-      font-size: clamp(34px, 6vw, 52px);
-      line-height: 1.05;
-      margin-bottom: 22px;
-      letter-spacing: -0.04em;
-    }
-
-    p {
-      color: var(--ink);
-      font-size: 18px;
-      line-height: 1.55;
-      margin-bottom: 18px;
-      max-width: 720px;
-    }
-
-    .note {
-      margin-top: 8px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: #FAF7F0;
-      border: 1px solid var(--line);
+    .status-card p {
       color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
+      line-height: 1.7;
+      font-size: 16px;
+      margin-bottom: 22px;
     }
 
-    .button {
+    .btn {
+      border: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 24px;
-      padding: 14px 22px;
       border-radius: 999px;
-      text-decoration: none;
+      padding: 14px 22px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      line-height: 1.2;
+      text-align: center;
+      min-height: 46px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
       background: var(--green);
       color: var(--white);
+      box-shadow: 0 14px 28px rgba(63, 74, 53, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--green);
+      border: 1px solid var(--line);
+    }
+
+    .app {
+      padding-bottom: 60px;
+    }
+
+    .hero {
+      padding: 46px 0 26px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .progress-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(232, 222, 204, 0.96);
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.14);
+      right: -86px;
+      top: -88px;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--olive);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.18);
+      flex: 0 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+      color: var(--green);
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .user-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: var(--soft-green);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .progress-card {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      background:
+        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.24), transparent 34%);
+      color: var(--white);
+    }
+
+    .progress-card h2 {
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: var(--white);
+    }
+
+    .progress-card p {
+      color: #EDE5D6;
+      line-height: 1.65;
+    }
+
+    .progress-metric {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--gold);
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      color: #EFE7D8;
       font-weight: 800;
-      font-size: 15px;
-      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.22);
+      font-size: 13px;
+    }
+
+    .progress-bar-wrap {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), #F2D487);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .sidebar,
+    .day-panel,
+    .journal-panel {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(232, 222, 204, 0.96);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .sidebar h2,
+    .day-panel h2,
+    .journal-panel h2 {
+      color: var(--green);
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      margin-bottom: 14px;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .day-button {
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--green);
+      border-radius: 14px;
+      padding: 12px 8px;
+      font-weight: 900;
       transition: 0.2s ease;
     }
 
-    .button:hover {
-      background: var(--olive);
+    .day-button:hover {
       transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
     }
 
-    .button:active {
-      transform: translateY(0);
+    .day-button.active {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+
+    .day-button.completed {
+      background: var(--soft-green);
+      border-color: rgba(63, 74, 53, 0.18);
+    }
+
+    .day-button.favorite {
+      box-shadow: inset 0 0 0 2px rgba(201, 166, 90, 0.65);
+    }
+
+    .content-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .day-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .day-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--soft-gold);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .favorite-btn {
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+    }
+
+    .favorite-btn.active {
+      background: var(--soft-gold);
+      border-color: rgba(201, 166, 90, 0.55);
+    }
+
+    .reflection {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .verse {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      color: var(--olive);
+      line-height: 1.65;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+    }
+
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--green);
+      font-weight: 900;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      line-height: 1.55;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: rgba(201, 166, 90, 0.88);
+      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.14);
+    }
+
+    .actions-row {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .note {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--green);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      z-index: 80;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      .journal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .day-grid {
+        grid-template-columns: repeat(7, 1fr);
+      }
     }
 
     @media (max-width: 640px) {
-      .container {
-        padding: 24px 16px;
+      .topbar-inner {
+        padding: 14px 0;
       }
 
-      .card {
-        padding: 28px 24px;
-        border-radius: 24px;
+      .brand-mark {
+        width: 42px;
+        height: 42px;
       }
 
-      p {
+      .brand-text strong {
         font-size: 16px;
       }
 
-      .button {
+      .hero {
+        padding: 28px 0 18px;
+      }
+
+      .hero-card,
+      .progress-card,
+      .sidebar,
+      .day-panel,
+      .journal-panel,
+      .status-card {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .hero h1 {
+        font-size: 44px;
+      }
+
+      .progress-metric {
+        grid-template-columns: 1fr;
+      }
+
+      .day-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .day-top {
+        display: block;
+      }
+
+      .favorite-btn {
+        margin-top: 10px;
         width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <section class="card" aria-labelledby="app-title">
-      <span class="eyebrow">App Devocional</span>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="status-card">
+      <h1>Preparando tu espacio</h1>
+      <p>Estamos validando tu sesión y tu acceso a Mi Tiempo con Dios.</p>
+    </div>
+  </div>
 
-      <h1 id="app-title">Mi Tiempo con Dios</h1>
-
+  <div id="lockedScreen" class="locked-screen hidden">
+    <div class="status-card">
+      <h1>Acceso no disponible</h1>
       <p>
-        Bienvenida a tu espacio personal de crecimiento espiritual.
+        Este recurso forma parte del bundle 21 Días Más Cerca de Dios. Para acceder, necesitas tener una compra activa asociada a este correo.
       </p>
+      <a class="btn btn-primary" href="../dashboard.html">
+        Volver al Dashboard
+      </a>
+    </div>
+  </div>
 
-      <p>
-        Aquí podrás registrar reflexiones, oraciones y avances de tu recorrido devocional.
-      </p>
+  <div id="appShell" class="app hidden">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../dashboard.html" aria-label="Volver al Dashboard">
+          <div class="brand-mark" aria-hidden="true">HD</div>
+          <div class="brand-text">
+            <small>App Devocional</small>
+            <strong>Mi Tiempo con Dios</strong>
+          </div>
+        </a>
 
-      <p>
-        Versión inicial de la micro aplicación.
-      </p>
-
-      <div class="note">
-        Esta app forma parte de la experiencia inicial de 21 Días Más Cerca de Dios. Nuevas funciones podrán sumarse en próximas etapas del portal.
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a class="nav-link" href="../dashboard.html">Dashboard</a>
+          ../biblioteca.htmlBiblioteca</a>
+          #hoyMi día</a>
+          <button class="logout-btn" type="button" id="logoutButton">Cerrar sesión</button>
+        </nav>
       </div>
 
-      <a class="button" href="../dashboard.html" aria-label="Volver al Dashboard de Hábitos con Dios Pro">
-        ← Volver al Dashboard
-      </a>
-    </section>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <div class="mobile-nav">
+        <div class="mobile-nav-grid">
+          <a href="../dashboard.html">Dashboard</a>
+          ../biblioteca.htmlBiblioteca</a>
+          #hoyMi día</a>
+          <button type="button" id="mobileLogoutButton">Cerrar sesión</button>
+        </div>
+      </div>
+    </header>
 
-<script>
-  const SUPABASE_URL =
-    "https://cianhgmqhdnvwvjxtuji.supabase.co";
+    <main class="page-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <div class="hero-card">
+          <div class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            Acceso activo
+          </div>
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+          <h1 id="app-title">
+            Mi Tiempo
+            <span>con Dios</span>
+          </h1>
 
-  async function validateSession() {
-    try {
+          <p>
+            Un espacio simple y cálido para acompañar tu recorrido de 21 días con reflexión, oración, gratitud, práctica y registro personal.
+          </p>
 
-      if (!window.supabase?.createClient) {
-        console.error("Supabase no se cargó.");
-        return;
+          <div class="user-row">
+            <span class="pill" id="userPill">Usuario autenticado</span>
+            <span class="pill">Bundle 21 Días</span>
+          </div>
+        </div>
+
+        <aside class="progress-card" aria-label="Resumen de progreso">
+          <h2>Tu recorrido</h2>
+          <p>
+            Pequeños pasos sostenidos pueden ayudarte a crear una rutina espiritual más posible.
+          </p>
+
+          <div class="progress-metric">
+            <div class="metric">
+              <strong id="completedDays">0</strong>
+              <span>Días completados</span>
+            </div>
+
+            <div class="metric">
+              <strong id="streakDays">0</strong>
+              <span>Racha actual</span>
+            </div>
+          </div>
+
+          <div class="progress-bar-wrap" aria-label="Progreso de 21 días">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="layout" id="hoy">
+        <aside class="sidebar">
+          <h2>Días</h2>
+          <div class="day-grid" id="dayGrid"></div>
+        </aside>
+
+        <div class="content-stack">
+          <section class="day-panel" aria-labelledby="dayTitle">
+            <div class="day-top">
+              <div>
+                <span class="day-label" id="dayLabel">Día 1</span>
+                <h2 id="dayTitle">Comenzar con un paso sencillo</h2>
+              </div>
+
+              <button class="favorite-btn" type="button" id="favoriteButton">
+                ☆ Guardar favorito
+              </button>
+            </div>
+
+            <p class="reflection" id="reflectionText"></p>
+
+            <div class="verse" id="verseText"></div>
+
+            <h2>Checklist devocional</h2>
+
+            <div class="checklist">
+              <label class="check-item">
+                <input type="checkbox" data-check="leer">
+                <span>Leí la reflexión del día</span>
+              </label>
+
+              <label class="check-item">
+                <input type="checkbox" data-check="orar">
+                <span>Tuve un momento de oración</span>
+              </label>
+
+              <label class="check-item">
+                <input type="checkbox" data-check="escribir">
+                <span>Escribí una oración o gratitud</span>
+              </label>
+
+              <label class="check-item">
+                <input type="checkbox" data-check="practicar">
+                <span>Elegí una práctica simple para hoy</span>
+              </label>
+            </div>
+
+            <div class="actions-row">
+              <button class="btn btn-primary" type="button" id="completeDayButton">
+                Marcar día como completado
+              </button>
+
+              <button class="btn btn-secondary" type="button" id="nextDayButton">
+                Siguiente día
+              </button>
+            </div>
+          </section>
+
+          <section class="journal-panel" aria-labelledby="journalTitle">
+            <h2 id="journalTitle">Diario del día</h2>
+
+            <div class="journal-grid">
+              <div class="field">
+                <label for="prayerInput">Oración</label>
+                <textarea id="prayerInput" placeholder="Escribe una oración breve para este día..."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="gratitudeInput">Gratitud</label>
+                <textarea id="gratitudeInput" placeholder="Hoy agradezco por..."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="notesInput">Notas personales</label>
+                <textarea id="notesInput" placeholder="Algo que quiero recordar de este día..."></textarea>
+              </div>
+            </div>
+
+            <div class="actions-row">
+              <button class="btn btn-primary" type="button" id="saveJournalButton">
+                Guardar diario
+              </button>
+            </div>
+
+            <div class="note">
+              Este recurso es de acompañamiento devocional. No reemplaza ayuda profesional, atención médica, apoyo psicológico, consejería pastoral responsable ni ayuda de emergencia cuando corresponda.
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">Guardado</div>
+
+  <script>
+    const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
+    const REQUIRED_PERMISSION_KEY = "access_21dias";
+    const REQUIRED_SOURCE_SKU = "HCD_21DIAS_BUNDLE";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const devotionals = [
+      {
+        day: 1,
+        title: "Comenzar con un paso sencillo",
+        reflection: "Hoy no necesitas resolver todo. Puedes comenzar con un momento breve, honesto y posible delante de Dios.",
+        verse: "Un pequeño paso sostenido puede convertirse en una nueva rutina de fe."
+      },
+      {
+        day: 2,
+        title: "Volver al lugar de calma",
+        reflection: "Dios puede encontrarte en una pausa pequeña. No necesitas un escenario perfecto para acercarte.",
+        verse: "Busca un momento simple para respirar, orar y volver al centro."
+      },
+      {
+        day: 3,
+        title: "Crear espacio en medio de la rutina",
+        reflection: "A veces la vida se llena de ruido. Hoy puedes apartar unos minutos para escuchar, escribir y descansar.",
+        verse: "Un corazón disponible puede encontrarse con Dios en lo cotidiano."
+      },
+      {
+        day: 4,
+        title: "Orar con palabras simples",
+        reflection: "La oración no necesita ser extensa. Puede comenzar con una frase sincera y un corazón presente.",
+        verse: "Habla con Dios desde donde estás, no desde donde crees que deberías estar."
+      },
+      {
+        day: 5,
+        title: "Reconocer lo recibido",
+        reflection: "La gratitud abre la mirada. Hoy observa un detalle pequeño por el que puedas dar gracias.",
+        verse: "La gratitud puede transformar la forma en que atraviesas el día."
+      },
+      {
+        day: 6,
+        title: "Sostener el hábito con ternura",
+        reflection: "No se trata de hacerlo perfecto. Se trata de volver con paciencia cada vez que puedas.",
+        verse: "La constancia también se construye con comienzos pequeños."
+      },
+      {
+        day: 7,
+        title: "Mirar la semana con honestidad",
+        reflection: "Hoy puedes revisar tu semana sin juicio. Mira lo que avanzaste y lo que deseas entregar a Dios.",
+        verse: "La reflexión honesta puede convertirse en dirección."
+      },
+      {
+        day: 8,
+        title: "Elegir una práctica posible",
+        reflection: "Una práctica simple puede ayudarte a permanecer. Elige algo concreto para vivir hoy con fe.",
+        verse: "La fe también se expresa en acciones pequeñas."
+      },
+      {
+        day: 9,
+        title: "Cuidar lo que escuchas",
+        reflection: "Las palabras que recibes influyen en tu interior. Hoy busca una palabra que afirme tu esperanza.",
+        verse: "Permite que una verdad buena acompañe tu día."
+      },
+      {
+        day: 10,
+        title: "Pausar antes de responder",
+        reflection: "Una pausa puede abrir espacio para responder con más paz y menos impulso.",
+        verse: "La sabiduría puede comenzar con un silencio breve."
+      },
+      {
+        day: 11,
+        title: "Entregar cargas pequeñas",
+        reflection: "No todas las cargas se sueltan de golpe. Hoy puedes entregar una preocupación concreta.",
+        verse: "Lo que entregas con honestidad también puede ser parte de tu oración."
+      },
+      {
+        day: 12,
+        title: "Volver a la esperanza",
+        reflection: "La esperanza no niega la realidad. La atraviesa con una mirada acompañada por Dios.",
+        verse: "Hoy puedes sostener una pequeña esperanza."
+      },
+      {
+        day: 13,
+        title: "Escribir para ordenar el corazón",
+        reflection: "Escribir puede ayudarte a ver con más claridad lo que llevas dentro.",
+        verse: "Un pensamiento escrito puede convertirse en una oración."
+      },
+      {
+        day: 14,
+        title: "Celebrar lo pequeño",
+        reflection: "Lo pequeño también cuenta. Un día leído, una oración breve, una gratitud sincera son avances reales.",
+        verse: "Celebra el paso que sí pudiste dar."
+      },
+      {
+        day: 15,
+        title: "Perseverar sin exigencia",
+        reflection: "La perseverancia no necesita dureza. Puede nacer de una decisión amable de seguir.",
+        verse: "Volver también es parte del camino."
+      },
+      {
+        day: 16,
+        title: "Hacer espacio para escuchar",
+        reflection: "Hoy puedes leer menos rápido y escuchar con más atención lo que se mueve en tu interior.",
+        verse: "La quietud puede abrir una respuesta."
+      },
+      {
+        day: 17,
+        title: "Practicar la confianza",
+        reflection: "Confiar puede ser dar el siguiente paso sin tener todo resuelto.",
+        verse: "Un paso en confianza también es una forma de oración."
+      },
+      {
+        day: 18,
+        title: "Agradecer en medio del proceso",
+        reflection: "La gratitud no espera a que todo esté perfecto. Puede aparecer en medio del camino.",
+        verse: "Encuentra una señal de cuidado en este día."
+      },
+      {
+        day: 19,
+        title: "Reconocer tu crecimiento",
+        reflection: "Mira con calma cuánto has avanzado desde el primer día. El progreso puede ser más silencioso de lo que imaginas.",
+        verse: "El crecimiento también ocurre en lo invisible."
+      },
+      {
+        day: 20,
+        title: "Preparar continuidad",
+        reflection: "Este recorrido puede convertirse en una forma de vida. Piensa qué hábito deseas sostener después.",
+        verse: "Lo que se practica con amor puede permanecer."
+      },
+      {
+        day: 21,
+        title: "Cerrar para continuar",
+        reflection: "Este final no es una despedida. Es una invitación a seguir caminando con Dios un día a la vez.",
+        verse: "Un hábito espiritual se renueva cada día con un sí pequeño."
       }
+    ];
 
-      const supabaseClient =
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_PUBLISHABLE_KEY
-        );
+    let currentUser = null;
+    let currentDay = 1;
+    let storageKey = "";
+    let state = {};
 
-      const {
-        data: { user },
-        error
-      } = await supabaseClient.auth.getUser();
+    const loadingScreen = document.getElementById("loadingScreen");
+    const lockedScreen = document.getElementById("lockedScreen");
+    const appShell = document.getElementById("appShell");
 
-      console.log("USER:", user);
-      console.log("ERROR:", error);
+    const userPill = document.getElementById("userPill");
+    const dayGrid = document.getElementById("dayGrid");
+    const dayLabel = document.getElementById("dayLabel");
+    const dayTitle = document.getElementById("dayTitle");
+    const reflectionText = document.getElementById("reflectionText");
+    const verseText = document.getElementById("verseText");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const completeDayButton = document.getElementById("completeDayButton");
+    const nextDayButton = document.getElementById("nextDayButton");
+    const saveJournalButton = document.getElementById("saveJournalButton");
 
-      if (error || !user) {
+    const prayerInput = document.getElementById("prayerInput");
+    const gratitudeInput = document.getElementById("gratitudeInput");
+    const notesInput = document.getElementById("notesInput");
 
-        alert(
-          "Debes iniciar sesión para acceder a Mi Tiempo con Dios."
-        );
+    const completedDays = document.getElementById("completedDays");
+    const streakDays = document.getElementById("streakDays");
+    const progressBar = document.getElementById("progressBar");
+    const toast = document.getElementById("toast");
 
-        window.location.href =
-          "../dashboard.html";
+    function getFriendlyNameFromEmail(email) {
+      if (!email || typeof email !== "string") return "Usuario";
 
-        return;
-      }
+      const firstPart = email.split("@")[0] || "";
+      const firstName = firstPart.split(/[._-]/).filter(Boolean)[0];
 
-      console.log(
-        "Usuario autenticado:",
-        user.email
-      );
+      if (!firstName) return email;
 
-    } catch (err) {
-
-      console.error(
-        "Error validando sesión:",
-        err
-      );
-
-      window.location.href =
-        "../dashboard.html";
+      return firstName.charAt(0).toUpperCase() + firstName.slice(1);
     }
-  }
 
-  window.addEventListener(
-    "load",
-    validateSession
-  );
-</script>
+    function getDefaultEntry() {
+      return {
+        checks: {
+          leer: false,
+          orar: false,
+          escribir: false,
+          practicar: false
+        },
+        prayer: "",
+        gratitude: "",
+        notes: "",
+        favorite: false,
+        completed: false
+      };
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(storageKey);
+
+      if (saved) {
+        try {
+          state = JSON.parse(saved);
+        } catch {
+          state = {};
+        }
+      }
+
+      devotionals.forEach((item) => {
+        if (!state[item.day]) {
+          state[item.day] = getDefaultEntry();
+        }
+      });
+
+      const savedDay = Number(localStorage.getItem(storageKey + "_currentDay"));
+
+      if (savedDay >= 1 && savedDay <= 21) {
+        currentDay = savedDay;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      localStorage.setItem(storageKey + "_currentDay", String(currentDay));
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function getCompletedCount() {
+      return Object.values(state).filter((entry) => entry.completed).length;
+    }
+
+    function getStreakCount() {
+      let streak = 0;
+
+      for (let day = 1; day <= 21; day++) {
+        if (state[day]?.completed) {
+          streak++;
+        } else {
+          break;
+        }
+      }
+
+      return streak;
+    }
+
+    function renderProgress() {
+      const completed = getCompletedCount();
+      const streak = getStreakCount();
+      const percentage = Math.round((completed / 21) * 100);
+
+      completedDays.textContent = completed;
+      streakDays.textContent = streak;
+      progressBar.style.width = percentage + "%";
+    }
+
+    function renderDayGrid() {
+      dayGrid.innerHTML = "";
+
+      devotionals.forEach((item) => {
+        const entry = state[item.day] || getDefaultEntry();
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "day-button";
+        button.textContent = item.day;
+
+        if (item.day === currentDay) {
+          button.classList.add("active");
+        }
+
+        if (entry.completed) {
+          button.classList.add("completed");
+        }
+
+        if (entry.favorite) {
+          button.classList.add("favorite");
+        }
+
+        button.addEventListener("click", () => {
+          currentDay = item.day;
+          saveState();
+          renderApp();
+        });
+
+        dayGrid.appendChild(button);
+      });
+    }
+
+    function renderCurrentDay() {
+      const devotional = devotionals.find((item) => item.day === currentDay);
+      const entry = state[currentDay] || getDefaultEntry();
+
+      dayLabel.textContent = "Día " + devotional.day;
+      dayTitle.textContent = devotional.title;
+      reflectionText.textContent = devotional.reflection;
+      verseText.textContent = devotional.verse;
+
+      favoriteButton.textContent = entry.favorite
+        ? "★ Favorito guardado"
+        : "☆ Guardar favorito";
+
+      favoriteButton.classList.toggle("active", Boolean(entry.favorite));
+
+      document.querySelectorAll("[data-check]").forEach((checkbox) => {
+        const key = checkbox.getAttribute("data-check");
+        checkbox.checked = Boolean(entry.checks[key]);
+      });
+
+      prayerInput.value = entry.prayer || "";
+      gratitudeInput.value = entry.gratitude || "";
+      notesInput.value = entry.notes || "";
+    }
+
+    function renderApp() {
+      renderDayGrid();
+      renderCurrentDay();
+      renderProgress();
+    }
+
+    function syncCurrentEntryFromFields() {
+      const entry = state[currentDay] || getDefaultEntry();
+
+      document.querySelectorAll("[data-check]").forEach((checkbox) => {
+        const key = checkbox.getAttribute("data-check");
+        entry.checks[key] = checkbox.checked;
+      });
+
+      entry.prayer = prayerInput.value.trim();
+      entry.gratitude = gratitudeInput.value.trim();
+      entry.notes = notesInput.value.trim();
+
+      state[currentDay] = entry;
+    }
+
+    async function validateAccess() {
+      try {
+        const {
+          data: { user },
+          error
+        } = await supabaseClient.auth.getUser();
+
+        if (error || !user) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        currentUser = user;
+
+        const { data, error: entitlementError } = await supabaseClient
+          .from("entitlements")
+          .select("id,email,permission_key,source_sku,active")
+          .eq("email", user.email)
+          .eq("permission_key", REQUIRED_PERMISSION_KEY)
+          .eq("source_sku", REQUIRED_SOURCE_SKU)
+          .eq("active", true)
+          .limit(1);
+
+        if (entitlementError) {
+          console.error("Error consultando entitlements:", entitlementError);
+          loadingScreen.classList.add("hidden");
+          lockedScreen.classList.remove("hidden");
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          loadingScreen.classList.add("hidden");
+          lockedScreen.classList.remove("hidden");
+          return;
+        }
+
+        const friendlyName = getFriendlyNameFromEmail(user.email);
+
+        userPill.textContent = "Bienvenida, " + friendlyName;
+
+        storageKey = "hcd_mi_tiempo_con_dios_" + user.email;
+
+        loadState();
+        renderApp();
+
+        loadingScreen.classList.add("hidden");
+        appShell.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error validando acceso:", error);
+        loadingScreen.classList.add("hidden");
+        lockedScreen.classList.remove("hidden");
+      }
+    }
+
+    function bindEvents() {
+      document.querySelectorAll("[data-check]").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          syncCurrentEntryFromFields();
+          saveState();
+          renderProgress();
+        });
+      });
+
+      favoriteButton.addEventListener("click", () => {
+        const entry = state[currentDay] || getDefaultEntry();
+        entry.favorite = !entry.favorite;
+        state[currentDay] = entry;
+        saveState();
+        renderApp();
+        showToast(entry.favorite ? "Guardado como favorito" : "Favorito quitado");
+      });
+
+      saveJournalButton.addEventListener("click", () => {
+        syncCurrentEntryFromFields();
+        saveState();
+        showToast("Diario guardado");
+      });
+
+      completeDayButton.addEventListener("click", () => {
+        syncCurrentEntryFromFields();
+        state[currentDay].completed = true;
+        saveState();
+        renderApp();
+        showToast("Día completado");
+      });
+
+      nextDayButton.addEventListener("click", () => {
+        syncCurrentEntryFromFields();
+        saveState();
+
+        if (currentDay < 21) {
+          currentDay++;
+          saveState();
+          renderApp();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          showToast("Llegaste al día 21");
+        }
+      });
+
+      const logoutButtons = [
+        document.getElementById("logoutButton"),
+        document.getElementById("mobileLogoutButton")
+      ];
+
+      logoutButtons.forEach((button) => {
+        if (!button) return;
+
+        button.addEventListener("click", async () => {
+          await supabaseClient.auth.signOut();
+          window.location.href = "../login.html";
+        });
+      });
+    }
+
+    window.addEventListener("load", () => {
+      bindEvents();
+      validateAccess();
+    });
+  </script>
 </body>
 </html>
