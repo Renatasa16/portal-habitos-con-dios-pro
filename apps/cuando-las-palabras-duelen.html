@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Diario de Paz Digital | Hábitos con Dios Pro</title>
+
+  <meta
+    name="description"
+    content="APP Premium Diario de Paz Digital, complementaria a Cuando las Palabras Duelen."
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --green: #3F4A35;
+      --green-dark: #2F3929;
+      --olive: #556544;
+      --gold: #C9A65A;
+      --gold-soft: #F4E6BE;
+      --cream: #FAF7F0;
+      --white: #FFFFFF;
+      --ink: #1F2937;
+      --muted: #6B7280;
+      --line: #E8DECC;
+      --soft-green: #EEF3EA;
+      --soft-gold: #FBF1D5;
+      --soft-blue: #EAF2F5;
+      --soft-pink: #F8E7E2;
+      --soft-red: #F9E8E6;
+      --danger: #9F3A38;
+      --success: #3F6B3C;
+      --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
+      --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.24), transparent 34%),
+        radial-gradient(circle at top right, rgba(85, 101, 68, 0.13), transparent 30%),
+        radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.72), transparent 36%),
+        linear-gradient(145deg, #FAF7F0, #F5F0E7);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    .app-shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      box-shadow: var(--shadow-soft);
+      font-size: 23px;
+      flex: 0 0 auto;
+    }
+
+    .brand-text strong {
+      display: block;
+      color: var(--green);
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill,
+    .btn,
+    .btn-soft,
+    .btn-dark,
+    .btn-gold,
+    .btn-danger,
+    .btn-calm {
+      border: 0;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 12px 18px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover,
+    .btn-soft:hover,
+    .btn-dark:hover,
+    .btn-gold:hover,
+    .btn-danger:hover,
+    .btn-calm:hover {
+      transform: translateY(-2px);
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--green);
+      font-size: 12px;
+      box-shadow: 0 10px 24px rgba(63, 74, 53, 0.07);
+      cursor: default;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.22);
+    }
+
+    .btn-soft {
+      background: white;
+      color: var(--green);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
+    }
+
+    .btn-dark {
+      background: var(--green);
+      color: var(--gold);
+      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.20);
+    }
+
+    .btn-gold {
+      background: var(--gold-soft);
+      color: var(--green);
+      border: 1px solid rgba(201, 166, 90, 0.32);
+    }
+
+    .btn-danger {
+      background: #F7E4E1;
+      color: var(--danger);
+      border: 1px solid rgba(159, 58, 56, 0.14);
+    }
+
+    .btn-calm {
+      background: linear-gradient(135deg, #EAF2F5, #FFFFFF);
+      color: var(--green);
+      border: 1px solid rgba(85, 101, 68, 0.13);
+      box-shadow: 0 12px 28px rgba(63, 74, 53, 0.08);
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(250, 247, 240, 0.94)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.22), transparent 34%);
+      border: 1px solid rgba(232, 222, 204, 0.90);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 56px);
+      margin-bottom: 22px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 310px;
+      top: -132px;
+      right: -105px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.17);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      bottom: -120px;
+      left: -80px;
+      border-radius: 50%;
+      background: rgba(85, 101, 68, 0.10);
+    }
+
+    .floating-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 999px;
+      opacity: 0.55;
+      animation: floaty 8s ease-in-out infinite;
+    }
+
+    .shape.one {
+      width: 42px;
+      height: 42px;
+      background: var(--soft-gold);
+      left: 6%;
+      top: 16%;
+    }
+
+    .shape.two {
+      width: 28px;
+      height: 28px;
+      background: var(--soft-green);
+      right: 21%;
+      bottom: 20%;
+      animation-delay: 1.5s;
+    }
+
+    .shape.three {
+      width: 34px;
+      height: 34px;
+      background: var(--soft-blue);
+      right: 11%;
+      top: 18%;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes floaty {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-soft);
+      color: var(--green);
+      border: 1px solid rgba(201, 166, 90, 0.24);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      color: var(--green);
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold);
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 720px;
+      font-size: 16px;
+      line-height: 1.78;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .hero-action-card {
+      min-height: 104px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--green);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(63, 74, 53, 0.08);
+      font-weight: 900;
+      text-align: left;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-action-card span {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .hero-action-card small {
+      color: var(--muted);
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .hero-action-card.primary {
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+    }
+
+    .hero-action-card.primary small {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .peace-card {
+      background: linear-gradient(145deg, var(--green), var(--green-dark));
+      border-radius: 28px;
+      padding: 24px;
+      color: white;
+      box-shadow: 0 22px 48px rgba(63, 74, 53, 0.26);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .peace-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .peace-card strong {
+      display: block;
+      color: var(--gold);
+      font-size: 42px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .peace-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .sticker-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .sticker {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 850;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0 28px;
+    }
+
+    .summary-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .summary-card small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      color: var(--green);
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .loading-state,
+    .error-state,
+    .locked-state {
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .loading-spinner {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 4px solid rgba(201, 166, 90, 0.22);
+      border-top-color: var(--green);
+      margin: 0 auto 18px;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-content {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      background: rgba(255, 255, 255, 0.91);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+    }
+
+    .sidebar h2 {
+      color: var(--green);
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      margin-bottom: 13px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-button {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--green);
+      border-radius: 18px;
+      padding: 13px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateX(2px);
+    }
+
+    .nav-button.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .main-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.18), transparent 35%),
+        linear-gradient(135deg, var(--green), var(--olive));
+      color: white;
+    }
+
+    .panel-head small {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .panel-head h2 {
+      color: var(--gold);
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 9px;
+    }
+
+    .panel-head p {
+      color: rgba(255, 255, 255, 0.80);
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .panel-body {
+      padding: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 7px;
+    }
+
+    .field select,
+    .field textarea,
+    .field input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 18px;
+      color: var(--ink);
+      padding: 13px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 112px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      accent-color: var(--green);
+    }
+
+    .value-badge {
+      min-width: 46px;
+      text-align: center;
+      color: var(--green);
+      background: var(--soft-green);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 950;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .check-card {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 20px;
+      padding: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    .check-card input {
+      margin-top: 3px;
+    }
+
+    .action-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .entry-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .entry-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 10px 28px rgba(63, 74, 53, 0.08);
+    }
+
+    .entry-card strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .entry-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .prayer-grid,
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .prayer-card,
+    .resource-card {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(63, 74, 53, 0.08);
+    }
+
+    .prayer-card strong,
+    .resource-card strong {
+      color: var(--green);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .prayer-card p,
+    .resource-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .safe-alert {
+      border-radius: 24px;
+      border: 1px solid rgba(159, 58, 56, 0.20);
+      background: var(--soft-red);
+      color: #5E2320;
+      padding: 18px;
+      line-height: 1.65;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .notice {
+      margin-top: 14px;
+      border-radius: 22px;
+      border: 1px solid rgba(201, 166, 90, 0.35);
+      background: rgba(244, 230, 190, 0.35);
+      color: #514221;
+      padding: 16px;
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      max-width: min(92vw, 540px);
+      background: var(--green);
+      color: white;
+      border-radius: 999px;
+      padding: 13px 18px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 850;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.error {
+      background: var(--danger);
+    }
+
+    .footer {
+      margin-top: 38px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .footer strong {
+      color: var(--green);
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    @media (max-width: 960px) {
+      .hero-inner,
+      .app-content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        padding: 18px 14px 36px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .top-actions .pill,
+      .top-actions .btn-soft,
+      .top-actions .btn-danger {
+        flex: 1 1 auto;
+      }
+
+      .hero {
+        padding: 26px;
+        border-radius: 28px;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+
+      .summary-grid,
+      .form-grid,
+      .check-grid,
+      .prayer-grid,
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .action-row {
+        flex-direction: column;
+      }
+
+      .action-row button,
+      .action-row a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="../biblioteca.html" aria-label="Volver a Biblioteca">
+        <div class="brand-mark">✦</div>
+        <div class="brand-text">
+          <strong>Hábitos con Dios Pro</strong>
+          <span>Diario de Paz Digital</span>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <span class="pill" id="userPill">Verificando acceso...</span>
+        <a class="btn-soft" href="../biblioteca.html">Biblioteca</a>
+        <button class="btn-danger" type="button" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section id="loadingState" class="loading-state">
+      <div class="loading-spinner"></div>
+      <strong>Preparando tu Diario de Paz Digital...</strong>
+      <p>Estamos verificando tu sesión y el acceso a Cuando las Palabras Duelen.</p>
+    </section>
+
+    <section id="errorState" class="error-state hide">
+      <strong>No pudimos cargar la app.</strong>
+      <p id="errorMessage">Intenta ingresar nuevamente desde la Biblioteca.</p>
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <a class="btn" href="../login.html">Ir a Login</a>
+        <a class="btn-soft" href="../biblioteca.html">Volver a Biblioteca</a>
+      </div>
+    </section>
+
+    <section id="lockedState" class="locked-state hide">
+      <strong>Acceso no disponible</strong>
+      <p>
+        Esta app forma parte del kit Cuando las Palabras Duelen.
+        Si ya realizaste la compra, inicia sesión con el mismo correo utilizado en tu acceso.
+      </p>
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <a class="btn" href="../login.html">Iniciar sesión</a>
+        <a class="btn-gold" href="https://skoolrenovae.store/products/cuando-las-palabras-duelen" target="_blank" rel="noopener noreferrer">Comprar ahora</a>
+      </div>
+    </section>
+
+    <section id="appContent" class="hide">
+      <section class="hero">
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape one"></span>
+          <span class="shape two"></span>
+          <span class="shape three"></span>
+        </div>
+
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">APP de acompañamiento seguro</div>
+
+            <h1>
+              Diario de Paz
+              <span>Digital</span>
+            </h1>
+
+            <p>
+              Un espacio privado para registrar cómo te afectan las redes, hacer pausas digitales,
+              poner límites saludables, orar con calma y recordar cuándo pedir ayuda segura.
+            </p>
+
+            <div class="hero-actions">
+              <button class="hero-action-card primary" type="button" id="startRegisterBtn">
+                <span>📝</span>
+                Registrar mi momento
+                <small>Anota cómo estabas antes y después de usar redes.</small>
+              </button>
+
+              <button class="hero-action-card" type="button" id="goPauseBtn">
+                <span>🌿</span>
+                Crear pausa digital
+                <small>Elige un plan breve para recuperar calma.</small>
+              </button>
+
+              <button class="hero-action-card" type="button" id="goHelpBtn">
+                <span>🛟</span>
+                Ver ayuda segura
+                <small>Recuerda cuándo hablar con un adulto o profesional.</small>
+              </button>
+            </div>
+          </div>
+
+          <aside class="peace-card">
+            <small>Registro privado</small>
+            <strong id="entryCount">0</strong>
+            <span id="peaceMessage">Tus registros se guardan solo en este navegador.</span>
+
+            <div class="sticker-row">
+              <span class="sticker">🌿 Pausa</span>
+              <span class="sticker">🛡️ Límites</span>
+              <span class="sticker">🙏 Oración</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Resumen de paz digital">
+        <article class="summary-card">
+          <small>Registros</small>
+          <strong id="metricEntries">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Pausas</small>
+          <strong id="metricPauses">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Límites activos</small>
+          <strong id="metricLimits">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <small>Estado</small>
+          <strong id="metricState">Activo</strong>
+        </article>
+      </section>
+
+      <section class="app-content">
+        <aside class="sidebar">
+          <h2>Navegación</h2>
+
+          <div class="nav-list">
+            <button class="nav-button active" type="button" data-view="registro">Registro emocional <span>📝</span></button>
+            <button class="nav-button" type="button" data-view="limites">Límites digitales <span>🛡️</span></button>
+            <button class="nav-button" type="button" data-view="pausa">Plan de pausa <span>🌿</span></button>
+            <button class="nav-button" type="button" data-view="oraciones">Oraciones breves <span>🙏</span></button>
+            <button class="nav-button" type="button" data-view="historial">Historial privado <span>📒</span></button>
+            <button class="nav-button" type="button" data-view="ayuda">Ayuda segura <span>🛟</span></button>
+            <button class="nav-button" type="button" data-view="legal">Aviso importante <span>⚖️</span></button>
+          </div>
+
+          <div class="notice">
+            Usa esta app como un espacio de pausa y registro. Si hay riesgo, amenaza, miedo intenso o pensamientos de hacerte daño, busca ayuda inmediata.
+          </div>
+        </aside>
+
+        <div class="main-panel">
+          <section id="viewRegistro" class="panel">
+            <div class="panel-head">
+              <small>Tracker antes y después</small>
+              <h2>Registro emocional</h2>
+              <p>Observa cómo te sentías antes y después de usar redes o mensajes. No es para juzgarte, es para cuidarte.</p>
+            </div>
+
+            <div class="panel-body">
+              <div id="riskAlert" class="safe-alert hide">
+                <strong>Importante:</strong> Si estás en peligro, recibes amenazas, te sientes en riesgo o tienes pensamientos de hacerte daño, busca ayuda inmediata de un adulto de confianza, profesional de salud mental, líder pastoral responsable, autoridad correspondiente o línea de emergencia local.
+              </div>
+
+              <form id="registroForm">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="platformInput">Dónde ocurrió</label>
+                    <select id="platformInput">
+                      <option value="Redes sociales">Redes sociales</option>
+                      <option value="Mensajes privados">Mensajes privados</option>
+                      <option value="Grupo de chat">Grupo de chat</option>
+                      <option value="Escuela / comunidad">Escuela / comunidad</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="triggerInput">Qué lo activó</label>
+                    <select id="triggerInput">
+                      <option value="Comentario hiriente">Comentario hiriente</option>
+                      <option value="Comparación">Comparación</option>
+                      <option value="Burla">Burla</option>
+                      <option value="Rechazo">Rechazo</option>
+                      <option value="Exceso de tiempo en pantalla">Exceso de tiempo en pantalla</option>
+                      <option value="No estoy seguro/a">No estoy seguro/a</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="beforeInput">Antes de entrar, me sentía</label>
+                    <select id="beforeInput">
+                      <option value="En calma">En calma</option>
+                      <option value="Ansioso/a">Ansioso/a</option>
+                      <option value="Triste">Triste</option>
+                      <option value="Cansado/a">Cansado/a</option>
+                      <option value="Enojado/a">Enojado/a</option>
+                      <option value="Confundido/a">Confundido/a</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="afterInput">Después de salir, me sentí</label>
+                    <select id="afterInput">
+                      <option value="En calma">En calma</option>
+                      <option value="Ansioso/a">Ansioso/a</option>
+                      <option value="Triste">Triste</option>
+                      <option value="Cansado/a">Cansado/a</option>
+                      <option value="Enojado/a">Enojado/a</option>
+                      <option value="Confundido/a">Confundido/a</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="intensityBefore">Intensidad antes</label>
+                    <div class="range-row">
+                      <input id="intensityBefore" type="range" min="1" max="5" value="2" />
+                      <span class="value-badge" id="beforeValue">2</span>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label for="intensityAfter">Intensidad después</label>
+                    <div class="range-row">
+                      <input id="intensityAfter" type="range" min="1" max="5" value="3" />
+                      <span class="value-badge" id="afterValue">3</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="noteInput">Lo que necesito decir con honestidad</label>
+                  <textarea id="noteInput" placeholder="Escribe con calma. Este registro queda guardado solo en este navegador."></textarea>
+                </div>
+
+                <label class="check-card" style="margin-bottom:14px;">
+                  <input type="checkbox" id="riskInput" />
+                  <span>Hoy me siento en riesgo, recibí amenazas, tengo miedo intenso o necesito ayuda inmediata.</span>
+                </label>
+
+                <div class="action-row">
+                  <button class="btn" type="submit">Guardar registro seguro</button>
+                  <button class="btn-soft" type="button" id="clearRegisterBtn">Limpiar</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <section id="viewLimites" class="panel hide">
+            <div class="panel-head">
+              <small>Checklist de cuidado</small>
+              <h2>Límites digitales saludables</h2>
+              <p>Los límites no son rechazo ni exageración. Son una forma sabia de cuidar tu corazón.</p>
+            </div>
+
+            <div class="panel-body">
+              <div id="limitsList" class="check-grid"></div>
+              <div class="action-row">
+                <button class="btn" type="button" id="saveLimitsBtn">Guardar límites</button>
+                <button class="btn-soft" type="button" id="resetLimitsBtn">Reiniciar</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="viewPausa" class="panel hide">
+            <div class="panel-head">
+              <small>Plan de calma</small>
+              <h2>Crear pausa digital</h2>
+              <p>Una pausa puede ser un paso pequeño hacia la paz. Elige una acción sencilla y posible.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="pauseTime">Duración</label>
+                  <select id="pauseTime">
+                    <option value="5 minutos">5 minutos</option>
+                    <option value="15 minutos">15 minutos</option>
+                    <option value="30 minutos">30 minutos</option>
+                    <option value="1 hora">1 hora</option>
+                    <option value="Toda la noche">Toda la noche</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="pauseAction">Qué haré en la pausa</label>
+                  <select id="pauseAction">
+                    <option value="Respirar lento y orar una frase">Respirar lento y orar una frase</option>
+                    <option value="Caminar un poco">Caminar un poco</option>
+                    <option value="Escribir lo que siento">Escribir lo que siento</option>
+                    <option value="Hablar con una persona segura">Hablar con una persona segura</option>
+                    <option value="Silenciar o bloquear una cuenta">Silenciar o bloquear una cuenta</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="pauseReason">Por qué necesito esta pausa</label>
+                <textarea id="pauseReason" placeholder="Ejemplo: Necesito calmarme antes de seguir mirando mensajes."></textarea>
+              </div>
+
+              <div class="action-row">
+                <button class="btn" type="button" id="savePauseBtn">Guardar pausa</button>
+                <button class="btn-calm" type="button" id="suggestPauseBtn">Sugerirme una pausa</button>
+              </div>
+
+              <div class="notice" id="pauseSuggestion">
+                Sugerencia: deja el celular lejos por unos minutos, respira lento y repite una oración breve.
+              </div>
+            </div>
+          </section>
+
+          <section id="viewOraciones" class="panel hide">
+            <div class="panel-head">
+              <small>Oraciones breves</small>
+              <h2>Orar cuando las palabras duelen</h2>
+              <p>Oraciones cortas para momentos de tristeza, ansiedad, cansancio, exposición o necesidad de pedir ayuda.</p>
+            </div>
+
+            <div class="panel-body">
+              <div id="prayerGrid" class="prayer-grid"></div>
+            </div>
+          </section>
+
+          <section id="viewHistorial" class="panel hide">
+            <div class="panel-head">
+              <small>Historial privado</small>
+              <h2>Mis registros seguros</h2>
+              <p>Este historial se guarda solo en este navegador. Puedes borrarlo cuando quieras.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="action-row" style="margin-top:0;">
+                <button class="btn-soft" type="button" id="refreshHistoryBtn">Actualizar historial</button>
+                <button class="btn-danger" type="button" id="clearHistoryBtn">Borrar historial</button>
+              </div>
+
+              <div id="historyList" class="entry-list"></div>
+            </div>
+          </section>
+
+          <section id="viewAyuda" class="panel hide">
+            <div class="panel-head">
+              <small>Ayuda segura</small>
+              <h2>No tienes que atravesar esto solo/a</h2>
+              <p>Si hay riesgo, amenaza, exposición, daño emocional fuerte o pensamientos de hacerte daño, busca ayuda inmediata.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="safe-alert">
+                Si estás en peligro, recibes amenazas, te sientes en riesgo, tienes pensamientos de hacerte daño o no sabes cómo continuar, habla ahora con un adulto de confianza, familiar responsable, profesional de salud mental, autoridad escolar, línea de emergencia local o líder pastoral responsable.
+              </div>
+
+              <div id="resourceGrid" class="resource-grid"></div>
+            </div>
+          </section>
+
+          <section id="viewLegal" class="panel hide">
+            <div class="panel-head">
+              <small>Aviso ético</small>
+              <h2>Acompañamiento devocional</h2>
+              <p>Este recurso fue creado para acompañar, no para reemplazar ayuda profesional.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="notice">
+                Este recurso es una herramienta devocional y de registro personal. No reemplaza terapia,
+                atención psicológica, ayuda médica, intervención escolar, acompañamiento familiar,
+                consejería pastoral ni apoyo profesional. Si hay crisis emocional, riesgo, violencia,
+                abuso, amenazas, exposición de imágenes, miedo intenso o pensamientos de hacerte daño,
+                busca ayuda inmediata de una persona adulta responsable o profesional.
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <strong>Hábitos con Dios Pro</strong><br />
+      Tu valor no depende de lo que otros dijeron. Un paso pequeño hacia la paz también cuenta.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
+    const REQUIRED_PERMISSION = "access_palabras_duelen";
+    const REQUIRED_SKU = "HCD_PALABRAS_DUELEN_BUNDLE";
+    const SHOPIFY_URL = "https://skoolrenovae.store/products/cuando-las-palabras-duelen";
+
+    const BASE_PREFIX = "hcd_paz_digital";
+
+    const limitOptions = [
+      "No revisar comentarios cuando estoy cansado/a.",
+      "Silenciar o bloquear cuentas que me dañan.",
+      "No responder mensajes hirientes en caliente.",
+      "Guardar evidencia si hay cyberbullying.",
+      "Hablar con una persona segura si algo se repite.",
+      "Tomar una pausa digital antes de dormir.",
+      "No comparar mi valor con likes o respuestas.",
+      "Reportar amenazas o exposición de imágenes."
+    ];
+
+    const prayers = [
+      {
+        title: "Cuando una palabra se quedó pegada",
+        text: "Señor, hay una palabra que todavía me duele. Te la entrego con honestidad. Ayúdame a recordar que tu voz pesa más que cualquier burla."
+      },
+      {
+        title: "Para pedir ayuda",
+        text: "Espíritu Santo, dame valentía para hablar con una persona segura. Recuérdame que pedir ayuda no me hace débil; puede ser un primer paso de cuidado."
+      },
+      {
+        title: "Para una pausa digital",
+        text: "Jesús, ayúdame a hacer una pausa. Que mi corazón respire, que mi mente descanse y que pueda elegir lo que me cuida."
+      },
+      {
+        title: "Cuando siento miedo",
+        text: "Dios, cuando tengo miedo, ayúdame a no quedarme solo/a. Guíame hacia personas que puedan acompañarme con responsabilidad."
+      },
+      {
+        title: "Para recordar mi valor",
+        text: "Padre, recuérdame que no soy lo que dijeron de mí. Mi valor está en Ti, no en la opinión de quienes me lastiman."
+      },
+      {
+        title: "Para poner límites",
+        text: "Dios, dame discernimiento para poner límites sanos. Ayúdame a alejarme de lo que me hace daño sin culpa."
+      }
+    ];
+
+    const helpResources = [
+      {
+        title: "Persona segura",
+        text: "Elige una persona adulta responsable que no minimice lo que vives y pueda ayudarte a actuar con cuidado."
+      },
+      {
+        title: "Evidencia si hay cyberbullying",
+        text: "Guarda capturas, fechas, usuarios, mensajes y enlaces. No respondas para exponerte más."
+      },
+      {
+        title: "Ayuda inmediata",
+        text: "Si hay riesgo, amenazas o pensamientos de hacerte daño, busca ayuda urgente de una persona adulta responsable, profesional, autoridad o línea de emergencia local."
+      },
+      {
+        title: "Acompañamiento continuo",
+        text: "Si el dolor sigue pesando, hablar con un profesional, referente escolar, familiar o líder pastoral responsable puede ser un paso de cuidado."
+      }
+    ];
+
+    if (!window.supabase) {
+      throw new Error("Supabase client was not loaded.");
+    }
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    const els = {
+      userPill: document.getElementById("userPill"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      loadingState: document.getElementById("loadingState"),
+      errorState: document.getElementById("errorState"),
+      lockedState: document.getElementById("lockedState"),
+      errorMessage: document.getElementById("errorMessage"),
+      appContent: document.getElementById("appContent"),
+      entryCount: document.getElementById("entryCount"),
+      peaceMessage: document.getElementById("peaceMessage"),
+      metricEntries: document.getElementById("metricEntries"),
+      metricPauses: document.getElementById("metricPauses"),
+      metricLimits: document.getElementById("metricLimits"),
+      metricState: document.getElementById("metricState"),
+      startRegisterBtn: document.getElementById("startRegisterBtn"),
+      goPauseBtn: document.getElementById("goPauseBtn"),
+      goHelpBtn: document.getElementById("goHelpBtn"),
+      registroForm: document.getElementById("registroForm"),
+      platformInput: document.getElementById("platformInput"),
+      triggerInput: document.getElementById("triggerInput"),
+      beforeInput: document.getElementById("beforeInput"),
+      afterInput: document.getElementById("afterInput"),
+      intensityBefore: document.getElementById("intensityBefore"),
+      intensityAfter: document.getElementById("intensityAfter"),
+      beforeValue: document.getElementById("beforeValue"),
+      afterValue: document.getElementById("afterValue"),
+      noteInput: document.getElementById("noteInput"),
+      riskInput: document.getElementById("riskInput"),
+      riskAlert: document.getElementById("riskAlert"),
+      clearRegisterBtn: document.getElementById("clearRegisterBtn"),
+      limitsList: document.getElementById("limitsList"),
+      saveLimitsBtn: document.getElementById("saveLimitsBtn"),
+      resetLimitsBtn: document.getElementById("resetLimitsBtn"),
+      pauseTime: document.getElementById("pauseTime"),
+      pauseAction: document.getElementById("pauseAction"),
+      pauseReason: document.getElementById("pauseReason"),
+      savePauseBtn: document.getElementById("savePauseBtn"),
+      suggestPauseBtn: document.getElementById("suggestPauseBtn"),
+      pauseSuggestion: document.getElementById("pauseSuggestion"),
+      prayerGrid: document.getElementById("prayerGrid"),
+      resourceGrid: document.getElementById("resourceGrid"),
+      historyList: document.getElementById("historyList"),
+      refreshHistoryBtn: document.getElementById("refreshHistoryBtn"),
+      clearHistoryBtn: document.getElementById("clearHistoryBtn"),
+      toast: document.getElementById("toast")
+    };
+
+    let currentUser = null;
+    let entries = [];
+    let pauses = [];
+    let limits = [];
+
+    init();
+
+    async function init() {
+      try {
+        showLoading();
+
+        const { data: sessionData, error: sessionError } =
+          await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+          throw sessionError;
+        }
+
+        const session = sessionData && sessionData.session;
+
+        if (!session || !session.user) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        currentUser = session.user;
+        els.userPill.textContent = currentUser.email || "Sesión activa";
+
+        const hasAccess = await validateAccess();
+
+        if (!hasAccess) {
+          showLocked();
+          return;
+        }
+
+        loadLocalState();
+        bindEvents();
+        renderAll();
+        showApp();
+      } catch (error) {
+        console.error(error);
+        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde la Biblioteca.");
+      }
+    }
+
+    async function validateAccess() {
+      const { data, error } = await supabaseClient
+        .from("entitlements")
+        .select("permission_key, source_sku, active")
+        .eq("active", true);
+
+      if (error) {
+        throw error;
+      }
+
+      return (data || []).some((item) => {
+        return (
+          item.permission_key === REQUIRED_PERMISSION &&
+          item.source_sku === REQUIRED_SKU &&
+          item.active === true
+        ) || item.permission_key === "membership_all_access";
+      });
+    }
+
+    function bindEvents() {
+      document.querySelectorAll("[data-view]").forEach((button) => {
+        button.addEventListener("click", () => {
+          setView(button.dataset.view);
+        });
+      });
+
+      els.startRegisterBtn.addEventListener("click", () => {
+        setView("registro");
+        document.getElementById("viewRegistro").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      els.goPauseBtn.addEventListener("click", () => {
+        setView("pausa");
+        document.getElementById("viewPausa").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      els.goHelpBtn.addEventListener("click", () => {
+        setView("ayuda");
+        document.getElementById("viewAyuda").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      els.intensityBefore.addEventListener("input", () => {
+        els.beforeValue.textContent = els.intensityBefore.value;
+      });
+
+      els.intensityAfter.addEventListener("input", () => {
+        els.afterValue.textContent = els.intensityAfter.value;
+        updateRiskVisibility();
+      });
+
+      els.riskInput.addEventListener("change", updateRiskVisibility);
+
+      els.registroForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        saveEntry();
+      });
+
+      els.clearRegisterBtn.addEventListener("click", clearRegisterForm);
+      els.saveLimitsBtn.addEventListener("click", saveLimits);
+      els.resetLimitsBtn.addEventListener("click", resetLimits);
+      els.savePauseBtn.addEventListener("click", savePause);
+      els.suggestPauseBtn.addEventListener("click", suggestPause);
+      els.refreshHistoryBtn.addEventListener("click", renderHistory);
+      els.clearHistoryBtn.addEventListener("click", clearHistory);
+
+      els.logoutBtn.addEventListener("click", async () => {
+        await supabaseClient.auth.signOut();
+        window.location.href = "../login.html";
+      });
+    }
+
+    function setView(viewName) {
+      const views = {
+        registro: document.getElementById("viewRegistro"),
+        limites: document.getElementById("viewLimites"),
+        pausa: document.getElementById("viewPausa"),
+        oraciones: document.getElementById("viewOraciones"),
+        historial: document.getElementById("viewHistorial"),
+        ayuda: document.getElementById("viewAyuda"),
+        legal: document.getElementById("viewLegal")
+      };
+
+      Object.entries(views).forEach(([key, el]) => {
+        el.classList.toggle("hide", key !== viewName);
+      });
+
+      document.querySelectorAll("[data-view]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.view === viewName);
+      });
+    }
+
+    function renderAll() {
+      renderLimits();
+      renderPrayers();
+      renderResources();
+      renderHistory();
+      renderStats();
+      updateRiskVisibility();
+    }
+
+    function saveEntry() {
+      const afterIntensity = Number(els.intensityAfter.value);
+      const hasRisk = els.riskInput.checked;
+
+      const entry = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        date: new Date().toLocaleString("es-AR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }),
+        platform: els.platformInput.value,
+        trigger: els.triggerInput.value,
+        before: els.beforeInput.value,
+        after: els.afterInput.value,
+        intensityBefore: Number(els.intensityBefore.value),
+        intensityAfter: afterIntensity,
+        note: els.noteInput.value.trim(),
+        risk: hasRisk
+      };
+
+      entries.push(entry);
+      saveLocalState();
+      renderAll();
+      clearRegisterForm();
+
+      if (hasRisk || afterIntensity >= 5) {
+        setView("ayuda");
+        showToast("Registro guardado. Busca ayuda segura si estás en riesgo.", true);
+        return;
+      }
+
+      showToast("Registro guardado con cuidado.");
+    }
+
+    function clearRegisterForm() {
+      els.noteInput.value = "";
+      els.riskInput.checked = false;
+      els.intensityBefore.value = "2";
+      els.intensityAfter.value = "3";
+      els.beforeValue.textContent = "2";
+      els.afterValue.textContent = "3";
+      updateRiskVisibility();
+    }
+
+    function updateRiskVisibility() {
+      const highIntensity = Number(els.intensityAfter.value) >= 5;
+      const explicitRisk = els.riskInput.checked;
+      els.riskAlert.classList.toggle("hide", !(highIntensity || explicitRisk));
+    }
+
+    function renderLimits() {
+      els.limitsList.innerHTML = "";
+
+      limitOptions.forEach((label, index) => {
+        const wrapper = document.createElement("label");
+        wrapper.className = "check-card";
+        wrapper.innerHTML = `
+          <input type="checkbox" data-limit-index="${index}" ${limits.includes(index) ? "checked" : ""} />
+          <span>${escapeHTML(label)}</span>
+        `;
+        els.limitsList.appendChild(wrapper);
+      });
+    }
+
+    function saveLimits() {
+      const selected = [...document.querySelectorAll("[data-limit-index]")]
+        .filter((input) => input.checked)
+        .map((input) => Number(input.dataset.limitIndex));
+
+      limits = selected;
+      saveLocalState();
+      renderStats();
+      showToast("Límites digitales guardados.");
+    }
+
+    function resetLimits() {
+      limits = [];
+      saveLocalState();
+      renderLimits();
+      renderStats();
+      showToast("Checklist reiniciado.");
+    }
+
+    function savePause() {
+      const pause = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        date: new Date().toLocaleString("es-AR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }),
+        time: els.pauseTime.value,
+        action: els.pauseAction.value,
+        reason: els.pauseReason.value.trim()
+      };
+
+      pauses.push(pause);
+      els.pauseReason.value = "";
+      saveLocalState();
+      renderAll();
+      showToast("Pausa digital guardada.");
+    }
+
+    function suggestPause() {
+      const suggestions = [
+        "Suelta el celular por 5 minutos, respira lento y repite: Dios está conmigo.",
+        "Silencia la app que te está haciendo mal y escribe una oración breve.",
+        "Toma agua, cambia de ambiente y habla con una persona segura si lo necesitas.",
+        "Guarda evidencia si hubo daño, no respondas en caliente y busca apoyo adulto.",
+        "Apaga notificaciones por un rato y escribe una verdad sobre tu valor."
+      ];
+
+      const suggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+      els.pauseSuggestion.textContent = suggestion;
+      showToast("Pausa sugerida preparada.");
+    }
+
+    function renderPrayers() {
+      els.prayerGrid.innerHTML = "";
+
+      prayers.forEach((prayer) => {
+        const card = document.createElement("article");
+        card.className = "prayer-card";
+        card.innerHTML = `
+          <strong>${escapeHTML(prayer.title)}</strong>
+          <p>${escapeHTML(prayer.text)}</p>
+        `;
+        els.prayerGrid.appendChild(card);
+      });
+    }
+
+    function renderResources() {
+      els.resourceGrid.innerHTML = "";
+
+      helpResources.forEach((resource) => {
+        const card = document.createElement("article");
+        card.className = "resource-card";
+        card.innerHTML = `
+          <strong>${escapeHTML(resource.title)}</strong>
+          <p>${escapeHTML(resource.text)}</p>
+        `;
+        els.resourceGrid.appendChild(card);
+      });
+    }
+
+    function renderHistory() {
+      els.historyList.innerHTML = "";
+
+      const allItems = [
+        ...entries.map((item) => ({ type: "Registro emocional", ...item })),
+        ...pauses.map((item) => ({ type: "Pausa digital", ...item }))
+      ].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+      if (!allItems.length) {
+        els.historyList.innerHTML = `
+          <div class="entry-card">
+            <strong>Todavía no hay registros.</strong>
+            <p>Cuando guardes un registro emocional o una pausa digital, aparecerá aquí.</p>
+          </div>
+        `;
+        return;
+      }
+
+      allItems.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "entry-card";
+
+        if (item.type === "Registro emocional") {
+          card.innerHTML = `
+            <strong>${escapeHTML(item.type)} · ${escapeHTML(item.date)}</strong>
+            <p><b>Lugar:</b> ${escapeHTML(item.platform)} · <b>Activador:</b> ${escapeHTML(item.trigger)}</p>
+            <p><b>Antes:</b> ${escapeHTML(item.before)} (${item.intensityBefore}/5) · <b>Después:</b> ${escapeHTML(item.after)} (${item.intensityAfter}/5)</p>
+            <p>${escapeHTML(item.note || "Sin nota adicional.")}</p>
+            ${item.risk ? "<p><b>Marcado como situación de riesgo. Buscar ayuda segura es importante.</b></p>" : ""}
+          `;
+        } else {
+          card.innerHTML = `
+            <strong>${escapeHTML(item.type)} · ${escapeHTML(item.date)}</strong>
+            <p><b>Duración:</b> ${escapeHTML(item.time)} · <b>Acción:</b> ${escapeHTML(item.action)}</p>
+            <p>${escapeHTML(item.reason || "Sin motivo escrito.")}</p>
+          `;
+        }
+
+        els.historyList.appendChild(card);
+      });
+    }
+
+    function clearHistory() {
+      const confirmClear = window.confirm("¿Quieres borrar todos los registros guardados en este navegador?");
+
+      if (!confirmClear) {
+        return;
+      }
+
+      entries = [];
+      pauses = [];
+      saveLocalState();
+      renderAll();
+      showToast("Historial privado borrado.");
+    }
+
+    function renderStats() {
+      els.entryCount.textContent = entries.length;
+      els.metricEntries.textContent = entries.length;
+      els.metricPauses.textContent = pauses.length;
+      els.metricLimits.textContent = limits.length;
+
+      if (entries.length > 0) {
+        els.peaceMessage.textContent = "Estás observando tus emociones con más claridad.";
+      } else {
+        els.peaceMessage.textContent = "Tus registros se guardan solo en este navegador.";
+      }
+    }
+
+    function storageKey(name) {
+      const userPart = currentUser && currentUser.id
+        ? currentUser.id
+        : "local";
+
+      return `${BASE_PREFIX}_${userPart}_${name}`;
+    }
+
+    function loadLocalState() {
+      entries = readStorageArray(storageKey("registro_emocional"));
+      pauses = readStorageArray(storageKey("pausas"));
+      limits = readStorageArray(storageKey("limites"));
+    }
+
+    function saveLocalState() {
+      localStorage.setItem(storageKey("registro_emocional"), JSON.stringify(entries));
+      localStorage.setItem(storageKey("pausas"), JSON.stringify(pauses));
+      localStorage.setItem(storageKey("limites"), JSON.stringify(limits));
+    }
+
+    function readStorageArray(key) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function showLoading() {
+      els.loadingState.classList.remove("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.add("hide");
+    }
+
+    function showApp() {
+      els.loadingState.classList.add("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.remove("hide");
+    }
+
+    function showLocked() {
+      els.loadingState.classList.add("hide");
+      els.errorState.classList.add("hide");
+      els.lockedState.classList.remove("hide");
+      els.appContent.classList.add("hide");
+    }
+
+    function showError(message) {
+      els.loadingState.classList.add("hide");
+      els.lockedState.classList.add("hide");
+      els.appContent.classList.add("hide");
+      els.errorState.classList.remove("hide");
+      els.errorMessage.textContent = message;
+    }
+
+    function showToast(message, isError = false) {
+      els.toast.textContent = message;
+      els.toast.classList.toggle("error", isError);
+      els.toast.classList.add("show");
+
+      window.clearTimeout(showToast.timer);
+
+      showToast.timer = window.setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 3600);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
