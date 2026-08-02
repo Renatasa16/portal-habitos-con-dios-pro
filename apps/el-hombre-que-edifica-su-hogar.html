@@ -2560,8 +2560,22 @@ const SHOPIFY_URL =
       if (view === "oracion") renderPrayer();
       if (view === "legado") renderLegacy();
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+      const panel = document.getElementById(
+  "panel-" + view
+);
+
+if (panel) {
+
+  setTimeout(() => {
+
+    panel.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }, 150);
+
+}
 
     function continueDay() {
       const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
