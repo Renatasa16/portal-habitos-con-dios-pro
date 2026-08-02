@@ -11,10 +11,9 @@
     content="Biblioteca Premium de Hábitos con Dios Pro. Accede a tus ebooks, bonos, imprimibles y recursos digitales exclusivos."
   />
 
-  <script src="https://cdn.jsdelivr.net/npm/@base-js@2script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    :root {
+ot {
       --green: #3F4A35;
       --green-dark: #2F3929;
       --olive: #556544;
@@ -134,13 +133,13 @@
       backdrop-filter: blur(14px);
     }
 
-    .icon-btn,
     .text-btn,
     .primary-btn,
     .secondary-btn,
     .dark-btn,
     .download-btn,
-    .buy-btn {
+    .buy-btn,
+    .disabled-btn {
       border: 0;
       cursor: pointer;
       border-radius: 999px;
@@ -154,7 +153,6 @@
       white-space: nowrap;
     }
 
-    .icon-btn:hover,
     .text-btn:hover,
     .primary-btn:hover,
     .secondary-btn:hover,
@@ -410,10 +408,6 @@
       background: linear-gradient(135deg, #263322, #556544);
     }
 
-    .product-card.locked {
-      opacity: 0.96;
-    }
-
     .product-badges {
       display: flex;
       gap: 8px;
@@ -493,6 +487,15 @@
       box-shadow: 0 12px 26px rgba(63, 74, 53, 0.18);
     }
 
+    .disabled-btn {
+      padding: 12px 17px;
+      color: var(--muted);
+      background: #F1E9DC;
+      border: 1px solid var(--line);
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
     .detail-panel {
       display: none;
       margin-top: 22px;
@@ -513,6 +516,7 @@
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -614,7 +618,8 @@
       letter-spacing: 0.05em;
     }
 
-    .file-card button {
+    .file-card button,
+    .file-card a {
       align-self: flex-start;
     }
 
@@ -785,7 +790,8 @@
       .buy-btn,
       .primary-btn,
       .secondary-btn,
-      .dark-btn {
+      .dark-btn,
+      .disabled-btn {
         width: 100%;
       }
     }
@@ -814,10 +820,12 @@
       <div class="hero-inner">
         <div>
           <div class="eyebrow">Biblioteca privada</div>
+
           <h1>
             Tus recursos
             <span>espirituales</span>
           </h1>
+
           <p>
             Accede a tus ebooks, bonos, versiones imprimibles y experiencias digitales desde un único lugar.
             Los productos comprados se desbloquean automáticamente según los permisos activos de tu cuenta.
@@ -870,6 +878,7 @@
     <section id="errorState" class="error-state hide">
       <strong>No pudimos cargar la Biblioteca.</strong>
       <p id="errorMessage">Intenta iniciar sesión nuevamente desde el portal.</p>
+
       <div style="margin-top:18px;">
         <a class="dark-btn" href="login.html">Ir a Login</a>
       </div>
@@ -896,6 +905,7 @@
           </div>
 
           <h2 id="detailTitle">Producto</h2>
+
           <p id="detailDescription">
             Aquí encontrarás los recursos incluidos en esta colección.
           </p>
@@ -923,33 +933,42 @@
 
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
+
     const SUPABASE_ANON_KEY =
-  "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+      "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
     const BUCKET_NAME = "hcd-resources";
     const SIGNED_URL_SECONDS = 300;
 
     const APP_LINKS = {
-  "21dias": {
-    title: "Mi Tiempo con Dios",
-    url: "apps/mi-tiempo-con-dios.html"
-  },
+      "21dias": {
+        title: "Mi Tiempo con Dios",
+        url: "apps/mi-tiempo-con-dios.html",
+        enabled: true,
+        statusLabel: "Aplicación exclusiva"
+      },
 
-  "familias": {
-    title: "Pequeños Momentos con Dios",
-    url: "apps/pequenos-momentos-con-dios.html"
-  },
+      "familias": {
+        title: "Pequeños Momentos con Dios",
+        url: "apps/pequenos-momentos-con-dios.html",
+        enabled: false,
+        statusLabel: "App próximamente"
+      },
 
-  "palabras-duelen": {
-    title: "Cuando las Palabras Duelen",
-    url: "apps/cuando-las-palabras-duelen.html"
-  },
+      "palabras-duelen": {
+        title: "Cuando las Palabras Duelen",
+        url: "apps/cuando-las-palabras-duelen.html",
+        enabled: false,
+        statusLabel: "App próximamente"
+      },
 
-  "hombre-edifica": {
-    title: "El Hombre que Edifica su Hogar",
-    url: "apps/el-hombre-que-edifica-su-hogar.html"
-  }
-};
+      "hombre-edifica": {
+        title: "El Hombre que Edifica su Hogar",
+        url: "apps/el-hombre-que-edifica-su-hogar.html",
+        enabled: false,
+        statusLabel: "App próximamente"
+      }
+    };
 
     const CATEGORY_LABELS = {
       ebook: {
@@ -1011,7 +1030,33 @@
       }
     };
 
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (!window.supabase) {
+      document.addEventListener("DOMContentLoaded", () => {
+        const errorState = document.getElementById("errorState");
+        const loadingState = document.getElementById("loadingState");
+        const errorMessage = document.getElementById("errorMessage");
+
+        if (loadingState) {
+          loadingState.classList.add("hide");
+        }
+
+        if (errorState) {
+          errorState.classList.remove("hide");
+        }
+
+        if (errorMessage) {
+          errorMessage.textContent =
+            "No pudimos cargar Supabase. Revisa la conexión o el script del cliente Supabase.";
+        }
+      });
+
+      throw new Error("Supabase client was not loaded.");
+    }
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
     const els = {
       userPill: document.getElementById("userPill"),
@@ -1048,7 +1093,8 @@
       try {
         setLoading(true);
 
-        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        const { data: sessionData, error: sessionError } =
+          await supabaseClient.auth.getSession();
 
         if (sessionError) {
           throw sessionError;
@@ -1171,9 +1217,9 @@
             <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
               ${isUnlocked ? "✅ Acceso activo" : "🔒 Bloqueado"}
             </span>
-            <span class="badge badge-status">${statusLabel}</span>
+            <span class="badge badge-status">${escapeHTML(statusLabel)}</span>
           </div>
-          <div class="product-symbol">${productIcon}</div>
+          <div class="product-symbol">${escapeHTML(productIcon)}</div>
         </div>
 
         <div class="product-body">
@@ -1192,13 +1238,15 @@
 
       const actionButton = card.querySelector("[data-action]");
 
-      actionButton.addEventListener("click", () => {
-        if (isUnlocked) {
-          openProduct(product);
-        } else {
-          openShopify(product);
-        }
-      });
+      if (actionButton) {
+        actionButton.addEventListener("click", () => {
+          if (isUnlocked) {
+            openProduct(product);
+          } else {
+            openShopify(product);
+          }
+        });
+      }
 
       return card;
     }
@@ -1216,7 +1264,8 @@
       const appLink = APP_LINKS[product.slug];
 
       els.detailTitle.textContent = product.title;
-      els.detailDescription.textContent = PRODUCT_META[product.slug]?.description || "Recursos disponibles para esta colección.";
+      els.detailDescription.textContent =
+        PRODUCT_META[product.slug]?.description || "Recursos disponibles para esta colección.";
       els.resourceGroups.innerHTML = "";
 
       if (!files.length && !appLink) {
@@ -1293,11 +1342,19 @@
       const card = document.createElement("article");
       card.className = "file-card";
 
-      card.innerHTML = `
-        <span>Aplicación exclusiva</span>
-        <strong>${escapeHTML(appLink.title)}</strong>
-        <a class="download-btn" href="${escapeAttr(appLink.url)}">Abrir aplicación</a>
-      `;
+      if (appLink.enabled) {
+        card.innerHTML = `
+          <span>${escapeHTML(appLink.statusLabel || "Aplicación exclusiva")}</span>
+          <strong>${escapeHTML(appLink.title)}</strong>
+          <a class="download-btn" href="${escapeAttr(appLink.url)}">Abrir aplicación</a>
+        `;
+      } else {
+        card.innerHTML = `
+          <span>${escapeHTML(appLink.statusLabel || "Próximamente")}</span>
+          <strong>${escapeHTML(appLink.title)}</strong>
+          <button class="disabled-btn" type="button" disabled>Disponible próximamente</button>
+        `;
+      }
 
       return card;
     }
