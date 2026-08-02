@@ -1294,6 +1294,10 @@
           .eq("active", true)
           .limit(1);
 
+console.log("EMAIL:", user.email);
+console.log("DATA:", data);
+console.log("ERROR:", entitlementError);
+
         if (entitlementError) {
           console.error("Error consultando entitlements:", entitlementError);
           loadingScreen.classList.add("hidden");
