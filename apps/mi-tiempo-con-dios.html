@@ -1184,32 +1184,52 @@
     </main>
 
     <footer class="bottom-nav" role="navigation" aria-label="Barra de navegación inferior">
+
   <ul class="bottom-nav__list">
+
     <li>
-      <a href="../dashboard.html" class="bottom-nav__item" aria-label="Inicio">
-        <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+      <a href="#inicio"
+         class="bottom-nav__item"
+         aria-label="Inicio">
+
+        <span class="bottom-nav__icon">🏠</span>
         <span class="bottom-nav__label">Inicio</span>
+
       </a>
     </li>
+
     <li>
-      <a href="../dias.html" class="bottom-nav__item" aria-label="Días">
-        <span class="bottom-nav__icon" aria-hidden="true">📅</span>
+      #dias
+
+        <span class="bottom-nav__icon">📅</span>
         <span class="bottom-nav__label">Días</span>
+
       </a>
     </li>
+
     <li>
-      <a href="../diario.html" class="bottom-nav__item" aria-label="Diario">
-        <span class="bottom-nav__icon" aria-hidden="true">✍️</span>
+      #diario
+
+        <span class="bottom-nav__icon">✍️</span>
         <span class="bottom-nav__label">Diario</span>
+
       </a>
     </li>
+
     <li>
-      <button id="btn-logout" class="bottom-nav__item bottom-nav__button" aria-label="Salir">
-        <span class="bottom-nav__icon" aria-hidden="true">🚪</span>
+      <button
+        id="btn-logout"
+        class="bottom-nav__item bottom-nav__button"
+        aria-label="Cerrar sesión">
+
+        <span class="bottom-nav__icon">🚪</span>
         <span class="bottom-nav__label">Salir</span>
+
       </button>
     </li>
+
   </ul>
+
 </footer>
 
 
@@ -1289,10 +1309,77 @@
     .bottom-nav__label {
       font-size: 11px;
     }
-    .bottom-nav__icon {
-      font-size: 18px;
-    }
-  }
+    .bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+
+  border-top: 1px solid #E8DECC;
+
+  padding-bottom: env(safe-area-inset-bottom);
+
+  z-index: 9999;
+}
+
+.bottom-nav__list {
+  display: flex;
+
+  justify-content: space-around;
+
+  align-items: center;
+
+  list-style: none;
+
+  padding: 10px 14px;
+
+  margin: 0;
+}
+
+.bottom-nav__item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  background: transparent;
+
+  border: none;
+
+  text-decoration: none;
+
+  color: #3F4A35;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  min-width: 64px;
+}
+
+.bottom-nav__icon {
+  font-size: 20px;
+}
+
+.bottom-nav__label {
+  font-size: 11px;
+}
+
+.bottom-nav__button {
+  cursor: pointer;
+}
+
+.bottom-nav__item:hover {
+  opacity: 0.85;
+}
 </style>
 
 
@@ -1896,25 +1983,36 @@
         }
       });
 
-      const logoutButtons = [
-        document.getElementById("logoutButton"),
-        document.getElementById("mobileLogoutButton")
-      ];
+      const logoutButton =
+document.getElementById("btn-logout");
 
-      logoutButtons.forEach((button) => {
-        if (!button) return;
+if(logoutButton){
 
-        button.addEventListener("click", async () => {
-          await supabaseClient.auth.signOut();
-          window.location.href = "../login.html";
-        });
-      });
+  logoutButton.addEventListener(
+    "click",
+    async () => {
+
+      const confirmar =
+      confirm("¿Deseas cerrar sesión?");
+
+      if(!confirmar) return;
+
+      try {
+
+        await supabaseClient.auth.signOut();
+
+      } catch(error){
+
+        console.error(error);
+
+      }
+
+      window.location.href =
+      "../login.html";
+
     }
-
-    window.addEventListener("load", () => {
-      bindEvents();
-      validateAccess();
-    });
+  );
+}
   </script>
 </body>
 </html>
