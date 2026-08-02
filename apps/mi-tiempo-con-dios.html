@@ -28,6 +28,7 @@
       --line: #E8DECC;
       --soft-green: #EEF3EA;
       --soft-gold: #F7EAC7;
+      --soft-cream: #FFFBF3;
       --soft-red: #FCEEEE;
       --red: #9F3A38;
       --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
@@ -45,13 +46,14 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 96px;
     }
 
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(201, 166, 90, 0.20), transparent 34%),
-        radial-gradient(circle at 90% 0%, rgba(85, 101, 68, 0.14), transparent 28%),
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
+        radial-gradient(circle at 92% 2%, rgba(85, 101, 68, 0.15), transparent 28%),
         linear-gradient(145deg, var(--cream), var(--beige));
       color: var(--ink);
       min-height: 100vh;
@@ -82,13 +84,17 @@
       margin: 0 auto;
     }
 
+    .app-shell {
+      padding-bottom: 92px;
+    }
+
     .topbar {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       background: rgba(250, 247, 240, 0.92);
-      border-bottom: 1px solid rgba(232, 222, 204, 0.85);
+      border-bottom: 1px solid rgba(232, 222, 204, 0.9);
     }
 
     .topbar-inner {
@@ -98,7 +104,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      padding: 16px 0;
+      padding: 15px 0;
     }
 
     .brand {
@@ -137,23 +143,21 @@
       line-height: 1.1;
     }
 
-    .nav-links {
+    .desktop-nav {
       display: flex;
       align-items: center;
-      gap: 12px;
-      color: var(--olive);
-      font-weight: 900;
-      font-size: 13px;
+      gap: 11px;
     }
 
     .nav-link,
     .logout-btn {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.82);
       color: var(--green);
       border-radius: 999px;
       padding: 10px 14px;
       font-weight: 900;
+      font-size: 13px;
       transition: 0.2s ease;
       white-space: nowrap;
     }
@@ -162,35 +166,12 @@
     .logout-btn:hover {
       background: var(--white);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
     }
 
     .logout-btn {
-      border: 1px solid rgba(159, 58, 56, 0.18);
       color: var(--red);
-    }
-
-    .mobile-nav {
-      display: none;
-      padding: 12px 0 16px;
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .mobile-nav-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .mobile-nav-grid a,
-    .mobile-nav-grid button {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.82);
-      color: var(--green);
-      border-radius: 14px;
-      padding: 12px 10px;
-      font-weight: 900;
-      text-align: center;
+      border-color: rgba(159, 58, 56, 0.18);
     }
 
     .loading-screen,
@@ -202,20 +183,33 @@
     }
 
     .status-card {
-      width: min(620px, 100%);
-      background: rgba(255, 255, 255, 0.92);
+      width: min(660px, 100%);
+      background: rgba(255, 255, 255, 0.94);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 34px;
+      padding: 36px;
       box-shadow: var(--shadow);
       text-align: center;
+    }
+
+    .status-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      background: var(--soft-gold);
+      color: var(--green);
+      font-size: 28px;
+      font-weight: 900;
     }
 
     .status-card h1 {
       color: var(--green);
       font-size: clamp(32px, 6vw, 52px);
       line-height: 1;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.055em;
       margin-bottom: 14px;
     }
 
@@ -223,7 +217,7 @@
       color: var(--muted);
       line-height: 1.7;
       font-size: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .btn {
@@ -256,17 +250,19 @@
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.9);
       color: var(--green);
       border: 1px solid var(--line);
     }
 
-    .app {
-      padding-bottom: 60px;
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green);
+      box-shadow: 0 12px 26px rgba(201, 166, 90, 0.26);
     }
 
     .hero {
-      padding: 46px 0 26px;
+      padding: 42px 0 24px;
       display: grid;
       grid-template-columns: 1.08fr 0.92fr;
       gap: 24px;
@@ -274,26 +270,34 @@
     }
 
     .hero-card,
-    .progress-card {
+    .progress-card,
+    .sidebar,
+    .day-panel,
+    .journal-panel,
+    .mission-panel,
+    .celebration-panel {
       background: rgba(255, 255, 255, 0.88);
       border: 1px solid rgba(232, 222, 204, 0.96);
       border-radius: var(--radius-xl);
-      padding: 30px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
       position: relative;
       overflow: hidden;
     }
 
+    .hero-card {
+      padding: 30px;
+    }
+
     .hero-card::after {
       content: "";
       position: absolute;
-      width: 220px;
-      height: 220px;
+      width: 240px;
+      height: 240px;
       border-radius: 50%;
       background: rgba(201, 166, 90, 0.14);
-      right: -86px;
-      top: -88px;
+      right: -92px;
+      top: -94px;
       pointer-events: none;
     }
 
@@ -325,9 +329,9 @@
     }
 
     .hero h1 {
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: 0.92;
-      letter-spacing: -0.07em;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
       color: var(--green);
       margin-bottom: 18px;
       position: relative;
@@ -369,7 +373,12 @@
       font-weight: 900;
     }
 
+    .pill.gold {
+      background: var(--soft-gold);
+    }
+
     .progress-card {
+      padding: 28px;
       display: grid;
       align-content: center;
       gap: 18px;
@@ -433,6 +442,24 @@
       transition: width 0.35s ease;
     }
 
+    .achievement-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .achievement {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #EFE7D8;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -442,22 +469,29 @@
 
     .sidebar,
     .day-panel,
-    .journal-panel {
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(232, 222, 204, 0.96);
-      border-radius: var(--radius-xl);
+    .journal-panel,
+    .mission-panel,
+    .celebration-panel {
       padding: 22px;
-      box-shadow: var(--shadow-soft);
     }
 
     .sidebar h2,
     .day-panel h2,
-    .journal-panel h2 {
+    .journal-panel h2,
+    .mission-panel h2,
+    .celebration-panel h2 {
       color: var(--green);
       font-size: 24px;
       line-height: 1.1;
       letter-spacing: -0.035em;
       margin-bottom: 14px;
+    }
+
+    .sidebar-subtitle {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+      margin-bottom: 16px;
     }
 
     .day-grid {
@@ -529,6 +563,7 @@
       border-radius: 999px;
       padding: 10px 14px;
       font-weight: 900;
+      white-space: nowrap;
     }
 
     .favorite-btn.active {
@@ -539,19 +574,50 @@
     .reflection {
       color: var(--ink);
       font-size: 18px;
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 18px;
     }
 
     .verse {
-      background: var(--cream);
+      background:
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.14), transparent 30%),
+        var(--cream);
       border: 1px solid var(--line);
       border-radius: 20px;
       padding: 18px;
       color: var(--olive);
       line-height: 1.65;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 20px;
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 8px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .mini-card span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+      font-weight: 600;
     }
 
     .checklist {
@@ -629,9 +695,52 @@
       font-size: 14px;
     }
 
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 70;
+      width: min(520px, calc(100% - 24px));
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(232, 222, 204, 0.98);
+      box-shadow: 0 18px 48px rgba(63, 74, 53, 0.18);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 8px;
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .bottom-nav a,
+    .bottom-nav button {
+      border: none;
+      background: transparent;
+      color: var(--olive);
+      border-radius: 18px;
+      padding: 9px 6px;
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.active,
+    .bottom-nav button.active {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .bottom-nav .icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
     .toast {
       position: fixed;
-      bottom: 22px;
+      bottom: 92px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: var(--green);
@@ -643,7 +752,7 @@
       opacity: 0;
       pointer-events: none;
       transition: 0.25s ease;
-      z-index: 80;
+      z-index: 90;
     }
 
     .toast.show {
@@ -657,15 +766,16 @@
         grid-template-columns: 1fr;
       }
 
-      .nav-links {
+      .desktop-nav {
         display: none;
       }
 
-      .mobile-nav {
-        display: block;
+      .bottom-nav {
+        display: grid;
       }
 
-      .journal-grid {
+      .journal-grid,
+      .mini-cards {
         grid-template-columns: 1fr;
       }
 
@@ -697,6 +807,8 @@
       .sidebar,
       .day-panel,
       .journal-panel,
+      .mission-panel,
+      .celebration-panel,
       .status-card {
         padding: 22px;
         border-radius: 26px;
@@ -741,6 +853,7 @@
 <body>
   <div id="loadingScreen" class="loading-screen">
     <div class="status-card">
+      <div class="status-icon">🙏</div>
       <h1>Preparando tu espacio</h1>
       <p>Estamos validando tu sesión y tu acceso a Mi Tiempo con Dios.</p>
     </div>
@@ -748,6 +861,7 @@
 
   <div id="lockedScreen" class="locked-screen hidden">
     <div class="status-card">
+      <div class="status-icon">🔒</div>
       <h1>Acceso no disponible</h1>
       <p>
         Este recurso forma parte del bundle 21 Días Más Cerca de Dios. Para acceder, necesitas tener una compra activa asociada a este correo.
@@ -758,7 +872,7 @@
     </div>
   </div>
 
-  <div id="appShell" class="app hidden">
+  <div id="appShell" class="app-shell hidden">
     <header class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="../dashboard.html" aria-label="Volver al Dashboard">
@@ -769,21 +883,13 @@
           </div>
         </a>
 
-        <nav class="nav-links" aria-label="Navegación principal">
-  <a class="nav-link" href="../dashboard.html">Dashboard</a>
-  ../biblioteca.htmlBiblioteca</a>
-  #hoyMi día</a>
-  <button class="logout-btn" type="button" id="logoutButton">Cerrar sesión</button>
-</nav>
-      </div>
-
-      <div class="mobile-nav">
-        <div class="mobile-nav-grid">
-  <a href="../dashboard.html">Dashboard</a>
-  ../biblioteca.htmlBiblioteca</a>
-  #hoyMi día</a>
-  <button type="button" id="mobileLogoutButton">Cerrar sesión</button>
-</div>
+        <nav class="desktop-nav" aria-label="Navegación principal">
+          <a class="nav-link" href="../dashboard.html">Dashboard</a>
+          ../biblioteca.htmlBiblioteca</a>
+          #hoyMi día</a>
+          #diarioDiario</a>
+          <button class="logout-btn" type="button" id="logoutButton">Cerrar sesión</button>
+        </nav>
       </div>
     </header>
 
@@ -801,12 +907,12 @@
           </h1>
 
           <p>
-            Un espacio simple y cálido para acompañar tu recorrido de 21 días con reflexión, oración, gratitud, práctica y registro personal.
+            Un espacio simple, cálido y práctico para acompañar tu recorrido de 21 días con reflexión, oración, gratitud, práctica y registro personal.
           </p>
 
           <div class="user-row">
-            <span class="pill" id="userPill">Usuario autenticado</span>
-            <span class="pill">Bundle 21 Días</span>
+            <span class="pill" id="userPill">Bienvenida</span>
+            <span class="pill gold">👑 Bundle 21 Días</span>
           </div>
         </div>
 
@@ -831,12 +937,19 @@
           <div class="progress-bar-wrap" aria-label="Progreso de 21 días">
             <div class="progress-bar" id="progressBar"></div>
           </div>
+
+          <div class="achievement-row" id="achievementRow">
+            <span class="achievement">🌱 Comenzando</span>
+          </div>
         </aside>
       </section>
 
       <section class="layout" id="hoy">
-        <aside class="sidebar">
-          <h2>Días</h2>
+        <aside class="sidebar" id="dias">
+          <h2>Días del recorrido</h2>
+          <p class="sidebar-subtitle">
+            Elige un día, registra tu avance y vuelve cuando quieras. Tu progreso queda guardado en este dispositivo.
+          </p>
           <div class="day-grid" id="dayGrid"></div>
         </aside>
 
@@ -856,6 +969,23 @@
             <p class="reflection" id="reflectionText"></p>
 
             <div class="verse" id="verseText"></div>
+
+            <div class="mini-cards">
+              <div class="mini-card">
+                <strong>🌿 Enfoque de hoy</strong>
+                <span id="focusText">Un paso pequeño también cuenta.</span>
+              </div>
+
+              <div class="mini-card">
+                <strong>🙏 Oración breve</strong>
+                <span id="shortPrayerText">Dios, ayúdame a estar presente hoy.</span>
+              </div>
+
+              <div class="mini-card">
+                <strong>✨ Acción práctica</strong>
+                <span id="actionText">Regala unos minutos a tu vida espiritual.</span>
+              </div>
+            </div>
 
             <h2>Checklist devocional</h2>
 
@@ -892,7 +1022,7 @@
             </div>
           </section>
 
-          <section class="journal-panel" aria-labelledby="journalTitle">
+          <section class="journal-panel" id="diario" aria-labelledby="journalTitle">
             <h2 id="journalTitle">Diario del día</h2>
 
             <div class="journal-grid">
@@ -922,9 +1052,41 @@
               Este recurso es de acompañamiento devocional. No reemplaza ayuda profesional, atención médica, apoyo psicológico, consejería pastoral responsable ni ayuda de emergencia cuando corresponda.
             </div>
           </section>
+
+          <section class="celebration-panel hidden" id="celebrationPanel" aria-labelledby="celebrationTitle">
+            <h2 id="celebrationTitle">🎉 Recorrido completado</h2>
+            <p class="reflection">
+              Completaste los 21 días de Mi Tiempo con Dios. Este cierre no es una despedida, es una invitación a seguir cultivando una rutina espiritual posible, un día a la vez.
+            </p>
+            ../biblioteca.html
+              Explorar más recursos
+            </a>
+          </section>
         </div>
       </section>
     </main>
+
+    <nav class="bottom-nav" aria-label="Navegación inferior mobile">
+      #hoy
+        <span class="icon">🙏</span>
+        <span>Mi día</span>
+      </a>
+
+      #dias
+        <span class="icon">📅</span>
+        <span>Días</span>
+      </a>
+
+      #diario
+        <span class="icon">✍️</span>
+        <span>Diario</span>
+      </a>
+
+      <button type="button" id="mobileLogoutButton">
+        <span class="icon">🚪</span>
+        <span>Salir</span>
+      </button>
+    </nav>
   </div>
 
   <div class="toast" id="toast">Guardado</div>
@@ -946,127 +1108,190 @@
         day: 1,
         title: "Comenzar con un paso sencillo",
         reflection: "Hoy no necesitas resolver todo. Puedes comenzar con un momento breve, honesto y posible delante de Dios.",
-        verse: "Un pequeño paso sostenido puede convertirse en una nueva rutina de fe."
+        verse: "Un pequeño paso sostenido puede convertirse en una nueva rutina de fe.",
+        focus: "Comenzar sin exigirte perfección.",
+        prayer: "Dios, acompáñame a iniciar este recorrido con calma.",
+        action: "Aparta cinco minutos para leer y respirar."
       },
       {
         day: 2,
         title: "Volver al lugar de calma",
         reflection: "Dios puede encontrarte en una pausa pequeña. No necesitas un escenario perfecto para acercarte.",
-        verse: "Busca un momento simple para respirar, orar y volver al centro."
+        verse: "Busca un momento simple para respirar, orar y volver al centro.",
+        focus: "Hacer una pausa consciente.",
+        prayer: "Dios, ayúdame a encontrar calma en medio de mi día.",
+        action: "Haz una pausa antes de mirar el celular."
       },
       {
         day: 3,
         title: "Crear espacio en medio de la rutina",
         reflection: "A veces la vida se llena de ruido. Hoy puedes apartar unos minutos para escuchar, escribir y descansar.",
-        verse: "Un corazón disponible puede encontrarse con Dios en lo cotidiano."
+        verse: "Un corazón disponible puede encontrarse con Dios en lo cotidiano.",
+        focus: "Crear un espacio sagrado y posible.",
+        prayer: "Dios, enséñame a abrir espacio para estar contigo.",
+        action: "Elige un lugar fijo para tu momento devocional."
       },
       {
         day: 4,
         title: "Orar con palabras simples",
         reflection: "La oración no necesita ser extensa. Puede comenzar con una frase sincera y un corazón presente.",
-        verse: "Habla con Dios desde donde estás, no desde donde crees que deberías estar."
+        verse: "Habla con Dios desde donde estás, no desde donde crees que deberías estar.",
+        focus: "Orar con sinceridad.",
+        prayer: "Dios, hoy me acerco con palabras simples.",
+        action: "Escribe una oración de una sola frase."
       },
       {
         day: 5,
         title: "Reconocer lo recibido",
         reflection: "La gratitud abre la mirada. Hoy observa un detalle pequeño por el que puedas dar gracias.",
-        verse: "La gratitud puede transformar la forma en que atraviesas el día."
+        verse: "La gratitud puede transformar la forma en que atraviesas el día.",
+        focus: "Practicar gratitud.",
+        prayer: "Dios, ayúdame a reconocer tus regalos cotidianos.",
+        action: "Anota tres cosas pequeñas por las que agradeces."
       },
       {
         day: 6,
         title: "Sostener el hábito con ternura",
         reflection: "No se trata de hacerlo perfecto. Se trata de volver con paciencia cada vez que puedas.",
-        verse: "La constancia también se construye con comienzos pequeños."
+        verse: "La constancia también se construye con comienzos pequeños.",
+        focus: "Volver sin culpa.",
+        prayer: "Dios, ayúdame a seguir con paciencia.",
+        action: "Retoma el hábito aunque ayer no lo hayas hecho."
       },
       {
         day: 7,
         title: "Mirar la semana con honestidad",
         reflection: "Hoy puedes revisar tu semana sin juicio. Mira lo que avanzaste y lo que deseas entregar a Dios.",
-        verse: "La reflexión honesta puede convertirse en dirección."
+        verse: "La reflexión honesta puede convertirse en dirección.",
+        focus: "Revisar sin juzgarte.",
+        prayer: "Dios, ayúdame a mirar mi semana con verdad y paz.",
+        action: "Escribe qué aprendiste en estos días."
       },
       {
         day: 8,
         title: "Elegir una práctica posible",
         reflection: "Una práctica simple puede ayudarte a permanecer. Elige algo concreto para vivir hoy con fe.",
-        verse: "La fe también se expresa en acciones pequeñas."
+        verse: "La fe también se expresa en acciones pequeñas.",
+        focus: "Bajar la fe a la práctica.",
+        prayer: "Dios, ayúdame a vivir mi fe en lo simple.",
+        action: "Elige una acción concreta de amor o paciencia."
       },
       {
         day: 9,
         title: "Cuidar lo que escuchas",
         reflection: "Las palabras que recibes influyen en tu interior. Hoy busca una palabra que afirme tu esperanza.",
-        verse: "Permite que una verdad buena acompañe tu día."
+        verse: "Permite que una verdad buena acompañe tu día.",
+        focus: "Elegir palabras que edifiquen.",
+        prayer: "Dios, guía lo que escucho y guardo en mi corazón.",
+        action: "Lee una frase bíblica o devocional y repítela durante el día."
       },
       {
         day: 10,
         title: "Pausar antes de responder",
         reflection: "Una pausa puede abrir espacio para responder con más paz y menos impulso.",
-        verse: "La sabiduría puede comenzar con un silencio breve."
+        verse: "La sabiduría puede comenzar con un silencio breve.",
+        focus: "Responder con calma.",
+        prayer: "Dios, ayúdame a pausar antes de actuar.",
+        action: "Antes de responder algo difícil, respira tres veces."
       },
       {
         day: 11,
         title: "Entregar cargas pequeñas",
         reflection: "No todas las cargas se sueltan de golpe. Hoy puedes entregar una preocupación concreta.",
-        verse: "Lo que entregas con honestidad también puede ser parte de tu oración."
+        verse: "Lo que entregas con honestidad también puede ser parte de tu oración.",
+        focus: "Entregar una preocupación.",
+        prayer: "Dios, pongo delante de ti esta carga específica.",
+        action: "Escribe una preocupación y una oración sobre ella."
       },
       {
         day: 12,
         title: "Volver a la esperanza",
         reflection: "La esperanza no niega la realidad. La atraviesa con una mirada acompañada por Dios.",
-        verse: "Hoy puedes sostener una pequeña esperanza."
+        verse: "Hoy puedes sostener una pequeña esperanza.",
+        focus: "Sostener una esperanza posible.",
+        prayer: "Dios, renueva mi esperanza de forma sencilla.",
+        action: "Escribe una frase de esperanza para este día."
       },
       {
         day: 13,
         title: "Escribir para ordenar el corazón",
         reflection: "Escribir puede ayudarte a ver con más claridad lo que llevas dentro.",
-        verse: "Un pensamiento escrito puede convertirse en una oración."
+        verse: "Un pensamiento escrito puede convertirse en una oración.",
+        focus: "Ordenar lo que sientes y piensas.",
+        prayer: "Dios, acompáñame mientras escribo con honestidad.",
+        action: "Escribe durante tres minutos sin corregirte."
       },
       {
         day: 14,
         title: "Celebrar lo pequeño",
         reflection: "Lo pequeño también cuenta. Un día leído, una oración breve, una gratitud sincera son avances reales.",
-        verse: "Celebra el paso que sí pudiste dar."
+        verse: "Celebra el paso que sí pudiste dar.",
+        focus: "Reconocer avances pequeños.",
+        prayer: "Dios, gracias por cada paso posible.",
+        action: "Celebra un avance de esta semana."
       },
       {
         day: 15,
         title: "Perseverar sin exigencia",
         reflection: "La perseverancia no necesita dureza. Puede nacer de una decisión amable de seguir.",
-        verse: "Volver también es parte del camino."
+        verse: "Volver también es parte del camino.",
+        focus: "Seguir sin dureza.",
+        prayer: "Dios, ayúdame a perseverar con ternura.",
+        action: "Elige continuar con una acción sencilla."
       },
       {
         day: 16,
         title: "Hacer espacio para escuchar",
         reflection: "Hoy puedes leer menos rápido y escuchar con más atención lo que se mueve en tu interior.",
-        verse: "La quietud puede abrir una respuesta."
+        verse: "La quietud puede abrir una respuesta.",
+        focus: "Escuchar con atención.",
+        prayer: "Dios, quiero escucharte con calma.",
+        action: "Lee la reflexión dos veces y subraya una idea."
       },
       {
         day: 17,
         title: "Practicar la confianza",
         reflection: "Confiar puede ser dar el siguiente paso sin tener todo resuelto.",
-        verse: "Un paso en confianza también es una forma de oración."
+        verse: "Un paso en confianza también es una forma de oración.",
+        focus: "Dar el siguiente paso.",
+        prayer: "Dios, ayúdame a confiar en el paso de hoy.",
+        action: "Haz una acción que venías postergando."
       },
       {
         day: 18,
         title: "Agradecer en medio del proceso",
         reflection: "La gratitud no espera a que todo esté perfecto. Puede aparecer en medio del camino.",
-        verse: "Encuentra una señal de cuidado en este día."
+        verse: "Encuentra una señal de cuidado en este día.",
+        focus: "Agradecer en proceso.",
+        prayer: "Dios, gracias por acompañarme incluso en lo incompleto.",
+        action: "Agradece por algo que aún está en proceso."
       },
       {
         day: 19,
         title: "Reconocer tu crecimiento",
         reflection: "Mira con calma cuánto has avanzado desde el primer día. El progreso puede ser más silencioso de lo que imaginas.",
-        verse: "El crecimiento también ocurre en lo invisible."
+        verse: "El crecimiento también ocurre en lo invisible.",
+        focus: "Reconocer transformación silenciosa.",
+        prayer: "Dios, ayúdame a ver el crecimiento que no siempre noto.",
+        action: "Compara tu día 1 con el día de hoy."
       },
       {
         day: 20,
         title: "Preparar continuidad",
         reflection: "Este recorrido puede convertirse en una forma de vida. Piensa qué hábito deseas sostener después.",
-        verse: "Lo que se practica con amor puede permanecer."
+        verse: "Lo que se practica con amor puede permanecer.",
+        focus: "Elegir continuidad.",
+        prayer: "Dios, muéstrame qué hábito puedo sostener.",
+        action: "Define una práctica para continuar después del día 21."
       },
       {
         day: 21,
         title: "Cerrar para continuar",
         reflection: "Este final no es una despedida. Es una invitación a seguir caminando con Dios un día a la vez.",
-        verse: "Un hábito espiritual se renueva cada día con un sí pequeño."
+        verse: "Un hábito espiritual se renueva cada día con un sí pequeño.",
+        focus: "Cerrar con gratitud.",
+        prayer: "Dios, gracias por acompañarme en este recorrido.",
+        action: "Escribe una carta breve sobre lo que deseas continuar."
       }
     ];
 
@@ -1085,6 +1310,9 @@
     const dayTitle = document.getElementById("dayTitle");
     const reflectionText = document.getElementById("reflectionText");
     const verseText = document.getElementById("verseText");
+    const focusText = document.getElementById("focusText");
+    const shortPrayerText = document.getElementById("shortPrayerText");
+    const actionText = document.getElementById("actionText");
     const favoriteButton = document.getElementById("favoriteButton");
     const completeDayButton = document.getElementById("completeDayButton");
     const nextDayButton = document.getElementById("nextDayButton");
@@ -1097,6 +1325,8 @@
     const completedDays = document.getElementById("completedDays");
     const streakDays = document.getElementById("streakDays");
     const progressBar = document.getElementById("progressBar");
+    const achievementRow = document.getElementById("achievementRow");
+    const celebrationPanel = document.getElementById("celebrationPanel");
     const toast = document.getElementById("toast");
 
     function getFriendlyNameFromEmail(email) {
@@ -1182,6 +1412,34 @@
       return streak;
     }
 
+    function renderAchievements(completed, streak) {
+      const achievements = [];
+
+      if (completed === 0) {
+        achievements.push("🌱 Comenzando");
+      }
+
+      if (completed >= 1) {
+        achievements.push("✨ Primer paso");
+      }
+
+      if (completed >= 7) {
+        achievements.push("🌿 7 días de avance");
+      }
+
+      if (streak >= 3) {
+        achievements.push("🔥 Racha activa");
+      }
+
+      if (completed >= 21) {
+        achievements.push("🏆 Recorrido completo");
+      }
+
+      achievementRow.innerHTML = achievements
+        .map((item) => `<span class="achievement">${item}</span>`)
+        .join("");
+    }
+
     function renderProgress() {
       const completed = getCompletedCount();
       const streak = getStreakCount();
@@ -1190,6 +1448,14 @@
       completedDays.textContent = completed;
       streakDays.textContent = streak;
       progressBar.style.width = percentage + "%";
+
+      renderAchievements(completed, streak);
+
+      if (completed >= 21) {
+        celebrationPanel.classList.remove("hidden");
+      } else {
+        celebrationPanel.classList.add("hidden");
+      }
     }
 
     function renderDayGrid() {
@@ -1233,6 +1499,9 @@
       dayTitle.textContent = devotional.title;
       reflectionText.textContent = devotional.reflection;
       verseText.textContent = devotional.verse;
+      focusText.textContent = devotional.focus;
+      shortPrayerText.textContent = devotional.prayer;
+      actionText.textContent = devotional.action;
 
       favoriteButton.textContent = entry.favorite
         ? "★ Favorito guardado"
@@ -1285,18 +1554,16 @@
 
         currentUser = user;
 
+        const normalizedEmail = String(user.email || "").trim().toLowerCase();
+
         const { data, error: entitlementError } = await supabaseClient
           .from("entitlements")
           .select("id,email,permission_key,source_sku,active")
-          .eq("email", user.email)
+          .eq("email", normalizedEmail)
           .eq("permission_key", REQUIRED_PERMISSION_KEY)
           .eq("source_sku", REQUIRED_SOURCE_SKU)
           .eq("active", true)
           .limit(1);
-
-console.log("EMAIL:", user.email);
-console.log("DATA:", data);
-console.log("ERROR:", entitlementError);
 
         if (entitlementError) {
           console.error("Error consultando entitlements:", entitlementError);
@@ -1311,11 +1578,11 @@ console.log("ERROR:", entitlementError);
           return;
         }
 
-        const friendlyName = getFriendlyNameFromEmail(user.email);
+        const friendlyName = getFriendlyNameFromEmail(normalizedEmail);
 
         userPill.textContent = "Bienvenida, " + friendlyName;
 
-        storageKey = "hcd_mi_tiempo_con_dios_" + user.email;
+        storageKey = "hcd_mi_tiempo_con_dios_" + normalizedEmail;
 
         loadState();
         renderApp();
@@ -1342,8 +1609,10 @@ console.log("ERROR:", entitlementError);
         const entry = state[currentDay] || getDefaultEntry();
         entry.favorite = !entry.favorite;
         state[currentDay] = entry;
+
         saveState();
         renderApp();
+
         showToast(entry.favorite ? "Guardado como favorito" : "Favorito quitado");
       });
 
