@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Hogar con Propósito | Hábitos con Dios</title>
+  <meta name="description" content="Micro app premium de 21 días para hombres cristianos que desean edificar su hogar con carácter, discernimiento, oración y propósito." />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --navy: #111D35;
+      --navy-2: #172846;
+      --navy-3: #23375E;
+      --gold: #C99A3D;
+      --gold-2: #E3B95F;
+      --gold-soft: #F6E8C5;
+      --olive: #4C5B3F;
+      --olive-2: #667452;
+      --cream: #F8F3E8;
+      --cream-2: #FFF9EF;
+      --white: #FFFFFF;
+      --ink: #172033;
+      --muted: #6B7280;
+      --line: rgba(201, 154, 61, 0.25);
+      --danger: #A64037;
+      --success: #3E7447;
+      --shadow: 0 24px 70px rgba(17, 29, 53, 0.18);
+      --soft-shadow: 0 14px 32px rgba(17, 29, 53, 0.12);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(227, 185, 95, 0.25), transparent 34%),
+        radial-gradient(circle at top right, rgba(17, 29, 53, 0.22), transparent 36%),
+        linear-gradient(145deg, #F8F3E8 0%, #FFFFFF 45%, #EEF1F3 100%);
+      overflow-x: hidden;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin-bottom: 22px;
+      padding: 14px 0;
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+      background:
+        linear-gradient(145deg, rgba(17, 29, 53, 0.98), rgba(35, 55, 94, 0.96)),
+        radial-gradient(circle at 20% 20%, rgba(227, 185, 95, 0.5), transparent 38%);
+      box-shadow: 0 12px 26px rgba(17, 29, 53, 0.24);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.95rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 29, 53, 0.1);
+      background: #fff;
+      color: var(--navy);
+      font-size: 0.86rem;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(17, 29, 53, 0.08);
+    }
+
+    .pill.primary {
+      border-color: rgba(201, 154, 61, 0.45);
+      background: linear-gradient(135deg, var(--navy), var(--navy-3));
+      color: #fff;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(17, 29, 53, 0.96), rgba(23, 40, 70, 0.92)),
+        radial-gradient(circle at 85% 16%, rgba(227, 185, 95, 0.32), transparent 34%);
+      color: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(227, 185, 95, 0.22);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(17, 29, 53, 0.22), rgba(17, 29, 53, 0.62)),
+        radial-gradient(circle at 16% 20%, rgba(255, 255, 255, 0.12), transparent 28%);
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -140px;
+      bottom: -180px;
+      border-radius: 50%;
+      background: rgba(227, 185, 95, 0.22);
+      filter: blur(2px);
+      z-index: -1;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 24px;
+      padding: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(227, 185, 95, 0.3);
+      border-radius: 999px;
+      color: var(--gold-soft);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      font-size: clamp(2.25rem, 6vw, 5.25rem);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold-2);
+    }
+
+    .hero p {
+      max-width: 660px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .hero-card {
+      min-height: 110px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 16px;
+      transition: transform 160ms ease, background 160ms ease, border 160ms ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(227, 185, 95, 0.42);
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 7px;
+    }
+
+    .hero-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.35;
+    }
+
+    .mission-card {
+      border-radius: 30px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(227, 185, 95, 0.28);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .mission-card small {
+      display: block;
+      color: var(--gold-soft);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .mission-card strong {
+      display: block;
+      font-size: 3.4rem;
+      line-height: 1;
+      color: var(--gold-2);
+      margin-bottom: 8px;
+    }
+
+    .mission-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.5;
+    }
+
+    .progress-track {
+      margin-top: 20px;
+      height: 12px;
+      width: 100%;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-2));
+      transition: width 300ms ease;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      padding: 20px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(17, 29, 53, 0.08);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .metric small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      color: var(--navy);
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 106px;
+      border-radius: 30px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(17, 29, 53, 0.08);
+    }
+
+    .sidebar h2 {
+      color: var(--navy);
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      background: transparent;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 850;
+      transition: background 160ms ease, transform 160ms ease, border 160ms ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(201, 154, 61, 0.1);
+      transform: translateX(2px);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--navy), var(--navy-3));
+      color: #fff;
+      border-color: rgba(227, 185, 95, 0.38);
+      box-shadow: 0 14px 30px rgba(17, 29, 53, 0.16);
+    }
+
+    .panel {
+      display: none;
+      animation: fadeUp 220ms ease both;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-card {
+      border-radius: 32px;
+      padding: 26px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(17, 29, 53, 0.08);
+      box-shadow: var(--soft-shadow);
+      margin-bottom: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(201, 154, 61, 0.12);
+      color: var(--navy);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      color: var(--navy);
+      font-size: clamp(1.45rem, 3vw, 2.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .section-head p,
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .day-selector {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .day-dot {
+      min-height: 48px;
+      border: 1px solid rgba(17, 29, 53, 0.1);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--navy);
+      font-weight: 900;
+      position: relative;
+      transition: transform 160ms ease, background 160ms ease, border 160ms ease;
+    }
+
+    .day-dot:hover {
+      transform: translateY(-2px);
+      border-color: rgba(201, 154, 61, 0.48);
+    }
+
+    .day-dot.active {
+      background: linear-gradient(135deg, var(--navy), var(--navy-3));
+      color: #fff;
+      border-color: rgba(227, 185, 95, 0.42);
+    }
+
+    .day-dot.done::after {
+      content: "✓";
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--success);
+      font-size: 0.72rem;
+      border: 2px solid #fff;
+    }
+
+    .devotional-card {
+      overflow: hidden;
+      border-radius: 32px;
+      border: 1px solid rgba(201, 154, 61, 0.22);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 243, 232, 0.82)),
+        radial-gradient(circle at 86% 0%, rgba(227, 185, 95, 0.18), transparent 34%);
+    }
+
+    .devotional-top {
+      padding: 26px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, var(--navy), var(--navy-2)),
+        radial-gradient(circle at 92% 10%, rgba(227, 185, 95, 0.32), transparent 34%);
+    }
+
+    .day-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.11);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .devotional-top h3 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .devotional-top p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.65;
+      max-width: 780px;
+    }
+
+    .devotional-body {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .content-box {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(17, 29, 53, 0.08);
+    }
+
+    .content-box h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--navy);
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+    }
+
+    .content-box p {
+      color: #334155;
+      line-height: 1.68;
+    }
+
+    .journal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 0.88rem;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid rgba(17, 29, 53, 0.12);
+      border-radius: 18px;
+      background: #fff;
+      color: var(--ink);
+      padding: 13px 14px;
+      outline: none;
+      transition: border 160ms ease, box-shadow 160ms ease;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 112px;
+      line-height: 1.5;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(201, 154, 61, 0.66);
+      box-shadow: 0 0 0 4px rgba(201, 154, 61, 0.12);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      min-height: 46px;
+      border: 1px solid rgba(17, 29, 53, 0.1);
+      border-radius: 999px;
+      padding: 0 16px;
+      background: #fff;
+      color: var(--navy);
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 18px rgba(17, 29, 53, 0.08);
+      transition: transform 160ms ease, background 160ms ease, border 160ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(201, 154, 61, 0.48);
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: rgba(201, 154, 61, 0.44);
+      background: linear-gradient(135deg, var(--navy), var(--navy-3));
+    }
+
+    .btn.gold {
+      color: var(--navy);
+      border-color: rgba(201, 154, 61, 0.48);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+    }
+
+    .btn.danger {
+      color: #fff;
+      background: linear-gradient(135deg, #82322D, #A64037);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-card {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(17, 29, 53, 0.08);
+    }
+
+    .mini-card h3 {
+      color: var(--navy);
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .mini-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.94rem;
+    }
+
+    .radar-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .radar-visual {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle, rgba(227, 185, 95, 0.16), transparent 48%),
+        linear-gradient(135deg, rgba(17, 29, 53, 0.98), rgba(35, 55, 94, 0.95));
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .radar-score {
+      position: relative;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        conic-gradient(var(--gold-2) var(--radar-percent, 0%), rgba(255,255,255,0.12) 0),
+        radial-gradient(circle at center, var(--navy) 0 59%, transparent 60%);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.18);
+    }
+
+    .radar-score::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--navy), var(--navy-2));
+      border: 1px solid rgba(227, 185, 95, 0.22);
+    }
+
+    .radar-score-inner {
+      position: relative;
+      text-align: center;
+    }
+
+    .radar-score-inner strong {
+      display: block;
+      font-size: 3.4rem;
+      line-height: 1;
+      color: var(--gold-2);
+    }
+
+    .radar-score-inner span {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .range-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .range-item {
+      padding: 14px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid rgba(17, 29, 53, 0.08);
+    }
+
+    .range-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    input[type="range"] {
+      padding: 0;
+      accent-color: var(--gold);
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .badge-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      padding: 18px;
+      border-radius: 26px;
+      background:
+        linear-gradient(145deg, rgba(17, 29, 53, 0.96), rgba(35, 55, 94, 0.94)),
+        radial-gradient(circle at 80% 10%, rgba(227, 185, 95, 0.25), transparent 38%);
+      color: #fff;
+      border: 1px solid rgba(227, 185, 95, 0.22);
+    }
+
+    .badge-card.locked {
+      filter: grayscale(0.8);
+      opacity: 0.68;
+    }
+
+    .badge-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .badge-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .badge-card p {
+      color: rgba(255, 255, 255, 0.74);
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .badge-state {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--gold-soft);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .record {
+      padding: 15px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid rgba(17, 29, 53, 0.08);
+    }
+
+    .record strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .record small {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .check-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(17, 29, 53, 0.08);
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+    }
+
+    .notice {
+      border-radius: 26px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(201, 154, 61, 0.12), rgba(255, 255, 255, 0.86));
+      border: 1px solid rgba(201, 154, 61, 0.25);
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 80;
+      min-width: min(460px, calc(100vw - 32px));
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--navy), var(--navy-3));
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px dashed rgba(17, 29, 53, 0.16);
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .layout,
+      .radar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid,
+      .cards-grid,
+      .badge-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-shell {
+        width: min(100% - 22px, var(--max));
+        padding-top: 12px;
+      }
+
+      .topbar-inner {
+        border-radius: 24px;
+      }
+
+      .top-actions .pill:not(.primary) {
+        display: none;
+      }
+
+      .hero-inner {
+        padding: 26px 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 13vw, 3.9rem);
+      }
+
+      .mission-card strong {
+        font-size: 2.8rem;
+      }
+
+      .summary-grid,
+      .cards-grid,
+      .badge-grid,
+      .journal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .day-selector {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .section-card {
+        padding: 20px;
+        border-radius: 26px;
+      }
+
+      .section-head {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .mobile-nav-toggle {
+        display: flex;
+        width: 100%;
+        margin: 16px 0;
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="toast" id="toast">Guardado correctamente.</div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        #inicio
+          <div class="brand-mark">HG</div>
+          <div class="brand-copy">
+            <strong>Mi Hogar con Propósito</strong>
+            <span>Hábitos con Dios · Hombres</span>
+          </div>
+        </a>
+
+        <div class="top-actions">
+          <button class="pill" type="button" id="resetProgressBtn">Reiniciar</button>
+          <button class="pill primary" type="button" id="continueBtn">Continuar día</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Misión devocional de 21 días</div>
+          <h1>Mi Hogar <span>con Propósito</span></h1>
+          <p>
+            Una experiencia digital para hombres que desean fortalecer su carácter, orar por su familia,
+            tomar decisiones con discernimiento y construir un legado de fe desde la humildad, la presencia y el amor práctico.
+          </p>
+
+          <div class="hero-actions">
+            <button class="hero-card" type="button" data-go="camino">
+              <strong>🛡 Continuar mi día</strong>
+              <small>Abre el día actual del camino de 21 días.</small>
+            </button>
+
+            <button class="hero-card" type="button" data-go="radar">
+              <strong>📍 Radar del Hogar</strong>
+              <small>Evalúa el estado espiritual y relacional de tu casa.</small>
+            </button>
+
+            <button class="hero-card" type="button" data-go="legado">
+              <strong>🏛 Mi Legado</strong>
+              <small>Escribe la huella espiritual que deseas dejar.</small>
+            </button>
+          </div>
+        </div>
+
+        <aside class="mission-card" aria-label="Progreso">
+          <small>Progreso de edificación</small>
+          <strong id="progressText">0/21</strong>
+          <span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen de avance">
+      <article class="metric">
+        <small>Días completados</small>
+        <strong id="metricDays">0</strong>
+      </article>
+
+      <article class="metric">
+        <small>Radar promedio</small>
+        <strong id="metricRadar">0</strong>
+      </article>
+
+      <article class="metric">
+        <small>Conversaciones</small>
+        <strong id="metricTalks">0</strong>
+      </article>
+
+      <article class="metric">
+        <small>Acciones guardadas</small>
+        <strong id="metricActions">0</strong>
+      </article>
+    </section>
+
+    <button class="btn primary mobile-nav-toggle" type="button" id="mobileNavBtn">☰ Abrir navegación</button>
+
+    <section class="layout">
+      <aside class="sidebar" id="sidebar">
+        <h2>Navegación</h2>
+        <div class="nav-list">
+          <button class="nav-btn active" type="button" data-view="camino">Camino 21 días <span>🛡</span></button>
+          <button class="nav-btn" type="button" data-view="radar">Radar del Hogar <span>📍</span></button>
+          <button class="nav-btn" type="button" data-view="caracter">Pasos de Carácter <span>⭐</span></button>
+          <button class="nav-btn" type="button" data-view="decisiones">Decisiones Sabias <span>🧭</span></button>
+          <button class="nav-btn" type="button" data-view="conversaciones">Conversaciones Clave <span>💬</span></button>
+          <button class="nav-btn" type="button" data-view="oracion">Oración Familiar <span>🙏</span></button>
+          <button class="nav-btn" type="button" data-view="legado">Mi Legado <span>🏛</span></button>
+          <button class="nav-btn" type="button" data-view="legal">Aviso importante <span>⚖️</span></button>
+        </div>
+      </aside>
+
+      <div class="main-panels">
+        <section class="panel active" id="panel-camino">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Camino principal</div>
+                <h2>21 días para edificar tu hogar con Dios</h2>
+                <p>
+                  Cada día incluye referencia bíblica, idea central, reflexión breve, oración,
+                  pregunta de journaling, acción práctica y declaración de identidad.
+                </p>
+              </div>
+              <button class="btn gold" type="button" id="markDoneTopBtn">Marcar día como completado</button>
+            </div>
+
+            <div class="day-selector" id="daySelector"></div>
+
+            <div class="devotional-card">
+              <div class="devotional-top">
+                <div class="day-meta">
+                  <span class="tag" id="dayNumberTag">Día 1</span>
+                  <span class="tag" id="daySectionTag">Identidad</span>
+                  <span class="tag" id="dayReferenceTag">Mateo 6:33</span>
+                </div>
+                <h3 id="dayTitle">Dios antes que todo</h3>
+                <p id="dayIdea">Todo liderazgo saludable comienza bajo el gobierno de Dios.</p>
+              </div>
+
+              <div class="devotional-body">
+                <div class="content-box">
+                  <h4>📖 Reflexión devocional</h4>
+                  <p id="dayReflection"></p>
+                </div>
+
+                <div class="content-box">
+                  <h4>🙏 Oración breve</h4>
+                  <p id="dayPrayer"></p>
+                </div>
+
+                <div class="journal-grid">
+                  <div class="content-box">
+                    <h4>✍️ Pregunta de journaling</h4>
+                    <p id="dayJournalQuestion"></p>
+                  </div>
+
+                  <div class="content-box">
+                    <h4>✅ Acción práctica</h4>
+                    <p id="dayAction"></p>
+                  </div>
+                </div>
+
+                <div class="content-box">
+                  <h4>🛡 Declaración de identidad</h4>
+                  <p id="dayIdentity"></p>
+                </div>
+
+                <div class="content-box">
+                  <h4>📝 Mi registro del día</h4>
+                  <div class="field">
+                    <label for="journalText">Qué me mostró Dios hoy</label>
+                    <textarea id="journalText" placeholder="Escribe una reflexión honesta y privada..."></textarea>
+                  </div>
+
+                  <div class="field">
+                    <label for="actionText">Mi acción concreta de hoy</label>
+                    <textarea id="actionText" placeholder="Ejemplo: escuchar con calma, pedir perdón, orar con mi familia..."></textarea>
+                  </div>
+
+                  <div class="btn-row">
+                    <button class="btn primary" type="button" id="saveDayBtn">Guardar día</button>
+                    <button class="btn gold" type="button" id="markDoneBtn">Marcar completado</button>
+                    <button class="btn" type="button" id="nextDayBtn">Siguiente día</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-radar">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Diagnóstico devocional</div>
+                <h2>Radar del Hogar</h2>
+                <p>
+                  Evalúa con honestidad áreas clave de tu hogar. No es para condenarte,
+                  sino para ayudarte a identificar dónde dar el próximo paso con sabiduría.
+                </p>
+              </div>
+              <button class="btn gold" type="button" id="saveRadarBtn">Guardar radar</button>
+            </div>
+
+            <div class="radar-grid">
+              <div class="radar-visual">
+                <div class="radar-score" id="radarScoreRing">
+                  <div class="radar-score-inner">
+                    <strong id="radarAverage">0</strong>
+                    <span id="radarLabel">En construcción</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="range-list" id="radarRanges"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-caracter">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Estados visuales de crecimiento</div>
+                <h2>Pasos de Carácter</h2>
+                <p>
+                  Estas insignias se desbloquean con tu avance en el camino de 21 días
+                  y reflejan virtudes centrales del ebook.
+                </p>
+              </div>
+            </div>
+
+            <div class="badge-grid" id="badgeGrid"></div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-decisiones">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Discernimiento</div>
+                <h2>Decisiones con Sabiduría</h2>
+                <p>
+                  Antes de avanzar bajo presión, detente, ora, busca consejo y evalúa si la decisión honra a Dios y cuida tu hogar.
+                </p>
+              </div>
+            </div>
+
+            <div class="cards-grid">
+              <div class="mini-card">
+                <h3>Nueva decisión</h3>
+
+                <div class="field">
+                  <label for="decisionTitle">Decisión o situación</label>
+                  <input id="decisionTitle" type="text" placeholder="Ejemplo: cambio laboral, conversación difícil, compra importante..." />
+                </div>
+
+                <div class="field">
+                  <label for="decisionOptions">Opciones que estoy considerando</label>
+                  <textarea id="decisionOptions" placeholder="Escribe las opciones posibles..."></textarea>
+                </div>
+
+                <div class="check-grid">
+                  <label class="check-item"><input type="checkbox" class="decision-check" value="ore" />Ya oré por esta decisión.</label>
+                  <label class="check-item"><input type="checkbox" class="decision-check" value="consejo" />Pedí consejo sabio o profesional si corresponde.</label>
+                  <label class="check-item"><input type="checkbox" class="decision-check" value="paz" />La decisión trae paz, no solo alivio inmediato.</label>
+                  <label class="check-item"><input type="checkbox" class="decision-check" value="honra" />La decisión honra a Dios y cuida a mi familia.</label>
+                </div>
+
+                <div class="btn-row">
+                  <button class="btn primary" type="button" id="saveDecisionBtn">Guardar decisión</button>
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h3>Historial</h3>
+                <div class="list" id="decisionList"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-conversaciones">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Escucha y honra</div>
+                <h2>Conversaciones Clave</h2>
+                <p>
+                  Registra conversaciones importantes para crecer en escucha, honra, calma y seguimiento práctico.
+                </p>
+              </div>
+            </div>
+
+            <div class="cards-grid">
+              <div class="mini-card">
+                <h3>Nueva conversación</h3>
+
+                <div class="field">
+                  <label for="talkPerson">Con quién fue</label>
+                  <input id="talkPerson" type="text" placeholder="Esposa, hijo, familiar, mentor..." />
+                </div>
+
+                <div class="field">
+                  <label for="talkTopic">Tema</label>
+                  <input id="talkTopic" type="text" placeholder="Ejemplo: perdón, finanzas, crianza, planes..." />
+                </div>
+
+                <div class="field">
+                  <label for="talkLearning">Qué aprendí</label>
+                  <textarea id="talkLearning" placeholder="Escribe qué escuchaste, qué entendiste o qué necesitas mejorar..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="talkNext">Próximo paso</label>
+                  <textarea id="talkNext" placeholder="Escribe una acción concreta de seguimiento..."></textarea>
+                </div>
+
+                <div class="btn-row">
+                  <button class="btn primary" type="button" id="saveTalkBtn">Guardar conversación</button>
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h3>Registro</h3>
+                <div class="list" id="talkList"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-oracion">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Intercesión familiar</div>
+                <h2>Mi Plan de Oración Familiar</h2>
+                <p>
+                  Ora primero por tu corazón, luego por sabiduría, honra, paciencia, decisiones, provisión integral y entrega del hogar a Dios.
+                </p>
+              </div>
+              <button class="btn gold" type="button" id="savePrayerBtn">Guardar oración</button>
+            </div>
+
+            <div class="cards-grid">
+              <div class="mini-card">
+                <h3>Enfoques de oración</h3>
+                <div class="check-grid" id="prayerChecks"></div>
+              </div>
+
+              <div class="mini-card">
+                <h3>Mi oración de hoy</h3>
+                <div class="field">
+                  <label for="familyPrayer">Escribe tu oración</label>
+                  <textarea id="familyPrayer" placeholder="Padre, guía mi corazón, mi familia y mis decisiones..."></textarea>
+                </div>
+
+                <div class="notice">
+                  La oración no reemplaza conversación, responsabilidad, consejería o ayuda profesional cuando corresponde.
+                  La fe y la sabiduría práctica pueden caminar juntas.
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-legado">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Visión de hogar</div>
+                <h2>Mi Legado</h2>
+                <p>
+                  Escribe con intención la huella espiritual, relacional y práctica que deseas dejar en tu familia.
+                </p>
+              </div>
+              <button class="btn gold" type="button" id="saveLegacyBtn">Guardar legado</button>
+            </div>
+
+            <div class="journal-grid">
+              <div class="field">
+                <label for="legacyValues">Valores que quiero transmitir</label>
+                <textarea id="legacyValues" placeholder="Ejemplo: fe, honra, verdad, humildad, servicio..."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="legacyHome">La visión de hogar que quiero construir</label>
+                <textarea id="legacyHome" placeholder="Describe cómo quieres que se viva la fe, el amor y la paz en casa..."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="legacyLetter">Carta a mi familia</label>
+                <textarea id="legacyLetter" placeholder="Querida familia, deseo que recuerden de mí..."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="legacyPromise">Mi compromiso delante de Dios</label>
+                <textarea id="legacyPromise" placeholder="Señor, hoy decido edificar mi hogar con..."></textarea>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="panel-legal">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Aviso importante</div>
+                <h2>Acompañamiento devocional responsable</h2>
+                <p>
+                  Esta app fue creada como apoyo espiritual y práctico para el crecimiento personal y familiar.
+                </p>
+              </div>
+            </div>
+
+            <div class="notice">
+              <p>
+                Este recurso es una guía devocional de acompañamiento y no reemplaza consejería pastoral,
+                terapia, acompañamiento psicológico, atención médica, consejería matrimonial, asesoría financiera profesional
+                ni apoyo especializado.
+              </p>
+              <br />
+              <p>
+                Si existe violencia, adicción, crisis familiar, pensamientos de hacerte daño,
+                conflicto grave en el matrimonio, presión financiera severa o una situación que pone en riesgo
+                a alguien del hogar, busca ayuda inmediata de un profesional calificado, líder pastoral responsable,
+                autoridad correspondiente o línea de emergencia local.
+              </p>
+              <br />
+              <p>
+                Ser un hombre de Dios también implica reconocer cuándo necesitas ayuda y recibir acompañamiento sabio.
+              </p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <strong>Hábitos con Dios · Hombres</strong><br />
+      Mi Hogar con Propósito · Complemento digital de El Hombre que Edifica su Hogar.<br />
+      Tus registros se guardan localmente en este dispositivo.
+    </footer>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "hcg_mi_hogar_con_proposito_v1";
+
+    const DAYS = [
+      {
+        day: 1,
+        section: "Identidad",
+        title: "Dios antes que todo",
+        reference: "Mateo 6:33",
+        idea: "Todo liderazgo saludable comienza bajo el gobierno de Dios.",
+        reflection: "Antes de organizar tu casa, Dios quiere ordenar tu corazón. Buscarle primero no es una tarea más de la lista, es la raíz de la que brota todo lo demás. Cuando pones a Dios en el centro, tus decisiones dejan de nacer del miedo o la urgencia y comienzan a nacer de la confianza.",
+        prayer: "Padre, ocupa el primer lugar en mi día y en mi hogar. Antes de resolver o dirigir, quiero buscarte a Ti; ordena mi corazón para que todo lo demás encuentre su lugar.",
+        question: "¿Qué ocupa hoy el primer lugar en mi mente y mi tiempo, y qué cambiaría si Dios ocupara ese lugar?",
+        action: "Aparta los primeros diez minutos de tu día para orar y leer, antes de revisar el teléfono o el trabajo.",
+        identity: "Busco a Dios primero. Cuando Él dirige mi corazón, dirijo mi hogar con paz y no con afán."
+      },
+      {
+        day: 2,
+        section: "Identidad",
+        title: "Mi valor no depende solo de lo que produzco",
+        reference: "Salmo 139",
+        idea: "Soy hijo antes que proveedor.",
+        reflection: "Es fácil medir el propio valor por lo que se produce: el sueldo, los logros, lo que se resuelve. Pero Dios te vio y te amó antes de que dieras un resultado. Tu identidad no se gana, se recibe. Cuando descansas en que eres hijo, empiezas a servir desde la libertad.",
+        prayer: "Señor, gracias porque me conoces y me amas más allá de mis resultados. Líbrame de medir mi valor por lo que produzco y enséñame a descansar en que soy tu hijo.",
+        question: "¿En qué áreas estoy midiendo mi valor por mi rendimiento en lugar de mi identidad en Dios?",
+        action: "Dedica tiempo a tu familia sin que sea productivo: conversa, escucha o juega sin prisa.",
+        identity: "Soy hijo de Dios antes que proveedor. Mi valor está seguro en Él, y desde ahí sirvo a mi familia."
+      },
+      {
+        day: 3,
+        section: "Identidad",
+        title: "Fuerza y humildad pueden caminar juntas",
+        reference: "Miqueas 6:8",
+        idea: "La verdadera fortaleza se expresa con humildad, justicia y misericordia.",
+        reflection: "El mundo enseña que fuerza y humildad son opuestas, pero en Dios caminan juntas. La verdadera fortaleza no aplasta: hace justicia, ama la misericordia y camina con humildad. Un hombre fuerte reconoce cuándo se equivocó y pide perdón sin sentirse menos.",
+        prayer: "Dios, hazme fuerte sin dejar de ser humilde. Que mi firmeza sirva para proteger y mi humildad para acercarme a quienes amo.",
+        question: "¿Dónde estoy confundiendo dureza con fortaleza, y qué pasaría si respondiera con humildad?",
+        action: "Reconoce ante alguien de tu familia un error reciente y pide perdón con sinceridad.",
+        identity: "Soy fuerte y humilde a la vez. Mi fortaleza protege y mi humildad reconcilia."
+      },
+      {
+        day: 4,
+        section: "Identidad",
+        title: "El carácter sostiene lo que el talento construye",
+        reference: "Proverbios 4:23",
+        idea: "El corazón del hombre dirige la calidad de su liderazgo.",
+        reflection: "El talento puede abrir puertas, pero solo el carácter sostiene lo que construyes. De tu corazón brotan las decisiones, las palabras y las reacciones que tu familia recibe cada día. Un hogar firme no descansa sobre lo que un hombre logra, sino sobre quién es cuando nadie aplaude.",
+        prayer: "Señor, guarda mi corazón. Que de él broten palabras y decisiones que reflejen tu carácter en mi hogar.",
+        question: "¿Qué estoy permitiendo en mi corazón que, con el tiempo, podría dañar a mi familia?",
+        action: "Identifica un hábito que alimenta mal tu corazón y córtalo hoy.",
+        identity: "Guardo mi corazón porque de él depende la calidad de mi hogar. Mi carácter sostiene lo que construyo."
+      },
+      {
+        day: 5,
+        section: "Discernimiento",
+        title: "Aprender a escuchar a Dios",
+        reference: "Juan 10:27",
+        idea: "El discernimiento nace de una relación constante con Dios.",
+        reflection: "Escuchar a Dios no está reservado para unos pocos; es fruto de una relación cercana y constante. En medio del ruido, del trabajo y de las preocupaciones, la quietud te devuelve discernimiento. Un hombre que escucha a Dios lidera con menos ansiedad.",
+        prayer: "Dios, enséñame a reconocer tu voz en medio del ruido. Aquieta mi mente para escucharte antes de decidir.",
+        question: "¿Cuándo fue la última vez que me detuve en silencio para escuchar a Dios en lugar de solo hablar?",
+        action: "Reserva cinco minutos de silencio hoy, sin pantallas, para orar y escuchar.",
+        identity: "Reconozco la voz de mi Pastor. Escucho a Dios y desde esa quietud tomo mejores decisiones."
+      },
+      {
+        day: 6,
+        section: "Carácter",
+        title: "La integridad cuando nadie observa",
+        reference: "Salmo 15",
+        idea: "Un hogar seguro se edifica con verdad, coherencia y fidelidad.",
+        reflection: "La integridad es quién eres cuando nadie te ve. No se trata de aparentar en público, sino de ser la misma persona en el trabajo, en el teléfono y en casa. Tus hijos y tu esposa perciben la coherencia entre lo que dices y lo que haces.",
+        prayer: "Señor, hazme un hombre íntegro también en lo oculto. Que lo que soy en privado honre lo que digo en público.",
+        question: "¿Hay alguna área oculta de mi vida que no resistiría la luz? ¿Qué paso puedo dar hoy?",
+        action: "Corrige hoy una pequeña incoherencia entre lo que dices y lo que haces en casa.",
+        identity: "Soy el mismo hombre en público y en privado. Mi integridad da seguridad a mi hogar."
+      },
+      {
+        day: 7,
+        section: "Descanso",
+        title: "Descansar también es obedecer",
+        reference: "Marcos 6:31",
+        idea: "Un hombre cansado necesita aprender a recibir descanso en Dios.",
+        reflection: "Descansar no es debilidad ni pereza; es reconocer que no eres inagotable y que Dios sostiene lo que sueltas. El cansancio prolongado endurece el trato, acorta la paciencia y roba presencia. Un hombre que descansa bien ama mejor.",
+        prayer: "Señor, enséñame a descansar sin culpa. Recuérdame que Tú sostienes mi hogar incluso cuando yo me detengo.",
+        question: "¿Cómo está afectando mi cansancio la forma en que trato a mi familia?",
+        action: "Aparta hoy un tiempo real de descanso: sin trabajo, sin culpa, presente con los tuyos o contigo.",
+        identity: "Descansar es confiar. Cuido mi descanso para amar a mi familia con fuerzas renovadas."
+      },
+      {
+        day: 8,
+        section: "Matrimonio",
+        title: "Amar no es controlar",
+        reference: "Efesios 5",
+        idea: "El amor bíblico se expresa en entrega, honra y servicio, no en dominio.",
+        reflection: "El amor bíblico no domina: se entrega. Amar así a tu esposa significa buscar su bien antes que tu comodidad, honrarla en lugar de controlarla, servir en vez de exigir. El control nace del miedo; el amor verdadero nace de la seguridad en Dios.",
+        prayer: "Señor, enséñame a amar a mi esposa con entrega y no con control. Que mi amor busque su bien antes que mi comodidad.",
+        question: "¿En qué momentos confundo amor con control, y cómo puedo servir en lugar de imponer?",
+        action: "Haz hoy algo concreto por tu esposa que busque su bien, sin esperar nada a cambio.",
+        identity: "Amo con entrega, no con control. Sirvo a mi esposa como Cristo me amó a mí."
+      },
+      {
+        day: 9,
+        section: "Comunicación",
+        title: "Escuchar antes de corregir",
+        reference: "Santiago 1:19",
+        idea: "La escucha abre caminos que la dureza cierra.",
+        reflection: "Muchas veces respondemos antes de entender. Escuchar de verdad no es esperar tu turno para corregir; es querer comprender el corazón del otro. Cuando tu esposa o tus hijos se sienten escuchados, se abren; cuando se sienten juzgados, se cierran.",
+        prayer: "Señor, hazme pronto para escuchar y lento para reaccionar. Dame paciencia para entender antes de responder.",
+        question: "¿A quién en mi hogar necesito escuchar de verdad, sin interrumpir ni corregir de inmediato?",
+        action: "En tu próxima conversación difícil, escucha completo antes de dar tu opinión o solución.",
+        identity: "Escucho antes de corregir. La paciencia para oír abre el corazón de mi familia."
+      },
+      {
+        day: 10,
+        section: "Paternidad",
+        title: "La ternura también es fortaleza",
+        reference: "Colosenses 3:12",
+        idea: "La mansedumbre no debilita al hombre; revela dominio propio.",
+        reflection: "La ternura no está reñida con la hombría; es una forma madura de fortaleza. La mansedumbre no es debilidad: es fuerza bajo control, poder que decide ser amable. Un padre tierno no pierde autoridad, gana confianza.",
+        prayer: "Señor, vísteme de ternura y mansedumbre. Que mi fortaleza sepa abrazar, consolar y hablar con dulzura.",
+        question: "¿Dónde necesito mostrar más ternura sin sentir que pierdo autoridad?",
+        action: "Expresa hoy afecto de forma concreta: un abrazo, una palabra amable o tiempo presente con alguien de tu hogar.",
+        identity: "Mi ternura es fortaleza bajo control. Abrazo y consuelo sin perder firmeza."
+      },
+      {
+        day: 11,
+        section: "Paz",
+        title: "Cómo enfrentamos conflictos",
+        reference: "Proverbios 15:1",
+        idea: "Una respuesta sabia puede proteger la paz del hogar.",
+        reflection: "El conflicto en casa es inevitable; la forma de enfrentarlo marca la diferencia. No se trata de evitar los temas difíciles, sino de tratarlos con calma y respeto. Bajar el tono no es rendirse: es proteger la relación mientras resuelves el problema.",
+        prayer: "Señor, dame dominio propio en el conflicto. Que mi respuesta traiga calma y no más fuego a mi hogar.",
+        question: "¿Cómo suelo reaccionar en los desacuerdos, y qué necesito cambiar para cuidar la paz?",
+        action: "La próxima vez que sientas que subes el tono, respira, baja la voz y responde con calma.",
+        identity: "Cuido la paz aun en el desacuerdo. Mi respuesta suave protege a mi familia."
+      },
+      {
+        day: 12,
+        section: "Perdón",
+        title: "Perdonar y pedir perdón",
+        reference: "Efesios 4:32",
+        idea: "La humildad sana espacios que el orgullo rompe.",
+        reflection: "El orgullo levanta muros; la humildad los derriba. Pedir perdón no te hace menos hombre; te hace un hombre libre. Perdonar no significa que no dolió, sino que decides no seguir cobrando la deuda.",
+        prayer: "Señor, dame humildad para pedir perdón y libertad para perdonar, como Tú me has perdonado a mí.",
+        question: "¿A quién necesito pedir perdón, y a quién necesito perdonar en mi hogar?",
+        action: "Da hoy un paso: pide perdón por algo concreto o suelta un rencor que has cargado.",
+        identity: "Pido perdón sin orgullo y perdono sin cobrar. En mi hogar las heridas se sanan."
+      },
+      {
+        day: 13,
+        section: "Matrimonio",
+        title: "Honrar a mi esposa diariamente",
+        reference: "1 Pedro 3:7",
+        idea: "La honra se demuestra en palabras, decisiones y cuidado cotidiano.",
+        reflection: "Honrar a tu esposa no es un gesto de un día especial; es una decisión diaria. La honra se ve en los detalles: cómo le hablas, cómo la defiendes, cómo valoras su opinión y su esfuerzo. Cuando tus hijos ven cómo tratas a su madre, aprenden respeto.",
+        prayer: "Señor, enséñame a honrar a mi esposa cada día, en mis palabras, decisiones y detalles. Que se sienta valorada y segura.",
+        question: "¿De qué formas concretas puedo honrar hoy a mi esposa con mis palabras y acciones?",
+        action: "Dile hoy a tu esposa algo específico que valoras de ella, y respáldalo con un gesto.",
+        identity: "Honro a mi esposa cada día. Mi trato hacia ella enseña a mis hijos lo que es el respeto."
+      },
+      {
+        day: 14,
+        section: "Matrimonio",
+        title: "Construir amistad dentro del matrimonio",
+        reference: "Eclesiastés 4",
+        idea: "El matrimonio se fortalece cuando también se cultiva compañerismo.",
+        reflection: "El matrimonio se sostiene no solo por el compromiso, sino por la amistad. Con los años es fácil volverse compañeros de logística y olvidar ser amigos. Cultivar amistad es reír juntos, compartir sueños y disfrutar la compañía sin agenda.",
+        prayer: "Señor, ayúdame a cultivar amistad con mi esposa. Que no solo compartamos tareas, sino también risas, sueños y compañía.",
+        question: "¿Cuándo fue la última vez que disfruté a mi esposa como amiga, sin agenda ni pendientes?",
+        action: "Planifica un momento simple con tu esposa esta semana para conversar o reír sin distracciones.",
+        identity: "Soy amigo de mi esposa, no solo su compañero de tareas. Cultivo nuestra amistad con intención."
+      },
+      {
+        day: 15,
+        section: "Legado",
+        title: "Ser ejemplo para mis hijos",
+        reference: "Deuteronomio 6",
+        idea: "Los hijos aprenden de lo que ven repetido en casa.",
+        reflection: "Los hijos aprenden más de lo que ven repetido que de lo que se les dice una vez. Tu ejemplo enseña más que tus sermones. Si quieres que tus hijos amen a Dios, que te vean amarlo; si quieres que sean íntegros, que te vean serlo.",
+        prayer: "Señor, hazme un ejemplo digno de seguir. Que mis hijos vean en mí una fe real y coherente en lo cotidiano.",
+        question: "¿Qué está aprendiendo mi hijo al observar mi vida, más allá de lo que le digo?",
+        action: "Comparte hoy con tu hijo algo de tu fe de forma natural: una oración, una conversación o un ejemplo.",
+        identity: "Enseño más con mi ejemplo que con mis palabras. Mi coherencia forma el corazón de mis hijos."
+      },
+      {
+        day: 16,
+        section: "Provisión",
+        title: "Provisión con sabiduría",
+        reference: "Proverbios 21:5",
+        idea: "Proveer también implica planificar, cuidar y administrar con integridad.",
+        reflection: "Proveer va más allá de traer dinero; incluye planificar, cuidar y administrar con integridad. La provisión también es emocional y espiritual: tu familia necesita tu presencia, no solo tu sustento. Administrar bien lo que Dios te da es un acto de amor.",
+        prayer: "Señor, dame sabiduría para proveer y administrar con integridad. Que cuide bien lo que pones en mis manos.",
+        question: "¿Estoy administrando con orden y previsión lo que Dios me ha dado, o desde la prisa?",
+        action: "Revisa hoy un aspecto práctico de tu economía familiar y da un paso concreto de orden.",
+        identity: "Proveo con sabiduría y administro con integridad. Cuido lo que Dios pone en mis manos."
+      },
+      {
+        day: 17,
+        section: "Discernimiento",
+        title: "Discernir antes de decidir",
+        reference: "Santiago 1:5",
+        idea: "Un hombre sabio no decide solo desde la presión, sino desde la dirección de Dios.",
+        reflection: "Las decisiones bajo presión suelen ser malas decisiones. Discernir es detenerse a orar, buscar consejo y esperar dirección antes de actuar. Un hombre sabio no confunde urgencia con claridad.",
+        prayer: "Señor, dame sabiduría para las decisiones que enfrento. Que no decida desde la presión, sino desde tu dirección.",
+        question: "¿Qué decisión estoy por tomar apresuradamente que necesita más oración y consejo?",
+        action: "Ante una decisión importante, tómate un tiempo para orar y consultar a alguien sabio antes de resolver.",
+        identity: "Discierno antes de decidir. Pido sabiduría a Dios y no me guío solo por la presión."
+      },
+      {
+        day: 18,
+        section: "Presión",
+        title: "Cómo manejar el estrés y la presión",
+        reference: "Mateo 11:28",
+        idea: "El peso del hogar no debe llevarse sin descanso, oración y apoyo sano.",
+        reflection: "El peso del hogar es real, pero no fuiste diseñado para cargarlo solo. Llevar el estrés en silencio termina saliendo por donde no debe: impaciencia, distancia o enojo. Un hombre fuerte sabe dónde descargar su peso.",
+        prayer: "Señor, vengo a Ti con mi cansancio y mi presión. Ayúdame a soltar en tus manos lo que no puedo cargar solo.",
+        question: "¿Dónde estoy descargando mi estrés, y cómo está afectando eso a mi familia?",
+        action: "Identifica una fuente concreta de presión y compártela hoy con Dios y con una persona de confianza.",
+        identity: "No cargo solo. Llevo mi presión a Dios y sé dónde descansar mi peso."
+      },
+      {
+        day: 19,
+        section: "Paz",
+        title: "Crear una cultura de paz en casa",
+        reference: "Romanos 12:18",
+        idea: "La paz se construye con decisiones repetidas, palabras sabias y presencia intencional.",
+        reflection: "La paz en el hogar no llega sola; se construye con decisiones repetidas. Eso significa cuidar tu tono, elegir tus batallas y sembrar palabras que edifiquen. Tu presencia marca gran parte del clima emocional que tu familia respira.",
+        prayer: "Señor, hazme un instrumento de paz en mi hogar. Que mis palabras y mi presencia siembren calma y respeto.",
+        question: "¿Qué aporto al clima emocional de mi casa: paz o tensión?",
+        action: "Elige hoy una palabra o gesto que siembre calma en un momento que suele ser tenso.",
+        identity: "Siembro paz en mi hogar. En cuanto depende de mí, cuido el clima de mi casa."
+      },
+      {
+        day: 20,
+        section: "Legado",
+        title: "El legado que quiero dejar",
+        reference: "Salmo 78",
+        idea: "El legado espiritual se forma en hábitos, palabras y ejemplo.",
+        reflection: "El legado más valioso no es material; es espiritual. Tu legado se forma en los hábitos que repites, las palabras que siembras y el ejemplo que dejas. Un día tus hijos no recordarán cada regalo, pero sí recordarán quién fuiste.",
+        prayer: "Señor, ayúdame a dejar un legado de fe. Que mis hábitos, palabras y ejemplo señalen a mis hijos hacia Ti.",
+        question: "¿Qué legado espiritual estoy construyendo hoy con mis hábitos y mi ejemplo?",
+        action: "Comparte con tu familia una historia de cómo Dios ha obrado en tu vida.",
+        identity: "Construyo un legado de fe. Mis hábitos y mi ejemplo señalan a mi familia hacia Dios."
+      },
+      {
+        day: 21,
+        section: "Consagración",
+        title: "Mi hogar pertenece a Dios",
+        reference: "Josué 24:15",
+        idea: "Un hogar firme se rinde primero al Señor.",
+        reflection: "Al final del camino, todo se resume en una decisión: ¿a quién servirá tu casa? Rendir tu hogar a Dios no es un acto único, sino una elección diaria de ponerlo a Él en el centro. Cuando tu casa pertenece a Dios, edificas sobre la Roca.",
+        prayer: "Señor, mi hogar te pertenece. Reina en mi casa y en mi corazón; hoy elijo servirte con mi familia.",
+        question: "¿Qué significa en la práctica que mi hogar le pertenezca a Dios, y qué paso confirma esa decisión hoy?",
+        action: "Declara hoy, en oración con tu familia si es posible, que tu casa pertenece al Señor.",
+        identity: "Yo y mi casa servimos al Señor. Mi hogar pertenece a Dios y descansa sobre la Roca."
+      }
+    ];
+
+    const RADAR_AREAS = [
+      "Relación con Dios",
+      "Matrimonio",
+      "Hijos y familia",
+      "Carácter",
+      "Descanso",
+      "Paz del hogar",
+      "Integridad",
+      "Discernimiento"
+    ];
+
+    const PRAYER_ITEMS = [
+      "Oro primero por mi corazón.",
+      "Oro por sabiduría para escuchar.",
+      "Oro por mi esposa con honra, no con exigencia.",
+      "Oro por mis hijos con paciencia y presencia.",
+      "Oro por decisiones con discernimiento.",
+      "Oro por provisión espiritual, emocional, práctica y económica.",
+      "Oro para que mi casa pertenezca al Señor."
+    ];
+
+    const BADGES = [
+      { min: 1, icon: "🙏", title: "Hombre de Oración", description: "Comienza poniendo a Dios primero en tu día y en tu hogar." },
+      { min: 3, icon: "🛡", title: "Hombre de Carácter", description: "Decide crecer en humildad, integridad y coherencia diaria." },
+      { min: 7, icon: "🌿", title: "Hombre que Descansa", description: "Reconoce que amar bien también requiere descanso y límites sanos." },
+      { min: 10, icon: "❤️", title: "Esposo que Honra", description: "Practica honra, escucha, ternura y servicio en el matrimonio." },
+      { min: 15, icon: "👨‍👩‍👧‍👦", title: "Padre Presente", description: "Forma con ejemplo, presencia y conversaciones significativas." },
+      { min: 21, icon: "🏛", title: "Hombre de Legado", description: "Declara que tu hogar pertenece a Dios y construyes para generaciones." }
+    ];
+
+    let state = loadState();
+    let currentDay = state.currentDay || 1;
+
+    function defaultState() {
+      return {
+        currentDay: 1,
+        completedDays: [],
+        journals: {},
+        actions: {},
+        radar: {},
+        decisions: [],
+        talks: [],
+        prayer: {
+          checks: [],
+          text: ""
+        },
+        legacy: {
+          values: "",
+          home: "",
+          letter: "",
+          promise: ""
+        }
+      };
+    }
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? { ...defaultState(), ...JSON.parse(saved) } : defaultState();
+      } catch (error) {
+        console.warn("No se pudo cargar el estado local.", error);
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateMetrics();
+      renderBadges();
+    }
+
+    function toast(message) {
+      const toastEl = document.getElementById("toast");
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      window.setTimeout(() => toastEl.classList.remove("show"), 2100);
+    }
+
+    function renderDaySelector() {
+      const container = document.getElementById("daySelector");
+      container.innerHTML = "";
+
+      DAYS.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "day-dot";
+        btn.textContent = item.day;
+        btn.setAttribute("aria-label", "Abrir día " + item.day);
+
+        if (item.day === currentDay) btn.classList.add("active");
+        if (state.completedDays.includes(item.day)) btn.classList.add("done");
+
+        btn.addEventListener("click", () => {
+          currentDay = item.day;
+          state.currentDay = currentDay;
+          saveState();
+          renderCurrentDay();
+          renderDaySelector();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        container.appendChild(btn);
+      });
+    }
+
+    function renderCurrentDay() {
+      const item = DAYS.find((day) => day.day === currentDay) || DAYS[0];
+
+      document.getElementById("dayNumberTag").textContent = "Día " + item.day;
+      document.getElementById("daySectionTag").textContent = item.section;
+      document.getElementById("dayReferenceTag").textContent = item.reference;
+      document.getElementById("dayTitle").textContent = item.title;
+      document.getElementById("dayIdea").textContent = item.idea;
+      document.getElementById("dayReflection").textContent = item.reflection;
+      document.getElementById("dayPrayer").textContent = item.prayer;
+      document.getElementById("dayJournalQuestion").textContent = item.question;
+      document.getElementById("dayAction").textContent = item.action;
+      document.getElementById("dayIdentity").textContent = item.identity;
+
+      document.getElementById("journalText").value = state.journals[item.day] || "";
+      document.getElementById("actionText").value = state.actions[item.day] || "";
+    }
+
+    function saveCurrentDay() {
+      const day = currentDay;
+      state.journals[day] = document.getElementById("journalText").value.trim();
+      state.actions[day] = document.getElementById("actionText").value.trim();
+      state.currentDay = currentDay;
+      saveState();
+      toast("Día " + day + " guardado.");
+    }
+
+    function markCurrentDayDone() {
+      saveCurrentDay();
+      if (!state.completedDays.includes(currentDay)) {
+        state.completedDays.push(currentDay);
+        state.completedDays.sort((a, b) => a - b);
+      }
+
+      if (currentDay < 21) {
+        state.currentDay = currentDay + 1;
+      }
+
+      saveState();
+      renderDaySelector();
+      updateMetrics();
+      toast("Día " + currentDay + " completado.");
+    }
+
+    function goNextDay() {
+      if (currentDay < 21) {
+        currentDay += 1;
+        state.currentDay = currentDay;
+        saveState();
+        renderCurrentDay();
+        renderDaySelector();
+        toast("Avanzaste al día " + currentDay + ".");
+      } else {
+        toast("Llegaste al día 21. Tu hogar pertenece a Dios.");
+      }
+    }
+
+    function renderRadar() {
+      const container = document.getElementById("radarRanges");
+      container.innerHTML = "";
+
+      RADAR_AREAS.forEach((area) => {
+        const value = Number(state.radar[area] || 0);
+
+        const item = document.createElement("div");
+        item.className = "range-item";
+        item.innerHTML = `
+          <div class="range-top">
+            <span>${area}</span>
+            <span data-radar-value="${area}">${value}</span>
+          </div>
+          <input type="range" min="0" max="10" value="${value}" data-radar="${area}" aria-label="${area}" />
+        `;
+
+        container.appendChild(item);
+      });
+
+      container.querySelectorAll("input[type='range']").forEach((range) => {
+        range.addEventListener("input", (event) => {
+          const area = event.target.dataset.radar;
+          const value = Number(event.target.value);
+          state.radar[area] = value;
+          const label = document.querySelector(`[data-radar-value="${area}"]`);
+          if (label) label.textContent = value;
+          updateRadarVisual();
+        });
+      });
+
+      updateRadarVisual();
+    }
+
+    function updateRadarVisual() {
+      const values = RADAR_AREAS.map((area) => Number(state.radar[area] || 0));
+      const total = values.reduce((sum, value) => sum + value, 0);
+      const average = values.length ? Math.round(total / values.length) : 0;
+      const percent = Math.min(100, average * 10);
+
+      document.getElementById("radarAverage").textContent = average;
+      document.getElementById("radarScoreRing").style.setProperty("--radar-percent", percent + "%");
+
+      let label = "En construcción";
+      if (average >= 8) label = "Hogar fortalecido";
+      else if (average >= 5) label = "Crecimiento activo";
+      else if (average >= 1) label = "Necesita atención";
+
+      document.getElementById("radarLabel").textContent = label;
+      document.getElementById("metricRadar").textContent = average;
+    }
+
+    function saveRadar() {
+      saveState();
+      toast("Radar del Hogar guardado.");
+    }
+
+    function renderBadges() {
+      const container = document.getElementById("badgeGrid");
+      container.innerHTML = "";
+      const completed = state.completedDays.length;
+
+      BADGES.forEach((badge) => {
+        const unlocked = completed >= badge.min;
+        const card = document.createElement("article");
+        card.className = "badge-card" + (unlocked ? "" : " locked");
+        card.innerHTML = `
+          <span class="badge-state">${unlocked ? "Desbloqueado" : "Día " + badge.min}</span>
+          <div class="badge-icon">${badge.icon}</div>
+          <h3>${badge.title}</h3>
+          <p>${badge.description}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function saveDecision() {
+      const title = document.getElementById("decisionTitle").value.trim();
+      const options = document.getElementById("decisionOptions").value.trim();
+      const checks = Array.from(document.querySelectorAll(".decision-check:checked")).map((item) => item.value);
+
+      if (!title && !options) {
+        toast("Escribe una decisión antes de guardar.");
+        return;
+      }
+
+      let recommendation = "Buscar consejo";
+      if (checks.length >= 4) recommendation = "Avanzar con paz";
+      else if (checks.length >= 2) recommendation = "Esperar y confirmar";
+      else recommendation = "Orar antes de avanzar";
+
+      state.decisions.unshift({
+        id: Date.now(),
+        title,
+        options,
+        checks,
+        recommendation,
+        date: new Date().toLocaleDateString("es-MX")
+      });
+
+      document.getElementById("decisionTitle").value = "";
+      document.getElementById("decisionOptions").value = "";
+      document.querySelectorAll(".decision-check").forEach((item) => item.checked = false);
+
+      saveState();
+      renderDecisions();
+      toast("Decisión guardada.");
+    }
+
+    function renderDecisions() {
+      const container = document.getElementById("decisionList");
+      container.innerHTML = "";
+
+      if (!state.decisions.length) {
+        container.innerHTML = '<div class="empty">Aún no hay decisiones guardadas.</div>';
+        return;
+      }
+
+      state.decisions.slice(0, 10).forEach((item) => {
+        const record = document.createElement("div");
+        record.className = "record";
+        record.innerHTML = `
+          <strong>${escapeHTML(item.title || "Decisión sin título")}</strong>
+          <small>${escapeHTML(item.date)} · Resultado sugerido: ${escapeHTML(item.recommendation)}</small>
+          <small style="display:block; margin-top:6px;">${escapeHTML(item.options || "")}</small>
+        `;
+        container.appendChild(record);
+      });
+    }
+
+    function saveTalk() {
+      const person = document.getElementById("talkPerson").value.trim();
+      const topic = document.getElementById("talkTopic").value.trim();
+      const learning = document.getElementById("talkLearning").value.trim();
+      const next = document.getElementById("talkNext").value.trim();
+
+      if (!person && !topic && !learning) {
+        toast("Escribe una conversación antes de guardar.");
+        return;
+      }
+
+      state.talks.unshift({
+        id: Date.now(),
+        person,
+        topic,
+        learning,
+        next,
+        date: new Date().toLocaleDateString("es-MX")
+      });
+
+      document.getElementById("talkPerson").value = "";
+      document.getElementById("talkTopic").value = "";
+      document.getElementById("talkLearning").value = "";
+      document.getElementById("talkNext").value = "";
+
+      saveState();
+      renderTalks();
+      toast("Conversación guardada.");
+    }
+
+    function renderTalks() {
+      const container = document.getElementById("talkList");
+      container.innerHTML = "";
+
+      if (!state.talks.length) {
+        container.innerHTML = '<div class="empty">Aún no hay conversaciones guardadas.</div>';
+        return;
+      }
+
+      state.talks.slice(0, 10).forEach((item) => {
+        const record = document.createElement("div");
+        record.className = "record";
+        record.innerHTML = `
+          <strong>${escapeHTML(item.person || "Conversación")}: ${escapeHTML(item.topic || "Sin tema")}</strong>
+          <small>${escapeHTML(item.date)}</small>
+          <small style="display:block; margin-top:6px;">Aprendizaje: ${escapeHTML(item.learning || "Sin registro")}</small>
+          <small style="display:block; margin-top:4px;">Próximo paso: ${escapeHTML(item.next || "Sin registro")}</small>
+        `;
+        container.appendChild(record);
+      });
+    }
+
+    function renderPrayer() {
+      const container = document.getElementById("prayerChecks");
+      container.innerHTML = "";
+
+      PRAYER_ITEMS.forEach((item, index) => {
+        const checked = state.prayer.checks.includes(index);
+        const label = document.createElement("label");
+        label.className = "check-item";
+        label.innerHTML = `
+          <input type="checkbox" data-prayer="${index}" ${checked ? "checked" : ""} />
+          ${item}
+        `;
+        container.appendChild(label);
+      });
+
+      document.getElementById("familyPrayer").value = state.prayer.text || "";
+
+      container.querySelectorAll("input").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          state.prayer.checks = Array.from(container.querySelectorAll("input:checked")).map((item) => Number(item.dataset.prayer));
+        });
+      });
+    }
+
+    function savePrayer() {
+      state.prayer.text = document.getElementById("familyPrayer").value.trim();
+      state.prayer.checks = Array.from(document.querySelectorAll("#prayerChecks input:checked")).map((item) => Number(item.dataset.prayer));
+      saveState();
+      toast("Plan de oración guardado.");
+    }
+
+    function renderLegacy() {
+      document.getElementById("legacyValues").value = state.legacy.values || "";
+      document.getElementById("legacyHome").value = state.legacy.home || "";
+      document.getElementById("legacyLetter").value = state.legacy.letter || "";
+      document.getElementById("legacyPromise").value = state.legacy.promise || "";
+    }
+
+    function saveLegacy() {
+      state.legacy.values = document.getElementById("legacyValues").value.trim();
+      state.legacy.home = document.getElementById("legacyHome").value.trim();
+      state.legacy.letter = document.getElementById("legacyLetter").value.trim();
+      state.legacy.promise = document.getElementById("legacyPromise").value.trim();
+      saveState();
+      toast("Mi Legado fue guardado.");
+    }
+
+    function updateMetrics() {
+      const completed = state.completedDays.length;
+      const percent = Math.round((completed / 21) * 100);
+
+      document.getElementById("progressText").textContent = completed + "/21";
+      document.getElementById("progressFill").style.width = percent + "%";
+      document.getElementById("metricDays").textContent = completed;
+      document.getElementById("metricTalks").textContent = state.talks.length;
+      document.getElementById("metricActions").textContent = Object.values(state.actions).filter(Boolean).length;
+
+      let message = "Todo hogar firme comienza con un corazón rendido a Dios.";
+      if (completed >= 21) message = "Misión completa: sigue edificando tu hogar con fe, carácter y legado.";
+      else if (completed >= 15) message = "Estás construyendo legado con pasos concretos y constantes.";
+      else if (completed >= 8) message = "Tu liderazgo crece cuando amas, escuchas y honras.";
+      else if (completed >= 3) message = "El carácter se forma en decisiones pequeñas y fieles.";
+
+      document.getElementById("growthMessage").textContent = message;
+      updateRadarVisual();
+    }
+
+    function switchView(view) {
+      document.querySelectorAll(".panel").forEach((panel) => panel.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
+
+      const panel = document.getElementById("panel-" + view);
+      const nav = document.querySelector(`.nav-btn[data-view="${view}"]`);
+
+      if (panel) panel.classList.add("active");
+      if (nav) nav.classList.add("active");
+
+      document.getElementById("sidebar").classList.remove("open");
+
+      if (view === "radar") renderRadar();
+      if (view === "caracter") renderBadges();
+      if (view === "decisiones") renderDecisions();
+      if (view === "conversaciones") renderTalks();
+      if (view === "oracion") renderPrayer();
+      if (view === "legado") renderLegacy();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function continueDay() {
+      const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
+      currentDay = nextIncomplete ? nextIncomplete.day : 21;
+      state.currentDay = currentDay;
+      saveState();
+      renderCurrentDay();
+      renderDaySelector();
+      switchView("camino");
+    }
+
+    function resetProgress() {
+      const confirmed = window.confirm("¿Quieres reiniciar los datos guardados de esta app en este dispositivo?");
+      if (!confirmed) return;
+
+      state = defaultState();
+      currentDay = 1;
+      saveState();
+      renderAll();
+      toast("La app fue reiniciada.");
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".nav-btn").forEach((btn) => {
+        btn.addEventListener("click", () => switchView(btn.dataset.view));
+      });
+
+      document.querySelectorAll("[data-go]").forEach((btn) => {
+        btn.addEventListener("click", () => switchView(btn.dataset.go));
+      });
+
+      document.getElementById("mobileNavBtn").addEventListener("click", () => {
+        document.getElementById("sidebar").classList.toggle("open");
+      });
+
+      document.getElementById("continueBtn").addEventListener("click", continueDay);
+      document.getElementById("saveDayBtn").addEventListener("click", saveCurrentDay);
+      document.getElementById("markDoneBtn").addEventListener("click", markCurrentDayDone);
+      document.getElementById("markDoneTopBtn").addEventListener("click", markCurrentDayDone);
+      document.getElementById("nextDayBtn").addEventListener("click", goNextDay);
+      document.getElementById("saveRadarBtn").addEventListener("click", saveRadar);
+      document.getElementById("saveDecisionBtn").addEventListener("click", saveDecision);
+      document.getElementById("saveTalkBtn").addEventListener("click", saveTalk);
+      document.getElementById("savePrayerBtn").addEventListener("click", savePrayer);
+      document.getElementById("saveLegacyBtn").addEventListener("click", saveLegacy);
+      document.getElementById("resetProgressBtn").addEventListener("click", resetProgress);
+    }
+
+    function renderAll() {
+      renderDaySelector();
+      renderCurrentDay();
+      renderRadar();
+      renderBadges();
+      renderDecisions();
+      renderTalks();
+      renderPrayer();
+      renderLegacy();
+      updateMetrics();
+    }
+
+    bindEvents();
+    renderAll();
+  </script>
+</body>
+</html>
