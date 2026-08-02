@@ -46,18 +46,18 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 96px;
+      scroll-padding-top: 100px;
     }
 
     body {
+      min-height: 100vh;
+      overflow-x: hidden;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
       background:
         radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
         radial-gradient(circle at 92% 2%, rgba(85, 101, 68, 0.15), transparent 28%),
         linear-gradient(145deg, var(--cream), var(--beige));
-      color: var(--ink);
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
     a {
@@ -85,15 +85,15 @@
     }
 
     .app-shell {
-      padding-bottom: 92px;
+      padding-bottom: 104px;
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 60;
       backdrop-filter: blur(18px);
-      background: rgba(250, 247, 240, 0.92);
+      background: rgba(250, 247, 240, 0.94);
       border-bottom: 1px solid rgba(232, 222, 204, 0.9);
     }
 
@@ -274,8 +274,8 @@
     .sidebar,
     .day-panel,
     .journal-panel,
-    .mission-panel,
-    .celebration-panel {
+    .celebration-panel,
+    .library-panel {
       background: rgba(255, 255, 255, 0.88);
       border: 1px solid rgba(232, 222, 204, 0.96);
       border-radius: var(--radius-xl);
@@ -400,10 +400,56 @@
       line-height: 1.65;
     }
 
+    .progress-circle-wrap {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .progress-circle {
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      background:
+        conic-gradient(var(--gold) 0deg, rgba(255, 255, 255, 0.14) 0deg);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .progress-circle::before {
+      content: "";
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--green);
+      position: absolute;
+    }
+
+    .progress-circle strong {
+      position: relative;
+      z-index: 1;
+      color: var(--gold);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .progress-circle span {
+      position: relative;
+      z-index: 1;
+      color: #EFE7D8;
+      font-size: 11px;
+      font-weight: 900;
+      margin-top: 30px;
+      position: absolute;
+    }
+
     .progress-metric {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
+      margin-top: 10px;
     }
 
     .metric {
@@ -470,16 +516,16 @@
     .sidebar,
     .day-panel,
     .journal-panel,
-    .mission-panel,
-    .celebration-panel {
+    .celebration-panel,
+    .library-panel {
       padding: 22px;
     }
 
     .sidebar h2,
     .day-panel h2,
     .journal-panel h2,
-    .mission-panel h2,
-    .celebration-panel h2 {
+    .celebration-panel h2,
+    .library-panel h2 {
       color: var(--green);
       font-size: 24px;
       line-height: 1.1;
@@ -600,7 +646,7 @@
 
     .mini-card {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 18px;
       padding: 14px;
     }
@@ -684,6 +730,35 @@
       flex-wrap: wrap;
     }
 
+    .library-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .library-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .library-card strong {
+      display: block;
+      color: var(--green);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .library-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
     .note {
       margin-top: 22px;
       padding: 18px;
@@ -702,7 +777,7 @@
       transform: translateX(-50%);
       z-index: 70;
       width: min(520px, calc(100% - 24px));
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(232, 222, 204, 0.98);
       box-shadow: 0 18px 48px rgba(63, 74, 53, 0.18);
       backdrop-filter: blur(18px);
@@ -727,8 +802,7 @@
       font-weight: 900;
     }
 
-    .bottom-nav a.active,
-    .bottom-nav button.active {
+    .bottom-nav a.active {
       background: var(--soft-green);
       color: var(--green);
     }
@@ -775,12 +849,17 @@
       }
 
       .journal-grid,
-      .mini-cards {
+      .mini-cards,
+      .library-grid {
         grid-template-columns: 1fr;
       }
 
       .day-grid {
         grid-template-columns: repeat(7, 1fr);
+      }
+
+      .progress-circle-wrap {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -807,8 +886,8 @@
       .sidebar,
       .day-panel,
       .journal-panel,
-      .mission-panel,
       .celebration-panel,
+      .library-panel,
       .status-card {
         padding: 22px;
         border-radius: 26px;
@@ -894,7 +973,7 @@
     </header>
 
     <main class="page-shell">
-      <section class="hero" aria-labelledby="app-title">
+      <section class="hero" id="inicio" aria-labelledby="app-title">
         <div class="hero-card">
           <div class="eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
@@ -922,15 +1001,24 @@
             Pequeños pasos sostenidos pueden ayudarte a crear una rutina espiritual más posible.
           </p>
 
-          <div class="progress-metric">
-            <div class="metric">
-              <strong id="completedDays">0</strong>
-              <span>Días completados</span>
+          <div class="progress-circle-wrap">
+            <div class="progress-circle" id="progressCircle">
+              <strong id="progressPercent">0%</strong>
+              <span>avance</span>
             </div>
 
-            <div class="metric">
-              <strong id="streakDays">0</strong>
-              <span>Racha actual</span>
+            <div>
+              <div class="progress-metric">
+                <div class="metric">
+                  <strong id="completedDays">0</strong>
+                  <span>Días completados</span>
+                </div>
+
+                <div class="metric">
+                  <strong id="streakDays">0</strong>
+                  <span>Racha actual</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1062,33 +1150,60 @@
               Explorar más recursos
             </a>
           </section>
+
+          <section class="library-panel" aria-labelledby="libraryTitle">
+            <h2 id="libraryTitle">Continúa creciendo</h2>
+            <p class="reflection">
+              Este recorrido forma parte de una biblioteca espiritual en crecimiento. Muy pronto podrás descubrir nuevas experiencias devocionales.
+            </p>
+
+            <div class="library-grid">
+              <div class="library-card">
+                <strong>21 Días Más Cerca de Dios</strong>
+                <span>Disponible con tu acceso actual.</span>
+              </div>
+
+              <div class="library-card">
+                <strong>Pequeños Momentos con Dios</strong>
+                <span>Próximo lanzamiento para familias.</span>
+              </div>
+
+              <div class="library-card">
+                <strong>Cuando las Palabras Duelen</strong>
+                <span>Próximo recurso para jóvenes.</span>
+              </div>
+
+              <div class="library-card">
+                <strong>El Hombre que Edifica su Hogar</strong>
+                <span>Próximo lanzamiento para hombres.</span>
+              </div>
+            </div>
+          </section>
         </div>
       </section>
     </main>
 
     <nav class="bottom-nav" aria-label="Navegación inferior mobile">
+      <a class="active" href="#inicio">
+        <span class="icon">🏠</span>
+        <span>Inicio</span>
+      </a>
 
-  #hoy
-    <span class="icon">🙏</span>
-    <span>Mi día</span>
-  </a>
+      #dias
+        <span class="icon">📅</span>
+        <span>Días</span>
+      </a>
 
-  #dias
-    <span class="icon">📅</span>
-    <span>Días</span>
-  </a>
+      #diario
+        <span class="icon">✍️</span>
+        <span>Diario</span>
+      </a>
 
-  #diario
-    <span class="icon">✍️</span>
-    <span>Diario</span>
-  </a>
-
-  <button type="button" id="mobileLogoutButton">
-    <span class="icon">🚪</span>
-    <span>Salir</span>
-  </button>
-
-</nav>
+      <button type="button" id="mobileLogoutButton">
+        <span class="icon">🚪</span>
+        <span>Salir</span>
+      </button>
+    </nav>
   </div>
 
   <div class="toast" id="toast">Guardado</div>
@@ -1327,6 +1442,8 @@
     const completedDays = document.getElementById("completedDays");
     const streakDays = document.getElementById("streakDays");
     const progressBar = document.getElementById("progressBar");
+    const progressCircle = document.getElementById("progressCircle");
+    const progressPercent = document.getElementById("progressPercent");
     const achievementRow = document.getElementById("achievementRow");
     const celebrationPanel = document.getElementById("celebrationPanel");
     const toast = document.getElementById("toast");
@@ -1446,10 +1563,15 @@
       const completed = getCompletedCount();
       const streak = getStreakCount();
       const percentage = Math.round((completed / 21) * 100);
+      const degrees = Math.round((percentage / 100) * 360);
 
       completedDays.textContent = completed;
       streakDays.textContent = streak;
       progressBar.style.width = percentage + "%";
+      progressPercent.textContent = percentage + "%";
+
+      progressCircle.style.background =
+        `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.14) ${degrees}deg)`;
 
       renderAchievements(completed, streak);
 
