@@ -824,7 +824,7 @@
           </p>
 
           <div class="hero-actions">
-            #biblioteca
+            <a class="primary-btn" href="#biblioteca">Explorar Biblioteca</a>
             <a class="secondary-btn" href="dashboard.html">Volver al Dashboard</a>
           </div>
         </div>
@@ -923,17 +923,33 @@
 
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+    const SUPABASE_ANON_KEY =
+  "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
     const BUCKET_NAME = "hcd-resources";
     const SIGNED_URL_SECONDS = 300;
 
     const APP_LINKS = {
-      "21dias": {
-        title: "Mi Tiempo con Dios",
-        url: "apps/mi-tiempo-con-dios.html"
-      }
-    };
+  "21dias": {
+    title: "Mi Tiempo con Dios",
+    url: "apps/mi-tiempo-con-dios.html"
+  },
+
+  "familias": {
+    title: "Pequeños Momentos con Dios",
+    url: "apps/pequenos-momentos-con-dios.html"
+  },
+
+  "palabras-duelen": {
+    title: "Cuando las Palabras Duelen",
+    url: "apps/cuando-las-palabras-duelen.html"
+  },
+
+  "hombre-edifica": {
+    title: "El Hombre que Edifica su Hogar",
+    url: "apps/el-hombre-que-edifica-su-hogar.html"
+  }
+};
 
     const CATEGORY_LABELS = {
       ebook: {
