@@ -8,12 +8,13 @@
 
   <meta
     name="description"
-    content="Biblioteca Premium de Hábitos con Dios Pro. Accede a tus ebooks, bonos, imprimibles y recursos digitales exclusivos."
+    content="Biblioteca Premium de Hábitos con Dios Pro. Explora ebooks, bonos, imprimibles y experiencias digitales exclusivas."
   />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-ot {
+  <style>
+    :root {
       --green: #3F4A35;
       --green-dark: #2F3929;
       --olive: #556544;
@@ -24,15 +25,11 @@ ot {
       --white: #FFFFFF;
       --ink: #1F2937;
       --muted: #6B7280;
-      --soft: #EEF3EA;
       --line: #E8DECC;
       --danger: #9F3A38;
-      --success: #3F6B3C;
       --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
       --radius-xl: 34px;
-      --radius-lg: 26px;
-      --radius-md: 18px;
       --max: 1180px;
     }
 
@@ -139,6 +136,7 @@ ot {
     .dark-btn,
     .download-btn,
     .buy-btn,
+    .login-btn,
     .disabled-btn {
       border: 0;
       cursor: pointer;
@@ -158,7 +156,8 @@ ot {
     .secondary-btn:hover,
     .dark-btn:hover,
     .download-btn:hover,
-    .buy-btn:hover {
+    .buy-btn:hover,
+    .login-btn:hover {
       transform: translateY(-2px);
     }
 
@@ -480,6 +479,13 @@ ot {
       border: 1px solid rgba(201, 166, 90, 0.34);
     }
 
+    .login-btn {
+      padding: 12px 17px;
+      color: var(--green);
+      background: white;
+      border: 1px solid var(--line);
+    }
+
     .download-btn {
       padding: 12px 17px;
       color: white;
@@ -788,6 +794,7 @@ ot {
 
       .download-btn,
       .buy-btn,
+      .login-btn,
       .primary-btn,
       .secondary-btn,
       .dark-btn,
@@ -810,38 +817,39 @@ ot {
       </a>
 
       <div class="top-actions">
-        <span class="pill" id="userPill">Verificando sesión...</span>
+        <span class="pill" id="userPill">Biblioteca pública</span>
         <a class="text-btn" href="dashboard.html">Dashboard</a>
-        <button class="text-btn" type="button" id="logoutBtn">Cerrar sesión</button>
+        <a class="text-btn" href="login.html" id="loginLink">Ingresar</a>
+        <button class="text-btn hide" type="button" id="logoutBtn">Cerrar sesión</button>
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <div class="eyebrow">Biblioteca privada</div>
+          <div class="eyebrow">Biblioteca digital</div>
 
           <h1>
-            Tus recursos
+            Explora tus recursos
             <span>espirituales</span>
           </h1>
 
           <p>
-            Accede a tus ebooks, bonos, versiones imprimibles y experiencias digitales desde un único lugar.
-            Los productos comprados se desbloquean automáticamente según los permisos activos de tu cuenta.
+            Conoce los ebooks, bonos, imprimibles y experiencias digitales de Hábitos con Dios.
+            Puedes explorar el catálogo libremente. El acceso a cada colección se activa según tu compra.
           </p>
 
           <div class="hero-actions">
             <a class="primary-btn" href="#biblioteca">Explorar Biblioteca</a>
-            <a class="secondary-btn" href="dashboard.html">Volver al Dashboard</a>
+            <a class="secondary-btn" href="login.html">Ya compré, quiero ingresar</a>
           </div>
         </div>
 
         <aside class="hero-card">
-          <div class="tiny">Acceso personalizado</div>
+          <div class="tiny">Catálogo Premium</div>
           <strong id="accessCount">0</strong>
           <span id="accessMessage">
-            Estamos preparando tus colecciones disponibles.
+            Productos disponibles para explorar.
           </span>
         </aside>
       </div>
@@ -859,38 +867,38 @@ ot {
       </article>
 
       <article class="metric">
-        <small>Recursos</small>
+        <small>Recursos visibles</small>
         <strong id="totalFiles">0</strong>
       </article>
 
       <article class="metric">
         <small>Estado</small>
-        <strong id="libraryStatus">Activo</strong>
+        <strong id="libraryStatus">Pública</strong>
       </article>
     </section>
 
     <section id="loadingState" class="loading-state">
       <div class="loading-spinner"></div>
-      <strong>Preparando tu Biblioteca Premium...</strong>
-      <p>Estamos verificando tu sesión, tus permisos y los recursos disponibles.</p>
+      <strong>Preparando la Biblioteca Premium...</strong>
+      <p>Estamos cargando el catálogo disponible.</p>
     </section>
 
     <section id="errorState" class="error-state hide">
       <strong>No pudimos cargar la Biblioteca.</strong>
-      <p id="errorMessage">Intenta iniciar sesión nuevamente desde el portal.</p>
+      <p id="errorMessage">Intenta actualizar la página.</p>
 
       <div style="margin-top:18px;">
-        <a class="dark-btn" href="login.html">Ir a Login</a>
+        index.htmlVolver al Portal</a>
       </div>
     </section>
 
     <section id="libraryApp" class="hide">
       <div class="section-head" id="biblioteca">
         <div>
-          <h2>Mi Biblioteca</h2>
+          <h2>Biblioteca</h2>
           <p>
-            Todos los productos aparecen aquí. Los que ya compraste se abren directamente.
-            Los que todavía no compraste muestran un acceso claro para adquirirlos en Shopify.
+            Todos los productos aparecen aquí. Si ya compraste un producto e iniciaste sesión,
+            podrás entrar a su colección. Si todavía no lo compraste, puedes adquirirlo en Shopify.
           </p>
         </div>
       </div>
@@ -916,8 +924,7 @@ ot {
 
           <div class="notice">
             Los archivos están protegidos dentro de la Biblioteca Premium.
-            Si compartes un enlace temporal, puede dejar de funcionar. Para acceder nuevamente,
-            inicia sesión desde tu cuenta y vuelve a descargar el recurso desde esta biblioteca.
+            Para acceder nuevamente, inicia sesión desde tu cuenta y vuelve a descargar el recurso desde esta biblioteca.
           </div>
         </div>
       </section>
@@ -940,6 +947,49 @@ ot {
     const BUCKET_NAME = "hcd-resources";
     const SIGNED_URL_SECONDS = 300;
 
+    const FALLBACK_PRODUCTS = [
+      {
+        title: "21 Días Más Cerca de Dios",
+        slug: "21dias",
+        permission_key: "access_21dias",
+        source_sku: "HCD_21DIAS_BUNDLE",
+        storage_folder: "21dias",
+        status: "active",
+        sort_order: 1,
+        shopify_url: "https://skoolrenovae.store/products/21diasmascercadedios"
+      },
+      {
+        title: "Pequeños Momentos con Dios",
+        slug: "familias",
+        permission_key: "access_familias",
+        source_sku: "HCD_FAMILIAS_BUNDLE",
+        storage_folder: "familias",
+        status: "active",
+        sort_order: 2,
+        shopify_url: "https://skoolrenovae.store/products/pequenos-momentos-con-dios"
+      },
+      {
+        title: "Cuando las Palabras Duelen",
+        slug: "palabras-duelen",
+        permission_key: "access_palabras_duelen",
+        source_sku: "HCD_PALABRAS_DUELEN_BUNDLE",
+        storage_folder: "palabras-duelen",
+        status: "active",
+        sort_order: 3,
+        shopify_url: "https://skoolrenovae.store/products/cuando-las-palabras-duelen"
+      },
+      {
+        title: "El Hombre que Edifica su Hogar",
+        slug: "hombre-edifica",
+        permission_key: "access_hombre_edifica",
+        source_sku: "HCD_HOMBRE_EDIFICA_BUNDLE",
+        storage_folder: "hombre-edifica",
+        status: "active",
+        sort_order: 4,
+        shopify_url: "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar"
+      }
+    ];
+
     const APP_LINKS = {
       "21dias": {
         title: "Mi Tiempo con Dios",
@@ -947,21 +997,18 @@ ot {
         enabled: true,
         statusLabel: "Aplicación exclusiva"
       },
-
       "familias": {
         title: "Pequeños Momentos con Dios",
         url: "apps/pequenos-momentos-con-dios.html",
         enabled: false,
         statusLabel: "App próximamente"
       },
-
       "palabras-duelen": {
         title: "Cuando las Palabras Duelen",
         url: "apps/cuando-las-palabras-duelen.html",
         enabled: false,
         statusLabel: "App próximamente"
       },
-
       "hombre-edifica": {
         title: "El Hombre que Edifica su Hogar",
         url: "apps/el-hombre-que-edifica-su-hogar.html",
@@ -971,45 +1018,16 @@ ot {
     };
 
     const CATEGORY_LABELS = {
-      ebook: {
-        title: "Ebook principal",
-        icon: "📖"
-      },
-      bonus: {
-        title: "Bonos incluidos",
-        icon: "🎁"
-      },
-      printable: {
-        title: "Versiones imprimibles",
-        icon: "🖨️"
-      },
-      app: {
-        title: "Aplicaciones exclusivas",
-        icon: "📱"
-      },
-      audio: {
-        title: "Audios",
-        icon: "🎧"
-      },
-      video: {
-        title: "Videos",
-        icon: "🎬"
-      },
-      resource: {
-        title: "Recursos",
-        icon: "✨"
-      }
+      ebook: { title: "Ebook principal", icon: "📖" },
+      bonus: { title: "Bonos incluidos", icon: "🎁" },
+      printable: { title: "Versiones imprimibles", icon: "🖨️" },
+      app: { title: "Aplicaciones exclusivas", icon: "📱" },
+      audio: { title: "Audios", icon: "🎧" },
+      video: { title: "Videos", icon: "🎬" },
+      resource: { title: "Recursos", icon: "✨" }
     };
 
-    const CATEGORY_ORDER = [
-      "ebook",
-      "bonus",
-      "printable",
-      "app",
-      "audio",
-      "video",
-      "resource"
-    ];
+    const CATEGORY_ORDER = ["ebook", "bonus", "printable", "app", "audio", "video", "resource"];
 
     const PRODUCT_META = {
       "21dias": {
@@ -1031,25 +1049,6 @@ ot {
     };
 
     if (!window.supabase) {
-      document.addEventListener("DOMContentLoaded", () => {
-        const errorState = document.getElementById("errorState");
-        const loadingState = document.getElementById("loadingState");
-        const errorMessage = document.getElementById("errorMessage");
-
-        if (loadingState) {
-          loadingState.classList.add("hide");
-        }
-
-        if (errorState) {
-          errorState.classList.remove("hide");
-        }
-
-        if (errorMessage) {
-          errorMessage.textContent =
-            "No pudimos cargar Supabase. Revisa la conexión o el script del cliente Supabase.";
-        }
-      });
-
       throw new Error("Supabase client was not loaded.");
     }
 
@@ -1060,6 +1059,7 @@ ot {
 
     const els = {
       userPill: document.getElementById("userPill"),
+      loginLink: document.getElementById("loginLink"),
       logoutBtn: document.getElementById("logoutBtn"),
       loadingState: document.getElementById("loadingState"),
       errorState: document.getElementById("errorState"),
@@ -1093,44 +1093,62 @@ ot {
       try {
         setLoading(true);
 
-        const { data: sessionData, error: sessionError } =
-          await supabaseClient.auth.getSession();
+        await loadSession();
+        await loadProducts();
 
-        if (sessionError) {
-          throw sessionError;
+        if (currentUser) {
+          await loadUserAccessData();
         }
 
-        const session = sessionData && sessionData.session;
-
-        if (!session || !session.user) {
-          window.location.href = "login.html";
-          return;
-        }
-
-        currentUser = session.user;
-        els.userPill.textContent = currentUser.email || "Sesión activa";
-
-        await loadData();
         renderLibrary();
-
         setLoading(false);
       } catch (error) {
         console.error(error);
-        showError("No pudimos cargar la Biblioteca. Revisa tu sesión o vuelve a ingresar desde login.");
+        showError("No pudimos cargar la Biblioteca. Intenta actualizar la página.");
       }
     }
 
-    async function loadData() {
-      const [
-        productsResult,
-        filesResult,
-        entitlementsResult
-      ] = await Promise.all([
-        supabaseClient
-          .from("products")
-          .select("*")
-          .order("sort_order", { ascending: true }),
+    async function loadSession() {
+      const { data, error } = await supabaseClient.auth.getSession();
 
+      if (error) {
+        console.warn("Session warning:", error);
+      }
+
+      currentUser = data && data.session && data.session.user
+        ? data.session.user
+        : null;
+
+      if (currentUser) {
+        els.userPill.textContent = currentUser.email || "Sesión activa";
+        els.loginLink.classList.add("hide");
+        els.logoutBtn.classList.remove("hide");
+        els.libraryStatus.textContent = "Sesión activa";
+      } else {
+        els.userPill.textContent = "Biblioteca pública";
+        els.loginLink.classList.remove("hide");
+        els.logoutBtn.classList.add("hide");
+        els.libraryStatus.textContent = "Pública";
+      }
+    }
+
+    async function loadProducts() {
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select("*")
+        .order("sort_order", { ascending: true });
+
+      if (error) {
+        console.warn("No se pudo leer products desde Supabase. Usando catálogo local.", error);
+        products = FALLBACK_PRODUCTS;
+        return;
+      }
+
+      products = data && data.length ? data : FALLBACK_PRODUCTS;
+    }
+
+    async function loadUserAccessData() {
+      const [filesResult, entitlementsResult] = await Promise.all([
         supabaseClient
           .from("product_files")
           .select("*")
@@ -1142,10 +1160,6 @@ ot {
           .eq("active", true)
       ]);
 
-      if (productsResult.error) {
-        throw productsResult.error;
-      }
-
       if (filesResult.error) {
         throw filesResult.error;
       }
@@ -1154,7 +1168,6 @@ ot {
         throw entitlementsResult.error;
       }
 
-      products = productsResult.data || [];
       productFiles = filesResult.data || [];
       entitlements = entitlementsResult.data || [];
 
@@ -1174,23 +1187,15 @@ ot {
       const activeFiles = getVisibleFilesForUnlockedProducts(unlocked);
 
       els.totalProducts.textContent = products.length;
-      els.unlockedProducts.textContent = unlocked.length;
-      els.totalFiles.textContent = activeFiles.length;
-      els.accessCount.textContent = unlocked.length;
+      els.unlockedProducts.textContent = currentUser ? unlocked.length : 0;
+      els.totalFiles.textContent = currentUser ? activeFiles.length : 0;
+      els.accessCount.textContent = currentUser ? unlocked.length : products.length;
 
-      els.accessMessage.textContent = unlocked.length > 0
-        ? "Tienes colecciones desbloqueadas listas para usar."
-        : "Tus productos aparecerán desbloqueados cuando tu compra esté activa.";
-
-      if (!products.length) {
-        els.productGrid.innerHTML = `
-          <div class="empty-state">
-            <strong>No hay productos cargados todavía.</strong>
-            <p>El catálogo maestro está vacío. Revisa la tabla products en Supabase.</p>
-          </div>
-        `;
-        return;
-      }
+      els.accessMessage.textContent = currentUser
+        ? unlocked.length > 0
+          ? "Tienes colecciones desbloqueadas listas para usar."
+          : "Iniciaste sesión, pero aún no tienes productos activos."
+        : "Puedes explorar el catálogo y comprar desde Shopify.";
 
       products.forEach((product) => {
         els.productGrid.appendChild(createProductCard(product));
@@ -1211,11 +1216,36 @@ ot {
       const productDescription = meta.description || "Colección premium de Hábitos con Dios Pro.";
       const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
 
+      let actions = "";
+
+      if (isUnlocked) {
+        actions = `
+          <button class="download-btn" type="button" data-action="open">
+            Entrar a la colección
+          </button>
+        `;
+      } else if (currentUser) {
+        actions = `
+          <button class="buy-btn" type="button" data-action="buy">
+            Comprar ahora
+          </button>
+        `;
+      } else {
+        actions = `
+          <button class="buy-btn" type="button" data-action="buy">
+            Comprar ahora
+          </button>
+          <a class="login-btn" href="login.html">
+            Ya compré
+          </a>
+        `;
+      }
+
       card.innerHTML = `
         <div class="product-top">
           <div class="product-badges">
             <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
-              ${isUnlocked ? "✅ Acceso activo" : "🔒 Bloqueado"}
+              ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
             </span>
             <span class="badge badge-status">${escapeHTML(statusLabel)}</span>
           </div>
@@ -1225,33 +1255,30 @@ ot {
         <div class="product-body">
           <h3>${escapeHTML(product.title)}</h3>
           <p>${escapeHTML(productDescription)}</p>
-
-          <div class="product-actions">
-            ${
-              isUnlocked
-                ? `<button class="download-btn" type="button" data-action="open">Entrar a la colección</button>`
-                : `<button class="buy-btn" type="button" data-action="buy">Comprar ahora</button>`
-            }
-          </div>
+          <div class="product-actions">${actions}</div>
         </div>
       `;
 
-      const actionButton = card.querySelector("[data-action]");
+      const openButton = card.querySelector('[data-action="open"]');
+      const buyButton = card.querySelector('[data-action="buy"]');
 
-      if (actionButton) {
-        actionButton.addEventListener("click", () => {
-          if (isUnlocked) {
-            openProduct(product);
-          } else {
-            openShopify(product);
-          }
-        });
+      if (openButton) {
+        openButton.addEventListener("click", () => openProduct(product));
+      }
+
+      if (buyButton) {
+        buyButton.addEventListener("click", () => openShopify(product));
       }
 
       return card;
     }
 
     function openProduct(product) {
+      if (!currentUser) {
+        window.location.href = "login.html";
+        return;
+      }
+
       if (!userHasAccess(product)) {
         showToast("Este producto todavía no está activo en tu cuenta.", true);
         return;
@@ -1361,6 +1388,11 @@ ot {
 
     async function downloadFile(product, file) {
       try {
+        if (!currentUser) {
+          window.location.href = "login.html";
+          return;
+        }
+
         if (!userHasAccess(product)) {
           showToast("Este recurso no está activo en tu cuenta.", true);
           return;
@@ -1407,7 +1439,7 @@ ot {
     }
 
     function userHasAccess(product) {
-      if (!product || product.status !== "active") {
+      if (!currentUser || !product || product.status !== "active") {
         return false;
       }
 
@@ -1416,7 +1448,6 @@ ot {
 
     function getVisibleFilesForUnlockedProducts(unlockedProducts) {
       const unlockedSlugs = new Set(unlockedProducts.map((product) => product.slug));
-
       return productFiles.filter((file) => unlockedSlugs.has(file.product_slug));
     }
 
@@ -1516,6 +1547,7 @@ ot {
 
     els.backToLibrary.addEventListener("click", () => {
       els.detailPanel.classList.remove("active");
+
       document.getElementById("biblioteca").scrollIntoView({
         behavior: "smooth",
         block: "start"
@@ -1524,8 +1556,9 @@ ot {
 
     els.logoutBtn.addEventListener("click", async () => {
       await supabaseClient.auth.signOut();
-      window.location.href = "login.html";
+      window.location.reload();
     });
   </script>
 </body>
 </html>
+``
