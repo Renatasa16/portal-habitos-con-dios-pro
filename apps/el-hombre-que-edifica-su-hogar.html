@@ -1062,21 +1062,61 @@
 
   <main class="app-shell">
     <header class="topbar">
-      <div class="topbar-inner">
-        #inicio
-          <div class="brand-mark">HG</div>
-          <div class="brand-copy">
-            <strong>Mi Hogar con Propósito</strong>
-            <span>Hábitos con Dios · Hombres</span>
-          </div>
-        </a>
+  <div class="topbar-inner">
 
-        <div class="top-actions">
-          <button class="pill" type="button" id="resetProgressBtn">Reiniciar</button>
-          <button class="pill primary" type="button" id="continueBtn">Continuar día</button>
-        </div>
-      </div>
-    </header>
+    <div class="brand-copy" style="flex:1;">
+      <strong style="
+        display:block;
+        font-size:.80rem;
+        color:#6B7280;
+        text-transform:uppercase;
+        letter-spacing:.08em;
+        margin-bottom:4px;">
+        Hábitos con Dios
+      </strong>
+
+      <span style="
+        display:block;
+        font-size:1.35rem;
+        font-weight:800;
+        color:var(--navy);
+        white-space:normal;">
+        Mi Hogar con Propósito
+      </span>
+    </div>
+
+    <div class="top-actions">
+
+      <button
+        class="pill"
+        id="libraryBtn"
+        type="button">
+        📚 Biblioteca
+      </button>
+
+      <button
+        class="pill"
+        id="userPill"
+        type="button">
+        Sesión activa
+      </button>
+
+      <button
+        class="pill"
+        id="logoutBtn"
+        type="button"
+        style="
+          background:#ec4899;
+          color:white;
+          border:none;
+          font-weight:700;">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </div>
+</header>
 
     <section class="hero" id="inicio">
       <div class="hero-inner">
