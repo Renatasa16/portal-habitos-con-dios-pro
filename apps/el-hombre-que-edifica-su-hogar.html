@@ -18,14 +18,11 @@
       --navy: #111D35;
       --navy-2: #172846;
       --navy-3: #24385F;
-      --navy-deep: #0B1428;
       --gold: #C99A3D;
       --gold-2: #E3B95F;
       --gold-soft: #F8E8BC;
       --olive: #3F4A35;
-      --olive-2: #596B4A;
       --cream: #F8F3E8;
-      --cream-2: #FFF9EF;
       --white: #FFFFFF;
       --ink: #172033;
       --muted: #6B7280;
@@ -51,6 +48,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 120px;
     }
 
     body {
@@ -87,11 +85,12 @@
     .app-shell {
       width: min(100% - 32px, var(--max));
       margin: 0 auto;
-      padding: 28px 0 58px;
+      padding: 22px 0 58px;
     }
 
     .topbar {
-      position: relative;
+      position: sticky;
+      top: 12px;
       z-index: 50;
       margin-bottom: 22px;
     }
@@ -99,23 +98,24 @@
     .topbar-inner {
       display: grid;
       gap: 16px;
-      padding: 26px 18px 22px;
+      padding: 22px 18px;
       border-radius: 32px;
-      background: rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.74);
       backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      box-shadow: var(--soft-shadow);
     }
 
     .brand-row {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .app-logo {
-      width: 86px;
-      height: 86px;
-      border-radius: 28px;
+      width: 76px;
+      height: 76px;
+      border-radius: 26px;
       display: grid;
       place-items: center;
       background:
@@ -123,18 +123,14 @@
         linear-gradient(145deg, var(--olive), #283826);
       box-shadow: 0 20px 48px rgba(63, 74, 53, 0.25);
       color: var(--gold-2);
-      font-size: 2.35rem;
+      font-size: 2.1rem;
       font-weight: 900;
-    }
-
-    .brand-text {
-      min-width: 0;
     }
 
     .brand-text strong {
       display: block;
       color: var(--olive);
-      font-size: clamp(1.55rem, 4vw, 2rem);
+      font-size: clamp(1.45rem, 4vw, 2rem);
       line-height: 1.05;
       font-weight: 950;
       letter-spacing: -0.035em;
@@ -144,43 +140,43 @@
       display: block;
       margin-top: 7px;
       color: var(--muted);
-      font-size: clamp(1.02rem, 3.3vw, 1.32rem);
+      font-size: clamp(1rem, 3.3vw, 1.28rem);
       line-height: 1.25;
       font-weight: 650;
     }
 
     .session-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 14px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
     }
 
     .session-pill,
     .library-pill,
     .logout-btn {
-      min-height: 72px;
+      min-height: 62px;
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 18px;
+      padding: 0 16px;
       font-weight: 950;
       border: 1px solid rgba(17, 29, 53, 0.08);
       box-shadow: var(--soft-shadow);
     }
 
     .session-pill {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.95);
       color: var(--olive);
-      font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+      font-size: clamp(0.9rem, 3.5vw, 1.12rem);
       word-break: break-word;
     }
 
     .library-pill {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--olive);
-      font-size: clamp(1.05rem, 4.2vw, 1.45rem);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: var(--navy);
+      font-size: clamp(0.95rem, 3.6vw, 1.17rem);
     }
 
     .logout-btn {
@@ -188,57 +184,8 @@
       border: 1px solid var(--rose-border);
       background: linear-gradient(135deg, var(--rose), #FBEDEA);
       color: var(--rose-text);
-      font-size: clamp(1rem, 4vw, 1.28rem);
+      font-size: clamp(0.95rem, 3.6vw, 1.16rem);
       box-shadow: 0 14px 32px rgba(173, 66, 61, 0.10);
-    }
-
-    .menu-float {
-      position: fixed;
-      right: 16px;
-      top: 58%;
-      z-index: 90;
-      width: 66px;
-      height: 66px;
-      border-radius: 999px;
-      border: 3px solid rgba(0, 0, 0, 0.45);
-      background: #2C2926;
-      color: #FFFFFF;
-      font-size: 2rem;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
-    }
-
-    .mobile-drawer {
-      display: none;
-      position: fixed;
-      inset: auto 14px 20px 14px;
-      z-index: 95;
-      padding: 16px;
-      border-radius: 26px;
-      background: rgba(17, 29, 53, 0.96);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
-      border: 1px solid rgba(227, 185, 95, 0.28);
-    }
-
-    .mobile-drawer.open {
-      display: grid;
-      gap: 10px;
-    }
-
-    .drawer-btn {
-      min-height: 52px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.08);
-      color: #FFFFFF;
-      font-weight: 900;
-    }
-
-    .drawer-btn.active {
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: var(--navy);
     }
 
     .hero {
@@ -269,9 +216,9 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.18fr 0.82fr;
       gap: 24px;
-      padding: 44px;
+      padding: 42px;
     }
 
     .eyebrow {
@@ -282,7 +229,7 @@
       border: 1px solid rgba(227, 185, 95, 0.35);
       background: rgba(255, 255, 255, 0.09);
       color: var(--gold-soft);
-      font-size: 0.80rem;
+      font-size: 0.8rem;
       font-weight: 950;
       letter-spacing: 0.09em;
       text-transform: uppercase;
@@ -429,7 +376,7 @@
 
     .sidebar {
       position: sticky;
-      top: 22px;
+      top: 138px;
       border-radius: 30px;
       padding: 18px;
       background: rgba(255, 255, 255, 0.88);
@@ -748,11 +695,6 @@
       background: linear-gradient(135deg, var(--gold), var(--gold-2));
     }
 
-    .btn.danger {
-      color: #FFFFFF;
-      background: linear-gradient(135deg, #82322D, #A64037);
-    }
-
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1032,7 +974,7 @@
     }
 
     .locked-card {
-      max-width: 560px;
+      max-width: 600px;
       border-radius: 32px;
       padding: 28px;
       background: rgba(255, 255, 255, 0.10);
@@ -1050,6 +992,55 @@
       color: rgba(255, 255, 255, 0.78);
       line-height: 1.6;
       margin-bottom: 16px;
+    }
+
+    .menu-float {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      z-index: 90;
+      width: 66px;
+      height: 66px;
+      border-radius: 999px;
+      border: 3px solid rgba(0, 0, 0, 0.45);
+      background: #2C2926;
+      color: #FFFFFF;
+      font-size: 2rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+    }
+
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: auto 14px 92px 14px;
+      z-index: 95;
+      padding: 16px;
+      border-radius: 26px;
+      background: rgba(17, 29, 53, 0.96);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+      border: 1px solid rgba(227, 185, 95, 0.28);
+    }
+
+    .mobile-drawer.open {
+      display: grid;
+      gap: 10px;
+    }
+
+    .drawer-btn {
+      min-height: 52px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      font-weight: 900;
+    }
+
+    .drawer-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: var(--navy);
     }
 
     @media (max-width: 980px) {
@@ -1078,27 +1069,25 @@
     @media (max-width: 720px) {
       .app-shell {
         width: min(100% - 22px, var(--max));
-        padding-top: 18px;
+        padding-top: 16px;
+      }
+
+      .topbar {
+        top: 8px;
       }
 
       .topbar-inner {
-        padding: 22px 14px 18px;
+        padding: 18px 14px;
       }
 
       .app-logo {
-        width: 78px;
-        height: 78px;
-        border-radius: 26px;
+        width: 68px;
+        height: 68px;
+        border-radius: 24px;
       }
 
       .session-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .session-pill,
-      .library-pill,
-      .logout-btn {
-        min-height: 62px;
+        grid-template-columns: 1fr;
       }
 
       .menu-float {
@@ -1137,12 +1126,8 @@
         display: none;
       }
 
-      .brand-text strong {
-        font-size: 1.58rem;
-      }
-
-      .brand-text span {
-        font-size: 1.13rem;
+      .btn {
+        width: 100%;
       }
     }
 
@@ -1152,13 +1137,9 @@
       }
 
       .app-logo {
-        width: 66px;
-        height: 66px;
+        width: 62px;
+        height: 62px;
         border-radius: 22px;
-      }
-
-      .session-grid {
-        grid-template-columns: 1fr;
       }
 
       .hero h1 {
@@ -1183,11 +1164,16 @@
       <h2>Acceso no disponible</h2>
       <p>
         Tu sesión está activa, pero no encontramos permiso para abrir esta aplicación.
-        Vuelve a la biblioteca o intenta iniciar sesión con el correo de compra.
+        Vuelve a la biblioteca o compra el acceso correspondiente.
       </p>
-      <button class="btn gold" type="button" onclick="window.location.href='../biblioteca.html'">
-        Volver a la biblioteca
-      </button>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn gold" type="button" onclick="window.location.href='../biblioteca.html'">
+          Volver a la biblioteca
+        </button>
+        <button class="btn primary" type="button" onclick="window.location.href=SHOPIFY_URL">
+          Comprar acceso
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1203,8 +1189,8 @@
         </div>
 
         <div class="session-grid">
-          <button class="session-pill" id="userPill" type="button">Sesión activa</button>
-          <button class="library-pill" id="libraryBtn" type="button">Biblioteca</button>
+          <button class="session-pill" id="userPill" type="button">Validando sesión...</button>
+          <button class="library-pill" id="libraryBtn" type="button">Volver a la biblioteca</button>
         </div>
 
         <button class="logout-btn" id="logoutBtn" type="button">Cerrar sesión</button>
@@ -1215,12 +1201,10 @@
       <div class="hero-inner">
         <div>
           <div class="eyebrow">App HOMBRES · misión de 21 días</div>
-
           <h1>
             Mi Hogar
             <span>con Propósito</span>
           </h1>
-
           <p>
             Una experiencia digital para hombres que desean fortalecer su carácter,
             orar por su familia, tomar decisiones con discernimiento y construir
@@ -1228,9 +1212,9 @@
           </p>
 
           <div class="hero-actions">
-            <button class="hero-card" type="button" data-go="camino">
+            <button class="hero-card" type="button" data-go="continue">
               <strong>🛡 Comenzar día de hoy</strong>
-              <small>Abre el día actual del camino de 21 días.</small>
+              <small>Abre el próximo día pendiente del camino de 21 días.</small>
             </button>
 
             <button class="hero-card" type="button" data-go="radar">
@@ -1249,6 +1233,7 @@
           <small>Progreso de edificación</small>
           <strong id="progressText">0/21</strong>
           <span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
+
           <div class="progress-track" aria-hidden="true">
             <div class="progress-fill" id="progressFill"></div>
           </div>
@@ -1261,17 +1246,14 @@
         <small>Días completados</small>
         <strong id="metricDays">0</strong>
       </article>
-
       <article class="metric">
         <small>Radar promedio</small>
         <strong id="metricRadar">0</strong>
       </article>
-
       <article class="metric">
         <small>Conversaciones</small>
         <strong id="metricTalks">0</strong>
       </article>
-
       <article class="metric">
         <small>Acciones guardadas</small>
         <strong id="metricActions">0</strong>
@@ -1281,7 +1263,6 @@
     <section class="layout">
       <aside class="sidebar" id="sidebar">
         <h2>Navegación</h2>
-
         <div class="nav-list" id="navList">
           <button class="nav-btn active" type="button" data-view="camino">Camino 21 días <span>🛡</span></button>
           <button class="nav-btn" type="button" data-view="radar">Radar del Hogar <span>📍</span></button>
@@ -1306,8 +1287,9 @@
                   oración, journaling, acción práctica y declaración de identidad.
                 </p>
               </div>
-
-              <button class="btn gold" type="button" id="markDoneTopBtn">Marcar día completado</button>
+              <button class="btn gold" type="button" id="markDoneTopBtn">
+                Marcar día completado
+              </button>
             </div>
 
             <div class="day-selector" id="daySelector"></div>
@@ -1319,7 +1301,6 @@
                   <span class="tag" id="daySectionTag">Identidad</span>
                   <span class="tag" id="dayReferenceTag">Mateo 6:33</span>
                 </div>
-
                 <h3 id="dayTitle">Dios antes que todo</h3>
                 <p id="dayIdea">Todo liderazgo saludable comienza bajo el gobierno de Dios.</p>
               </div>
@@ -1387,7 +1368,6 @@
                   sino para ayudarte a identificar dónde dar el próximo paso.
                 </p>
               </div>
-
               <button class="btn gold" type="button" id="saveRadarBtn">Guardar radar</button>
             </div>
 
@@ -1528,7 +1508,6 @@
                   por decisiones, provisión integral y entrega del hogar a Dios.
                 </p>
               </div>
-
               <button class="btn gold" type="button" id="savePrayerBtn">Guardar oración</button>
             </div>
 
@@ -1566,7 +1545,6 @@
                   relacional y práctica que deseas dejar en tu familia.
                 </p>
               </div>
-
               <button class="btn gold" type="button" id="saveLegacyBtn">Guardar legado</button>
             </div>
 
@@ -1650,14 +1628,9 @@
       "all_access"
     ];
 
-    const REQUIRED_PERMISSION =
-  "access_hombre_edifica";
-
-const REQUIRED_SKU =
-  "HCD_HOMBRE_EDIFICA_BUNDLE";
-
-const SHOPIFY_URL =
-  "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar";
+    const REQUIRED_PERMISSION = "access_hombre_edifica";
+    const REQUIRED_SKU = "HCD_HOMBRE_EDIFICA_BUNDLE";
+    const SHOPIFY_URL = "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar";
 
     const supabaseClient = (() => {
       if (window.supabaseClient) return window.supabaseClient;
@@ -2017,9 +1990,7 @@ const SHOPIFY_URL =
     function loadState() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        return saved
-          ? { ...defaultState(), ...JSON.parse(saved) }
-          : defaultState();
+        return saved ? { ...defaultState(), ...JSON.parse(saved) } : defaultState();
       } catch (error) {
         return defaultState();
       }
@@ -2035,7 +2006,6 @@ const SHOPIFY_URL =
       const toastEl = document.getElementById("toast");
       toastEl.textContent = message;
       toastEl.classList.add("show");
-
       window.clearTimeout(toast.timer);
       toast.timer = window.setTimeout(() => {
         toastEl.classList.remove("show");
@@ -2077,7 +2047,7 @@ const SHOPIFY_URL =
       });
 
       if (!supabaseClient) {
-        document.getElementById("userPill").textContent = "Sesión activa";
+        document.getElementById("userPill").textContent = "Supabase no configurado";
         return;
       }
 
@@ -2096,11 +2066,12 @@ const SHOPIFY_URL =
         }
 
         if (session && session.user) {
-          document.getElementById("userPill").textContent =
-            session.user.email || "Sesión activa";
+          document.getElementById("userPill").textContent = session.user.email || "Sesión activa";
         }
 
-        await validateAccess(session && session.user);
+        const hasAccess = await validateAccess(session && session.user);
+
+        if (!hasAccess) return;
       } catch (error) {
         console.error(error);
 
@@ -2114,6 +2085,7 @@ const SHOPIFY_URL =
       if (!supabaseClient || !user) return true;
 
       const now = new Date();
+      const normalizedEmail = String(user.email || "").trim().toLowerCase();
 
       try {
         const { data, error } = await supabaseClient
@@ -2126,9 +2098,7 @@ const SHOPIFY_URL =
         if (!error) {
           const active = (data || []).some((row) => {
             const status = String(row.status || "").toLowerCase();
-            const expirationIsValid =
-              !row.expires_at || new Date(row.expires_at) > now;
-
+            const expirationIsValid = !row.expires_at || new Date(row.expires_at) > now;
             return status !== "inactive" && expirationIsValid;
           });
 
@@ -2141,16 +2111,21 @@ const SHOPIFY_URL =
       try {
         const { data, error } = await supabaseClient
           .from("entitlements")
-          .select("permission_key, source_sku, active")
-          .eq("active", true);
+          .select("email,permission_key,source_sku,active")
+          .eq("email", normalizedEmail)
+          .eq("active", true)
+          .limit(20);
 
         if (!error) {
           const active = (data || []).some((item) => {
+            const permission = String(item.permission_key || "");
+            const sku = String(item.source_sku || "");
+
             return (
-              item.permission_key === REQUIRED_PERMISSION &&
-              item.source_sku === REQUIRED_SKU &&
-              item.active === true
-            ) || item.permission_key === "membership_all_access";
+              (permission === REQUIRED_PERMISSION && sku === REQUIRED_SKU) ||
+              permission === "membership_all_access" ||
+              sku === "HCD_ALL_ACCESS"
+            );
           });
 
           if (active) return true;
@@ -2183,7 +2158,7 @@ const SHOPIFY_URL =
           saveState();
           renderCurrentDay();
           renderDaySelector();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          switchView("camino");
         });
 
         container.appendChild(button);
@@ -2208,12 +2183,8 @@ const SHOPIFY_URL =
     }
 
     function saveCurrentDay() {
-      state.journals[currentDay] =
-        document.getElementById("journalText").value.trim();
-
-      state.actions[currentDay] =
-        document.getElementById("actionText").value.trim();
-
+      state.journals[currentDay] = document.getElementById("journalText").value.trim();
+      state.actions[currentDay] = document.getElementById("actionText").value.trim();
       state.currentDay = currentDay;
       saveState();
       toast("Día " + currentDay + " guardado.");
@@ -2240,6 +2211,7 @@ const SHOPIFY_URL =
         saveState();
         renderCurrentDay();
         renderDaySelector();
+        switchView("camino");
         toast("Avanzaste al día " + currentDay + ".");
       } else {
         toast("Llegaste al día 21. Tu hogar pertenece a Dios.");
@@ -2252,7 +2224,6 @@ const SHOPIFY_URL =
 
       RADAR_AREAS.forEach((area) => {
         const value = Number(state.radar[area] || 0);
-
         const item = document.createElement("div");
         item.className = "range-item";
 
@@ -2271,12 +2242,9 @@ const SHOPIFY_URL =
         range.addEventListener("input", (event) => {
           const area = event.target.dataset.radar;
           const value = Number(event.target.value);
-
           state.radar[area] = value;
 
-          const label = document.querySelector(
-            `[data-radar-value="${cssSafe(area)}"]`
-          );
+          const label = document.querySelector(`[data-radar-value="${cssSafe(area)}"]`);
 
           if (label) label.textContent = value;
 
@@ -2294,6 +2262,7 @@ const SHOPIFY_URL =
         : 0;
 
       document.getElementById("radarAverage").textContent = average;
+
       document.getElementById("radarScoreRing").style.setProperty(
         "--radar-percent",
         Math.min(100, average * 10) + "%"
@@ -2319,12 +2288,10 @@ const SHOPIFY_URL =
     function renderBadges() {
       const container = document.getElementById("badgeGrid");
       container.innerHTML = "";
-
       const completed = state.completedDays.length;
 
       BADGES.forEach((badge) => {
         const unlocked = completed >= badge.min;
-
         const card = document.createElement("article");
         card.className = "badge-card" + (unlocked ? "" : " locked");
 
@@ -2342,8 +2309,7 @@ const SHOPIFY_URL =
     function saveDecision() {
       const title = document.getElementById("decisionTitle").value.trim();
       const options = document.getElementById("decisionOptions").value.trim();
-      const checks = Array.from(document.querySelectorAll(".decision-check:checked"))
-        .map((item) => item.value);
+      const checks = Array.from(document.querySelectorAll(".decision-check:checked")).map((item) => item.value);
 
       if (!title && !options) {
         toast("Escribe una decisión antes de guardar.");
@@ -2368,6 +2334,7 @@ const SHOPIFY_URL =
 
       document.getElementById("decisionTitle").value = "";
       document.getElementById("decisionOptions").value = "";
+
       document.querySelectorAll(".decision-check").forEach((item) => {
         item.checked = false;
       });
@@ -2382,14 +2349,14 @@ const SHOPIFY_URL =
       container.innerHTML = "";
 
       if (!state.decisions.length) {
-        container.innerHTML =
-          '<div class="empty">Aún no hay decisiones guardadas.</div>';
+        container.innerHTML = '<div class="empty">Aún no hay decisiones guardadas.</div>';
         return;
       }
 
       state.decisions.slice(0, 10).forEach((item) => {
         const record = document.createElement("div");
         record.className = "record";
+
         record.innerHTML = `
           <strong>${escapeHTML(item.title || "Decisión sin título")}</strong>
           <small>${escapeHTML(item.date)} · Resultado sugerido: ${escapeHTML(item.recommendation)}</small>
@@ -2434,14 +2401,14 @@ const SHOPIFY_URL =
       container.innerHTML = "";
 
       if (!state.talks.length) {
-        container.innerHTML =
-          '<div class="empty">Aún no hay conversaciones guardadas.</div>';
+        container.innerHTML = '<div class="empty">Aún no hay conversaciones guardadas.</div>';
         return;
       }
 
       state.talks.slice(0, 10).forEach((item) => {
         const record = document.createElement("div");
         record.className = "record";
+
         record.innerHTML = `
           <strong>${escapeHTML(item.person || "Conversación")}: ${escapeHTML(item.topic || "Sin tema")}</strong>
           <small>${escapeHTML(item.date)}</small>
@@ -2461,6 +2428,7 @@ const SHOPIFY_URL =
         const checked = state.prayer.checks.includes(index);
         const label = document.createElement("label");
         label.className = "check-item";
+
         label.innerHTML = `
           <input type="checkbox" data-prayer="${index}" ${checked ? "checked" : ""} />
           ${escapeHTML(item)}
@@ -2473,18 +2441,18 @@ const SHOPIFY_URL =
 
       container.querySelectorAll("input").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          state.prayer.checks = Array.from(
-            container.querySelectorAll("input:checked")
-          ).map((item) => Number(item.dataset.prayer));
+          state.prayer.checks = Array.from(container.querySelectorAll("input:checked")).map((item) =>
+            Number(item.dataset.prayer)
+          );
         });
       });
     }
 
     function savePrayer() {
       state.prayer.text = document.getElementById("familyPrayer").value.trim();
-      state.prayer.checks = Array.from(
-        document.querySelectorAll("#prayerChecks input:checked")
-      ).map((item) => Number(item.dataset.prayer));
+      state.prayer.checks = Array.from(document.querySelectorAll("#prayerChecks input:checked")).map((item) =>
+        Number(item.dataset.prayer)
+      );
 
       saveState();
       toast("Plan de oración guardado.");
@@ -2515,8 +2483,7 @@ const SHOPIFY_URL =
       document.getElementById("progressFill").style.width = percent + "%";
       document.getElementById("metricDays").textContent = completed;
       document.getElementById("metricTalks").textContent = state.talks.length;
-      document.getElementById("metricActions").textContent =
-        Object.values(state.actions).filter(Boolean).length;
+      document.getElementById("metricActions").textContent = Object.values(state.actions).filter(Boolean).length;
 
       document.getElementById("growthMessage").textContent =
         completed >= 21
@@ -2532,7 +2499,28 @@ const SHOPIFY_URL =
       updateRadarVisual();
     }
 
-    function switchView(view) {
+    function scrollToActivePanel(view) {
+      const panel = document.getElementById("panel-" + view);
+      const target = panel || document.getElementById("inicio");
+
+      if (!target) return;
+
+      const topbar = document.querySelector(".topbar");
+      const offset = topbar ? topbar.getBoundingClientRect().height + 26 : 96;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "smooth"
+      });
+    }
+
+    function switchView(view, options = {}) {
+      if (view === "continue") {
+        continueDay();
+        return;
+      }
+
       document.querySelectorAll(".panel").forEach((panel) => {
         panel.classList.remove("active");
       });
@@ -2553,6 +2541,11 @@ const SHOPIFY_URL =
 
       document.getElementById("mobileDrawer").classList.remove("open");
 
+      if (view === "camino") {
+        renderCurrentDay();
+        renderDaySelector();
+      }
+
       if (view === "radar") renderRadar();
       if (view === "caracter") renderBadges();
       if (view === "decisiones") renderDecisions();
@@ -2560,21 +2553,19 @@ const SHOPIFY_URL =
       if (view === "oracion") renderPrayer();
       if (view === "legado") renderLegacy();
 
-      window.scrollTo({
-  top: 0,
-  behavior: "smooth"
-});
+      if (options.scroll !== false) {
+        scrollToActivePanel(view);
+      }
+    }
 
     function continueDay() {
       const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
-
       currentDay = nextIncomplete ? nextIncomplete.day : 21;
       state.currentDay = currentDay;
-
       saveState();
       renderCurrentDay();
       renderDaySelector();
-      switchView("camino");
+      switchView("camino", { scroll: true });
     }
 
     function buildMobileDrawer() {
@@ -2584,8 +2575,7 @@ const SHOPIFY_URL =
       document.querySelectorAll("#navList .nav-btn").forEach((navButton) => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className =
-          "drawer-btn" + (navButton.classList.contains("active") ? " active" : "");
+        button.className = "drawer-btn" + (navButton.classList.contains("active") ? " active" : "");
         button.dataset.view = navButton.dataset.view;
         button.textContent = navButton.textContent.trim();
 
