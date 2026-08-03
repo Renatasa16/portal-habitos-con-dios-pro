@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Biblioteca Premium | Hábitos con Dios Pro</title>
+  <title>Mis Colecciones | Hábitos con Dios</title>
 
   <meta
     name="description"
-    content="Biblioteca Premium de Hábitos con Dios Pro. Explora ebooks, bonos, imprimibles y experiencias digitales exclusivas."
+    content="Mis Colecciones de Hábitos con Dios. Explora experiencias digitales cristianas con Apps, ebooks y bonos diseñados para acompañar tu crecimiento con Dios."
   />
+
+  <meta name="theme-color" content="#3F4A35" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -27,9 +29,12 @@
       --muted: #6B7280;
       --line: #E8DECC;
       --danger: #9F3A38;
+      --soft-green: #EEF3EA;
+      --soft-gold: #FFF4D8;
       --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
       --radius-xl: 34px;
+      --radius-lg: 26px;
       --max: 1180px;
     }
 
@@ -41,16 +46,18 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 110px;
     }
 
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       min-height: 100vh;
+      color: var(--ink);
       background:
         radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
         radial-gradient(circle at top right, rgba(85, 101, 68, 0.12), transparent 30%),
-        linear-gradient(145deg, #FAF7F0, #F5F0E7);
-      color: var(--ink);
+        linear-gradient(145deg, var(--cream), var(--beige));
+      overflow-x: hidden;
     }
 
     a {
@@ -63,167 +70,165 @@
     }
 
     .page-shell {
-      max-width: var(--max);
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      padding: 28px 18px 42px;
     }
 
-    .topbar {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(250, 247, 240, 0.92);
+      border-bottom: 1px solid rgba(232, 222, 204, 0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      min-height: 94px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
+      gap: 24px;
     }
 
-    .brand {
+    .brand-area {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       min-width: 0;
     }
 
     .brand-logo {
-  width: 58px;
-  height: 58px;
-  object-fit: contain;
-  flex: 0 0 auto;
-}
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
 
-    .brand-text strong {
-      display: block;
+    .brand-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand-name {
+      color: var(--olive);
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
       color: var(--green);
-      font-size: 15px;
-      line-height: 1.1;
+      font-size: clamp(1.18rem, 2.5vw, 1.62rem);
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.035em;
     }
 
-    .brand-text span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .top-actions {
+    .header-nav {
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      gap: 24px;
+      color: var(--olive);
+      font-size: 0.92rem;
+      font-weight: 850;
     }
 
-    .pill {
-      border: 1px solid rgba(232, 222, 204, 0.95);
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--green);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: 800;
-      box-shadow: 0 10px 26px rgba(63, 74, 53, 0.07);
-      backdrop-filter: blur(14px);
-    }
-
-    .text-btn,
-    .primary-btn,
-    .secondary-btn,
-    .dark-btn,
-    .download-btn,
-    .buy-btn,
-    .login-btn,
-    .disabled-btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 999px;
-      font-weight: 900;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
-      min-height: 46px;
+    .header-nav a {
+      position: relative;
+      transition: 0.2s ease;
       white-space: nowrap;
     }
 
-    .text-btn:hover,
-    .primary-btn:hover,
-    .secondary-btn:hover,
-    .dark-btn:hover,
-    .download-btn:hover,
-    .buy-btn:hover,
-    .login-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .text-btn {
-      padding: 11px 16px;
-      background: rgba(255, 255, 255, 0.72);
+    .header-nav a:hover,
+    .header-nav a.active {
       color: var(--green);
+    }
+
+    .header-nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -12px;
+      width: 100%;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--gold);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: 14px;
       border: 1px solid var(--line);
-    }
-
-    .primary-btn {
-      padding: 13px 20px;
-      color: white;
-      background: linear-gradient(135deg, var(--green), var(--olive));
-      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.22);
-    }
-
-    .secondary-btn {
-      padding: 13px 20px;
+      background: var(--white);
       color: var(--green);
-      background: white;
-      border: 1px solid var(--line);
-      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
+      font-weight: 900;
+      cursor: pointer;
     }
 
-    .dark-btn {
-      padding: 13px 20px;
-      color: var(--gold);
-      background: var(--green);
-      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.20);
+    .mobile-nav {
+      display: none;
+      padding-bottom: 16px;
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav-panel {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mobile-nav-panel a {
+      padding: 12px;
+      border-radius: 14px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .mobile-nav-panel a:hover {
+      background: var(--soft-green);
     }
 
     .hero {
       position: relative;
       overflow: hidden;
+      margin: 30px auto 26px;
+      padding: clamp(30px, 5vw, 56px);
       border-radius: var(--radius-xl);
       background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 240, 0.94)),
         radial-gradient(circle at top right, rgba(201, 166, 90, 0.18), transparent 32%);
       border: 1px solid rgba(232, 222, 204, 0.85);
       box-shadow: var(--shadow);
-      padding: clamp(28px, 5vw, 56px);
-      margin-bottom: 26px;
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      width: 300px;
-      height: 300px;
-      top: -130px;
-      right: -100px;
+      width: 320px;
+      height: 320px;
+      top: -140px;
+      right: -110px;
       border-radius: 50%;
       background: rgba(201, 166, 90, 0.16);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      bottom: -120px;
-      left: -80px;
-      border-radius: 50%;
-      background: rgba(85, 101, 68, 0.10);
+      pointer-events: none;
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1.35fr 0.75fr;
+      grid-template-columns: 1.32fr 0.78fr;
       gap: 28px;
       align-items: center;
     }
@@ -242,6 +247,14 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.18);
     }
 
     .hero h1 {
@@ -281,9 +294,9 @@
     }
 
     .hero-card .tiny {
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255, 255, 255, 0.74);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 850;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 12px;
@@ -291,7 +304,7 @@
 
     .hero-card strong {
       color: var(--gold);
-      font-size: 38px;
+      font-size: 42px;
       display: block;
       line-height: 1;
       margin-bottom: 8px;
@@ -304,11 +317,110 @@
       display: block;
     }
 
+    .btn,
+    .text-btn,
+    .primary-btn,
+    .secondary-btn,
+    .download-btn,
+    .buy-btn,
+    .login-btn,
+    .disabled-btn,
+    .back-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+      min-height: 46px;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .text-btn:hover,
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .download-btn:hover,
+    .buy-btn:hover,
+    .login-btn:hover,
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary-btn {
+      padding: 13px 20px;
+      color: white;
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      box-shadow: 0 16px 34px rgba(63, 74, 53, 0.22);
+    }
+
+    .secondary-btn {
+      padding: 13px 20px;
+      color: var(--green);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
+    }
+
+    .buy-btn {
+      padding: 12px 17px;
+      color: var(--green);
+      background: var(--gold-soft);
+      border: 1px solid rgba(201, 166, 90, 0.34);
+    }
+
+    .login-btn {
+      padding: 12px 17px;
+      color: var(--green);
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .download-btn {
+      padding: 12px 17px;
+      color: white;
+      background: linear-gradient(135deg, var(--green), var(--olive));
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.18);
+    }
+
+    .disabled-btn {
+      padding: 12px 17px;
+      color: var(--muted);
+      background: #F1E9DC;
+      border: 1px solid var(--line);
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .pill {
+      border: 1px solid rgba(232, 222, 204, 0.95);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 10px 26px rgba(63, 74, 53, 0.07);
+      backdrop-filter: blur(14px);
+    }
+
     .status-bar {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
-      margin: 24px 0 28px;
+      margin: 24px auto 28px;
     }
 
     .metric {
@@ -343,8 +455,8 @@
 
     .section-head h2 {
       color: var(--green);
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: -0.045em;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.05em;
       line-height: 1;
     }
 
@@ -352,7 +464,7 @@
       color: var(--muted);
       font-size: 14px;
       line-height: 1.65;
-      max-width: 620px;
+      max-width: 660px;
       margin-top: 8px;
     }
 
@@ -365,7 +477,7 @@
     .product-card {
       position: relative;
       overflow: hidden;
-      min-height: 300px;
+      min-height: 330px;
       border-radius: 30px;
       background: white;
       border: 1px solid var(--line);
@@ -380,7 +492,7 @@
     }
 
     .product-top {
-      min-height: 148px;
+      min-height: 154px;
       padding: 22px;
       color: white;
       display: flex;
@@ -437,7 +549,7 @@
     }
 
     .product-symbol {
-      font-size: 34px;
+      font-size: 36px;
       line-height: 1;
     }
 
@@ -460,40 +572,19 @@
       margin-bottom: 18px;
     }
 
+    .included-list {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 18px;
+      color: var(--olive);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
     .product-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-    }
-
-    .buy-btn {
-      padding: 12px 17px;
-      color: var(--green);
-      background: var(--gold-soft);
-      border: 1px solid rgba(201, 166, 90, 0.34);
-    }
-
-    .login-btn {
-      padding: 12px 17px;
-      color: var(--green);
-      background: white;
-      border: 1px solid var(--line);
-    }
-
-    .download-btn {
-      padding: 12px 17px;
-      color: white;
-      background: linear-gradient(135deg, var(--green), var(--olive));
-      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.18);
-    }
-
-    .disabled-btn {
-      padding: 12px 17px;
-      color: var(--muted);
-      background: #F1E9DC;
-      border: 1px solid var(--line);
-      cursor: not-allowed;
-      opacity: 0.92;
     }
 
     .detail-panel {
@@ -543,10 +634,7 @@
       border: 1px solid rgba(255, 255, 255, 0.25);
       background: rgba(255, 255, 255, 0.10);
       color: white;
-      border-radius: 999px;
       padding: 10px 14px;
-      font-weight: 900;
-      cursor: pointer;
     }
 
     .detail-hero h2 {
@@ -634,6 +722,28 @@
       font-size: 13px;
     }
 
+    .notice-premium {
+      margin-top: 40px;
+      padding: 26px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .notice-premium strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .notice-premium p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
     .empty-state,
     .loading-state,
     .error-state {
@@ -670,7 +780,7 @@
       transform: translateX(-50%) translateY(18px);
       opacity: 0;
       pointer-events: none;
-      z-index: 50;
+      z-index: 80;
       max-width: min(92vw, 520px);
       background: var(--green);
       color: white;
@@ -697,6 +807,7 @@
       text-align: center;
       font-size: 12px;
       line-height: 1.7;
+      padding-bottom: 40px;
     }
 
     .footer strong {
@@ -725,26 +836,32 @@
       }
     }
 
+    @media (max-width: 760px) {
+      .header-nav {
+        display: none;
+      }
+
+      .mobile-menu-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header-inner {
+        min-height: 82px;
+      }
+
+      .brand-logo {
+        width: 56px;
+        height: 56px;
+      }
+
+      .brand-title {
+        font-size: 1.1rem;
+      }
+    }
+
     @media (max-width: 640px) {
-      .page-shell {
-        padding: 18px 14px 34px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .top-actions {
-        width: 100%;
-        justify-content: stretch;
-      }
-
-      .top-actions .text-btn,
-      .top-actions .pill {
-        flex: 1 1 auto;
-      }
-
       .hero {
         padding: 26px;
         border-radius: 28px;
@@ -754,12 +871,22 @@
         font-size: 44px;
       }
 
-      .hero-actions {
+      .hero-actions,
+      .product-actions,
+      .top-actions {
         flex-direction: column;
       }
 
       .hero-actions a,
-      .hero-actions button {
+      .hero-actions button,
+      .product-actions button,
+      .product-actions a,
+      .download-btn,
+      .buy-btn,
+      .login-btn,
+      .primary-btn,
+      .secondary-btn,
+      .disabled-btn {
         width: 100%;
       }
 
@@ -772,76 +899,94 @@
         align-items: flex-start;
       }
 
-      .product-actions {
-        flex-direction: column;
-      }
-
-      .product-actions button,
-      .product-actions a {
-        width: 100%;
-      }
-
       .detail-nav {
         align-items: flex-start;
         flex-direction: column;
       }
+    }
 
-      .download-btn,
-      .buy-btn,
-      .login-btn,
-      .primary-btn,
-      .secondary-btn,
-      .dark-btn,
-      .disabled-btn {
-        width: 100%;
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="page-shell">
-    <header class="topbar">
-      <a class="brand" href="dashboard.html" aria-label="Volver al Dashboard">
+  <header class="site-header">
+    <div class="header-inner page-shell">
+      <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
+        assets/logo-header.png
 
-  <img
-    src="assets/logo-header.png"
-    alt="Hábitos con Dios"
-    class="brand-logo"
-  >
-
-  <div class="brand-text">
-          <strong>Hábitos con Dios Pro</strong>
-          <span>Biblioteca Premium</span>
+        <div class="brand-copy">
+          <span class="brand-name">Hábitos con Dios</span>
+          <strong class="brand-title">Mis Colecciones</strong>
         </div>
       </a>
 
-      <div class="top-actions">
-        <span class="pill" id="userPill">Biblioteca pública</span>
-        <a class="text-btn" href="dashboard.html">Dashboard</a>
-        <a class="text-btn" href="login.html" id="loginLink">Ingresar</a>
-        <button class="text-btn hide" type="button" id="logoutBtn">Cerrar sesión</button>
-      </div>
-    </header>
+      <nav class="header-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html" class="active">Mis Colecciones</a>
+      </nav>
 
+      <button
+        class="mobile-menu-button"
+        type="button"
+        id="mobileMenuButton"
+        aria-label="Abrir menú"
+        aria-controls="mobileNav"
+        aria-expanded="false"
+      >
+        Menú
+      </button>
+    </div>
+
+    <div class="mobile-nav page-shell" id="mobileNav" aria-hidden="true">
+      <div class="mobile-nav-panel">
+        <a href="index.html">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html">Mis Colecciones</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <div class="eyebrow">Biblioteca digital</div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            Mis Colecciones
+          </div>
 
           <h1>
-            Explora tus recursos
-            <span>espirituales</span>
+            Descubre las experiencias
+            <span>que acompañan tu camino con Dios</span>
           </h1>
 
           <p>
-            Conoce los ebooks, bonos, imprimibles y experiencias digitales de Hábitos con Dios.
-            Puedes explorar el catálogo libremente. El acceso a cada colección se activa según tu compra.
+            Explora las colecciones digitales de Hábitos con Dios. Cada colección puede incluir App,
+            ebook premium, bonos y recursos creados para acompañar una etapa específica de crecimiento.
+            Puedes conocer el catálogo libremente. El acceso se valida cuando decides entrar a un producto.
           </p>
 
           <div class="hero-actions">
-            <a class="primary-btn" href="#biblioteca">Explorar Biblioteca</a>
-            <a class="secondary-btn" href="login.html">Ya compré, quiero ingresar</a>
+            #bibliotecaExplorar colecciones</a>
+            <a class="secondary-btn" href="login.html" id="heroLoginLink">Ya compré, quiero ingresar</a>
+          </div>
+
+          <div class="top-actions">
+            <span class="pill" id="userPill">Biblioteca pública</span>
+            <a class="secondary-btn" href="login.html" id="loginLink">Ingresar</a>
+            <button class="secondary-btn hide" type="button" id="logoutBtn">Cerrar sesión</button>
           </div>
         </div>
 
@@ -849,7 +994,7 @@
           <div class="tiny">Catálogo Premium</div>
           <strong id="accessCount">0</strong>
           <span id="accessMessage">
-            Productos disponibles para explorar.
+            Colecciones disponibles para explorar.
           </span>
         </aside>
       </div>
@@ -857,17 +1002,17 @@
 
     <section class="status-bar" aria-label="Resumen de biblioteca">
       <article class="metric">
-        <small>Productos</small>
+        <small>Colecciones</small>
         <strong id="totalProducts">0</strong>
       </article>
 
       <article class="metric">
-        <small>Desbloqueados</small>
+        <small>Con acceso</small>
         <strong id="unlockedProducts">0</strong>
       </article>
 
       <article class="metric">
-        <small>Recursos visibles</small>
+        <small>Recursos privados</small>
         <strong id="totalFiles">0</strong>
       </article>
 
@@ -879,26 +1024,27 @@
 
     <section id="loadingState" class="loading-state">
       <div class="loading-spinner"></div>
-      <strong>Preparando la Biblioteca Premium...</strong>
+      <strong>Preparando Mis Colecciones...</strong>
       <p>Estamos cargando el catálogo disponible.</p>
     </section>
 
     <section id="errorState" class="error-state hide">
-      <strong>No pudimos cargar la Biblioteca.</strong>
+      <strong>No pudimos cargar Mis Colecciones.</strong>
       <p id="errorMessage">Intenta actualizar la página.</p>
 
       <div style="margin-top:18px;">
-        index.htmlVolver al Portal</a>
+        <a class="secondary-btn" href="index.html">Inicio</a>
       </div>
     </section>
 
     <section id="libraryApp" class="hide">
       <div class="section-head" id="biblioteca">
         <div>
-          <h2>Biblioteca</h2>
+          <h2>Elige una colección</h2>
           <p>
-            Todos los productos aparecen aquí. Si ya compraste un producto e iniciaste sesión,
-            podrás entrar a su colección. Si todavía no lo compraste, puedes adquirirlo en Shopify.
+            Todas las colecciones se presentan aquí. Si ya compraste e iniciaste sesión,
+            podrás entrar a la App y acceder a tus ebooks y bonos. Si todavía no compraste,
+            podrás ir a Shopify desde la colección elegida.
           </p>
         </div>
       </div>
@@ -908,7 +1054,7 @@
       <section id="detailPanel" class="detail-panel" aria-live="polite">
         <div class="detail-hero">
           <div class="detail-nav">
-            <button class="back-btn" type="button" id="backToLibrary">← Volver a la Biblioteca</button>
+            <button class="back-btn" type="button" id="backToLibrary">← Mis Colecciones</button>
             <span class="badge badge-unlocked">Acceso activo</span>
           </div>
 
@@ -923,16 +1069,27 @@
           <div id="resourceGroups"></div>
 
           <div class="notice">
-            Los archivos están protegidos dentro de la Biblioteca Premium.
-            Para acceder nuevamente, inicia sesión desde tu cuenta y vuelve a descargar el recurso desde esta biblioteca.
+            Los archivos están protegidos dentro de Mis Colecciones. Para acceder nuevamente,
+            inicia sesión desde tu cuenta y vuelve a descargar el recurso desde esta biblioteca.
           </div>
         </div>
       </section>
     </section>
 
+    <section class="notice-premium">
+      <strong>ℹ️ Información importante</strong>
+      <p>
+        Los recursos, Apps y experiencias digitales de Hábitos con Dios fueron creados como herramientas
+        de acompañamiento espiritual y crecimiento personal. No reemplazan terapia, atención médica,
+        apoyo psicológico, consejería pastoral responsable ni ayuda profesional cuando corresponda.
+        Si estás atravesando una situación de crisis, emergencia o necesitas asistencia especializada,
+        te recomendamos buscar apoyo profesional adecuado.
+      </p>
+    </section>
+
     <footer class="footer">
-      <strong>Hábitos con Dios Pro</strong><br />
-      Recursos digitales creados para acompañar tu crecimiento espiritual diario.
+      <strong>Hábitos con Dios</strong><br />
+      Experiencias digitales creadas para acompañar tu crecimiento espiritual diario.
     </footer>
   </main>
 
@@ -940,9 +1097,7 @@
 
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+    const SUPABASE_ANON_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
     const BUCKET_NAME = "hcd-resources";
     const SIGNED_URL_SECONDS = 300;
@@ -991,63 +1146,60 @@
     ];
 
     const APP_LINKS = {
-  "21dias": {
-    title: "Mi Tiempo con Dios",
-    url: "apps/mi-tiempo-con-dios.html",
-    enabled: true,
-    statusLabel: "Aplicación exclusiva"
-  },
-
-  "familias": {
-    title: "Momentos con Dios en Familia",
-    url: "apps/pequenos-momentos-con-dios.html",
-    enabled: true,
-    statusLabel: "Aplicación exclusiva"
-  },
-
-  "palabras-duelen": {
-    title: "Sanando las Palabras",
-    url: "apps/cuando-las-palabras-duelen.html",
-    enabled: true,
-    statusLabel: "Aplicación exclusiva"
-  },
-
-  "hombre-edifica": {
-    title: "El Hombre que Edifica su Hogar",
-    url: "apps/el-hombre-que-edifica-su-hogar.html",
-    enabled: true,
-    statusLabel: "Aplicación exclusiva"
-  }
-};
+      "21dias": {
+        title: "Mi Tiempo con Dios",
+        url: "apps/mi-tiempo-con-dios.html",
+        enabled: true,
+        statusLabel: "App exclusiva"
+      },
+      "familias": {
+        title: "Pequeños Momentos con Dios",
+        url: "apps/pequenos-momentos-con-dios.html",
+        enabled: true,
+        statusLabel: "App exclusiva"
+      },
+      "palabras-duelen": {
+        title: "Cuando las Palabras Duelen",
+        url: "apps/cuando-las-palabras-duelen.html",
+        enabled: true,
+        statusLabel: "App exclusiva"
+      },
+      "hombre-edifica": {
+        title: "El Hombre que Edifica su Hogar",
+        url: "apps/el-hombre-que-edifica-su-hogar.html",
+        enabled: true,
+        statusLabel: "App exclusiva"
+      }
+    };
 
     const CATEGORY_LABELS = {
+      app: { title: "App principal", icon: "📱" },
       ebook: { title: "Ebook principal", icon: "📖" },
       bonus: { title: "Bonos incluidos", icon: "🎁" },
       printable: { title: "Versiones imprimibles", icon: "🖨️" },
-      app: { title: "Aplicaciones exclusivas", icon: "📱" },
       audio: { title: "Audios", icon: "🎧" },
       video: { title: "Videos", icon: "🎬" },
       resource: { title: "Recursos", icon: "✨" }
     };
 
-    const CATEGORY_ORDER = ["ebook", "bonus", "printable", "app", "audio", "video", "resource"];
+    const CATEGORY_ORDER = ["app", "ebook", "bonus", "printable", "audio", "video", "resource"];
 
     const PRODUCT_META = {
       "21dias": {
         icon: "🌸",
-        description: "Un kit devocional completo para crear una rutina espiritual posible, profunda y constante."
+        description: "Devocional guiado para mujeres que desean fortalecer su relación con Dios mediante hábitos espirituales simples y sostenibles."
       },
       "familias": {
         icon: "👨‍👩‍👧‍👦",
-        description: "Recursos para acompañar momentos de fe, gratitud y conexión espiritual en familia."
+        description: "Recursos prácticos para ayudar a las familias a compartir momentos de fe, reflexión y conexión espiritual en la vida cotidiana."
       },
       "palabras-duelen": {
         icon: "💛",
-        description: "Una colección de acompañamiento, identidad y esperanza para atravesar palabras difíciles."
+        description: "Una experiencia diseñada para acompañar a adolescentes y jóvenes a procesar heridas emocionales desde una perspectiva de fe y esperanza."
       },
       "hombre-edifica": {
         icon: "🏡",
-        description: "Herramientas devocionales para liderazgo, oración, discernimiento y propósito en el hogar."
+        description: "Herramientas prácticas para hombres que desean fortalecer su liderazgo espiritual, familiar y personal con propósito."
       }
     };
 
@@ -1063,6 +1215,7 @@
     const els = {
       userPill: document.getElementById("userPill"),
       loginLink: document.getElementById("loginLink"),
+      heroLoginLink: document.getElementById("heroLoginLink"),
       logoutBtn: document.getElementById("logoutBtn"),
       loadingState: document.getElementById("loadingState"),
       errorState: document.getElementById("errorState"),
@@ -1080,7 +1233,9 @@
       totalProducts: document.getElementById("totalProducts"),
       unlockedProducts: document.getElementById("unlockedProducts"),
       totalFiles: document.getElementById("totalFiles"),
-      libraryStatus: document.getElementById("libraryStatus")
+      libraryStatus: document.getElementById("libraryStatus"),
+      mobileButton: document.getElementById("mobileMenuButton"),
+      mobileNav: document.getElementById("mobileNav")
     };
 
     let currentUser = null;
@@ -1088,9 +1243,11 @@
     let productFiles = [];
     let entitlements = [];
     let activePermissionKeys = new Set();
+    let activeSourceSkus = new Set();
     let hasAllAccess = false;
 
     init();
+    bindMobileNavigation();
 
     async function init() {
       try {
@@ -1107,8 +1264,29 @@
         setLoading(false);
       } catch (error) {
         console.error(error);
-        showError("No pudimos cargar la Biblioteca. Intenta actualizar la página.");
+        showError("No pudimos cargar Mis Colecciones. Intenta actualizar la página.");
       }
+    }
+
+    function bindMobileNavigation() {
+      if (!els.mobileButton || !els.mobileNav) return;
+
+      els.mobileButton.addEventListener("click", () => {
+        const isOpen = els.mobileNav.classList.toggle("open");
+
+        els.mobileButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        els.mobileButton.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+        els.mobileNav.setAttribute("aria-hidden", isOpen ? "false" : "true");
+      });
+
+      els.mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          els.mobileNav.classList.remove("open");
+          els.mobileButton.setAttribute("aria-expanded", "false");
+          els.mobileButton.setAttribute("aria-label", "Abrir menú");
+          els.mobileNav.setAttribute("aria-hidden", "true");
+        });
+      });
     }
 
     async function loadSession() {
@@ -1125,11 +1303,13 @@
       if (currentUser) {
         els.userPill.textContent = currentUser.email || "Sesión activa";
         els.loginLink.classList.add("hide");
+        els.heroLoginLink.classList.add("hide");
         els.logoutBtn.classList.remove("hide");
         els.libraryStatus.textContent = "Sesión activa";
       } else {
         els.userPill.textContent = "Biblioteca pública";
         els.loginLink.classList.remove("hide");
+        els.heroLoginLink.classList.remove("hide");
         els.logoutBtn.classList.add("hide");
         els.libraryStatus.textContent = "Pública";
       }
@@ -1151,6 +1331,8 @@
     }
 
     async function loadUserAccessData() {
+      const normalizedEmail = String(currentUser.email || "").trim().toLowerCase();
+
       const [filesResult, entitlementsResult] = await Promise.all([
         supabaseClient
           .from("product_files")
@@ -1159,7 +1341,8 @@
 
         supabaseClient
           .from("entitlements")
-          .select("permission_key, source_sku, active")
+          .select("permission_key, source_sku, active, email")
+          .eq("email", normalizedEmail)
           .eq("active", true)
       ]);
 
@@ -1180,7 +1363,15 @@
           .map((item) => item.permission_key)
       );
 
-      hasAllAccess = activePermissionKeys.has("membership_all_access");
+      activeSourceSkus = new Set(
+        entitlements
+          .filter((item) => item.active === true)
+          .map((item) => item.source_sku)
+      );
+
+      hasAllAccess =
+        activePermissionKeys.has("membership_all_access") ||
+        activeSourceSkus.has("HCD_ALL_ACCESS");
     }
 
     function renderLibrary() {
@@ -1196,8 +1387,8 @@
 
       els.accessMessage.textContent = currentUser
         ? unlocked.length > 0
-          ? "Tienes colecciones desbloqueadas listas para usar."
-          : "Iniciaste sesión, pero aún no tienes productos activos."
+          ? "Tienes colecciones activas listas para usar."
+          : "Iniciaste sesión, pero aún no tienes colecciones activas."
         : "Puedes explorar el catálogo y comprar desde Shopify.";
 
       products.forEach((product) => {
@@ -1205,42 +1396,51 @@
       });
 
       els.libraryApp.classList.remove("hide");
+
+      setTimeout(scrollToHashTarget, 80);
     }
 
     function createProductCard(product) {
       const isUnlocked = userHasAccess(product);
       const isActive = product.status === "active";
       const meta = PRODUCT_META[product.slug] || {};
+      const appLink = APP_LINKS[product.slug];
       const card = document.createElement("article");
 
       card.className = `product-card ${escapeClass(product.slug)} ${isUnlocked ? "unlocked" : "locked"}`;
+      card.id = `coleccion-${product.slug}`;
 
       const productIcon = meta.icon || "✦";
-      const productDescription = meta.description || "Colección premium de Hábitos con Dios Pro.";
+      const productDescription = meta.description || "Colección premium de Hábitos con Dios.";
       const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
 
       let actions = "";
 
       if (isUnlocked) {
         actions = `
-          <button class="download-btn" type="button" data-action="open">
-            Entrar a la colección
+          <a class="download-btn" href="${escapeAttr(appLink?.url || "#")}">
+            Entrar a la App
+          </a>
+
+          <button class="login-btn" type="button" data-action="open">
+            Tus Ebooks y Bonos
           </button>
         `;
       } else if (currentUser) {
         actions = `
           <button class="buy-btn" type="button" data-action="buy">
-            Comprar ahora
+            Comprar acceso
           </button>
         `;
       } else {
         actions = `
-          <button class="buy-btn" type="button" data-action="buy">
-            Comprar ahora
-          </button>
-          <a class="login-btn" href="login.html">
-            Ya compré
+          <a class="download-btn" href="login.html">
+            Entrar a la App
           </a>
+
+          <button class="buy-btn" type="button" data-action="buy">
+            Comprar acceso
+          </button>
         `;
       }
 
@@ -1258,6 +1458,13 @@
         <div class="product-body">
           <h3>${escapeHTML(product.title)}</h3>
           <p>${escapeHTML(productDescription)}</p>
+
+          <div class="included-list">
+            <span>✓ App exclusiva</span>
+            <span>✓ Ebook premium</span>
+            <span>✓ Bonos digitales</span>
+          </div>
+
           <div class="product-actions">${actions}</div>
         </div>
       `;
@@ -1335,16 +1542,37 @@
 
         const list = section.querySelector(".resource-list");
 
-        groupFiles.forEach((file) => {
-          list.appendChild(createFileCard(product, file));
-        });
-
         if (shouldRenderAppGroup) {
           list.appendChild(createAppCard(appLink));
         }
 
+        groupFiles.forEach((file) => {
+          list.appendChild(createFileCard(product, file));
+        });
+
         els.resourceGroups.appendChild(section);
       });
+    }
+
+    function createAppCard(appLink) {
+      const card = document.createElement("article");
+      card.className = "file-card";
+
+      if (appLink.enabled) {
+        card.innerHTML = `
+          <span>${escapeHTML(appLink.statusLabel || "App exclusiva")}</span>
+          <strong>${escapeHTML(appLink.title)}</strong>
+          <a class="download-btn" href="${escapeAttr(appLink.url)}">Abrir App</a>
+        `;
+      } else {
+        card.innerHTML = `
+          <span>${escapeHTML(appLink.statusLabel || "Próximamente")}</span>
+          <strong>${escapeHTML(appLink.title)}</strong>
+          <button class="disabled-btn" type="button" disabled>Disponible próximamente</button>
+        `;
+      }
+
+      return card;
     }
 
     function createFileCard(product, file) {
@@ -1364,27 +1592,6 @@
       button.addEventListener("click", () => {
         downloadFile(product, file);
       });
-
-      return card;
-    }
-
-    function createAppCard(appLink) {
-      const card = document.createElement("article");
-      card.className = "file-card";
-
-      if (appLink.enabled) {
-        card.innerHTML = `
-          <span>${escapeHTML(appLink.statusLabel || "Aplicación exclusiva")}</span>
-          <strong>${escapeHTML(appLink.title)}</strong>
-          <a class="download-btn" href="${escapeAttr(appLink.url)}">Abrir aplicación</a>
-        `;
-      } else {
-        card.innerHTML = `
-          <span>${escapeHTML(appLink.statusLabel || "Próximamente")}</span>
-          <strong>${escapeHTML(appLink.title)}</strong>
-          <button class="disabled-btn" type="button" disabled>Disponible próximamente</button>
-        `;
-      }
 
       return card;
     }
@@ -1446,7 +1653,11 @@
         return false;
       }
 
-      return hasAllAccess || activePermissionKeys.has(product.permission_key);
+      return (
+        hasAllAccess ||
+        activePermissionKeys.has(product.permission_key) ||
+        activeSourceSkus.has(product.source_sku)
+      );
     }
 
     function getVisibleFilesForUnlockedProducts(unlockedProducts) {
@@ -1473,7 +1684,7 @@
         ebook: "Ebook digital",
         bonus: "Bono digital",
         printable: "Versión imprimible",
-        app: "Aplicación",
+        app: "App",
         audio: "Audio",
         video: "Video",
         resource: "Recurso"
@@ -1548,6 +1759,21 @@
       }, 3200);
     }
 
+    function scrollToHashTarget() {
+      const hash = window.location.hash;
+
+      if (!hash) return;
+
+      const target = document.querySelector(hash);
+
+      if (!target) return;
+
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
     els.backToLibrary.addEventListener("click", () => {
       els.detailPanel.classList.remove("active");
 
@@ -1564,4 +1790,3 @@
   </script>
 </body>
 </html>
-``
