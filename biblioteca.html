@@ -83,18 +83,12 @@
       min-width: 0;
     }
 
-    .brand-mark {
-      width: 46px;
-      height: 46px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--green), var(--olive));
-      display: grid;
-      place-items: center;
-      color: var(--gold);
-      box-shadow: var(--shadow-soft);
-      flex: 0 0 auto;
-      font-size: 21px;
-    }
+    .brand-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
 
     .brand-text strong {
       display: block;
@@ -809,8 +803,14 @@
   <main class="page-shell">
     <header class="topbar">
       <a class="brand" href="dashboard.html" aria-label="Volver al Dashboard">
-        <div class="brand-mark">✦</div>
-        <div class="brand-text">
+
+  <img
+    src="assets/logo-header.png"
+    alt="Hábitos con Dios"
+    class="brand-logo"
+  >
+
+  <div class="brand-text">
           <strong>Hábitos con Dios Pro</strong>
           <span>Biblioteca Premium</span>
         </div>
