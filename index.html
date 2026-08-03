@@ -4,43 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Hábitos con Dios Pro | Portal Premium</title>
+  <title>Hábitos con Dios | Experiencias digitales para crecer con Dios</title>
 
   <meta
     name="description"
-    content="Portal premium de Hábitos con Dios para acceder a recursos digitales, micro aplicaciones devocionales, biblioteca espiritual, membresías y experiencias de crecimiento espiritual."
+    content="Hábitos con Dios ofrece experiencias digitales cristianas con Apps, ebooks y bonos diseñados para ayudarte a cultivar fe, oración, propósito y conexión espiritual en tu vida diaria."
   />
 
   <meta name="theme-color" content="#3F4A35" />
 
-  <meta property="og:title" content="Hábitos con Dios Pro | Portal Premium" />
+  <meta property="og:title" content="Hábitos con Dios | Experiencias digitales cristianas" />
   <meta
     property="og:description"
-    content="Un portal digital premium para acceder a micro aplicaciones, recursos devocionales, biblioteca espiritual y experiencias prácticas para crecer en la fe un día a la vez."
+    content="Encuentra un camino simple para acercarte más a Dios con colecciones digitales que integran Apps, ebooks y bonos premium."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://skool.renovae.store" />
   <meta property="og:site_name" content="Hábitos con Dios" />
 
   <style>
     :root {
       --green: #3F4A35;
+      --green-dark: #2F3A2C;
       --olive: #556544;
       --gold: #C9A65A;
+      --gold-soft: #F7EAC7;
       --beige: #F5F0E7;
       --cream: #FAF7F0;
-      --ink: #1F2937;
       --white: #FFFFFF;
+      --ink: #1F2937;
       --muted: #6B7280;
       --line: #E8DECC;
       --soft-green: #EEF3EA;
-      --soft-gold: #F7EAC7;
-      --soft-rose: #F5E3DD;
+      --soft-gold: #FFF4D8;
+      --soft-card: rgba(255, 255, 255, 0.86);
       --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.10);
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
+      --max: 1180px;
     }
 
     * {
@@ -51,18 +53,17 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 104px;
     }
 
     body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(201, 166, 90, 0.22), transparent 34%),
-        radial-gradient(circle at 80% 10%, rgba(85, 101, 68, 0.14), transparent 28%),
-        linear-gradient(145deg, var(--cream), var(--beige));
-      color: var(--ink);
       min-height: 100vh;
       overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(201, 166, 90, 0.24), transparent 34%),
+        radial-gradient(circle at 86% 6%, rgba(85, 101, 68, 0.14), transparent 30%),
+        linear-gradient(145deg, var(--cream), var(--beige));
     }
 
     a {
@@ -70,855 +71,643 @@
       text-decoration: none;
     }
 
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid rgba(201, 166, 90, 0.88);
-      outline-offset: 4px;
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
     }
 
     .page-shell {
-      width: min(1180px, calc(100% - 32px));
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
-    .announcement {
-      width: 100%;
-      background: var(--green);
-      color: var(--cream);
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      padding: 10px 16px;
-      letter-spacing: 0.01em;
-    }
-
-    .navbar {
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(16px);
       background: rgba(250, 247, 240, 0.92);
-      border-bottom: 1px solid rgba(232, 222, 204, 0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(232, 222, 204, 0.86);
     }
 
-    .nav-inner {
-      width: min(1180px, calc(100% - 32px));
+    .header-inner {
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
+      min-height: 94px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 16px 0;
+      gap: 24px;
     }
 
-    .brand {
+    .brand-area {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: fit-content;
+      gap: 16px;
+      min-width: 0;
     }
 
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--gold);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      box-shadow: var(--shadow-soft);
+    .brand-logo {
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
       flex: 0 0 auto;
     }
 
-    .brand-text small {
-      display: block;
+    .brand-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand-name {
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
       color: var(--olive);
-      font-size: 10px;
-      font-weight: 900;
     }
 
-    .brand-text strong {
-      display: block;
+    .brand-title {
       color: var(--green);
-      font-size: 19px;
-      line-height: 1.1;
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.035em;
     }
 
-    .nav-links {
+    .header-nav {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 26px;
       color: var(--olive);
-      font-weight: 800;
-      font-size: 14px;
+      font-size: 0.92rem;
+      font-weight: 850;
     }
 
-    .nav-links a {
+    .header-nav a {
+      position: relative;
       transition: 0.2s ease;
-      line-height: 1;
-    }
-
-    .nav-links a:hover {
-      color: var(--green);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn {
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 13px 20px;
-      font-weight: 900;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      line-height: 1;
-      text-align: center;
-      min-height: 44px;
       white-space: nowrap;
     }
 
-    .btn-primary {
-      background: var(--green);
-      color: var(--white);
-      box-shadow: 0 14px 28px rgba(63, 74, 53, 0.22);
-    }
-
-    .btn-primary:hover,
-    .btn-secondary:hover,
-    .btn-gold:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.04);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.82);
+    .header-nav a:hover,
+    .header-nav a.active {
       color: var(--green);
-      border: 1px solid var(--line);
     }
 
-    .btn-gold {
+    .header-nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -12px;
+      width: 100%;
+      height: 3px;
+      border-radius: 999px;
       background: var(--gold);
-      color: var(--green);
-      box-shadow: 0 12px 26px rgba(201, 166, 90, 0.26);
     }
 
-    .btn-gold:hover {
-      filter: brightness(1.03);
-    }
-
-    .mobile-menu {
+    .mobile-menu-button {
       display: none;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: 14px;
       border: 1px solid var(--line);
       background: var(--white);
       color: var(--green);
-      border-radius: 14px;
-      padding: 10px 12px;
       font-weight: 900;
-      cursor: pointer;
-      min-height: 44px;
     }
 
     .mobile-nav {
       display: none;
-      width: min(1180px, calc(100% - 32px));
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      padding: 0 0 16px;
+      padding-bottom: 16px;
     }
 
     .mobile-nav.open {
       display: block;
     }
 
-    .mobile-nav-inner {
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 14px;
+    .mobile-nav-panel {
       display: grid;
       gap: 8px;
-      color: var(--green);
-      font-weight: 900;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow-soft);
     }
 
-    .mobile-nav-inner a {
-      padding: 12px 10px;
-      border-radius: 12px;
-      transition: 0.2s ease;
+    .mobile-nav-panel a {
+      padding: 12px;
+      border-radius: 14px;
+      color: var(--green);
+      font-weight: 900;
     }
 
-    .mobile-nav-inner a:hover {
+    .mobile-nav-panel a:hover {
       background: var(--soft-green);
     }
 
-    .hero {
-      padding: 72px 0 48px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 36px;
-      align-items: center;
+    .hero-section {
+      padding: 70px 0 46px;
     }
 
-    .eyebrow {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(30px, 5vw, 50px);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(232, 222, 204, 0.96);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 310px;
+      right: -130px;
+      top: -130px;
+      border-radius: 50%;
+      background: rgba(201, 166, 90, 0.15);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 8px 12px;
+      margin-bottom: 20px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
-      color: var(--olive);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.05em;
+      background: rgba(247, 234, 199, 0.78);
+      border: 1px solid rgba(201, 166, 90, 0.24);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 18px;
     }
 
-    .eyebrow-dot {
+    .hero-eyebrow-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.18);
-      flex: 0 0 auto;
+      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.20);
     }
 
-    .hero h1 {
-      font-size: clamp(48px, 8vw, 88px);
-      line-height: 0.9;
-      letter-spacing: -0.075em;
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      max-width: 790px;
       color: var(--green);
+      font-size: clamp(2.8rem, 6.7vw, 5.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+      font-weight: 950;
       margin-bottom: 22px;
     }
 
-    .hero h1 span {
+    .hero-title span {
       color: var(--gold);
-      display: block;
     }
 
     .hero-subtitle {
-      font-size: clamp(19px, 2.4vw, 27px);
-      line-height: 1.22;
-      color: var(--ink);
-      font-weight: 800;
+      position: relative;
+      z-index: 1;
       max-width: 680px;
-      margin-bottom: 16px;
-    }
-
-    .hero-description {
       color: var(--muted);
-      font-size: 17px;
-      line-height: 1.75;
-      max-width: 650px;
-      margin-bottom: 28px;
+      font-size: clamp(1rem, 2vw, 1.14rem);
+      line-height: 1.78;
     }
 
     .hero-actions {
+      position: relative;
+      z-index: 1;
       display: flex;
-      align-items: center;
-      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .trust-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
-      max-width: 620px;
+      margin-top: 28px;
     }
 
-    .trust-item {
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 14px 15px;
-      box-shadow: 0 8px 24px rgba(63, 74, 53, 0.06);
+    .btn {
+      min-height: 48px;
+      border: none;
+      border-radius: 999px;
+      padding: 0 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 950;
+      font-size: 0.92rem;
+      transition: 0.2s ease;
+      line-height: 1;
+      text-align: center;
     }
 
-    .trust-item strong {
-      display: block;
+    .btn-primary {
+      color: var(--white);
+      background: var(--green);
+      box-shadow: 0 14px 28px rgba(63, 74, 53, 0.24);
+    }
+
+    .btn-secondary {
       color: var(--green);
-      font-size: 20px;
-      margin-bottom: 2px;
-    }
-
-    .trust-item span {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 800;
-    }
-
-    .hero-panel {
-      position: relative;
-    }
-
-    .dashboard-card {
       background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(232, 222, 204, 0.96);
+      border: 1px solid var(--line);
+    }
+
+    .btn-gold {
+      color: var(--green);
+      background: var(--gold);
+      box-shadow: 0 14px 28px rgba(201, 166, 90, 0.24);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
       border-radius: var(--radius-xl);
-      padding: 22px;
+      background:
+        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.26), transparent 38%);
+      color: var(--white);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .dashboard-card::before {
-      content: "";
-      position: absolute;
-      width: 210px;
-      height: 210px;
-      border-radius: 50%;
-      background: rgba(201, 166, 90, 0.14);
-      top: -70px;
-      right: -58px;
-      pointer-events: none;
-    }
-
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 4px 2px 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .profile-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--gold);
       display: grid;
-      place-items: center;
-      font-weight: 900;
-      flex: 0 0 auto;
+      align-content: center;
+      gap: 18px;
     }
 
-    .profile small {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .profile strong {
-      display: block;
-      color: var(--green);
-      font-size: 15px;
-    }
-
-    .status-pill {
+    .visual-badge {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
       border-radius: 999px;
-      padding: 8px 10px;
-      background: var(--soft-green);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 900;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--gold-soft);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
     }
 
-    .progress-box {
-      background: var(--green);
-      color: var(--white);
-      border-radius: 24px;
+    .visual-card {
       padding: 22px;
-      margin-bottom: 14px;
-      position: relative;
-      overflow: hidden;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
-    .progress-box::after {
-      content: "";
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: rgba(201, 166, 90, 0.2);
-      right: -42px;
-      top: -52px;
+    .visual-card h2 {
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin-bottom: 12px;
     }
 
-    .progress-box small,
-    .progress-box h3,
-    .progress-bar {
-      position: relative;
-      z-index: 1;
-    }
-
-    .progress-box small {
+    .visual-card p {
       color: #EFE7D8;
-      font-weight: 800;
+      line-height: 1.7;
     }
 
-    .progress-box h3 {
-      font-size: 25px;
-      line-height: 1.05;
-      margin: 8px 0 16px;
-      color: var(--white);
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background: rgba(255, 255, 255, 0.18);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar span {
-      display: block;
-      width: 38%;
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--gold), #F2D487);
-    }
-
-    .dashboard-grid {
+    .experience-icons {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      position: relative;
-      z-index: 1;
     }
 
-    .mini-card {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 20px;
+    .experience-icon {
+      min-height: 112px;
       padding: 16px;
-      min-height: 126px;
-      box-shadow: 0 10px 24px rgba(63, 74, 53, 0.06);
-      transition: 0.2s ease;
-    }
-
-    .mini-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(63, 74, 53, 0.10);
-    }
-
-    .mini-card .icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 14px;
-      background: var(--soft-gold);
-      color: var(--green);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .mini-card h4 {
-      color: var(--green);
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .mini-card p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-      font-weight: 600;
-    }
-
-    .floating-note {
-      position: absolute;
-      left: -22px;
-      bottom: 36px;
-      width: 190px;
-      background: var(--white);
-      border: 1px solid var(--line);
       border-radius: 22px;
-      padding: 16px;
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .floating-note .spark {
-      width: 30px;
-      height: 30px;
-      border-radius: 12px;
-      background: var(--green);
-      color: var(--gold);
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-      font-weight: 900;
+      gap: 6px;
+      align-content: center;
     }
 
-    .floating-note p {
-      font-size: 12px;
-      line-height: 1.45;
-      color: var(--muted);
-      font-weight: 700;
+    .experience-icon strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.7rem;
+      line-height: 1;
     }
 
-    section {
-      padding: 58px 0;
+    .experience-icon span {
+      color: #EFE7D8;
+      font-size: 0.86rem;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .section {
+      padding: 52px 0;
     }
 
     .section-heading {
+      max-width: 780px;
+      margin: 0 auto 30px;
       text-align: center;
-      max-width: 760px;
-      margin: 0 auto 34px;
     }
 
     .section-kicker {
       display: inline-flex;
-      justify-content: center;
-      align-items: center;
+      margin-bottom: 12px;
+      padding: 8px 12px;
       border-radius: 999px;
-      padding: 7px 12px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid var(--line);
-      color: var(--olive);
-      font-size: 12px;
-      font-weight: 900;
+      background: var(--soft-gold);
+      color: var(--green);
+      font-size: 0.74rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 14px;
     }
 
     .section-heading h2 {
-      font-size: clamp(34px, 5vw, 56px);
+      color: var(--green);
+      font-size: clamp(2rem, 4.8vw, 3.5rem);
       line-height: 0.98;
       letter-spacing: -0.06em;
-      color: var(--green);
       margin-bottom: 14px;
     }
 
     .section-heading p {
       color: var(--muted);
-      font-size: 17px;
-      line-height: 1.7;
+      font-size: 1rem;
+      line-height: 1.72;
     }
 
-    .benefits-grid,
-    .resource-grid,
-    .coming-grid {
+    .pillars-grid {
       display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
-    .benefits-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .benefit-card {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid var(--line);
+    .pillar-card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      min-height: 250px;
       border-radius: var(--radius-lg);
-      padding: 24px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow-soft);
       transition: 0.2s ease;
-      min-height: 245px;
     }
 
-    .benefit-card:hover,
-    .resource-card:hover,
-    .coming-card:hover {
+    .pillar-card:hover,
+    .collection-card:hover,
+    .feature-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow);
     }
 
-    .benefit-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 18px;
-      background: var(--green);
-      color: var(--gold);
+    .pillar-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 20px;
       display: grid;
       place-items: center;
-      font-weight: 900;
-      font-size: 20px;
+      background: var(--green);
+      color: var(--gold);
+      font-size: 1.7rem;
       margin-bottom: 18px;
     }
 
-    .benefit-card h3,
-    .resource-card h3,
-    .coming-card h3 {
+    .pillar-card h3 {
       color: var(--green);
-      line-height: 1.15;
-      margin-bottom: 12px;
-    }
-
-    .benefit-card h3 {
-      font-size: 20px;
-    }
-
-    .resource-card h3 {
-      font-size: 21px;
-    }
-
-    .coming-card h3 {
-      font-size: 22px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .benefit-card p,
-    .resource-card p,
-    .coming-card p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-      font-weight: 600;
-    }
-
-    .resources-wrapper {
-      background: rgba(63, 74, 53, 0.96);
-      border-radius: var(--radius-xl);
-      padding: 34px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .resources-wrapper::before {
-      content: "";
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: rgba(201, 166, 90, 0.14);
-      right: -120px;
-      top: -120px;
-    }
-
-    .resources-top {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: end;
-      margin-bottom: 22px;
-    }
-
-    .resources-top h2 {
-      color: var(--white);
-      font-size: clamp(32px, 4.7vw, 54px);
-      line-height: 1;
-      letter-spacing: -0.055em;
+      font-size: 1.35rem;
+      line-height: 1.12;
       margin-bottom: 10px;
     }
 
-    .resources-top p {
-      color: #EDE5D6;
-      max-width: 640px;
-      line-height: 1.7;
-      font-size: 16px;
+    .pillar-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.94rem;
     }
 
-    .resource-grid {
+    .collections-grid {
+      display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      position: relative;
-      z-index: 1;
+      gap: 18px;
     }
 
-    .resource-card {
+    .collection-card {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
       background: var(--white);
-      border-radius: 24px;
-      padding: 20px;
-      min-height: 250px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
       transition: 0.2s ease;
     }
 
-    .resource-card.featured {
-      background: linear-gradient(145deg, var(--cream), #FFFFFF);
-      outline: 2px solid rgba(201, 166, 90, 0.34);
+    .collection-cover {
+      min-height: 145px;
+      padding: 18px;
+      display: flex;
+      align-items: flex-end;
+      color: var(--gold);
+      font-size: 1.42rem;
+      font-weight: 950;
+      letter-spacing: -0.035em;
+      background:
+        linear-gradient(135deg, rgba(63, 74, 53, 0.94), rgba(85, 101, 68, 0.90)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.28), transparent 36%);
     }
 
-    .resource-tag {
+    .collection-body {
+      padding: 20px;
+    }
+
+    .collection-badge {
       display: inline-flex;
-      align-self: flex-start;
+      margin-bottom: 12px;
       padding: 7px 10px;
       border-radius: 999px;
       background: var(--soft-green);
       color: var(--green);
-      font-size: 11px;
-      font-weight: 900;
+      font-size: 0.7rem;
+      font-weight: 950;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 14px;
+      letter-spacing: 0.05em;
     }
 
-    .resource-card.featured .resource-tag {
-      background: var(--soft-gold);
+    .collection-body h3 {
+      color: var(--green);
+      font-size: 1.16rem;
+      line-height: 1.18;
+      margin-bottom: 10px;
     }
 
-    .resource-card p {
-      flex: 1;
+    .collection-body p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.62;
+      margin-bottom: 18px;
     }
 
-    .resource-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      color: var(--olive);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .coming-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .coming-card {
-      background: rgba(255, 255, 255, 0.78);
+    .features-wrap {
+      border-radius: var(--radius-xl);
+      padding: clamp(28px, 5vw, 42px);
+      background:
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.16), transparent 32%),
+        rgba(255, 255, 255, 0.88);
       border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature-card {
+      padding: 20px;
+      border-radius: 22px;
+      background: var(--white);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-      min-height: 220px;
       transition: 0.2s ease;
     }
 
-    .coming-card::after {
-      content: "";
-      position: absolute;
-      width: 116px;
-      height: 116px;
-      border-radius: 50%;
-      background: rgba(201, 166, 90, 0.12);
-      right: -38px;
-      top: -42px;
-    }
-
-    .lock-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 18px;
-      background: var(--soft-gold);
+    .feature-card strong {
+      display: block;
       color: var(--green);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
     }
 
-    .coming-card p {
-      position: relative;
-      z-index: 1;
+    .feature-card span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      font-weight: 650;
     }
 
-    .cta-section {
-      padding: 48px 0 70px;
+    .quote-section {
+      padding: 52px 0;
+    }
+
+    .quote-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: clamp(30px, 5vw, 52px);
+      background:
+        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
+        radial-gradient(circle at bottom right, rgba(201, 166, 90, 0.22), transparent 34%);
+      color: var(--white);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .quote-card p {
+      max-width: 880px;
+      margin: 0 auto;
+      color: #EFE7D8;
+      font-size: clamp(1.35rem, 3.2vw, 2.35rem);
+      line-height: 1.28;
+      letter-spacing: -0.035em;
+      font-weight: 850;
+    }
+
+    .final-cta {
+      padding: 42px 0 70px;
     }
 
     .cta-box {
-      background:
-        linear-gradient(145deg, rgba(63, 74, 53, 0.95), rgba(85, 101, 68, 0.96)),
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.22), transparent 30%);
-      border-radius: var(--radius-xl);
-      padding: 44px;
-      color: var(--white);
-      box-shadow: var(--shadow);
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 24px;
       align-items: center;
-      overflow: hidden;
-      position: relative;
+      padding: clamp(28px, 5vw, 42px);
+      border-radius: var(--radius-xl);
+      color: var(--white);
+      background:
+        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.24), transparent 34%);
+      box-shadow: var(--shadow);
     }
 
     .cta-box h2 {
-      font-size: clamp(32px, 4.8vw, 56px);
+      color: var(--white);
+      font-size: clamp(2rem, 4.5vw, 3.3rem);
       line-height: 0.98;
       letter-spacing: -0.055em;
       margin-bottom: 12px;
     }
 
     .cta-box p {
-      color: #EDE5D6;
+      color: #EFE7D8;
       line-height: 1.7;
-      font-size: 16px;
-      max-width: 690px;
+      max-width: 720px;
     }
 
-    footer {
+    .site-footer {
+      margin-top: 24px;
+      padding: 32px 0;
       background: var(--green);
       color: var(--cream);
-      padding: 32px 0;
-      margin-top: 22px;
     }
 
     .footer-inner {
-      width: min(1180px, calc(100% - 32px));
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      gap: 24px;
     }
 
-    footer strong {
-      color: var(--gold);
+    .footer-brand strong {
       display: block;
-      margin-bottom: 8px;
+      color: var(--gold);
+      margin-bottom: 6px;
     }
 
-    footer p {
-      color: #EDE5D6;
-      font-size: 13px;
-      line-height: 1.6;
+    .footer-brand p {
+      color: #EFE7D8;
+      font-size: 0.86rem;
+      line-height: 1.55;
       max-width: 760px;
     }
 
     .footer-links {
       display: flex;
-      gap: 14px;
       flex-wrap: wrap;
-      color: #EDE5D6;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .footer-links a {
-      transition: 0.2s ease;
+      gap: 16px;
+      color: #EFE7D8;
+      font-size: 0.86rem;
+      font-weight: 850;
     }
 
     .footer-links a:hover {
@@ -926,136 +715,100 @@
     }
 
     @media (max-width: 1040px) {
-      .hero {
+      .hero-grid,
+      .cta-box {
         grid-template-columns: 1fr;
-        padding-top: 54px;
       }
 
-      .hero-panel {
-        max-width: 720px;
-      }
-
-      .floating-note {
-        display: none;
-      }
-
-      .benefits-grid,
-      .resource-grid,
-      .coming-grid {
+      .collections-grid,
+      .features-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .resources-top,
-      .cta-box,
-      .footer-inner {
+      .pillars-grid {
         grid-template-columns: 1fr;
-      }
-
-      .resources-top .btn {
-        justify-self: start;
       }
     }
 
-    @media (max-width: 760px) {
-      .nav-links,
-      .nav-actions {
+    @media (max-width: 780px) {
+      .header-nav {
         display: none;
       }
 
-      .mobile-menu {
+      .mobile-menu-button {
         display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .hero {
-        padding: 42px 0 34px;
+      .header-inner {
+        min-height: 82px;
       }
 
-      .hero h1 {
-        font-size: 52px;
+      .brand-logo {
+        width: 56px;
+        height: 56px;
       }
 
-      .hero-subtitle {
-        font-size: 21px;
+      .brand-title {
+        font-size: 1.14rem;
       }
 
-      .trust-row,
-      .benefits-grid,
-      .resource-grid,
-      .coming-grid,
-      .dashboard-grid {
+      .hero-section {
+        padding: 38px 0 24px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.6rem, 12vw, 4.1rem);
+      }
+
+      .experience-icons,
+      .collections-grid,
+      .features-grid {
         grid-template-columns: 1fr;
       }
 
-      section {
-        padding: 42px 0;
-      }
-
-      .resources-wrapper,
-      .cta-box {
-        padding: 24px;
-        border-radius: 26px;
-      }
-
-      .dashboard-card {
-        padding: 18px;
-        border-radius: 26px;
-      }
-
-      .progress-box {
-        padding: 20px;
-      }
-
-      .section-heading {
-        text-align: left;
-      }
-
-      .section-heading h2 {
-        font-size: 40px;
-      }
-
-      .resource-card,
-      .benefit-card,
-      .coming-card {
-        min-height: auto;
-      }
-
-      .footer-links {
+      .hero-actions {
         flex-direction: column;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .page-shell,
-      .nav-inner,
-      .mobile-nav,
-      .footer-inner {
-        width: min(100% - 22px, 1180px);
-      }
-
-      .brand-mark {
-        width: 42px;
-        height: 42px;
-      }
-
-      .brand-text strong {
-        font-size: 16px;
-      }
-
-      .hero h1 {
-        font-size: 46px;
       }
 
       .btn {
         width: 100%;
       }
 
-      .hero-actions {
-        width: 100%;
+      .section-heading {
+        text-align: left;
       }
 
-      .dashboard-header {
+      .footer-inner {
         flex-direction: column;
         align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page-shell,
+      .header-inner,
+      .mobile-nav,
+      .footer-inner {
+        width: min(100% - 22px, var(--max));
+      }
+
+      .hero-card,
+      .hero-visual,
+      .features-wrap,
+      .quote-card,
+      .cta-box {
+        border-radius: 26px;
+        padding: 22px;
+      }
+
+      .brand-name {
+        font-size: 0.62rem;
+      }
+
+      .brand-title {
+        font-size: 1.02rem;
       }
     }
 
@@ -1074,411 +827,328 @@
 </head>
 
 <body>
-  <div class="announcement">
-    Portal premium en construcción para la línea Hábitos con Dios en skool.renovae.store
-  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand-area" href="index.html" aria-label="Ir al inicio de Hábitos con Dios">
+        assets/logo-header.png
 
-  <nav class="navbar" aria-label="Navegación principal">
-    <div class="nav-inner">
-      <a class="brand" href="#inicio" aria-label="Ir al inicio de Hábitos con Dios">
-        <div class="brand-mark" aria-hidden="true">HD</div>
-        <div class="brand-text">
-          <small>Portal Premium</small>
-          <strong>Hábitos con Dios</strong>
+        <div class="brand-copy">
+          <span class="brand-name">Hábitos con Dios</span>
+          <strong class="brand-title">Experiencias digitales cristianas</strong>
         </div>
       </a>
 
-      <div class="nav-links" aria-label="Secciones del portal">
-        <a href="#inicio">Inicio</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#proximamente">Próximamente</a>
-        <a href="dashboard.html">Mis Recursos</a>
-        <a href="biblioteca.html">Biblioteca</a>
-        <a href="acerca.html">Acerca de</a>
-      </div>
-
-      <div class="nav-actions">
-        <a class="btn btn-primary" href="login.html">
-  Ingresar
-</a>
-      </div>
+      <nav class="header-nav" aria-label="Navegación principal">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html">Mis Colecciones</a>
+      </nav>
 
       <button
-        class="mobile-menu"
+        class="mobile-menu-button"
         type="button"
-        aria-label="Abrir menú de navegación"
+        id="mobileMenuButton"
+        aria-label="Abrir menú"
         aria-controls="mobileNav"
         aria-expanded="false"
-        id="mobileMenuButton"
       >
         Menú
       </button>
     </div>
 
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <div class="mobile-nav-inner">
-        <a href="#inicio">Inicio</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#proximamente">Próximamente</a>
-        <a href="dashboard.html">Mis Recursos</a>
-        <a href="biblioteca.html">Biblioteca</a>
-        <a href="acerca.html">Acerca de</a>
-        <a href="dashboard.html">Ingresar</a>
+      <div class="mobile-nav-panel">
+        <a href="index.html">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html">Mis Colecciones</a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main id="inicio">
-    <section class="hero page-shell" aria-labelledby="hero-title">
-      <div>
-        <div class="eyebrow">
-          <span class="eyebrow-dot" aria-hidden="true"></span>
-          Ecosistema devocional digital
-        </div>
-
-        <h1 id="hero-title">
-          Hábitos con Dios
-          <span>Premium</span>
-        </h1>
-
-        <p class="hero-subtitle">
-          Transforma tu tiempo con Dios en un hábito real.
-        </p>
-
-        <p class="hero-description">
-          Un portal digital diseñado para acompañarte con micro aplicaciones, recursos devocionales, biblioteca espiritual y experiencias prácticas para crecer en la fe un día a la vez.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="login.html">
-  Ingresar
-</a>
-        </div>
-
-        <div class="trust-row" aria-label="Resumen del portal">
-          <div class="trust-item">
-            <strong>21</strong>
-            <span>Días guiados</span>
+    <section class="hero-section page-shell" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <article class="hero-card">
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+            Hábitos con Dios
           </div>
 
-          <div class="trust-item">
-            <strong>6</strong>
-            <span>Recursos iniciales</span>
-          </div>
+          <h1 class="hero-title" id="hero-title">
+            Encuentra un camino simple para acercarte más a <span>Dios</span>
+          </h1>
 
-          <div class="trust-item">
-            <strong>1</strong>
-            <span>Portal unificado</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-panel" aria-label="Vista previa del dashboard">
-        <div class="dashboard-card">
-          <div class="dashboard-header">
-            <div class="profile">
-              <div class="profile-avatar" aria-hidden="true">HD</div>
-              <div>
-                <small>Bienvenida nuevamente</small>
-                <strong>Tu espacio con Dios</strong>
-              </div>
-            </div>
-
-            <div class="status-pill">
-              Acceso inicial
-            </div>
-          </div>
-
-          <div class="progress-box">
-            <small>Tu recorrido devocional</small>
-            <h3>Un paso pequeño también cuenta.</h3>
-            <div class="progress-bar" aria-label="Progreso del recorrido">
-              <span></span>
-            </div>
-          </div>
-
-          <div class="dashboard-grid">
-            <div class="mini-card">
-              <div class="icon" aria-hidden="true">01</div>
-              <h4>Mi Tiempo con Dios</h4>
-              <p>Seguimiento diario para construir un hábito espiritual sostenible.</p>
-            </div>
-
-            <div class="mini-card">
-              <div class="icon" aria-hidden="true">02</div>
-              <h4>Tarjetas de Fe</h4>
-              <p>Inspiración visual para guardar, compartir y recordar promesas.</p>
-            </div>
-
-            <div class="mini-card">
-              <div class="icon" aria-hidden="true">03</div>
-              <h4>Promesas Bíblicas</h4>
-              <p>Busca palabras de fe por tema, necesidad o etapa de vida.</p>
-            </div>
-
-            <div class="mini-card">
-              <div class="icon" aria-hidden="true">04</div>
-              <h4>Oraciones Guiadas</h4>
-              <p>Oraciones breves para momentos cotidianos y decisiones importantes.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="floating-note">
-          <div class="spark" aria-hidden="true">✦</div>
-          <p>Diseñado para que la fe se vuelva práctica, simple y constante.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="beneficios" aria-labelledby="beneficios-title">
-      <div class="page-shell">
-        <div class="section-heading">
-          <div class="section-kicker">Beneficios</div>
-          <h2 id="beneficios-title">Una experiencia digital creada para acompañar tu vida espiritual.</h2>
-          <p>
-            Cada recurso está pensado para ayudarte a pasar de la intención a la práctica, con herramientas simples, cálidas y fáciles de usar.
+          <p class="hero-subtitle">
+            Experiencias digitales diseñadas para ayudarte a cultivar fe, oración,
+            propósito y crecimiento espiritual en tu vida diaria.
           </p>
-        </div>
 
-        <div class="benefits-grid">
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">✓</div>
-            <h3>Hábitos diarios guiados</h3>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="biblioteca.html">
+              Comenzar mi camino
+            </a>
+
+            <a class="btn btn-secondary" href="dashboard.html">
+              Mi Experiencia
+            </a>
+          </div>
+        </article>
+
+        <aside class="hero-visual" aria-label="Vista de la experiencia Hábitos con Dios">
+          <span class="visual-badge">Experiencia premium</span>
+
+          <div class="visual-card">
+            <h2>Una colección no es solo un ebook.</h2>
             <p>
-              Recorridos claros para leer, orar, reflexionar y sostener pequeños pasos con Dios cada día.
+              Cada experiencia puede integrar App, ebook, bonos y recursos diseñados para
+              acompañar un camino de crecimiento con Dios.
             </p>
-          </article>
+          </div>
 
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">✦</div>
-            <h3>Recursos digitales premium</h3>
-            <p>
-              Micro aplicaciones, devocionales, tarjetas y herramientas diseñadas con estética cuidada y propósito espiritual.
-            </p>
-          </article>
-
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">⌂</div>
-            <h3>Biblioteca espiritual</h3>
-            <p>
-              Un espacio unificado para organizar recursos, ebooks, bonos y futuras experiencias de crecimiento.
-            </p>
-          </article>
-
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">↗</div>
-            <h3>Acceso desde cualquier dispositivo</h3>
-            <p>
-              Una experiencia pensada para celular, tablet y escritorio, para acompañarte donde estés.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="recursos" class="resources-section" aria-labelledby="recursos-title">
-      <div class="page-shell">
-        <div class="resources-wrapper">
-          <div class="resources-top">
-            <div>
-              <h2 id="recursos-title">Dashboard Preview</h2>
-              <p>
-                Vista inicial del ecosistema de recursos. Esta estructura está preparada para crecer hacia login, membresías, biblioteca y acceso por producto.
-              </p>
+          <div class="experience-icons">
+            <div class="experience-icon">
+              <strong>📱</strong>
+              <span>Apps interactivas</span>
             </div>
 
-            <a class="btn btn-gold" href="login.html">Ingresar al portal</a>
+            <div class="experience-icon">
+              <strong>📖</strong>
+              <span>Ebooks premium</span>
+            </div>
+
+            <div class="experience-icon">
+              <strong>🎁</strong>
+              <span>Bonos digitales</span>
+            </div>
+
+            <div class="experience-icon">
+              <strong>🌱</strong>
+              <span>Crecimiento diario</span>
+            </div>
           </div>
-
-          <div class="resource-grid">
-            <article class="resource-card featured">
-              <span class="resource-tag">Disponible</span>
-              <h3>Mi Tiempo con Dios</h3>
-              <p>
-                Micro aplicación devocional para acompañar un recorrido de 21 días con oración, gratitud, reflexión y progreso.
-              </p>
-              <div class="resource-meta">
-                <span>21 días</span>
-                <span>Activo</span>
-              </div>
-            </article>
-
-            <article class="resource-card">
-              <span class="resource-tag">Próximo</span>
-              <h3>Tarjetas de Fe</h3>
-              <p>
-                Tarjetas digitales para inspirar, guardar y compartir mensajes de fe en la rutina diaria.
-              </p>
-              <div class="resource-meta">
-                <span>Visual</span>
-                <span>Próximo</span>
-              </div>
-            </article>
-
-            <article class="resource-card">
-              <span class="resource-tag">Próximo</span>
-              <h3>Banco de Promesas</h3>
-              <p>
-                Buscador por temas para encontrar versículos y recordatorios espirituales según la necesidad del día.
-              </p>
-              <div class="resource-meta">
-                <span>Por tema</span>
-                <span>Próximo</span>
-              </div>
-            </article>
-
-            <article class="resource-card">
-              <span class="resource-tag">Próximo</span>
-              <h3>Generador de Oraciones</h3>
-              <p>
-                Oraciones breves, cálidas y responsables para acompañar momentos de gratitud, paz, familia y decisión.
-              </p>
-              <div class="resource-meta">
-                <span>Interactivo</span>
-                <span>Próximo</span>
-              </div>
-            </article>
-          </div>
-        </div>
+        </aside>
       </div>
     </section>
 
-    <section id="proximamente" aria-labelledby="proximamente-title">
-      <div class="page-shell">
-        <div class="section-heading">
-          <div class="section-kicker">Próximamente</div>
-          <h2 id="proximamente-title">Un ecosistema preparado para crecer contigo.</h2>
+    <section class="section page-shell" aria-labelledby="pillars-title">
+      <div class="section-heading">
+        <span class="section-kicker">Una fe que se cultiva</span>
+        <h2 id="pillars-title">Pequeños hábitos. Un camino con propósito.</h2>
+        <p>
+          Hábitos con Dios fue creado para acompañarte con herramientas simples,
+          cálidas y prácticas. No se trata de hacer más, sino de acercarte más.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <div class="pillar-icon" aria-hidden="true">🌱</div>
+          <h3>Fe en lo cotidiano</h3>
           <p>
-            Los próximos recursos permitirán expandir Hábitos con Dios hacia jóvenes, familias, devocionales temáticos y experiencias de membresía.
+            Momentos breves y guiados para volver a Dios en medio de la rutina,
+            con prácticas simples y sostenibles.
           </p>
-        </div>
+        </article>
 
-        <div class="coming-grid">
-          <article class="coming-card">
-            <div class="lock-badge" aria-hidden="true">🔒</div>
-            <h3>Diario de Paz</h3>
+        <article class="pillar-card">
+          <div class="pillar-icon" aria-hidden="true">🕊️</div>
+          <h3>Propósito con dirección</h3>
+          <p>
+            Experiencias creadas para ayudarte a tomar pequeños pasos de crecimiento,
+            oración y reflexión personal.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-icon" aria-hidden="true">❤️</div>
+          <h3>Crecimiento con Dios</h3>
+          <p>
+            Recursos pensados para acompañar distintas etapas: mujeres, familias,
+            jóvenes y hombres que desean vivir con propósito.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section page-shell" aria-labelledby="collections-title">
+      <div class="section-heading">
+        <span class="section-kicker">Colecciones destacadas</span>
+        <h2 id="collections-title">Elige el camino que acompaña tu etapa actual</h2>
+        <p>
+          Cada colección reúne una experiencia digital completa con App, ebook y bonos
+          diseñados para acompañar una necesidad específica de crecimiento.
+        </p>
+      </div>
+
+      <div class="collections-grid">
+        <article class="collection-card">
+          <div class="collection-cover">21 Días</div>
+          <div class="collection-body">
+            <span class="collection-badge">Mujeres</span>
+            <h3>21 Días Más Cerca de Dios</h3>
             <p>
-              Herramienta de acompañamiento devocional para registrar emociones, pausas digitales y oraciones breves.
+              Devocional guiado para mujeres que desean fortalecer su relación con Dios
+              mediante hábitos espirituales simples y sostenibles.
             </p>
-          </article>
+            <a class="btn btn-secondary" href="biblioteca.html">Conocer colección</a>
+          </div>
+        </article>
 
-          <article class="coming-card">
-            <div class="lock-badge" aria-hidden="true">🔒</div>
-            <h3>Momentos con Dios en Familia</h3>
+        <article class="collection-card">
+          <div class="collection-cover">Familias</div>
+          <div class="collection-body">
+            <span class="collection-badge">Familia</span>
+            <h3>Pequeños Momentos con Dios</h3>
             <p>
-              Actividades simples para crear conversaciones, oración y recuerdos de fe en casa.
+              Recursos prácticos para ayudar a las familias a compartir momentos de fe,
+              reflexión y conexión espiritual en la vida cotidiana.
             </p>
-          </article>
+            <a class="btn btn-secondary" href="biblioteca.html">Conocer colección</a>
+          </div>
+        </article>
 
-          <article class="coming-card">
-            <div class="lock-badge" aria-hidden="true">✦</div>
+        <article class="collection-card">
+          <div class="collection-cover">Palabras</div>
+          <div class="collection-body">
+            <span class="collection-badge">Jóvenes</span>
+            <h3>Cuando las Palabras Duelen</h3>
+            <p>
+              Una experiencia diseñada para acompañar a adolescentes y jóvenes a procesar
+              heridas emocionales desde una perspectiva de fe y esperanza.
+            </p>
+            <a class="btn btn-secondary" href="biblioteca.html">Conocer colección</a>
+          </div>
+        </article>
+
+        <article class="collection-card">
+          <div class="collection-cover">Hogar</div>
+          <div class="collection-body">
+            <span class="collection-badge">Hombres</span>
             <h3>El Hombre que Edifica su Hogar</h3>
             <p>
-              Recurso futuro para acompañar a hombres que desean construir hábitos espirituales y familiares con propósito.
+              Herramientas prácticas para hombres que desean fortalecer su liderazgo espiritual,
+              familiar y personal con propósito.
             </p>
+            <a class="btn btn-secondary" href="biblioteca.html">Conocer colección</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section page-shell" aria-labelledby="premium-title">
+      <div class="features-wrap">
+        <div class="section-heading" style="margin-bottom:0;">
+          <span class="section-kicker">Experiencia digital premium</span>
+          <h2 id="premium-title">Todo lo que necesitas para comenzar, continuar y profundizar</h2>
+          <p>
+            Hábitos con Dios está diseñado para que cada producto sea una experiencia completa,
+            no solamente un archivo para descargar.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <strong>📱 App exclusiva</strong>
+            <span>Una experiencia interactiva para avanzar de forma sencilla y guiada.</span>
           </article>
 
-          <article class="coming-card">
-            <div class="lock-badge" aria-hidden="true">✦</div>
-            <h3>Nuevos recursos</h3>
-            <p>
-              Espacio preparado para ebooks, bonos, audios, cursos, imprimibles y futuras membresías.
-            </p>
+          <article class="feature-card">
+            <strong>📖 Ebook premium</strong>
+            <span>Contenido devocional y práctico para leer, reflexionar y volver cuando lo necesites.</span>
+          </article>
+
+          <article class="feature-card">
+            <strong>🎁 Bonos digitales</strong>
+            <span>Recursos complementarios para enriquecer cada colección y aumentar su valor.</span>
+          </article>
+
+          <article class="feature-card">
+            <strong>🌿 Acceso organizado</strong>
+            <span>Tus colecciones se presentan de forma clara, simple y preparada para crecer contigo.</span>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="acceso" class="cta-section" aria-labelledby="acceso-title">
-      <div class="page-shell">
-        <div class="cta-box">
-          <div>
-            <h2 id="acceso-title">Tu portal espiritual, en un solo lugar.</h2>
-            <p>
-              Esta es la base del ecosistema premium de Hábitos con Dios. Próximamente podrás acceder con tu cuenta, ver tus recursos comprados y continuar tu recorrido desde cualquier dispositivo.
-            </p>
-          </div>
+    <section class="quote-section page-shell" aria-label="Mensaje inspiracional">
+      <div class="quote-card">
+        <p>
+          “No se trata de hacer más. Se trata de acercarte más a Dios, un hábito a la vez.”
+        </p>
+      </div>
+    </section>
 
-          <a
-            class="btn btn-gold"
-            href="apps/mi-tiempo-con-dios.html"
-          >
-            Abrir Mi Tiempo con Dios
-          </a>
+    <section class="final-cta page-shell" aria-labelledby="cta-title">
+      <div class="cta-box">
+        <div>
+          <h2 id="cta-title">Todo hábito comienza con un primer paso</h2>
+          <p>
+            Explora las colecciones disponibles y encuentra el camino que mejor acompañe
+            tu etapa actual de fe, oración, familia, sanidad o propósito.
+          </p>
         </div>
+
+        <a class="btn btn-gold" href="biblioteca.html">
+          Explorar Colecciones
+        </a>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <div class="footer-inner">
-      <div>
+      <div class="footer-brand">
         <strong>Hábitos con Dios</strong>
         <p>
-          Recursos digitales de acompañamiento devocional. Este portal no reemplaza terapia, atención médica, apoyo psicológico, consejería pastoral responsable ni ayuda de emergencia cuando corresponda.
+          Experiencias digitales de acompañamiento devocional. Este portal no reemplaza
+          terapia, atención médica, apoyo psicológico, consejería pastoral responsable
+          ni ayuda de emergencia cuando corresponda.
         </p>
       </div>
 
-      <div class="footer-links" aria-label="Enlaces del pie de página">
-        <a href="#inicio">Inicio</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#proximamente">Próximamente</a>
-        <a href="dashboard.html">Mis Recursos</a>
-        <a href="biblioteca.html">Biblioteca</a>
-        <a href="acerca.html">Acerca de</a>
-      </div>
+      <nav class="footer-links" aria-label="Enlaces del pie de página">
+        <a href="index.html">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html">Mis Colecciones</a>
+      </nav>
     </div>
   </footer>
 
   <script>
+    const mobileButton = document.getElementById("mobileMenuButton");
     const mobileNav = document.getElementById("mobileNav");
-    const menuButton = document.getElementById("mobileMenuButton");
-    const mobileLinks = document.querySelectorAll(".mobile-nav a");
 
-    function setExpanded(value) {
-      if (!menuButton || !mobileNav) return;
-
-      menuButton.setAttribute("aria-expanded", value ? "true" : "false");
-      menuButton.setAttribute(
-        "aria-label",
-        value ? "Cerrar menú de navegación" : "Abrir menú de navegación"
-      );
-
-      mobileNav.setAttribute("aria-hidden", value ? "false" : "true");
-    }
-
-    function toggleMenu() {
-      if (!mobileNav) return;
+    function toggleMobileMenu() {
+      if (!mobileButton || !mobileNav) return;
 
       const isOpen = mobileNav.classList.toggle("open");
-      setExpanded(isOpen);
+
+      mobileButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      mobileButton.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+      mobileNav.setAttribute("aria-hidden", isOpen ? "false" : "true");
     }
 
-    function closeMenu() {
-      if (!mobileNav) return;
+    if (mobileButton && mobileNav) {
+      mobileButton.addEventListener("click", toggleMobileMenu);
 
-      mobileNav.classList.remove("open");
-      setExpanded(false);
+      mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.remove("open");
+          mobileButton.setAttribute("aria-expanded", "false");
+          mobileButton.setAttribute("aria-label", "Abrir menú");
+          mobileNav.setAttribute("aria-hidden", "true");
+        });
+      });
     }
 
-    if (menuButton) {
-      menuButton.addEventListener("click", toggleMenu);
-    }
-
-    mobileLinks.forEach(function (link) {
-      link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        closeMenu();
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && mobileNav && mobileNav.classList.contains("open")) {
+        mobileNav.classList.remove("open");
+        mobileButton.setAttribute("aria-expanded", "false");
+        mobileButton.setAttribute("aria-label", "Abrir menú");
+        mobileNav.setAttribute("aria-hidden", "true");
       }
     });
   </script>
 </body>
 </html>
-``
