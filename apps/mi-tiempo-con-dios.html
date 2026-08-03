@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Micro aplicación devocional Mi Tiempo con Dios, parte de la experiencia 21 Días Más Cerca de Dios."
+    content="App devocional Mi Tiempo con Dios, parte de la experiencia 21 Días Más Cerca de Dios."
   />
 
   <meta name="theme-color" content="#3F4A35" />
@@ -36,6 +36,7 @@
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
+      --max: 1180px;
     }
 
     * {
@@ -46,13 +47,12 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 96px;
     }
 
     body {
       min-height: 100vh;
       overflow-x: hidden;
-      padding-bottom: 104px;
+      padding-bottom: 44px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
       background:
@@ -81,45 +81,36 @@
     }
 
     .page-shell {
-      width: min(1180px, calc(100% - 32px));
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      backdrop-filter: blur(18px);
-      background: rgba(250, 247, 240, 0.94);
-      border-bottom: 1px solid rgba(232, 222, 204, 0.9);
-    }
-
-    .topbar-inner {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto 22px;
+      padding-top: 18px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 15px 0;
+      align-items: center;
+      gap: 14px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      min-width: fit-content;
+      min-width: 0;
     }
 
     .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--green);
+      width: 54px;
+      height: 54px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--green), var(--olive));
       color: var(--gold);
       display: grid;
       place-items: center;
-      font-weight: 900;
+      font-weight: 950;
       box-shadow: var(--shadow-soft);
       flex: 0 0 auto;
     }
@@ -130,7 +121,7 @@
       letter-spacing: 0.09em;
       color: var(--olive);
       font-size: 10px;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .brand-text strong {
@@ -138,37 +129,63 @@
       color: var(--green);
       font-size: 18px;
       line-height: 1.1;
+      font-weight: 950;
     }
 
-    .desktop-nav {
+    .top-actions {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .nav-link,
-    .logout-btn {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.82);
-      color: var(--green);
+    .top-pill,
+    .top-link,
+    .top-logout {
       border-radius: 999px;
-      padding: 10px 14px;
+      min-height: 46px;
+      padding: 12px 18px;
       font-weight: 900;
-      font-size: 13px;
-      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       white-space: nowrap;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      transition: 0.2s ease;
     }
 
-    .nav-link:hover,
-    .logout-btn:hover {
+    .top-pill {
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--green);
+      box-shadow: 0 10px 24px rgba(63, 74, 53, 0.07);
+    }
+
+    .top-link {
       background: var(--white);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-soft);
+      color: var(--green);
+      box-shadow: 0 12px 26px rgba(63, 74, 53, 0.08);
     }
 
-    .logout-btn {
+    .top-logout {
+      background: #F7E4E1;
       color: var(--red);
       border-color: rgba(159, 58, 56, 0.18);
+      box-shadow: 0 12px 26px rgba(159, 58, 56, 0.08);
+    }
+
+    .top-link:hover,
+    .top-logout:hover,
+    .btn:hover,
+    .favorite-btn:hover,
+    .day-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
     }
 
     .loading-screen,
@@ -199,7 +216,7 @@
       background: var(--soft-gold);
       color: var(--green);
       font-size: 28px;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .status-card h1 {
@@ -225,9 +242,8 @@
       gap: 8px;
       border-radius: 999px;
       padding: 14px 22px;
-      font-weight: 900;
+      font-weight: 950;
       font-size: 14px;
-      cursor: pointer;
       transition: 0.2s ease;
       line-height: 1.2;
       text-align: center;
@@ -241,15 +257,14 @@
       box-shadow: 0 14px 28px rgba(63, 74, 53, 0.22);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.04);
-    }
-
     .btn-secondary {
       background: rgba(255, 255, 255, 0.9);
       color: var(--green);
       border: 1px solid var(--line);
+    }
+
+    .app-shell {
+      display: block;
     }
 
     .hero {
@@ -304,7 +319,7 @@
       border: 1px solid var(--line);
       color: var(--olive);
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-bottom: 18px;
@@ -543,7 +558,7 @@
       display: block;
       color: var(--green);
       font-size: 22px;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .layout {
@@ -594,13 +609,8 @@
       color: var(--green);
       border-radius: 14px;
       padding: 12px 8px;
-      font-weight: 900;
+      font-weight: 950;
       transition: 0.2s ease;
-    }
-
-    .day-button:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-soft);
     }
 
     .day-button.active {
@@ -639,7 +649,7 @@
       background: var(--soft-gold);
       color: var(--green);
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 950;
       text-transform: uppercase;
       margin-bottom: 12px;
     }
@@ -650,8 +660,9 @@
       color: var(--green);
       border-radius: 999px;
       padding: 10px 14px;
-      font-weight: 900;
+      font-weight: 950;
       white-space: nowrap;
+      transition: 0.2s ease;
     }
 
     .favorite-btn.active {
@@ -741,7 +752,7 @@
     .field label {
       display: block;
       color: var(--green);
-      font-weight: 900;
+      font-weight: 950;
       margin-bottom: 8px;
       font-size: 13px;
     }
@@ -784,7 +795,7 @@
       background: rgba(255, 255, 255, 0.92);
       padding: 14px;
       color: var(--green);
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .badge-card.locked {
@@ -832,74 +843,16 @@
       font-size: 14px;
     }
 
-    .bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1000;
-      padding-bottom: env(safe-area-inset-bottom);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 240, 0.98));
-      border-top: 1px solid var(--line);
-      box-shadow: 0 -6px 18px rgba(31, 41, 55, 0.08);
-      display: none;
-    }
-
-    .bottom-nav__list {
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 8px 14px;
-      display: flex;
-      gap: 6px;
-      justify-content: space-between;
-      align-items: center;
-      list-style: none;
-    }
-
-    .bottom-nav__item {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 7px 9px;
-      min-width: 58px;
-      color: var(--green);
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 12px;
-      background: transparent;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .bottom-nav__item:hover,
-    .bottom-nav__item[aria-current="page"] {
-      background: var(--soft-green);
-      color: var(--green);
-    }
-
-    .bottom-nav__icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .bottom-nav__label {
-      font-size: 11px;
-      line-height: 1;
-    }
-
     .toast {
       position: fixed;
-      bottom: 92px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: var(--green);
       color: var(--white);
       border-radius: 999px;
       padding: 12px 18px;
-      font-weight: 900;
+      font-weight: 950;
       box-shadow: var(--shadow);
       opacity: 0;
       pointer-events: none;
@@ -913,17 +866,25 @@
     }
 
     @media (max-width: 980px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .top-actions .top-pill,
+      .top-actions .top-link,
+      .top-actions .top-logout {
+        flex: 1 1 auto;
+      }
+
       .hero,
       .layout {
         grid-template-columns: 1fr;
-      }
-
-      .desktop-nav {
-        display: none;
-      }
-
-      .bottom-nav {
-        display: block;
       }
 
       .journal-grid,
@@ -944,13 +905,15 @@
     }
 
     @media (max-width: 640px) {
-      .topbar-inner {
-        padding: 14px 0;
+      .topbar {
+        width: min(100% - 28px, var(--max));
+        padding-top: 16px;
       }
 
       .brand-mark {
-        width: 42px;
-        height: 42px;
+        width: 46px;
+        height: 46px;
+        border-radius: 18px;
       }
 
       .brand-text strong {
@@ -1017,56 +980,41 @@
       <div class="status-icon">🔒</div>
       <h1>Acceso no disponible</h1>
       <p>
-        Este recurso forma parte del bundle 21 Días Más Cerca de Dios. Para acceder, necesitas tener una compra activa asociada a este correo.
+        Este recurso forma parte del bundle 21 Días Más Cerca de Dios.
+        Para acceder, necesitas tener una compra activa asociada a este correo.
       </p>
-      ../dashboard.html
-        Volver al Dashboard
-      </a>
+
+      <div class="actions-row" style="justify-content:center;">
+        <a class="btn btn-secondary" href="../biblioteca.html">Volver a la biblioteca</a>
+        <a class="btn btn-primary" href="../login.html">Iniciar sesión</a>
+      </div>
     </div>
   </div>
 
   <div id="appShell" class="app-shell hidden">
     <header class="topbar">
+      <a class="brand" href="../biblioteca.html" aria-label="Volver a Biblioteca">
+        <div class="brand-mark">HD</div>
 
-  <div class="topbar-inner">
+        <div class="brand-text">
+          <small>APP DEVOCIONAL</small>
+          <strong>Mi Tiempo con Dios</strong>
+        </div>
+      </a>
 
-    <div class="brand">
-
-      <div class="brand-mark">
-        HD
+      <div class="top-actions">
+        <span class="top-pill" id="userPill">Validando sesión...</span>
+        <a class="top-link" href="../biblioteca.html">Volver a la biblioteca</a>
+        <button class="top-logout" type="button" id="logoutButton">Cerrar sesión</button>
       </div>
-
-      <div class="brand-text">
-
-        <small>APP DEVOCIONAL</small>
-
-        <strong>
-          Mi Tiempo con Dios
-        </strong>
-
-      </div>
-
-    </div>
-
-    <button
-      class="logout-btn"
-      type="button"
-      id="logoutButton">
-
-      Cerrar sesión
-
-    </button>
-
-  </div>
-
-</header>
+    </header>
 
     <main class="page-shell">
       <section class="hero" id="inicio" aria-labelledby="app-title">
         <div class="hero-card">
           <div class="eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
-            Fase UX Premium
+            App devocional
           </div>
 
           <h1 id="app-title">
@@ -1081,7 +1029,6 @@
           <p class="date-line" id="dateLine"></p>
 
           <div class="user-row">
-            <span class="pill" id="userPill">Bienvenida</span>
             <span class="pill gold">👑 Bundle 21 Días</span>
             <span class="pill" id="levelPill">🌱 Nivel Semilla</span>
           </div>
@@ -1173,7 +1120,6 @@
             </div>
 
             <p class="reflection" id="reflectionText"></p>
-
             <div class="verse" id="verseText"></div>
 
             <div class="mini-cards">
@@ -1197,22 +1143,22 @@
 
             <div class="checklist">
               <label class="check-item">
-                <input type="checkbox" data-check="leer">
+                <input type="checkbox" data-check="leer" />
                 <span>Leí la reflexión del día</span>
               </label>
 
               <label class="check-item">
-                <input type="checkbox" data-check="orar">
+                <input type="checkbox" data-check="orar" />
                 <span>Tuve un momento de oración</span>
               </label>
 
               <label class="check-item">
-                <input type="checkbox" data-check="escribir">
+                <input type="checkbox" data-check="escribir" />
                 <span>Escribí una oración o gratitud</span>
               </label>
 
               <label class="check-item">
-                <input type="checkbox" data-check="practicar">
+                <input type="checkbox" data-check="practicar" />
                 <span>Elegí una práctica simple para hoy</span>
               </label>
             </div>
@@ -1269,7 +1215,8 @@
             <p class="reflection">
               Completaste los 21 días de Mi Tiempo con Dios. Este cierre no es una despedida, es una invitación a seguir cultivando una rutina espiritual posible, un día a la vez.
             </p>
-            ../biblioteca.html
+
+            <a class="btn btn-primary" href="../biblioteca.html">
               Explorar más recursos
             </a>
           </section>
@@ -1305,25 +1252,6 @@
         </div>
       </section>
     </main>
-
-    <footer class="bottom-nav" role="navigation" aria-label="Barra de navegación inferior">
-
-  <ul class="bottom-nav__list">
-      <button
-        id="mobileLogoutButton"
-        class="bottom-nav__item"
-        type="button"
-        aria-label="Cerrar sesión">
-
-        <span class="bottom-nav__icon">🚪</span>
-        <span class="bottom-nav__label">Salir</span>
-
-      </button>
-    </li>
-
-  </ul>
-
-</footer>
   </div>
 
   <div class="toast" id="toast">Guardado</div>
@@ -1331,7 +1259,6 @@
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
-
     const REQUIRED_PERMISSION_KEY = "access_21dias";
     const REQUIRED_SOURCE_SKU = "HCD_21DIAS_BUNDLE";
 
@@ -1575,9 +1502,12 @@
 
     function getFriendlyNameFromEmail(email) {
       if (!email || typeof email !== "string") return "Usuario";
+
       const firstPart = email.split("@")[0] || "";
       const firstName = firstPart.split(/[._-]/).filter(Boolean)[0];
+
       if (!firstName) return email;
+
       return firstName.charAt(0).toUpperCase() + firstName.slice(1);
     }
 
@@ -1629,7 +1559,12 @@
     function showToast(message) {
       toast.textContent = message;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 1800);
+
+      window.clearTimeout(showToast.timer);
+
+      showToast.timer = window.setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
     }
 
     function getCompletedCount() {
@@ -1716,7 +1651,6 @@
       const favorites = getFavoriteCount();
       const prayers = getPrayerCount();
       const gratitudes = getGratitudeCount();
-
       const percentage = Math.round((completed / 21) * 100);
       const degrees = Math.round((percentage / 100) * 360);
       const level = getLevel(completed);
@@ -1725,7 +1659,6 @@
       streakDays.textContent = streak;
       progressBar.style.width = percentage + "%";
       progressPercent.textContent = percentage + "%";
-
       progressCircle.style.background =
         `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.14) ${degrees}deg)`;
 
@@ -1736,7 +1669,6 @@
 
       renderAchievements(completed, streak);
       renderBadges(completed, streak, favorites, prayers, gratitudes);
-
       celebrationPanel.classList.toggle("hidden", completed < 21);
     }
 
@@ -1745,8 +1677,8 @@
 
       devotionals.forEach((item) => {
         const entry = state[item.day] || getDefaultEntry();
-
         const button = document.createElement("button");
+
         button.type = "button";
         button.className = "day-button";
         button.textContent = item.day;
@@ -1759,6 +1691,7 @@
           currentDay = item.day;
           saveState();
           renderApp();
+          document.getElementById("hoy").scrollIntoView({ behavior: "smooth", block: "start" });
         });
 
         dayGrid.appendChild(button);
@@ -1795,6 +1728,7 @@
 
     function renderPersonalHeader(name) {
       const now = new Date();
+
       const formattedDate = now.toLocaleDateString("es-MX", {
         weekday: "long",
         day: "numeric",
@@ -1860,8 +1794,7 @@
 
         const friendlyName = getFriendlyNameFromEmail(normalizedEmail);
 
-        userPill.textContent = "Bienvenida, " + friendlyName;
-
+        userPill.textContent = currentUser.email || "Sesión activa";
         storageKey = "hcd_mi_tiempo_con_dios_" + normalizedEmail;
 
         loadState();
@@ -1888,6 +1821,7 @@
 
       favoriteButton.addEventListener("click", () => {
         const entry = state[currentDay] || getDefaultEntry();
+
         entry.favorite = !entry.favorite;
         state[currentDay] = entry;
 
@@ -1920,62 +1854,28 @@
           currentDay++;
           saveState();
           renderApp();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          document.getElementById("hoy").scrollIntoView({ behavior: "smooth", block: "start" });
         } else {
           showToast("Llegaste al día 21");
         }
       });
 
-      [document.getElementById("logoutButton"), document.getElementById("mobileLogoutButton")].forEach((button) => {
-        if (!button) return;
+      const logoutButton = document.getElementById("logoutButton");
 
-        button.addEventListener("click", async () => {
+      if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
           const confirmExit = confirm("¿Deseas cerrar sesión?");
+
           if (!confirmExit) return;
 
           await supabaseClient.auth.signOut();
           window.location.href = "../login.html";
         });
-      });
-    }
-
-    function markActiveBottomNav() {
-      const navItems = document.querySelectorAll(".bottom-nav__item[href]");
-
-      function updateActiveItem() {
-        const fromTop = window.scrollY + 140;
-
-        const sections = [
-          { id: "inicio", hash: "#inicio" },
-          { id: "dias", hash: "#dias" },
-          { id: "diario", hash: "#diario" }
-        ];
-
-        let activeHash = "#inicio";
-
-        sections.forEach((section) => {
-          const element = document.getElementById(section.id);
-          if (element && fromTop >= element.offsetTop) {
-            activeHash = section.hash;
-          }
-        });
-
-        navItems.forEach((item) => {
-          if (item.getAttribute("href") === activeHash) {
-            item.setAttribute("aria-current", "page");
-          } else {
-            item.removeAttribute("aria-current");
-          }
-        });
       }
-
-      window.addEventListener("scroll", updateActiveItem, { passive: true });
-      updateActiveItem();
     }
 
     window.addEventListener("load", () => {
       bindEvents();
-      markActiveBottomNav();
       validateAccess();
     });
   </script>
