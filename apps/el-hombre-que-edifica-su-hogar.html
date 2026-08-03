@@ -48,7 +48,6 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 120px;
     }
 
     body {
@@ -89,11 +88,12 @@
     }
 
     .topbar {
-      position: sticky;
-      top: 12px;
-      z-index: 50;
-      margin-bottom: 22px;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
 
     .topbar-inner {
       display: grid;
@@ -1179,23 +1179,36 @@
 
   <main class="app-shell">
     <header class="topbar">
-      <div class="topbar-inner">
-        <div class="brand-row">
-          <div class="app-logo" aria-hidden="true">✦</div>
-          <div class="brand-text">
-            <strong>Hábitos con Dios Pro</strong>
-            <span>Mi Hogar con Propósito</span>
-          </div>
-        </div>
 
-        <div class="session-grid">
-          <button class="session-pill" id="userPill" type="button">Validando sesión...</button>
-          <button class="library-pill" id="libraryBtn" type="button">Volver a la biblioteca</button>
-        </div>
+  <a class="brand" href="../biblioteca.html" aria-label="Volver a Biblioteca">
+    <div class="app-logo">✦</div>
 
-        <button class="logout-btn" id="logoutBtn" type="button">Cerrar sesión</button>
-      </div>
-    </header>
+    <div class="brand-text">
+      <strong>Hábitos con Dios Pro</strong>
+      <span>Mi Hogar con Propósito</span>
+    </div>
+  </a>
+
+  <div class="top-actions">
+
+    <span class="pill" id="userPill">
+      Verificando acceso...
+    </span>
+
+    <a class="btn-soft" href="../biblioteca.html">
+      Biblioteca
+    </a>
+
+    <button
+      class="btn-danger"
+      type="button"
+      id="logoutBtn">
+      Cerrar sesión
+    </button>
+
+  </div>
+
+</header>
 
     <section class="hero" id="inicio">
       <div class="hero-inner">
