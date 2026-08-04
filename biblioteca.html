@@ -156,21 +156,23 @@
       border-radius: 999px;
       background: var(--gold);
     }
-.header-logout {
-  border: none;
-  background: transparent;
-  color: var(--green);
-  font-size: .92rem;
-  font-weight: 850;
-  cursor: pointer;
-  transition: .2s ease;
-  padding: 0;
-font-family: inherit;
-}
 
-.header-logout:hover {
-  color: var(--gold);
-}
+    .header-logout {
+      border: none;
+      background: transparent;
+      color: var(--green);
+      font-size: 0.92rem;
+      font-weight: 850;
+      cursor: pointer;
+      transition: 0.2s ease;
+      padding: 0;
+      font-family: inherit;
+    }
+
+    .header-logout:hover {
+      color: var(--gold);
+    }
+
     .mobile-menu-button {
       display: none;
       min-height: 44px;
@@ -202,14 +204,22 @@ font-family: inherit;
       box-shadow: var(--shadow-soft);
     }
 
-    .mobile-nav-panel a {
+    .mobile-nav-panel a,
+    .mobile-logout {
       padding: 12px;
       border-radius: 14px;
       color: var(--green);
       font-weight: 900;
+      text-align: left;
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
     }
 
-    .mobile-nav-panel a:hover {
+    .mobile-nav-panel a:hover,
+    .mobile-logout:hover {
       background: var(--soft-green);
     }
 
@@ -331,8 +341,6 @@ font-family: inherit;
       display: block;
     }
 
-    .btn,
-    .text-btn,
     .primary-btn,
     .secondary-btn,
     .download-btn,
@@ -354,7 +362,6 @@ font-family: inherit;
       text-align: center;
     }
 
-    .text-btn:hover,
     .primary-btn:hover,
     .secondary-btn:hover,
     .download-btn:hover,
@@ -407,27 +414,6 @@ font-family: inherit;
       border: 1px solid var(--line);
       cursor: not-allowed;
       opacity: 0.92;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      margin-top: 20px;
-    }
-
-    .pill {
-      border: 1px solid rgba(232, 222, 204, 0.95);
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--green);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: 800;
-      box-shadow: 0 10px 26px rgba(63, 74, 53, 0.07);
-      backdrop-filter: blur(14px);
     }
 
     .status-bar {
@@ -886,8 +872,7 @@ font-family: inherit;
       }
 
       .hero-actions,
-      .product-actions,
-      .top-actions {
+      .product-actions {
         flex-direction: column;
       }
 
@@ -937,33 +922,26 @@ font-family: inherit;
   <header class="site-header">
     <div class="header-inner page-shell">
       <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
+        assets/logo-header.png
 
-  <img
-  src="assets/logo-header.png"
-  alt="Hábitos con Dios"
-  class="brand-logo"
-/>
-
-  <div class="brand-copy">
-    <span class="brand-name">Hábitos con Dios</span>
-    <strong class="brand-title">Mis Colecciones</strong>
-  </div>
-
-</a>
+        <div class="brand-copy">
+          <span class="brand-name">Hábitos con Dios</span>
+          <strong class="brand-title">Mis Colecciones</strong>
+        </div>
+      </a>
 
       <nav class="header-nav" aria-label="Navegación principal">
-  <a href="index.html">Inicio</a>
-  <a href="dashboard.html">Mi Experiencia</a>
-  <a href="biblioteca.html" class="active">Mis Colecciones</a>
+        <a href="index.html">Inicio</a>
+        <a href="dashboard.html">Mi Experiencia</a>
+        <a href="biblioteca.html" class="active">Mis Colecciones</a>
 
-  <button
-    class="header-logout hide"
-    type="button"
-    id="headerLogoutBtn">
-    Cerrar sesión
-  </button>
-
-</nav>
+        <button
+          class="header-logout hide"
+          type="button"
+          id="headerLogoutBtn">
+          Cerrar sesión
+        </button>
+      </nav>
 
       <button
         class="mobile-menu-button"
@@ -982,6 +960,12 @@ font-family: inherit;
         <a href="index.html">Inicio</a>
         <a href="dashboard.html">Mi Experiencia</a>
         <a href="biblioteca.html">Mis Colecciones</a>
+        <button
+          class="mobile-logout hide"
+          type="button"
+          id="mobileLogoutBtn">
+          Cerrar sesión
+        </button>
       </div>
     </div>
   </header>
@@ -1007,26 +991,15 @@ font-family: inherit;
           </p>
 
           <div class="hero-actions">
+            #biblioteca
+              Explorar colecciones
+            </a>
 
-  <a class="primary-btn" href="#biblioteca">
-    Explorar colecciones
-  </a>
-
-  <a class="secondary-btn" href="login.html" id="heroLoginLink">
-    Ya compré, quiero ingresar
-  </a>
-
-</div>
-
-          <div class="top-actions">
-
-  <button class="secondary-btn hide"
-          type="button"
-          id="logoutBtn">
-          Cerrar sesión
-  </button>
-
-</div>
+            <a class="secondary-btn" href="login.html" id="heroLoginLink">
+              Ya compré, quiero ingresar
+            </a>
+          </div>
+        </div>
 
         <aside class="hero-card">
           <div class="tiny">Catálogo Premium</div>
@@ -1251,40 +1224,39 @@ font-family: inherit;
     );
 
     const els = {
-  userPill: document.getElementById("userPill"),
-  loginLink: document.getElementById("loginLink"),
-  heroLoginLink: document.getElementById("heroLoginLink"),
+      heroLoginLink: document.getElementById("heroLoginLink"),
 
-  headerLogoutBtn: document.getElementById("headerLogoutBtn"),
+      headerLogoutBtn: document.getElementById("headerLogoutBtn"),
+      mobileLogoutBtn: document.getElementById("mobileLogoutBtn"),
 
-  loadingState: document.getElementById("loadingState"),
-  errorState: document.getElementById("errorState"),
-  errorMessage: document.getElementById("errorMessage"),
+      loadingState: document.getElementById("loadingState"),
+      errorState: document.getElementById("errorState"),
+      errorMessage: document.getElementById("errorMessage"),
 
-  libraryApp: document.getElementById("libraryApp"),
-  productGrid: document.getElementById("productGrid"),
+      libraryApp: document.getElementById("libraryApp"),
+      productGrid: document.getElementById("productGrid"),
 
-  detailPanel: document.getElementById("detailPanel"),
-  detailTitle: document.getElementById("detailTitle"),
-  detailDescription: document.getElementById("detailDescription"),
+      detailPanel: document.getElementById("detailPanel"),
+      detailTitle: document.getElementById("detailTitle"),
+      detailDescription: document.getElementById("detailDescription"),
 
-  resourceGroups: document.getElementById("resourceGroups"),
-  backToLibrary: document.getElementById("backToLibrary"),
+      resourceGroups: document.getElementById("resourceGroups"),
+      backToLibrary: document.getElementById("backToLibrary"),
 
-  toast: document.getElementById("toast"),
+      toast: document.getElementById("toast"),
 
-  accessCount: document.getElementById("accessCount"),
-  accessMessage: document.getElementById("accessMessage"),
+      accessCount: document.getElementById("accessCount"),
+      accessMessage: document.getElementById("accessMessage"),
 
-  totalProducts: document.getElementById("totalProducts"),
-  unlockedProducts: document.getElementById("unlockedProducts"),
-  totalFiles: document.getElementById("totalFiles"),
+      totalProducts: document.getElementById("totalProducts"),
+      unlockedProducts: document.getElementById("unlockedProducts"),
+      totalFiles: document.getElementById("totalFiles"),
 
-  libraryStatus: document.getElementById("libraryStatus"),
+      libraryStatus: document.getElementById("libraryStatus"),
 
-  mobileButton: document.getElementById("mobileMenuButton"),
-  mobileNav: document.getElementById("mobileNav")
-};
+      mobileButton: document.getElementById("mobileMenuButton"),
+      mobileNav: document.getElementById("mobileNav")
+    };
 
     let currentUser = null;
     let products = [];
@@ -1328,13 +1300,17 @@ font-family: inherit;
       });
 
       els.mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          els.mobileNav.classList.remove("open");
-          els.mobileButton.setAttribute("aria-expanded", "false");
-          els.mobileButton.setAttribute("aria-label", "Abrir menú");
-          els.mobileNav.setAttribute("aria-hidden", "true");
-        });
+        link.addEventListener("click", closeMobileMenu);
       });
+    }
+
+    function closeMobileMenu() {
+      if (!els.mobileButton || !els.mobileNav) return;
+
+      els.mobileNav.classList.remove("open");
+      els.mobileButton.setAttribute("aria-expanded", "false");
+      els.mobileButton.setAttribute("aria-label", "Abrir menú");
+      els.mobileNav.setAttribute("aria-hidden", "true");
     }
 
     async function loadSession() {
@@ -1349,32 +1325,35 @@ font-family: inherit;
         : null;
 
       if (currentUser) {
+        if (els.heroLoginLink) {
+          els.heroLoginLink.classList.add("hide");
+        }
 
-  els.userPill.textContent = currentUser.email || "Sesión activa";
+        if (els.headerLogoutBtn) {
+          els.headerLogoutBtn.classList.remove("hide");
+        }
 
-  els.loginLink.classList.add("hide");
-  els.heroLoginLink.classList.add("hide");
+        if (els.mobileLogoutBtn) {
+          els.mobileLogoutBtn.classList.remove("hide");
+        }
 
-  if (els.headerLogoutBtn) {
-    els.headerLogoutBtn.classList.remove("hide");
-  }
+        els.libraryStatus.textContent = "Sesión activa";
+      } else {
+        if (els.heroLoginLink) {
+          els.heroLoginLink.classList.remove("hide");
+        }
 
-  els.libraryStatus.textContent = "Sesión activa";
+        if (els.headerLogoutBtn) {
+          els.headerLogoutBtn.classList.add("hide");
+        }
 
-} else {
+        if (els.mobileLogoutBtn) {
+          els.mobileLogoutBtn.classList.add("hide");
+        }
 
-  els.userPill.textContent = "Biblioteca pública";
-
-  els.loginLink.classList.remove("hide");
-  els.heroLoginLink.classList.remove("hide");
-
-  if (els.headerLogoutBtn) {
-    els.headerLogoutBtn.classList.add("hide");
-  }
-
-  els.libraryStatus.textContent = "Pública";
-
-}
+        els.libraryStatus.textContent = "Pública";
+      }
+    }
 
     async function loadProducts() {
       const { data, error } = await supabaseClient
@@ -1513,6 +1492,7 @@ font-family: inherit;
             </span>
             <span class="badge badge-status">${escapeHTML(statusLabel)}</span>
           </div>
+
           <div class="product-symbol">${escapeHTML(productIcon)}</div>
         </div>
 
@@ -1844,19 +1824,15 @@ font-family: inherit;
       });
     });
 
-    [els.headerLogoutBtn]
-  .filter(Boolean)
-  .forEach((btn) => {
+    [els.headerLogoutBtn, els.mobileLogoutBtn]
+      .filter(Boolean)
+      .forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          await supabaseClient.auth.signOut();
 
-    btn.addEventListener("click", async () => {
-
-      await supabaseClient.auth.signOut();
-
-      window.location.reload();
-
-    });
-
-  });
+          window.location.reload();
+        });
+      });
   </script>
 </body>
 </html>
