@@ -1251,31 +1251,40 @@ font-family: inherit;
     );
 
     const els = {
-      userPill: document.getElementById("userPill"),
-      loginLink: document.getElementById("loginLink"),
-      heroLoginLink: document.getElementById("heroLoginLink"),
-      logoutBtn: document.getElementById("logoutBtn"),
-      headerLogoutBtn: document.getElementById("headerLogoutBtn"),
-      loadingState: document.getElementById("loadingState"),
-      errorState: document.getElementById("errorState"),
-      errorMessage: document.getElementById("errorMessage"),
-      libraryApp: document.getElementById("libraryApp"),
-      productGrid: document.getElementById("productGrid"),
-      detailPanel: document.getElementById("detailPanel"),
-      detailTitle: document.getElementById("detailTitle"),
-      detailDescription: document.getElementById("detailDescription"),
-      resourceGroups: document.getElementById("resourceGroups"),
-      backToLibrary: document.getElementById("backToLibrary"),
-      toast: document.getElementById("toast"),
-      accessCount: document.getElementById("accessCount"),
-      accessMessage: document.getElementById("accessMessage"),
-      totalProducts: document.getElementById("totalProducts"),
-      unlockedProducts: document.getElementById("unlockedProducts"),
-      totalFiles: document.getElementById("totalFiles"),
-      libraryStatus: document.getElementById("libraryStatus"),
-      mobileButton: document.getElementById("mobileMenuButton"),
-      mobileNav: document.getElementById("mobileNav")
-    };
+  userPill: document.getElementById("userPill"),
+  loginLink: document.getElementById("loginLink"),
+  heroLoginLink: document.getElementById("heroLoginLink"),
+
+  headerLogoutBtn: document.getElementById("headerLogoutBtn"),
+
+  loadingState: document.getElementById("loadingState"),
+  errorState: document.getElementById("errorState"),
+  errorMessage: document.getElementById("errorMessage"),
+
+  libraryApp: document.getElementById("libraryApp"),
+  productGrid: document.getElementById("productGrid"),
+
+  detailPanel: document.getElementById("detailPanel"),
+  detailTitle: document.getElementById("detailTitle"),
+  detailDescription: document.getElementById("detailDescription"),
+
+  resourceGroups: document.getElementById("resourceGroups"),
+  backToLibrary: document.getElementById("backToLibrary"),
+
+  toast: document.getElementById("toast"),
+
+  accessCount: document.getElementById("accessCount"),
+  accessMessage: document.getElementById("accessMessage"),
+
+  totalProducts: document.getElementById("totalProducts"),
+  unlockedProducts: document.getElementById("unlockedProducts"),
+  totalFiles: document.getElementById("totalFiles"),
+
+  libraryStatus: document.getElementById("libraryStatus"),
+
+  mobileButton: document.getElementById("mobileMenuButton"),
+  mobileNav: document.getElementById("mobileNav")
+};
 
     let currentUser = null;
     let products = [];
@@ -1835,7 +1844,7 @@ font-family: inherit;
       });
     });
 
-    [els.logoutBtn, els.headerLogoutBtn]
+    [els.headerLogoutBtn]
   .filter(Boolean)
   .forEach((btn) => {
 
