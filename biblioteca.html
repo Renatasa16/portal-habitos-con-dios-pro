@@ -156,7 +156,21 @@
       border-radius: 999px;
       background: var(--gold);
     }
+.header-logout {
+  border: none;
+  background: transparent;
+  color: var(--green);
+  font-size: .92rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: .2s ease;
+  padding: 0;
+font-family: inherit;
+}
 
+.header-logout:hover {
+  color: var(--gold);
+}
     .mobile-menu-button {
       display: none;
       min-height: 44px;
@@ -938,10 +952,18 @@
 </a>
 
       <nav class="header-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="dashboard.html">Mi Experiencia</a>
-        <a href="biblioteca.html" class="active">Mis Colecciones</a>
-      </nav>
+  <a href="index.html">Inicio</a>
+  <a href="dashboard.html">Mi Experiencia</a>
+  <a href="biblioteca.html" class="active">Mis Colecciones</a>
+
+  <button
+    class="header-logout hide"
+    type="button"
+    id="headerLogoutBtn">
+    Cerrar sesión
+  </button>
+
+</nav>
 
       <button
         class="mobile-menu-button"
@@ -997,11 +1019,14 @@
 </div>
 
           <div class="top-actions">
-            <span class="pill" id="userPill">Biblioteca pública</span>
-            <a class="secondary-btn" href="login.html" id="loginLink">Ingresar</a>
-            <button class="secondary-btn hide" type="button" id="logoutBtn">Cerrar sesión</button>
-          </div>
-        </div>
+
+  <button class="secondary-btn hide"
+          type="button"
+          id="logoutBtn">
+          Cerrar sesión
+  </button>
+
+</div>
 
         <aside class="hero-card">
           <div class="tiny">Catálogo Premium</div>
@@ -1230,6 +1255,7 @@
       loginLink: document.getElementById("loginLink"),
       heroLoginLink: document.getElementById("heroLoginLink"),
       logoutBtn: document.getElementById("logoutBtn"),
+      headerLogoutBtn: document.getElementById("headerLogoutBtn"),
       loadingState: document.getElementById("loadingState"),
       errorState: document.getElementById("errorState"),
       errorMessage: document.getElementById("errorMessage"),
@@ -1314,19 +1340,30 @@
         : null;
 
       if (currentUser) {
-        els.userPill.textContent = currentUser.email || "Sesión activa";
-        els.loginLink.classList.add("hide");
-        els.heroLoginLink.classList.add("hide");
-        els.logoutBtn.classList.remove("hide");
-        els.libraryStatus.textContent = "Sesión activa";
-      } else {
-        els.userPill.textContent = "Biblioteca pública";
-        els.loginLink.classList.remove("hide");
-        els.heroLoginLink.classList.remove("hide");
-        els.logoutBtn.classList.add("hide");
-        els.libraryStatus.textContent = "Pública";
-      }
-    }
+
+  els.userPill.textContent = currentUser.email || "Sesión activa";
+
+  els.loginLink.classList.add("hide");
+  els.heroLoginLink.classList.add("hide");
+
+  els.logoutBtn.classList.remove("hide");
+  els.headerLogoutBtn.classList.remove("hide");
+
+  els.libraryStatus.textContent = "Sesión activa";
+
+} else {
+
+  els.userPill.textContent = "Biblioteca pública";
+
+  els.loginLink.classList.remove("hide");
+  els.heroLoginLink.classList.remove("hide");
+
+  els.logoutBtn.classList.add("hide");
+  els.headerLogoutBtn.classList.add("hide");
+
+  els.libraryStatus.textContent = "Pública";
+
+}
 
     async function loadProducts() {
       const { data, error } = await supabaseClient
@@ -1796,10 +1833,19 @@
       });
     });
 
-    els.logoutBtn.addEventListener("click", async () => {
+    [els.logoutBtn, els.headerLogoutBtn]
+  .filter(Boolean)
+  .forEach((btn) => {
+
+    btn.addEventListener("click", async () => {
+
       await supabaseClient.auth.signOut();
+
       window.location.reload();
+
     });
+
+  });
   </script>
 </body>
 </html>
