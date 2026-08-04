@@ -1346,8 +1346,9 @@ font-family: inherit;
   els.loginLink.classList.add("hide");
   els.heroLoginLink.classList.add("hide");
 
-  els.logoutBtn.classList.remove("hide");
-  els.headerLogoutBtn.classList.remove("hide");
+  if (els.headerLogoutBtn) {
+    els.headerLogoutBtn.classList.remove("hide");
+  }
 
   els.libraryStatus.textContent = "Sesión activa";
 
@@ -1358,8 +1359,9 @@ font-family: inherit;
   els.loginLink.classList.remove("hide");
   els.heroLoginLink.classList.remove("hide");
 
-  els.logoutBtn.classList.add("hide");
-  els.headerLogoutBtn.classList.add("hide");
+  if (els.headerLogoutBtn) {
+    els.headerLogoutBtn.classList.add("hide");
+  }
 
   els.libraryStatus.textContent = "Pública";
 
