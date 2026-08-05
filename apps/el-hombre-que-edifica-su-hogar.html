@@ -11,6 +11,8 @@
     content="App premium de 21 días para hombres cristianos que desean edificar su hogar con carácter, discernimiento, oración y propósito."
   />
 
+  <meta name="theme-color" content="#111D35" />
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -27,16 +29,12 @@
       --ink: #172033;
       --muted: #6B7280;
       --line: rgba(17, 29, 53, 0.10);
-      --rose: #F8E1DE;
-      --rose-border: #EAB8B3;
-      --rose-text: #AD423D;
-      --success: #3E7447;
       --danger: #A64037;
+      --success: #3E7447;
       --shadow: 0 24px 70px rgba(17, 29, 53, 0.18);
       --soft-shadow: 0 14px 32px rgba(17, 29, 53, 0.11);
       --radius-xl: 34px;
       --radius-lg: 26px;
-      --radius-md: 18px;
       --max: 1180px;
     }
 
@@ -217,9 +215,10 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
+      grid-template-columns: 1.12fr 0.88fr;
       gap: 24px;
       padding: 42px;
+      align-items: stretch;
     }
 
     .eyebrow {
@@ -290,52 +289,143 @@
       line-height: 1.38;
     }
 
-    .mission-card {
+    .journey-card {
+      background:
+        radial-gradient(circle at top right, rgba(227, 185, 95, 0.25), transparent 36%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.08));
       border-radius: 30px;
-      padding: 24px;
-      background: rgba(255, 255, 255, 0.12);
+      padding: 26px;
+      color: #FFFFFF;
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.18);
       border: 1px solid rgba(227, 185, 95, 0.28);
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.12);
-    }
-
-    .mission-card small {
-      display: block;
-      color: var(--gold-soft);
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .mission-card strong {
-      display: block;
-      font-size: 3.4rem;
-      line-height: 1;
-      color: var(--gold-2);
-      margin-bottom: 8px;
-    }
-
-    .mission-card span {
-      display: block;
-      color: rgba(255, 255, 255, 0.76);
-      line-height: 1.5;
-    }
-
-    .progress-track {
-      margin-top: 20px;
-      height: 12px;
-      width: 100%;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.16);
+      position: relative;
       overflow: hidden;
+      display: grid;
+      gap: 18px;
+      align-content: center;
     }
 
-    .progress-fill {
+    .journey-kicker {
+      display: inline-flex;
+      width: fit-content;
+      color: var(--gold-soft);
+      font-size: 0.76rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .journey-title h2 {
+      color: #FFFFFF;
+      font-size: clamp(1.9rem, 4vw, 2.65rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .progress-circle-wrap {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .progress-circle {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold-2) 0deg, rgba(255, 255, 255, 0.15) 0deg);
+      display: grid;
+      place-items: center;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-circle::before {
+      content: "";
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--navy);
+      position: absolute;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-circle strong {
+      position: relative;
+      z-index: 1;
+      color: var(--gold-2);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .progress-circle span {
+      position: absolute;
+      z-index: 1;
+      color: #EFE7D8;
+      font-size: 11px;
+      font-weight: 900;
+      margin-top: 34px;
+    }
+
+    .journey-copy {
+      display: grid;
+      gap: 10px;
+    }
+
+    .journey-copy strong {
+      color: var(--gold-2);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .journey-copy span {
+      color: rgba(255, 255, 255, 0.80);
+      line-height: 1.5;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .journey-progress-wrap {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .journey-progress-fill {
       height: 100%;
       width: 0%;
       border-radius: 999px;
       background: linear-gradient(90deg, var(--gold), var(--gold-2));
       transition: width 0.3s;
+    }
+
+    .journey-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .journey-metric {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .journey-metric small {
+      display: block;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 11px;
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    .journey-metric strong {
+      color: var(--gold-2);
+      font-size: 21px;
+      line-height: 1;
     }
 
     .summary-grid {
@@ -611,7 +701,8 @@
       line-height: 1.68;
     }
 
-    .journal-grid {
+    .journal-grid,
+    .cards-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
@@ -690,17 +781,17 @@
       background: linear-gradient(135deg, var(--gold), var(--gold-2));
     }
 
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+    .mini-card,
+    .range-item,
+    .record,
+    .check-item {
+      background: #FFFFFF;
+      border: 1px solid var(--line);
     }
 
     .mini-card {
       padding: 18px;
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid var(--line);
     }
 
     .mini-card h3 {
@@ -743,7 +834,7 @@
       display: grid;
       place-items: center;
       background:
-        conic-gradient(var(--gold-2) var(--radar-percent, 0%), rgba(255,255,255,0.12) 0),
+        conic-gradient(var(--gold-2) var(--radar-percent, 0%), rgba(255, 255, 255, 0.12) 0),
         radial-gradient(circle at center, var(--navy) 0 59%, transparent 60%);
       box-shadow: 0 24px 50px rgba(0, 0, 0, 0.18);
     }
@@ -784,8 +875,6 @@
     .range-item {
       padding: 14px;
       border-radius: 20px;
-      background: #FFFFFF;
-      border: 1px solid var(--line);
     }
 
     .range-top {
@@ -863,8 +952,6 @@
     .record {
       padding: 15px;
       border-radius: 20px;
-      background: #FFFFFF;
-      border: 1px solid var(--line);
     }
 
     .record strong {
@@ -889,8 +976,6 @@
       gap: 10px;
       padding: 12px;
       border-radius: 18px;
-      background: #FFFFFF;
-      border: 1px solid var(--line);
       color: #334155;
       line-height: 1.45;
     }
@@ -1059,6 +1144,10 @@
         position: relative;
         top: auto;
       }
+
+      .progress-circle-wrap {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 720px) {
@@ -1104,7 +1193,8 @@
       .summary-grid,
       .cards-grid,
       .badge-grid,
-      .journal-grid {
+      .journal-grid,
+      .journey-metrics {
         grid-template-columns: 1fr;
       }
 
@@ -1139,6 +1229,19 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -1160,6 +1263,7 @@
         <button class="btn gold" type="button" onclick="window.location.href='../biblioteca.html'">
           Volver a la biblioteca
         </button>
+
         <button class="btn primary" type="button" onclick="window.location.href='https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar'">
           Comprar acceso
         </button>
@@ -1225,13 +1329,45 @@
           </div>
         </div>
 
-        <aside class="mission-card" aria-label="Progreso">
-          <small>Progreso de edificación</small>
-          <strong id="progressText">0/21</strong>
-          <span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
+        <aside class="journey-card" aria-label="Tu recorrido de edificación">
+          <span class="journey-kicker">Tu recorrido</span>
 
-          <div class="progress-track" aria-hidden="true">
-            <div class="progress-fill" id="progressFill"></div>
+          <div class="journey-title">
+            <h2>Camino de edificación</h2>
+          </div>
+
+          <div class="progress-circle-wrap">
+            <div class="progress-circle" id="progressCircle">
+              <strong id="progressPercent">0%</strong>
+              <span>avance</span>
+            </div>
+
+            <div class="journey-copy">
+              <strong id="progressText">0/21</strong>
+              <span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
+              <span id="nextStepMessage">Tu próximo paso: Día 1</span>
+            </div>
+          </div>
+
+          <div class="journey-progress-wrap" aria-label="Progreso de 21 días">
+            <div class="journey-progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="journey-metrics">
+            <div class="journey-metric">
+              <small>Etapa</small>
+              <strong id="journeyLevel">Inicio</strong>
+            </div>
+
+            <div class="journey-metric">
+              <small>Radar</small>
+              <strong id="journeyRadar">0</strong>
+            </div>
+
+            <div class="journey-metric">
+              <small>Acciones</small>
+              <strong id="journeyActions">0</strong>
+            </div>
           </div>
         </aside>
       </div>
@@ -1618,7 +1754,9 @@
   </main>
 
   <script>
-    const STORAGE_KEY = "hcg_mi_hogar_con_proposito_v4";
+    const STORAGE_KEY_BASE = "hcd_mi_hogar_con_proposito_v5";
+    const STORAGE_PROGRESS_SNAPSHOT_PREFIX = "hcd_hombre_hogar_progress_snapshot";
+
     const LOGIN_URL = "../login.html";
     const LIBRARY_URL = "../biblioteca.html";
     const REQUIRE_LOGIN = true;
@@ -1637,9 +1775,9 @@
     const REQUIRED_SKU = "HCD_HOMBRE_EDIFICA_BUNDLE";
     const SHOPIFY_URL = "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar";
 
-    const supabaseClient = (() => {
-      if (window.supabaseClient) return window.supabaseClient;
+    let currentUser = null;
 
+    const supabaseClient = (() => {
       const hasRealConfig =
         SUPABASE_URL.startsWith("https://") &&
         SUPABASE_ANON_KEY.length > 30 &&
@@ -1845,7 +1983,7 @@
         action: "Revisa hoy un aspecto práctico de tu economía familiar y da un paso concreto de orden.",
         identity: "Proveo con sabiduría y administro con integridad. Cuido lo que Dios pone en mis manos."
       },
-      {
+            {
         day: 17,
         section: "Discernimiento",
         title: "Discernir antes de decidir",
@@ -1959,7 +2097,7 @@
         title: "Padre Presente",
         description: "Forma con ejemplo, presencia y conversaciones significativas."
       },
-      {
+            {
         min: 21,
         icon: "🏛",
         title: "Hombre de Legado",
@@ -1967,8 +2105,23 @@
       }
     ];
 
-    let state = loadState();
-    let currentDay = state.currentDay || 1;
+    function storageKey() {
+      const userPart =
+        currentUser && currentUser.id
+          ? currentUser.id
+          : "local";
+
+      return `${STORAGE_KEY_BASE}_${userPart}`;
+    }
+
+    function snapshotKey() {
+      const userPart =
+        currentUser && currentUser.id
+          ? currentUser.id
+          : "local";
+
+      return `${STORAGE_PROGRESS_SNAPSHOT_PREFIX}_${userPart}`;
+    }
 
     function defaultState() {
       return {
@@ -1994,21 +2147,36 @@
 
     function loadState() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? { ...defaultState(), ...JSON.parse(saved) } : defaultState();
-      } catch (error) {
+        const saved = localStorage.getItem(storageKey());
+
+        return saved
+          ? {
+              ...defaultState(),
+              ...JSON.parse(saved)
+            }
+          : defaultState();
+      } catch {
         return defaultState();
       }
     }
 
+    let state = loadState();
+    let currentDay = state.currentDay || 1;
+
     function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(
+        storageKey(),
+        JSON.stringify(state)
+      );
+
       updateMetrics();
       renderBadges();
     }
 
     function toast(message) {
-      const toastEl = document.getElementById("toast");
+      const toastEl =
+        document.getElementById("toast");
+
       toastEl.textContent = message;
       toastEl.classList.add("show");
 
@@ -2029,25 +2197,33 @@
     }
 
     function cssSafe(value) {
-      if (window.CSS && typeof window.CSS.escape === "function") {
+      if (
+        window.CSS &&
+        typeof window.CSS.escape === "function"
+      ) {
         return window.CSS.escape(value);
       }
 
-      return String(value).replace(/"/g, '\\"');
-    }
+      return String(value).replace(
+        /"/g,
+        '\\"'
+      );
+         }
 
     async function initAuth() {
-      document.getElementById("logoutBtn").addEventListener("click", async () => {
-        try {
-          if (supabaseClient) {
-            await supabaseClient.auth.signOut();
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", async () => {
+          try {
+            if (supabaseClient) {
+              await supabaseClient.auth.signOut();
+            }
+          } catch (error) {
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
-        }
 
-        window.location.href = LOGIN_URL;
-      });
+          window.location.href = LOGIN_URL;
+        });
 
       if (!supabaseClient) {
         document.getElementById("userPill").textContent = "Supabase no configurado";
@@ -2069,12 +2245,20 @@
         }
 
         if (session && session.user) {
+          currentUser = session.user;
           document.getElementById("userPill").textContent = session.user.email || "Sesión activa";
+
+          state = loadState();
+          currentDay = state.currentDay || 1;
+
+          renderAll();
         }
 
         const hasAccess = await validateAccess(session && session.user);
 
-        if (!hasAccess) return;
+        if (!hasAccess) {
+          return;
+        }
       } catch (error) {
         console.error(error);
 
@@ -2085,7 +2269,9 @@
     }
 
     async function validateAccess(user) {
-      if (!supabaseClient || !user) return true;
+      if (!supabaseClient || !user) {
+        return true;
+      }
 
       const now = new Date();
       const normalizedEmail = String(user.email || "").trim().toLowerCase();
@@ -2102,10 +2288,13 @@
           const active = (data || []).some((row) => {
             const status = String(row.status || "").toLowerCase();
             const expirationIsValid = !row.expires_at || new Date(row.expires_at) > now;
+
             return status !== "inactive" && expirationIsValid;
           });
 
-          if (active) return true;
+          if (active) {
+            return true;
+          }
         }
       } catch (error) {
         console.warn("Validación user_entitlements omitida", error);
@@ -2131,7 +2320,9 @@
             );
           });
 
-          if (active) return true;
+          if (active) {
+            return true;
+          }
         }
       } catch (error) {
         console.warn("Validación entitlements omitida", error);
@@ -2152,12 +2343,18 @@
         button.textContent = item.day;
         button.setAttribute("aria-label", "Abrir día " + item.day);
 
-        if (item.day === currentDay) button.classList.add("active");
-        if (state.completedDays.includes(item.day)) button.classList.add("done");
+        if (item.day === currentDay) {
+          button.classList.add("active");
+        }
+
+        if (state.completedDays.includes(item.day)) {
+          button.classList.add("done");
+        }
 
         button.addEventListener("click", () => {
           currentDay = item.day;
           state.currentDay = currentDay;
+
           saveState();
           renderCurrentDay();
           renderDaySelector();
@@ -2181,6 +2378,7 @@
       document.getElementById("dayJournalQuestion").textContent = item.question;
       document.getElementById("dayAction").textContent = item.action;
       document.getElementById("dayIdentity").textContent = item.identity;
+
       document.getElementById("journalText").value = state.journals[item.day] || "";
       document.getElementById("actionText").value = state.actions[item.day] || "";
     }
@@ -2189,6 +2387,7 @@
       state.journals[currentDay] = document.getElementById("journalText").value.trim();
       state.actions[currentDay] = document.getElementById("actionText").value.trim();
       state.currentDay = currentDay;
+
       saveState();
       toast("Día " + currentDay + " guardado.");
     }
@@ -2204,6 +2403,7 @@
       saveState();
       renderDaySelector();
       updateMetrics();
+
       toast("Día " + currentDay + " completado.");
     }
 
@@ -2211,14 +2411,24 @@
       if (currentDay < 21) {
         currentDay += 1;
         state.currentDay = currentDay;
+
         saveState();
         renderCurrentDay();
         renderDaySelector();
         switchView("camino");
+
         toast("Avanzaste al día " + currentDay + ".");
       } else {
         toast("Llegaste al día 21. Tu hogar pertenece a Dios.");
       }
+    }
+
+    function getRadarAverage() {
+      const values = RADAR_AREAS.map((area) => Number(state.radar[area] || 0));
+
+      return values.length
+        ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length)
+        : 0;
     }
 
     function renderRadar() {
@@ -2228,6 +2438,7 @@
       RADAR_AREAS.forEach((area) => {
         const value = Number(state.radar[area] || 0);
         const item = document.createElement("div");
+
         item.className = "range-item";
 
         item.innerHTML = `
@@ -2235,7 +2446,14 @@
             <span>${escapeHTML(area)}</span>
             <span data-radar-value="${escapeHTML(area)}">${value}</span>
           </div>
-          <input type="range" min="0" max="10" value="${value}" data-radar="${escapeHTML(area)}" aria-label="${escapeHTML(area)}" />
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value="${value}"
+            data-radar="${escapeHTML(area)}"
+            aria-label="${escapeHTML(area)}"
+          />
         `;
 
         container.appendChild(item);
@@ -2245,13 +2463,17 @@
         range.addEventListener("input", (event) => {
           const area = event.target.dataset.radar;
           const value = Number(event.target.value);
+
           state.radar[area] = value;
 
           const label = document.querySelector(`[data-radar-value="${cssSafe(area)}"]`);
 
-          if (label) label.textContent = value;
+          if (label) {
+            label.textContent = value;
+          }
 
           updateRadarVisual();
+          saveProgressSnapshot();
         });
       });
 
@@ -2259,10 +2481,7 @@
     }
 
     function updateRadarVisual() {
-      const values = RADAR_AREAS.map((area) => Number(state.radar[area] || 0));
-      const average = values.length
-        ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length)
-        : 0;
+      const average = getRadarAverage();
 
       document.getElementById("radarAverage").textContent = average;
 
@@ -2281,6 +2500,12 @@
               : "En construcción";
 
       document.getElementById("metricRadar").textContent = average;
+
+      const radarMetric = document.getElementById("journeyRadar");
+
+      if (radarMetric) {
+        radarMetric.textContent = average;
+      }
     }
 
     function saveRadar() {
@@ -2291,11 +2516,13 @@
     function renderBadges() {
       const container = document.getElementById("badgeGrid");
       container.innerHTML = "";
+
       const completed = state.completedDays.length;
 
       BADGES.forEach((badge) => {
         const unlocked = completed >= badge.min;
         const card = document.createElement("article");
+
         card.className = "badge-card" + (unlocked ? "" : " locked");
 
         card.innerHTML = `
@@ -2312,7 +2539,9 @@
     function saveDecision() {
       const title = document.getElementById("decisionTitle").value.trim();
       const options = document.getElementById("decisionOptions").value.trim();
-      const checks = Array.from(document.querySelectorAll(".decision-check:checked")).map((item) => item.value);
+
+      const checks = Array.from(document.querySelectorAll(".decision-check:checked"))
+        .map((item) => item.value);
 
       if (!title && !options) {
         toast("Escribe una decisión antes de guardar.");
@@ -2430,6 +2659,7 @@
       PRAYER_ITEMS.forEach((item, index) => {
         const checked = state.prayer.checks.includes(index);
         const label = document.createElement("label");
+
         label.className = "check-item";
 
         label.innerHTML = `
@@ -2444,18 +2674,17 @@
 
       container.querySelectorAll("input").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          state.prayer.checks = Array.from(container.querySelectorAll("input:checked")).map((item) =>
-            Number(item.dataset.prayer)
-          );
+          state.prayer.checks = Array.from(container.querySelectorAll("input:checked"))
+            .map((item) => Number(item.dataset.prayer));
         });
       });
     }
 
     function savePrayer() {
       state.prayer.text = document.getElementById("familyPrayer").value.trim();
-      state.prayer.checks = Array.from(document.querySelectorAll("#prayerChecks input:checked")).map((item) =>
-        Number(item.dataset.prayer)
-      );
+
+      state.prayer.checks = Array.from(document.querySelectorAll("#prayerChecks input:checked"))
+        .map((item) => Number(item.dataset.prayer));
 
       saveState();
       toast("Plan de oración guardado.");
@@ -2478,15 +2707,68 @@
       toast("Mi Legado fue guardado.");
     }
 
+    function getNextRecommendedDay() {
+      const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
+      return nextIncomplete ? nextIncomplete.day : 21;
+    }
+
+    function getJourneyLevel(percentage) {
+      if (percentage >= 100) return { name: "Completado" };
+      if (percentage >= 76) return { name: "Muy cerca" };
+      if (percentage >= 51) return { name: "Edificando" };
+      if (percentage >= 26) return { name: "Avanzando" };
+      if (percentage > 0) return { name: "Comenzando" };
+      return { name: "Inicio" };
+    }
+
+    function saveProgressSnapshot() {
+      const completed = state.completedDays.length;
+      const total = DAYS.length;
+      const percentage = Math.round((completed / total) * 100);
+      const actionsCount = Object.values(state.actions).filter(Boolean).length;
+
+      const snapshot = {
+        slug: "hombre-hogar",
+        title: "El Hombre que Edifica su Hogar",
+        appTitle: "Mi Hogar con Propósito",
+        completed,
+        total,
+        percentage,
+        radarAverage: getRadarAverage(),
+        talks: state.talks.length,
+        actions: actionsCount,
+        nextDay: getNextRecommendedDay(),
+        level: getJourneyLevel(percentage).name,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(snapshotKey(), JSON.stringify(snapshot));
+    }
+
     function updateMetrics() {
       const completed = state.completedDays.length;
       const percent = Math.round((completed / 21) * 100);
+      const degrees = Math.round((percent / 100) * 360);
+      const actionsCount = Object.values(state.actions).filter(Boolean).length;
 
       document.getElementById("progressText").textContent = completed + "/21";
       document.getElementById("progressFill").style.width = percent + "%";
+      document.getElementById("progressPercent").textContent = percent + "%";
+
+      document.getElementById("progressCircle").style.background =
+        `conic-gradient(var(--gold-2) ${degrees}deg, rgba(255,255,255,.15) ${degrees}deg)`;
+
       document.getElementById("metricDays").textContent = completed;
       document.getElementById("metricTalks").textContent = state.talks.length;
-      document.getElementById("metricActions").textContent = Object.values(state.actions).filter(Boolean).length;
+      document.getElementById("metricActions").textContent = actionsCount;
+
+      document.getElementById("journeyActions").textContent = actionsCount;
+      document.getElementById("journeyLevel").textContent = getJourneyLevel(percent).name;
+
+      document.getElementById("nextStepMessage").textContent =
+        percent >= 100
+          ? "Camino completado. Puedes volver a cualquier día cuando lo necesites."
+          : "Tu próximo paso: Día " + getNextRecommendedDay();
 
       document.getElementById("growthMessage").textContent =
         completed >= 21
@@ -2500,12 +2782,15 @@
                 : "Todo hogar firme comienza con un corazón rendido a Dios.";
 
       updateRadarVisual();
+      saveProgressSnapshot();
     }
 
     function scrollToActivePanel(view) {
       const panel = document.getElementById("panel-" + view);
 
-      if (!panel) return;
+      if (!panel) {
+        return;
+      }
 
       panel.scrollIntoView({
         behavior: "smooth",
@@ -2558,8 +2843,10 @@
 
     function continueDay() {
       const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
+
       currentDay = nextIncomplete ? nextIncomplete.day : 21;
       state.currentDay = currentDay;
+
       saveState();
       renderCurrentDay();
       renderDaySelector();
