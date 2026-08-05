@@ -71,8 +71,8 @@
     }
 
     img {
-      display: block;
       max-width: 100%;
+      display: block;
     }
 
     .is-hidden {
@@ -104,20 +104,18 @@
     }
 
     .brand-area {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-  flex: 1;
-}
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
 
     .brand-logo {
-  width: 68px;
-  height: 68px;
-  object-fit: contain;
-  display: block;
-  flex: 0 0 auto;
-}
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
 
     .brand-copy {
       display: grid;
@@ -134,21 +132,20 @@
 
     .brand-title {
       color: var(--green);
-      font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
       line-height: 1.05;
       font-weight: 950;
       letter-spacing: -0.035em;
     }
 
     .header-nav {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  color: var(--olive);
-  font-size: 0.92rem;
-  font-weight: 850;
-  margin-left: auto;
-}
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--olive);
+      font-size: 0.92rem;
+      font-weight: 850;
+    }
 
     .header-nav a {
       position: relative;
@@ -173,16 +170,15 @@
     }
 
     .mobile-menu-button {
-  display: none;
-  min-height: 44px;
-  padding: 0 14px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: var(--white);
-  color: var(--green);
-  font-weight: 900;
-  margin-left: auto;
-}
+      display: none;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--green);
+      font-weight: 900;
+    }
 
     .mobile-nav {
       display: none;
@@ -751,7 +747,7 @@
       }
 
       .brand-title {
-        font-size: 1.18rem;
+        font-size: 1.14rem;
       }
 
       .hero-section {
@@ -808,7 +804,7 @@
       }
 
       .brand-title {
-        font-size: 1.08rem;
+        font-size: 1.02rem;
       }
     }
 
@@ -830,15 +826,13 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
+        assets/logo-header.png
 
-  <img
-    src="assets/logo-header.png"
-    alt="Hábitos con Dios"
-   brand-name">Hábitos con Dios</span>
-    <strong class="brand-title">Mi Experiencia con Dios</strong>
-  </div>
-
-</a>
+        <div class="brand-copy">
+          <span class="brand-name">Hábitos con Dios</span>
+          <strong class="brand-title">Mi Experiencia con Dios</strong>
+        </div>
+      </a>
 
       <nav class="header-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
@@ -969,7 +963,6 @@
       <div class="collections-grid">
         <article class="collection-card">
           <div class="collection-cover">21 Días</div>
-
           <div class="collection-body">
             <span class="collection-badge">Mujeres</span>
             <h3>21 Días Más Cerca de Dios</h3>
@@ -985,7 +978,6 @@
 
         <article class="collection-card">
           <div class="collection-cover">Familias</div>
-
           <div class="collection-body">
             <span class="collection-badge">Familia</span>
             <h3>Pequeños Momentos con Dios</h3>
@@ -1001,7 +993,6 @@
 
         <article class="collection-card">
           <div class="collection-cover">Palabras</div>
-
           <div class="collection-body">
             <span class="collection-badge">Jóvenes</span>
             <h3>Cuando las Palabras Duelen</h3>
@@ -1017,7 +1008,6 @@
 
         <article class="collection-card">
           <div class="collection-cover">Hogar</div>
-
           <div class="collection-body">
             <span class="collection-badge">Hombres</span>
             <h3>El Hombre que Edifica su Hogar</h3>
@@ -1196,6 +1186,15 @@
           mobileButton.setAttribute("aria-label", "Abrir menú");
           mobileNav.setAttribute("aria-hidden", "true");
         });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && mobileNav.classList.contains("open")) {
+          mobileNav.classList.remove("open");
+          mobileButton.setAttribute("aria-expanded", "false");
+          mobileButton.setAttribute("aria-label", "Abrir menú");
+          mobileNav.setAttribute("aria-hidden", "true");
+        }
       });
     }
 
