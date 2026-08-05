@@ -107,11 +107,11 @@
     }
 
     .brand-logo {
-  width: 68px;
-  height: 68px;
-  object-fit: contain;
-  flex: 0 0 auto;
-}
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
 
     .brand-copy {
       display: grid;
@@ -149,10 +149,7 @@
       white-space: nowrap;
     }
 
-    .header-nav a:hover {
-      color: var(--green);
-    }
-
+    .header-nav a:hover,
     .header-nav a.active {
       color: var(--green);
     }
@@ -519,6 +516,11 @@
       font-weight: 900;
     }
 
+    .habit-pill.gold {
+      background: var(--soft-gold);
+      border: 1px solid rgba(201, 166, 90, 0.22);
+    }
+
     .progress-line {
       width: 100%;
       height: 10px;
@@ -533,6 +535,20 @@
       width: var(--progress, 0%);
       border-radius: 999px;
       background: linear-gradient(90deg, var(--green), var(--gold));
+    }
+
+    .habit-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .habit-progress-text {
+      color: var(--green);
+      font-weight: 950;
+      font-size: 0.88rem;
     }
 
     .empty-habit {
@@ -813,27 +829,15 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
- <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
+      <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
+        assets/logo-header.png
 
-  <img
-    src="assets/logo-header.png"
-    alt="Hábitos con Dios"
-    class="brand-logo"
-  />
+        <div class="brand-copy">
+          <span class="brand-name">Hábitos con Dios</span>
+          <strong class="brand-title">Mi Experiencia con Dios</strong>
+        </div>
+      </a>
 
-  <div class="brand-copy">
-
-    <span class="brand-name">
-      Hábitos con Dios
-    </span>
-
-    <strong class="brand-title">
-      Mi Experiencia con Dios
-    </strong>
-
-  </div>
-
-</a>
       <nav class="header-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="dashboard.html" class="active">Mi Experiencia</a>
@@ -880,16 +884,14 @@
           </p>
 
           <div class="hero-actions">
+            <a class="btn btn-primary" href="#regar-mi-habito">
+              Regar mi hábito
+            </a>
 
-  <a class="btn btn-primary" href="#regar-mi-habito">
-    Regar mi hábito
-  </a>
-
-  <a class="btn btn-secondary" href="biblioteca.html">
-    Explorar Colecciones
-  </a>
-
-</div>
+            <a class="btn btn-secondary" href="biblioteca.html">
+              Explorar Colecciones
+            </a>
+          </div>
         </article>
 
         <aside class="hero-side-card" aria-label="Resumen de la experiencia">
@@ -931,7 +933,7 @@
           <h2 id="habit-title">Regar mi hábito</h2>
           <p>
             Aquí verás únicamente las experiencias que ya forman parte de tu camino.
-            Si todavía no tienes experiencias activas, puedes iniciar desde Mis Colecciones.
+            El progreso se actualiza con el avance real guardado dentro de cada app.
           </p>
         </div>
       </div>
@@ -973,8 +975,8 @@
               mediante hábitos espirituales simples y sostenibles.
             </p>
             <a class="btn btn-secondary" href="biblioteca.html#coleccion-21dias">
-  Conocer
-</a>
+              Conocer
+            </a>
           </div>
         </article>
 
@@ -987,10 +989,9 @@
               Recursos prácticos para ayudar a las familias a compartir momentos de fe,
               reflexión y conexión espiritual en la vida cotidiana.
             </p>
-            <a class="btn btn-secondary"
-   href="biblioteca.html#coleccion-familias">
-   Conocer
-</a>
+            <a class="btn btn-secondary" href="biblioteca.html#coleccion-familias">
+              Conocer
+            </a>
           </div>
         </article>
 
@@ -1003,10 +1004,9 @@
               Una experiencia diseñada para acompañar a adolescentes y jóvenes a procesar
               heridas emocionales desde una perspectiva de fe y esperanza.
             </p>
-            <a class="btn btn-secondary"
-   href="biblioteca.html#coleccion-palabras-duelen">
-   Conocer
-</a>
+            <a class="btn btn-secondary" href="biblioteca.html#coleccion-palabras-duelen">
+              Conocer
+            </a>
           </div>
         </article>
 
@@ -1019,10 +1019,9 @@
               Herramientas prácticas para hombres que desean fortalecer su liderazgo espiritual,
               familiar y personal con propósito.
             </p>
-            <a class="btn btn-secondary"
-   href="biblioteca.html#coleccion-hombre-edifica">
-   Conocer
-</a>
+            <a class="btn btn-secondary" href="biblioteca.html#coleccion-hombre-edifica">
+              Conocer
+            </a>
           </div>
         </article>
       </div>
@@ -1071,24 +1070,41 @@
 
     const ACTIVE_EXPERIENCES = [
       {
+        id: "21dias",
         title: "21 Días Más Cerca de Dios",
         label: "Devocional de 21 días",
-        description: "Continúa tu recorrido devocional para cultivar hábitos de fe, oración y cercanía con Dios.",
+        description:
+          "Continúa tu recorrido devocional para cultivar hábitos de fe, oración y cercanía con Dios.",
         icon: "21",
         href: "apps/mi-tiempo-con-dios.html",
-        progressLabel: "Disponible para continuar",
-        progress: 12,
-        permissionKeys: ["access_21dias", "membership_all_access"],
-        sourceSkus: ["HCD_21DIAS_BUNDLE", "HCD_ALL_ACCESS"]
+        snapshotKeys: [
+          "hcd_21dias_progress_snapshot",
+          "hcd_mi_tiempo_con_dios_progress_snapshot",
+          "hcd_mujeres_21dias_progress_snapshot"
+        ],
+        permissionKeys: [
+          "access_21dias",
+          "membership_all_access"
+        ],
+        sourceSkus: [
+          "HCD_21DIAS_BUNDLE",
+          "HCD_ALL_ACCESS"
+        ]
       },
       {
+        id: "familias",
         title: "Pequeños Momentos con Dios",
         label: "Experiencia familiar",
-        description: "Acompaña a tu familia con momentos simples de fe, reflexión y conexión espiritual.",
+        description:
+          "Acompaña a tu familia con momentos simples de fe, reflexión y conexión espiritual.",
         icon: "FM",
         href: "apps/pequenos-momentos-con-dios.html",
-        progressLabel: "Disponible para comenzar",
-        progress: 0,
+        snapshotKeys: [
+          "hcd_familias_progress_snapshot",
+          "hcd_momentos_familia_progress_snapshot",
+          "hcd_pequenos_momentos_progress_snapshot",
+          "hcd_pequenos_momentos_con_dios_progress_snapshot"
+        ],
         permissionKeys: [
           "access_familias",
           "access_pequenos_momentos",
@@ -1103,13 +1119,18 @@
         ]
       },
       {
+        id: "palabras",
         title: "Cuando las Palabras Duelen",
         label: "Acompañamiento para jóvenes",
-        description: "Una experiencia para procesar palabras difíciles desde una mirada de fe, esperanza y restauración.",
+        description:
+          "Una experiencia para procesar palabras difíciles desde una mirada de fe, esperanza y restauración.",
         icon: "PD",
         href: "apps/cuando-las-palabras-duelen.html",
-        progressLabel: "Disponible para comenzar",
-        progress: 0,
+        snapshotKeys: [
+          "hcd_palabras_duelen_progress_snapshot",
+          "hcd_palabras_progress_snapshot",
+          "hcd_cuando_las_palabras_duelen_progress_snapshot"
+        ],
         permissionKeys: [
           "access_palabras_duelen",
           "access_cuando_las_palabras_duelen",
@@ -1122,13 +1143,17 @@
         ]
       },
       {
+        id: "hombre",
         title: "El Hombre que Edifica su Hogar",
         label: "Camino de propósito",
-        description: "Fortalece liderazgo espiritual, carácter, fe y propósito familiar desde una experiencia guiada.",
+        description:
+          "Fortalece liderazgo espiritual, carácter, fe y propósito familiar desde una experiencia guiada.",
         icon: "HG",
         href: "apps/el-hombre-que-edifica-su-hogar.html",
-        progressLabel: "Disponible para continuar",
-        progress: 0,
+        snapshotKeys: [
+          "hcd_hombre_hogar_progress_snapshot",
+          "hcd_mi_hogar_con_proposito_progress_snapshot"
+        ],
         permissionKeys: [
           "access_hombre_edifica",
           "membership_all_access"
@@ -1147,6 +1172,7 @@
 
     function toggleMobileMenu() {
       const isOpen = mobileNav.classList.toggle("open");
+
       mobileButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
       mobileButton.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
       mobileNav.setAttribute("aria-hidden", isOpen ? "false" : "true");
@@ -1166,12 +1192,22 @@
     }
 
     function escapeHTML(value) {
-      return String(value || "")
+      return String(value ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function clampProgress(value) {
+      const number = Number(value || 0);
+
+      if (Number.isNaN(number)) {
+        return 0;
+      }
+
+      return Math.max(0, Math.min(100, Math.round(number)));
     }
 
     function hasAccess(experience, entitlements) {
@@ -1191,6 +1227,96 @@
       });
     }
 
+    function readSnapshotByKey(baseKey, userId) {
+      const possibleKeys = [
+        `${baseKey}_${userId}`,
+        `${baseKey}_local`,
+        baseKey
+      ];
+
+      for (const key of possibleKeys) {
+        const raw = localStorage.getItem(key);
+
+        if (!raw) {
+          continue;
+        }
+
+        try {
+          return JSON.parse(raw);
+        } catch (error) {
+          console.warn("Snapshot inválido:", key, error);
+        }
+      }
+
+      return null;
+    }
+
+    function getExperienceProgress(experience, userId) {
+      const keys = Array.isArray(experience.snapshotKeys)
+        ? experience.snapshotKeys
+        : [];
+
+      for (const key of keys) {
+        const snapshot = readSnapshotByKey(key, userId);
+
+        if (!snapshot) {
+          continue;
+        }
+
+        const percentage = clampProgress(snapshot.percentage);
+        const completed = Number(snapshot.completed || 0);
+        const total = Number(snapshot.total || 21);
+        const nextDay = snapshot.nextDay || null;
+        const level = snapshot.level || "";
+
+        return {
+          progress: percentage,
+          progressLabel:
+            percentage >= 100
+              ? "Completado"
+              : `${percentage}% completado`,
+          completed,
+          total,
+          nextDay,
+          level,
+          hasSnapshot: true
+        };
+      }
+
+      return {
+        progress: 0,
+        progressLabel: "Disponible para comenzar",
+        completed: 0,
+        total: 21,
+        nextDay: 1,
+        level: "Inicio",
+        hasSnapshot: false
+      };
+    }
+
+    function buildProgressMeta(experience) {
+      const items = [];
+
+      items.push(`<span class="habit-pill">${escapeHTML(experience.label)}</span>`);
+      items.push(`<span class="habit-pill gold">${escapeHTML(experience.progressLabel)}</span>`);
+
+      if (experience.hasSnapshot) {
+        items.push(
+          `<span class="habit-pill">${escapeHTML(String(experience.completed))}/${escapeHTML(String(experience.total))} días</span>`
+        );
+
+        if (experience.level) {
+          items.push(`<span class="habit-pill">${escapeHTML(experience.level)}</span>`);
+        }
+
+        if (experience.progress < 100 && experience.nextDay) {
+          items.push(`<span class="habit-pill">Próximo día: ${escapeHTML(String(experience.nextDay))}</span>`);
+        }
+      }
+
+      return items.join("");
+    }
+
     function renderActiveExperiences(experiences) {
       habitGrid.innerHTML = "";
 
@@ -1201,7 +1327,9 @@
       }
 
       experiences.forEach((experience) => {
+        const progress = clampProgress(experience.progress);
         const card = document.createElement("article");
+
         card.className = "habit-card";
 
         card.innerHTML = `
@@ -1214,17 +1342,19 @@
           </div>
 
           <div class="habit-meta">
-            <span class="habit-pill">${escapeHTML(experience.label)}</span>
-            <span class="habit-pill">${escapeHTML(experience.progressLabel)}</span>
+            ${buildProgressMeta(experience)}
           </div>
 
           <div class="progress-line" aria-hidden="true">
-            <div class="progress-fill" style="--progress:${Number(experience.progress || 0)}%;"></div>
+            <div class="progress-fill" style="--progress:${progress}%;"></div>
           </div>
 
-          <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
-            Continuar
-          </a>
+          <div class="habit-footer">
+            <span class="habit-progress-text">${progress}%</span>
+            <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
+              ${progress > 0 ? "Continuar" : "Comenzar"}
+            </a>
+          </div>
         `;
 
         habitGrid.appendChild(card);
@@ -1270,9 +1400,16 @@
           return;
         }
 
-        const activeExperiences = ACTIVE_EXPERIENCES.filter((experience) =>
-          hasAccess(experience, data)
-        );
+        const activeExperiences = ACTIVE_EXPERIENCES
+          .filter((experience) => hasAccess(experience, data))
+          .map((experience) => {
+            const progressInfo = getExperienceProgress(experience, user.id);
+
+            return {
+              ...experience,
+              ...progressInfo
+            };
+          });
 
         renderActiveExperiences(activeExperiences);
       } catch (error) {
