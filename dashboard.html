@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Mi Experiencia con Dios es el espacio premium de Hábitos con Dios para acceder a experiencias digitales, colecciones, Apps, ebooks y bonos diseñados para cultivar fe, oración, propósito y conexión espiritual."
+    content="Mi Experiencia con Dios es el espacio premium de Hábitos con Dios para acceder a experiencias digitales, colecciones, apps, ebooks y bonos diseñados para cultivar fe, oración, propósito y conexión espiritual."
   />
 
   <meta name="theme-color" content="#3F4A35" />
@@ -71,8 +71,12 @@
     }
 
     img {
-      max-width: 100%;
       display: block;
+      max-width: 100%;
+    }
+
+    .is-hidden {
+      display: none !important;
     }
 
     .page-shell {
@@ -711,10 +715,6 @@
       color: var(--gold);
     }
 
-    .is-hidden {
-      display: none !important;
-    }
-
     @media (max-width: 1040px) {
       .hero-grid,
       .library-cta {
@@ -723,10 +723,6 @@
 
       .collections-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .hero-stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
@@ -967,6 +963,7 @@
       <div class="collections-grid">
         <article class="collection-card">
           <div class="collection-cover">21 Días</div>
+
           <div class="collection-body">
             <span class="collection-badge">Mujeres</span>
             <h3>21 Días Más Cerca de Dios</h3>
@@ -982,6 +979,7 @@
 
         <article class="collection-card">
           <div class="collection-cover">Familias</div>
+
           <div class="collection-body">
             <span class="collection-badge">Familia</span>
             <h3>Pequeños Momentos con Dios</h3>
@@ -997,6 +995,7 @@
 
         <article class="collection-card">
           <div class="collection-cover">Palabras</div>
+
           <div class="collection-body">
             <span class="collection-badge">Jóvenes</span>
             <h3>Cuando las Palabras Duelen</h3>
@@ -1012,6 +1011,7 @@
 
         <article class="collection-card">
           <div class="collection-cover">Hogar</div>
+
           <div class="collection-body">
             <span class="collection-badge">Hombres</span>
             <h3>El Hombre que Edifica su Hogar</h3>
@@ -1171,6 +1171,8 @@
     const emptyHabit = document.getElementById("emptyHabit");
 
     function toggleMobileMenu() {
+      if (!mobileButton || !mobileNav) return;
+
       const isOpen = mobileNav.classList.toggle("open");
 
       mobileButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
@@ -1214,9 +1216,11 @@
       return entitlements.some((item) => {
         const permission = String(item.permission_key || "");
         const sku = String(item.source_sku || "");
-        const isActive = item.active === true;
+        const active = item.active === true;
 
-        if (!isActive) return false;
+        if (!active) {
+          return false;
+        }
 
         return (
           experience.permissionKeys.includes(permission) ||
@@ -1310,7 +1314,9 @@
         }
 
         if (experience.progress < 100 && experience.nextDay) {
-          items.push(`<span class="habit-pill">Próximo día: ${escapeHTML(String(experience.nextDay))}</span>`);
+          items.push(
+            `<span class="habit-pill">Próximo día: ${escapeHTML(String(experience.nextDay))}</span>`
+          );
         }
       }
 
