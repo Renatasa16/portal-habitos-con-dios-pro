@@ -1259,8 +1259,15 @@
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+
     const REQUIRED_PERMISSION_KEY = "access_21dias";
     const REQUIRED_SOURCE_SKU = "HCD_21DIAS_BUNDLE";
+
+    const PROGRESS_SNAPSHOT_KEYS = [
+      "hcd_21dias_progress_snapshot",
+      "hcd_mi_tiempo_con_dios_progress_snapshot",
+      "hcd_mujeres_21dias_progress_snapshot"
+    ];
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -1554,6 +1561,7 @@
     function saveState() {
       localStorage.setItem(storageKey, JSON.stringify(state));
       localStorage.setItem(storageKey + "_currentDay", String(currentDay));
+      saveProgressSnapshot();
     }
 
     function showToast(message) {
@@ -1597,12 +1605,64 @@
       return streak;
     }
 
+    function getNextRecommendedDay() {
+      for (let day = 1; day <= 21; day++) {
+        if (!state[day]?.completed) {
+          return day;
+        }
+      }
+
+      return 21;
+    }
+
     function getLevel(completed) {
       if (completed >= 21) return { icon: "🏆", name: "Discípulo Constante" };
       if (completed >= 16) return { icon: "✨", name: "Transformación" };
       if (completed >= 11) return { icon: "🌳", name: "Raíces Firmes" };
       if (completed >= 6) return { icon: "🌿", name: "Crecimiento" };
       return { icon: "🌱", name: "Semilla" };
+    }
+
+    function saveProgressSnapshot() {
+      if (!currentUser) return;
+
+      const completed = getCompletedCount();
+      const total = 21;
+      const percentage = Math.round((completed / total) * 100);
+      const streak = getStreakCount();
+      const favorites = getFavoriteCount();
+      const prayers = getPrayerCount();
+      const gratitudes = getGratitudeCount();
+      const level = getLevel(completed);
+      const nextDay = getNextRecommendedDay();
+
+      const snapshot = {
+        slug: "21dias",
+        title: "21 Días Más Cerca de Dios",
+        appTitle: "Mi Tiempo con Dios",
+        completed,
+        total,
+        percentage,
+        streak,
+        favorites,
+        prayers,
+        gratitudes,
+        nextDay,
+        level: level.name,
+        updatedAt: new Date().toISOString()
+      };
+
+      PROGRESS_SNAPSHOT_KEYS.forEach((baseKey) => {
+        localStorage.setItem(
+          `${baseKey}_${currentUser.id}`,
+          JSON.stringify(snapshot)
+        );
+
+        localStorage.setItem(
+          `${baseKey}_local`,
+          JSON.stringify(snapshot)
+        );
+      });
     }
 
     function getBadges(completed, streak, favorites, prayers, gratitudes) {
@@ -1659,6 +1719,7 @@
       streakDays.textContent = streak;
       progressBar.style.width = percentage + "%";
       progressPercent.textContent = percentage + "%";
+
       progressCircle.style.background =
         `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.14) ${degrees}deg)`;
 
@@ -1669,7 +1730,10 @@
 
       renderAchievements(completed, streak);
       renderBadges(completed, streak, favorites, prayers, gratitudes);
+
       celebrationPanel.classList.toggle("hidden", completed < 21);
+
+      saveProgressSnapshot();
     }
 
     function renderDayGrid() {
@@ -1691,7 +1755,10 @@
           currentDay = item.day;
           saveState();
           renderApp();
-          document.getElementById("hoy").scrollIntoView({ behavior: "smooth", block: "start" });
+          document.getElementById("hoy").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
         });
 
         dayGrid.appendChild(button);
@@ -1780,13 +1847,28 @@
           .from("entitlements")
           .select("id,email,permission_key,source_sku,active")
           .eq("email", normalizedEmail)
-          .eq("permission_key", REQUIRED_PERMISSION_KEY)
-          .eq("source_sku", REQUIRED_SOURCE_SKU)
           .eq("active", true)
-          .limit(1);
+          .limit(50);
 
-        if (entitlementError || !data || data.length === 0) {
+        if (entitlementError || !data) {
           if (entitlementError) console.error("Error consultando entitlements:", entitlementError);
+          loadingScreen.classList.add("hidden");
+          lockedScreen.classList.remove("hidden");
+          return;
+        }
+
+        const hasValidAccess = data.some((item) => {
+          const permission = String(item.permission_key || "");
+          const sku = String(item.source_sku || "");
+
+          return (
+            (permission === REQUIRED_PERMISSION_KEY && sku === REQUIRED_SOURCE_SKU) ||
+            permission === "membership_all_access" ||
+            sku === "HCD_ALL_ACCESS"
+          );
+        });
+
+        if (!hasValidAccess) {
           loadingScreen.classList.add("hidden");
           lockedScreen.classList.remove("hidden");
           return;
@@ -1800,6 +1882,7 @@
         loadState();
         renderPersonalHeader(friendlyName);
         renderApp();
+        saveProgressSnapshot();
 
         loadingScreen.classList.add("hidden");
         appShell.classList.remove("hidden");
@@ -1841,8 +1924,10 @@
       completeDayButton.addEventListener("click", () => {
         syncCurrentEntryFromFields();
         state[currentDay].completed = true;
+
         saveState();
         renderApp();
+
         showToast("🎉 Día completado");
       });
 
@@ -1854,7 +1939,11 @@
           currentDay++;
           saveState();
           renderApp();
-          document.getElementById("hoy").scrollIntoView({ behavior: "smooth", block: "start" });
+
+          document.getElementById("hoy").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
         } else {
           showToast("Llegaste al día 21");
         }
