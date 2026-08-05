@@ -11,6 +11,7 @@
     content="APP Familiar premium Momentos con Dios en Familia, complementaria a Pequeños Momentos con Dios."
   />
 
+  <meta name="theme-color" content="#3F4A35" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -30,12 +31,10 @@
       --soft-blue: #EAF2F5;
       --soft-pink: #F8E7E2;
       --danger: #9F3A38;
-      --success: #3F6B3C;
       --shadow: 0 24px 70px rgba(63, 74, 53, 0.14);
       --shadow-soft: 0 14px 36px rgba(63, 74, 53, 0.10);
       --radius-xl: 34px;
       --radius-lg: 26px;
-      --radius-md: 18px;
       --max: 1180px;
     }
 
@@ -80,6 +79,10 @@
       font-family: inherit;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .app-shell {
       max-width: var(--max);
       margin: 0 auto;
@@ -111,6 +114,7 @@
       color: var(--gold);
       box-shadow: var(--shadow-soft);
       font-size: 23px;
+      font-weight: 950;
       flex: 0 0 auto;
     }
 
@@ -152,7 +156,6 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       white-space: nowrap;
     }
@@ -164,6 +167,7 @@
     .btn-danger:hover,
     .btn-kid:hover {
       transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
     }
 
     .pill {
@@ -173,6 +177,9 @@
       font-size: 12px;
       box-shadow: 0 10px 24px rgba(63, 74, 53, 0.07);
       cursor: default;
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .btn {
@@ -235,6 +242,7 @@
       right: -105px;
       border-radius: 50%;
       background: rgba(201, 166, 90, 0.17);
+      pointer-events: none;
     }
 
     .hero::after {
@@ -246,6 +254,7 @@
       left: -80px;
       border-radius: 50%;
       background: rgba(85, 101, 68, 0.10);
+      pointer-events: none;
     }
 
     .floating-shapes {
@@ -303,9 +312,9 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1.25fr 0.85fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 28px;
-      align-items: center;
+      align-items: stretch;
     }
 
     .eyebrow {
@@ -363,7 +372,6 @@
       align-items: flex-start;
       justify-content: center;
       gap: 6px;
-      cursor: pointer;
       box-shadow: 0 12px 28px rgba(63, 74, 53, 0.08);
       font-weight: 900;
       text-align: left;
@@ -395,45 +403,176 @@
       color: rgba(255, 255, 255, 0.82);
     }
 
-    .family-card {
-      background: linear-gradient(145deg, var(--green), var(--green-dark));
-      border-radius: 28px;
-      padding: 24px;
+    .journey-card {
+      background:
+        radial-gradient(circle at top right, rgba(201, 166, 90, 0.25), transparent 36%),
+        linear-gradient(145deg, var(--green), var(--green-dark));
+      border-radius: 30px;
+      padding: 26px;
       color: white;
-      box-shadow: 0 22px 48px rgba(63, 74, 53, 0.26);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 54px rgba(63, 74, 53, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      gap: 18px;
+      align-content: center;
     }
 
-    .family-card small {
-      display: block;
-      color: rgba(255, 255, 255, 0.72);
+    .journey-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -76px;
+      bottom: -86px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      pointer-events: none;
+    }
+
+    .journey-kicker {
+      display: inline-flex;
+      width: fit-content;
+      color: var(--gold);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 950;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
 
-    .family-card strong {
-      display: block;
+    .journey-title {
+      position: relative;
+      z-index: 1;
+    }
+
+    .journey-title h2 {
+      color: white;
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .progress-circle-wrap {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 18px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-circle {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold) 0deg, rgba(255, 255, 255, 0.15) 0deg);
+      display: grid;
+      place-items: center;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-circle::before {
+      content: "";
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--green);
+      position: absolute;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-circle strong {
+      position: relative;
+      z-index: 1;
       color: var(--gold);
-      font-size: 42px;
+      font-size: 28px;
       line-height: 1;
-      margin-bottom: 8px;
+      font-weight: 950;
     }
 
-    .family-card span {
-      display: block;
-      color: rgba(255, 255, 255, 0.82);
+    .progress-circle span {
+      position: absolute;
+      z-index: 1;
+      color: #EFE7D8;
+      font-size: 11px;
+      font-weight: 900;
+      margin-top: 34px;
+    }
+
+    .journey-copy {
+      display: grid;
+      gap: 10px;
+    }
+
+    .journey-copy strong {
+      color: var(--gold);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .journey-copy span {
+      color: #EFE7D8;
+      line-height: 1.5;
       font-size: 14px;
-      line-height: 1.55;
+      font-weight: 750;
+    }
+
+    .progress-bar-wrap {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), #F2D487);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .journey-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .journey-metric {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .journey-metric small {
+      display: block;
+      color: #EFE7D8;
+      font-size: 11px;
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    .journey-metric strong {
+      color: var(--gold);
+      font-size: 21px;
+      line-height: 1;
     }
 
     .sticker-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 18px;
+      position: relative;
+      z-index: 1;
     }
 
     .sticker {
@@ -541,7 +680,6 @@
       border-radius: 18px;
       padding: 13px 12px;
       text-align: left;
-      cursor: pointer;
       font-weight: 850;
       display: flex;
       align-items: center;
@@ -816,7 +954,6 @@
       background: white;
       color: var(--green);
       font-weight: 950;
-      cursor: pointer;
       transition: transform 0.18s ease, background 0.18s ease;
     }
 
@@ -955,6 +1092,10 @@
       .hero-actions {
         grid-template-columns: 1fr;
       }
+
+      .progress-circle-wrap {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 640px) {
@@ -995,7 +1136,11 @@
       .hero-actions a,
       .hero-actions button,
       .action-row button,
-      .action-row a {
+      .action-row a,
+      .btn,
+      .btn-soft,
+      .btn-gold,
+      .btn-danger {
         width: 100%;
       }
 
@@ -1003,12 +1148,31 @@
       .filter-grid,
       .moment-grid,
       .kid-grid,
-      .cards-grid {
+      .cards-grid,
+      .journey-metrics {
         grid-template-columns: 1fr;
       }
 
       .calendar-grid {
         grid-template-columns: repeat(4, 1fr);
+      }
+
+      .journey-card {
+        padding: 22px;
+        border-radius: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
       }
     }
   </style>
@@ -1102,10 +1266,44 @@
             </div>
           </div>
 
-          <aside class="family-card">
-            <small>Progreso familiar</small>
-            <strong id="completedCount">0/14</strong>
-            <span id="progressMessage">Cada pequeño momento cuenta.</span>
+          <aside class="journey-card" aria-label="Tu recorrido familiar">
+            <span class="journey-kicker">Tu recorrido</span>
+
+            <div class="journey-title">
+              <h2>Camino familiar</h2>
+            </div>
+
+            <div class="progress-circle-wrap">
+              <div class="progress-circle" id="progressCircle">
+                <strong id="progressPercent">0%</strong>
+                <span>avance</span>
+              </div>
+
+              <div class="journey-copy">
+                <strong id="completedCount">0/14</strong>
+                <span id="progressMessage">Cada pequeño momento cuenta.</span>
+                <span id="nextStepMessage">Tu próximo paso: Día 1</span>
+              </div>
+            </div>
+
+            <div class="progress-bar-wrap" aria-label="Progreso de 14 momentos">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="journey-metrics">
+              <div class="journey-metric">
+                <small>Estado</small>
+                <strong id="journeyLevel">Inicio</strong>
+              </div>
+              <div class="journey-metric">
+                <small>Favoritos</small>
+                <strong id="journeyFavorites">0</strong>
+              </div>
+              <div class="journey-metric">
+                <small>Recuerdos</small>
+                <strong id="journeyMemories">0</strong>
+              </div>
+            </div>
 
             <div class="sticker-row">
               <span class="sticker">🌿 Fe simple</span>
@@ -1270,9 +1468,7 @@
 
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+    const SUPABASE_ANON_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
     const REQUIRED_PERMISSION = "access_familias";
     const REQUIRED_SKU = "HCD_FAMILIAS_BUNDLE";
@@ -1284,6 +1480,7 @@
     const STORAGE_MEMORIES = `${STORAGE_PREFIX}_memories`;
     const STORAGE_SELECTED_DAY = `${STORAGE_PREFIX}_selected_day`;
     const STORAGE_KID_MODE = `${STORAGE_PREFIX}_kid_mode`;
+    const STORAGE_PROGRESS_SNAPSHOT = `${STORAGE_PREFIX}_progress_snapshot`;
 
     const momentos = [
       {
@@ -1557,6 +1754,13 @@
       appContent: document.getElementById("appContent"),
       completedCount: document.getElementById("completedCount"),
       progressMessage: document.getElementById("progressMessage"),
+      nextStepMessage: document.getElementById("nextStepMessage"),
+      progressCircle: document.getElementById("progressCircle"),
+      progressPercent: document.getElementById("progressPercent"),
+      progressBar: document.getElementById("progressBar"),
+      journeyLevel: document.getElementById("journeyLevel"),
+      journeyFavorites: document.getElementById("journeyFavorites"),
+      journeyMemories: document.getElementById("journeyMemories"),
       metricCompleted: document.getElementById("metricCompleted"),
       metricFavorites: document.getElementById("metricFavorites"),
       metricMemories: document.getElementById("metricMemories"),
@@ -1615,9 +1819,8 @@
 
         loadLocalState();
         bindEvents();
-        renderAll();
         applyKidMode();
-
+        renderAll();
         showApp();
       } catch (error) {
         console.error(error);
@@ -1626,9 +1829,12 @@
     }
 
     async function validateAccess() {
+      const normalizedEmail = String(currentUser?.email || "").trim().toLowerCase();
+
       const { data, error } = await supabaseClient
         .from("entitlements")
-        .select("permission_key, source_sku, active")
+        .select("email, permission_key, source_sku, active")
+        .eq("email", normalizedEmail)
         .eq("active", true);
 
       if (error) {
@@ -1636,11 +1842,18 @@
       }
 
       return (data || []).some((item) => {
+        const permission = String(item.permission_key || "");
+        const sku = String(item.source_sku || "");
+
         return (
-          item.permission_key === REQUIRED_PERMISSION &&
-          item.source_sku === REQUIRED_SKU &&
-          item.active === true
-        ) || item.permission_key === "membership_all_access";
+          (
+            permission === REQUIRED_PERMISSION &&
+            sku === REQUIRED_SKU &&
+            item.active === true
+          ) ||
+          permission === "membership_all_access" ||
+          sku === "HCD_ALL_ACCESS"
+        );
       });
     }
 
@@ -1980,19 +2193,77 @@
     }
 
     function renderStats() {
-      els.completedCount.textContent = `${completed.length}/14`;
-      els.metricCompleted.textContent = completed.length;
-      els.metricFavorites.textContent = favorites.length;
-      els.metricMemories.textContent = memories.length;
+      completed = uniqueNumbers(completed);
+      favorites = uniqueNumbers(favorites);
 
+      const total = momentos.length;
+      const completedTotal = completed.length;
+      const favoriteTotal = favorites.length;
+      const memoryTotal = memories.length;
+      const percentage = Math.round((completedTotal / total) * 100);
+      const degrees = Math.round((percentage / 100) * 360);
       const reward = getReward();
+      const level = getJourneyLevel(percentage);
+      const nextDay = getNextRecommendedDay();
+
+      els.completedCount.textContent = `${completedTotal}/${total}`;
+      els.metricCompleted.textContent = completedTotal;
+      els.metricFavorites.textContent = favoriteTotal;
+      els.metricMemories.textContent = memoryTotal;
       els.metricReward.textContent = reward.icon;
 
-      const percentage = Math.round((completed.length / momentos.length) * 100);
+      els.progressPercent.textContent = `${percentage}%`;
+      els.progressBar.style.width = `${percentage}%`;
+      els.progressCircle.style.background =
+        `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.15) ${degrees}deg)`;
 
       els.progressMessage.textContent = percentage > 0
         ? `${percentage}% del camino familiar completado.`
         : "Cada pequeño momento cuenta.";
+
+      els.nextStepMessage.textContent = percentage >= 100
+        ? "Camino completado. Pueden volver a sus momentos favoritos."
+        : `Tu próximo paso: Día ${nextDay}`;
+
+      els.journeyLevel.textContent = level.name;
+      els.journeyFavorites.textContent = favoriteTotal;
+      els.journeyMemories.textContent = memoryTotal;
+
+      saveProgressSnapshot({
+        slug: "familias",
+        title: "Pequeños Momentos con Dios",
+        appTitle: "Momentos con Dios en Familia",
+        completed: completedTotal,
+        total,
+        percentage,
+        favorites: favoriteTotal,
+        memories: memoryTotal,
+        nextDay,
+        level: level.name,
+        reward: reward.icon,
+        updatedAt: new Date().toISOString()
+      });
+    }
+
+    function getJourneyLevel(percentage) {
+      if (percentage >= 100) return { name: "Completado" };
+      if (percentage >= 76) return { name: "Muy cerca" };
+      if (percentage >= 51) return { name: "Creciendo" };
+      if (percentage >= 26) return { name: "Avanzando" };
+      if (percentage > 0) return { name: "Comenzando" };
+      return { name: "Inicio" };
+    }
+
+    function getNextRecommendedDay() {
+      const completedSet = new Set(uniqueNumbers(completed));
+
+      for (let day = 1; day <= momentos.length; day++) {
+        if (!completedSet.has(day)) {
+          return day;
+        }
+      }
+
+      return momentos.length;
     }
 
     function getReward() {
@@ -2092,9 +2363,17 @@
     }
 
     function saveLocalState() {
-      localStorage.setItem(STORAGE_COMPLETED, JSON.stringify(uniqueNumbers(completed)));
-      localStorage.setItem(STORAGE_FAVORITES, JSON.stringify(uniqueNumbers(favorites)));
+      completed = uniqueNumbers(completed);
+      favorites = uniqueNumbers(favorites);
+
+      localStorage.setItem(STORAGE_COMPLETED, JSON.stringify(completed));
+      localStorage.setItem(STORAGE_FAVORITES, JSON.stringify(favorites));
       localStorage.setItem(STORAGE_MEMORIES, JSON.stringify(memories));
+      localStorage.setItem(STORAGE_SELECTED_DAY, String(selectedDay));
+    }
+
+    function saveProgressSnapshot(snapshot) {
+      localStorage.setItem(STORAGE_PROGRESS_SNAPSHOT, JSON.stringify(snapshot));
     }
 
     function readStorageArray(key) {
@@ -2107,7 +2386,9 @@
     }
 
     function uniqueNumbers(values) {
-      return [...new Set(values.map(Number))].filter(Boolean).sort((a, b) => a - b);
+      return [...new Set(values.map(Number))]
+        .filter(Boolean)
+        .sort((a, b) => a - b);
     }
 
     function applyKidMode() {
@@ -2118,8 +2399,6 @@
           ? "<span>🌿</span> Modo familiar <small>Ver guía completa para adultos.</small>"
           : "<span>🎨</span> Activar modo niño <small>Tarjetas simples y visuales para niños.</small>";
       }
-
-      renderStats();
     }
 
     function showLoading() {
