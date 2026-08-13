@@ -12,7 +12,7 @@ const MODULE_FILES = {
   disclaimers: "disclaimers.json",
   escalation: "escalation.json",
   faq: "faq.json",
-  knowledgeBase: "knowledge-base.json",
+  knowledgeBase: "knowledge-base.json"
 };
 
 let cachedKnowledge = null;
@@ -51,7 +51,7 @@ function loadKnowledgeBase() {
     disclaimers: readJsonFile(MODULE_FILES.disclaimers),
     escalation: readJsonFile(MODULE_FILES.escalation),
     faq: readJsonFile(MODULE_FILES.faq),
-    knowledgeBase: readJsonFile(MODULE_FILES.knowledgeBase),
+    knowledgeBase: readJsonFile(MODULE_FILES.knowledgeBase)
   };
 
   cachedKnowledge = knowledge;
@@ -70,7 +70,7 @@ function getKnowledgeSummary() {
       knowledge.knowledgeBase?.knowledge_base?.supported_language || "es",
 
     version:
-      knowledge.knowledgeBase?.knowledge_base?.version || "1.0.0",
+      knowledge.knowledgeBase?.knowledge_base?.version || "1.1.0",
 
     modules:
       knowledge.knowledgeBase?.knowledge_base?.modules || {},
@@ -82,9 +82,10 @@ function getKnowledgeSummary() {
       knowledge.knowledgeBase?.knowledge_base?.disclaimer_strategy || {},
 
     escalationStrategy:
-      knowledge.knowledgeBase?.knowledge_base?.escalation_strategy || {},
+      knowledge.knowledgeBase?.knowledge_base?.escalation_strategy || {}
   };
 }
+
 function getRelevantModulesByRoute(aiRoute) {
   const defaultModules = [
     "brand",
@@ -136,7 +137,7 @@ function buildKnowledgeContext(aiRoute) {
     metadata: {
       source: "Hábitos con Dios Knowledge Base",
       version:
-        knowledge.knowledgeBase?.knowledge_base?.version || "1.0.0",
+        knowledge.knowledgeBase?.knowledge_base?.version || "1.1.0",
       aiRoute,
       modulesUsed: modulesToUse
     },
