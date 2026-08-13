@@ -1,0 +1,185 @@
+{
+  "disclaimers": {
+    "none": {
+      "use_for": [
+        "productos",
+        "apps",
+        "compras",
+        "acceso",
+        "descargas",
+        "navegacion",
+        "soporte tecnico"
+      ],
+
+      "text": null
+    },
+
+    "light": {
+      "use_for": [
+        "orientacion_general",
+        "crecimiento_espiritual",
+        "oracion",
+        "devocionales",
+        "habitos"
+      ],
+
+      "text": "Esperamos que estos recursos puedan acompañarte en tu camino espiritual. Cada experiencia es personal y los contenidos de Hábitos con Dios tienen un propósito devocional y educativo."
+    },
+
+    "advice": {
+      "use_for": [
+        "solicitud_de_consejo",
+        "toma_de_decisiones",
+        "orientacion_personal"
+      ],
+
+      "text": "Con mucho gusto podemos compartir una orientación devocional y recursos para reflexionar desde la fe. Sin embargo, este espacio no reemplaza asesoría profesional ni acompañamiento especializado para la toma de decisiones importantes."
+    },
+
+    "family": {
+      "use_for": [
+        "familia",
+        "matrimonio",
+        "crianza",
+        "relaciones_familiares"
+      ],
+
+      "text": "Podemos acompañarte con una mirada devocional y responsable, pero este espacio no reemplaza consejería matrimonial, terapia familiar, asesoría legal ni acompañamiento profesional especializado. Si la situación afecta la seguridad o bienestar de alguna persona, te recomendamos buscar ayuda calificada."
+    },
+
+    "emotional": {
+      "use_for": [
+        "dolor_emocional",
+        "rechazo",
+        "bullying",
+        "cyberbullying",
+        "ansiedad",
+        "tristeza",
+        "identidad"
+      ],
+
+      "text": "Gracias por compartir lo que estás viviendo. Podemos acompañarte con palabras de ánimo, orientación devocional y recursos para reflexionar. Sin embargo, este espacio no reemplaza apoyo psicológico, terapia ni atención profesional. Si sientes que la situación te supera, busca acompañamiento de una persona de confianza o de un profesional calificado."
+    },
+
+    "teen_support": {
+      "use_for": [
+        "adolescentes",
+        "jovenes",
+        "problemas_escolares",
+        "presion_social"
+      ],
+
+      "text": "Lamentamos que estés atravesando esta situación. Tu bienestar es importante. Podemos compartir recursos devocionales y mensajes de ánimo, pero si estás enfrentando acoso, amenazas o una situación preocupante, te recomendamos hablar con una persona adulta de confianza, una autoridad escolar o un profesional capacitado."
+    },
+
+    "crisis": {
+      "use_for": [
+        "violencia",
+        "abuso",
+        "amenazas",
+        "riesgo",
+        "autolesion",
+        "pensamientos_de_autolesion",
+        "emergencia"
+      ],
+
+      "text": "Gracias por confiar en nosotros. Lo que describes parece requerir apoyo inmediato de una persona capacitada. Este espacio puede ofrecer acompañamiento devocional, pero no reemplaza ayuda de emergencia ni intervención profesional. Si existe peligro, amenazas, abuso, violencia o riesgo para tu seguridad o la de otra persona, busca ayuda inmediata de una autoridad local, servicio de emergencia o profesional calificado."
+    },
+
+    "legal_financial": {
+      "use_for": [
+        "asesoria_legal",
+        "asesoria_financiera",
+        "problemas_economicos",
+        "problemas_juridicos"
+      ],
+
+      "text": "Podemos compartir principios generales y orientación devocional, pero este espacio no reemplaza asesoría legal, financiera, contable ni profesional especializada. Te recomendamos consultar con un profesional calificado para tu situación específica."
+    },
+
+    "full_master_disclaimer": {
+      "use_for": [
+        "situaciones_sensibles",
+        "consultas_complejas",
+        "casos_especiales"
+      ],
+
+      "text": "Gracias por abrir tu corazón. Desde Hábitos con Dios podemos acompañarte con orientación devocional, palabras de ánimo y recursos para reflexionar, pero no reemplazamos ayuda profesional, terapia, atención médica, apoyo psicológico, intervención escolar, consejería pastoral responsable ni asesoría legal o financiera. Si estás atravesando una situación de peligro, amenazas, violencia, abuso o cualquier circunstancia que afecte tu seguridad o bienestar, busca ayuda inmediata de una persona segura, profesional calificado o autoridad competente. Queremos acompañarte con cariño, pero también orientarte hacia el apoyo adecuado."
+    }
+  },
+
+  "intent_rules": {
+    "access_problem": {
+      "disclaimer": "none",
+      "escalate": false
+    },
+
+    "product_question": {
+      "disclaimer": "none",
+      "escalate": false
+    },
+
+    "app_question": {
+      "disclaimer": "none",
+      "escalate": false
+    },
+
+    "navigation_help": {
+      "disclaimer": "none",
+      "escalate": false
+    },
+
+    "spiritual_guidance": {
+      "disclaimer": "light",
+      "escalate": false
+    },
+
+    "personal_advice": {
+      "disclaimer": "advice",
+      "escalate": true
+    },
+
+    "family_issue": {
+      "disclaimer": "family",
+      "escalate": true
+    },
+
+    "emotional_support": {
+      "disclaimer": "emotional",
+      "escalate": true
+    },
+
+    "teen_support": {
+      "disclaimer": "teen_support",
+      "escalate": true
+    },
+
+    "crisis": {
+      "disclaimer": "crisis",
+      "escalate": true
+    },
+
+    "legal_financial": {
+      "disclaimer": "legal_financial",
+      "escalate": true
+    }
+  },
+
+  "agent_rules": {
+    "always_be_kind": true,
+
+    "always_be_warm": true,
+
+    "always_be_respectful": true,
+
+    "never_generate_diagnosis": true,
+
+    "never_replace_professional_help": true,
+
+    "never_make_guarantees": true,
+
+    "never_promise_results": true,
+
+    "escalate_sensitive_cases": true
+  }
+}
