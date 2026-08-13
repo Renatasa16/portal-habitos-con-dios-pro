@@ -1,0 +1,240 @@
+{
+  "escalation": {
+    "philosophy": {
+      "golden_rule": "Intentar ayudar primero mediante rutas guiadas, validaciones y respuestas de la base de conocimiento antes de escalar a soporte humano.",
+
+      "objective": "Resolver la mayor cantidad posible de consultas comunes sin intervención humana, manteniendo siempre una experiencia cálida, responsable y segura."
+    },
+
+    "levels": [
+      {
+        "level": 1,
+        "name": "Auto Resolution",
+
+        "description": "La IA puede responder completamente utilizando la Base de Conocimiento.",
+
+        "requires_human": false
+      },
+
+      {
+        "level": 2,
+        "name": "Assisted Resolution",
+
+        "description": "La IA intenta resolver y solicita información adicional antes de derivar.",
+
+        "requires_human": false
+      },
+
+      {
+        "level": 3,
+        "name": "Human Review",
+
+        "description": "El caso requiere revisión humana.",
+
+        "requires_human": true
+      }
+    ],
+
+    "auto_resolve": [
+      {
+        "intent": "product_information",
+        "action": "answer"
+      },
+
+      {
+        "intent": "app_information",
+        "action": "answer"
+      },
+
+      {
+        "intent": "navigation_help",
+        "action": "answer"
+      },
+
+      {
+        "intent": "purchase_guidance",
+        "action": "answer"
+      },
+
+      {
+        "intent": "download_help",
+        "action": "answer"
+      },
+
+      {
+        "intent": "magic_link_help",
+        "action": "answer"
+      },
+
+      {
+        "intent": "login_help",
+        "action": "answer"
+      },
+
+      {
+        "intent": "availability_question",
+        "action": "answer"
+      }
+    ],
+
+    "needs_additional_validation": [
+      {
+        "intent": "cannot_login",
+
+        "required_steps": [
+          "validar mismo correo de compra",
+          "validar recepcion del correo",
+          "validar apertura del enlace",
+          "validar si el enlace expiro"
+        ]
+      },
+
+      {
+        "intent": "cannot_find_collection",
+
+        "required_steps": [
+          "validar mismo correo",
+          "validar login exitoso",
+          "validar acceso a Mis Colecciones"
+        ]
+      }
+    ],
+
+    "human_review": [
+      {
+        "intent": "purchase_problem",
+
+        "reason": "Requiere validación de compra."
+      },
+
+      {
+        "intent": "payment_problem",
+
+        "reason": "Problema relacionado con cobros o pagos."
+      },
+
+      {
+        "intent": "refund_request",
+
+        "reason": "Solicitud de reembolso."
+      },
+
+      {
+        "intent": "email_change_request",
+
+        "reason": "Cambio de correo electrónico asociado a la compra."
+      },
+
+      {
+        "intent": "manual_access_review",
+
+        "reason": "Revisión manual de permisos."
+      },
+
+      {
+        "intent": "missing_entitlements",
+
+        "reason": "Posible problema de permisos o sincronización."
+      }
+    ],
+
+    "sensitive_cases": [
+      {
+        "intent": "family_issue",
+
+        "requires_disclaimer": true,
+
+        "disclaimer": "family",
+
+        "requires_escalation": true
+      },
+
+      {
+        "intent": "emotional_support",
+
+        "requires_disclaimer": true,
+
+        "disclaimer": "emotional",
+
+        "requires_escalation": true
+      },
+
+      {
+        "intent": "teen_support",
+
+        "requires_disclaimer": true,
+
+        "disclaimer": "teen_support",
+
+        "requires_escalation": true
+      },
+
+      {
+        "intent": "crisis",
+
+        "requires_disclaimer": true,
+
+        "disclaimer": "crisis",
+
+        "requires_escalation": true
+      },
+
+      {
+        "intent": "legal_financial",
+
+        "requires_disclaimer": true,
+
+        "disclaimer": "legal_financial",
+
+        "requires_escalation": true
+      }
+    ],
+
+    "required_information_before_escalation": {
+      "access_problem": [
+        "correo utilizado durante la compra",
+        "nombre de la colección",
+        "fecha aproximada de compra"
+      ],
+
+      "payment_problem": [
+        "correo utilizado durante la compra",
+        "nombre de la colección",
+        "fecha aproximada de compra",
+        "detalle del problema"
+      ],
+
+      "manual_review": [
+        "correo utilizado durante la compra",
+        "nombre de la colección",
+        "descripcion del problema"
+      ]
+    },
+
+    "support_messages": {
+      "access_review": "Gracias por validar los pasos anteriores. Para revisar tu caso, por favor comparte el correo utilizado durante la compra, el nombre de la colección adquirida y la fecha aproximada de compra.",
+
+      "payment_review": "Gracias por escribirnos. Para poder revisar tu consulta necesitamos algunos datos adicionales sobre la compra realizada.",
+
+      "sensitive_case": "Gracias por compartir lo que estás viviendo. Queremos acompañarte con respeto y cuidado. Además de los recursos disponibles, te recomendamos buscar el apoyo adecuado para tu situación específica."
+    },
+
+    "agent_rules": {
+      "always_try_to_help_first": true,
+
+      "always_show_routes_before_escalation": true,
+
+      "always_validate_purchase_email": true,
+
+      "always_use_disclaimers_when_required": true,
+
+      "never_provide_professional_advice": true,
+
+      "never_make_legal_decisions": true,
+
+      "never_make_medical_decisions": true,
+
+      "never_make_financial_decisions": true
+    }
+  }
+}
