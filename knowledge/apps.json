@@ -1,0 +1,188 @@
+{
+  "apps": [
+    {
+      "id": "mi_tiempo_con_dios",
+      "name": "Mi Tiempo con Dios",
+      "product_id": "21dias",
+      "status": "active",
+
+      "description": "App Premium diseñada para acompañar el desarrollo de hábitos espirituales diarios mediante reflexión, oración, gratitud y seguimiento de progreso.",
+
+      "purpose": "Ayudar al usuario a mantener una relación más cercana y constante con Dios mediante prácticas simples y sostenibles.",
+
+      "target_audience": [
+        "mujeres cristianas",
+        "adultos cristianos",
+        "personas que desean fortalecer sus hábitos espirituales"
+      ],
+
+      "features": [
+        "Devocionales diarios",
+        "Checklist de avance",
+        "Registro de oración",
+        "Diario espiritual",
+        "Gratitud diaria",
+        "Favoritos",
+        "Insignias",
+        "Niveles de progreso"
+      ],
+
+      "what_users_will_find": [
+        "Reflexiones guiadas",
+        "Espacios para registrar aprendizajes",
+        "Motivación diaria",
+        "Seguimiento de crecimiento espiritual",
+        "Herramientas para desarrollar constancia"
+      ],
+
+      "requires_login": true,
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "21 Días Más Cerca de Dios",
+        "Mi Tiempo con Dios"
+      ]
+    },
+
+    {
+      "id": "momentos_con_dios_en_familia",
+      "name": "Momentos con Dios en Familia",
+      "product_id": "familia",
+      "status": "prelaunch",
+
+      "description": "App Premium diseñada para compartir momentos de fe en familia mediante actividades, conversaciones guiadas y experiencias sencillas para niños y adultos.",
+
+      "purpose": "Facilitar experiencias espirituales cotidianas que fortalezcan la conexión familiar y la fe compartida.",
+
+      "target_audience": [
+        "familias",
+        "padres",
+        "madres",
+        "abuelos",
+        "niños"
+      ],
+
+      "features": [
+        "Actividades familiares",
+        "Conversaciones guiadas",
+        "Momentos de gratitud",
+        "Oraciones familiares",
+        "Retos sencillos",
+        "Registro de actividades"
+      ],
+
+      "what_users_will_find": [
+        "Ideas para compartir en familia",
+        "Dinámicas para niños",
+        "Espacios de conversación",
+        "Momentos de gratitud",
+        "Experiencias devocionales familiares"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Pequeños Momentos con Dios",
+        "Momentos con Dios en Familia"
+      ]
+    },
+
+    {
+      "id": "diario_de_paz_digital",
+      "name": "Diario de Paz Digital",
+      "product_id": "palabras_duelen",
+      "status": "prelaunch",
+
+      "description": "App Premium orientada a la reflexión personal, journaling guiado y fortalecimiento de la identidad en Dios.",
+
+      "purpose": "Acompañar procesos de crecimiento personal y construcción de hábitos de paz desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "adolescentes",
+        "jóvenes",
+        "familias"
+      ],
+
+      "features": [
+        "Journaling guiado",
+        "Registro personal",
+        "Reflexiones",
+        "Seguimiento de hábitos",
+        "Espacios para recordar verdades importantes",
+        "Progreso personal"
+      ],
+
+      "what_users_will_find": [
+        "Ejercicios de reflexión",
+        "Registro de pensamientos",
+        "Seguimiento de crecimiento personal",
+        "Recordatorios sobre identidad en Dios",
+        "Prácticas de paz y autocuidado"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "sensitive_content": true,
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Cuando las Palabras Duelen",
+        "Diario de Paz Digital"
+      ]
+    },
+
+    {
+      "id": "mi_hogar_con_proposito",
+      "name": "Mi Hogar con Propósito",
+      "product_id": "hombre_hogar",
+      "status": "prelaunch",
+
+      "description": "App Premium diseñada para acompañar a hombres cristianos en hábitos de oración, discernimiento, crecimiento espiritual y liderazgo familiar responsable.",
+
+      "purpose": "Ayudar a desarrollar hábitos espirituales prácticos que fortalezcan la relación con Dios y el servicio dentro del hogar.",
+
+      "target_audience": [
+        "hombres cristianos",
+        "esposos",
+        "padres",
+        "futuros padres"
+      ],
+
+      "features": [
+        "Devocionales diarios",
+        "Registro de oración",
+        "Herramientas de discernimiento",
+        "Seguimiento de progreso",
+        "Planificación espiritual",
+        "Reflexiones para el hogar"
+      ],
+
+      "what_users_will_find": [
+        "Reflexiones para liderazgo espiritual",
+        "Espacios para oración",
+        "Herramientas de organización",
+        "Seguimiento de hábitos",
+        "Recursos para crecimiento personal"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "El Hombre que Edifica su Hogar",
+        "Mi Hogar con Propósito"
+      ]
+    }
+  ]
+}
