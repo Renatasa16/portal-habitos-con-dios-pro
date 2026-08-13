@@ -2,9 +2,6 @@ const RESEND_API_URL = "https://api.resend.com/emails";
 
 const BRAND_NAME = "Hábitos con Dios";
 const FROM_EMAIL = "soporte@skoolrenovae.store";
-
-// Recomendado: configurar CONTACT_TO_EMAIL en Vercel con tu correo actual.
-// Si todavía no existe, el endpoint devolverá un error de configuración claro.
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL;
 
 const ALLOWED_CATEGORIES = {
@@ -38,7 +35,18 @@ function sanitizeText(value) {
   return value
     .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
     .replace(/<[^>]*>/g, "")
+    .replace(/[{}[\]<>]/g, "")
     .replace(/\s+/g, " ")
+    .trim();
+}
+
+function sanitizeMessage(value) {
+  if (typeof value !== "string") return "";
+
+  return value
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/[{}[\]<>]/g, "")
     .trim();
 }
 
@@ -104,25 +112,21 @@ function buildInternalEmailTemplate({
                     Nueva consulta recibida
                   </h1>
                   <p style="margin:12px 0 0; color:#f8f2e8; font-size:15px; line-height:1.6;">
-                    Una usuaria completó el formulario de contacto de ${BRAND_NAME}.
+                    Una persona completó el formulario de contacto de ${BRAND_NAME}.
                   </p>
                 </td>
               </tr>
 
               <tr>
                 <td style="padding:32px;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td style="padding:0 0 18px;">
-                        <div style="display:inline-block; padding:8px 14px; background:#efe7d8; border-radius:999px; color:#5f4a2b; font-size:13px; font-weight:700;">
-                          ${safeCategory}
-                        </div>
-                        <div style="display:inline-block; margin-left:8px; padding:8px 14px; background:#f4eee3; border-radius:999px; color:#315c4b; font-size:13px; font-weight:700;">
-                          Prioridad: ${safePriority}
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
+                  <div style="margin-bottom:22px;">
+                    <span style="display:inline-block; padding:8px 14px; background:#efe7d8; border-radius:999px; color:#5f4a2b; font-size:13px; font-weight:700;">
+                      ${safeCategory}
+                    </span>
+                    <span style="display:inline-block; margin-left:8px; padding:8px 14px; background:#f4eee3; border-radius:999px; color:#315c4b; font-size:13px; font-weight:700;">
+                      Prioridad: ${safePriority}
+                    </span>
+                  </div>
 
                   <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:separate; border-spacing:0 12px;">
                     <tr>
@@ -171,7 +175,7 @@ function buildInternalEmailTemplate({
               <tr>
                 <td style="padding:22px 32px; background:#f3eee5; border-top:1px solid #eadfce;">
                   <p style="margin:0; color:#7a684f; font-size:13px; line-height:1.6;">
-                    ${BRAND_NAME} · Formulario de consultas y soporte
+                    ${BRAND_NAME} · Centro de Ayuda
                   </p>
                 </td>
               </tr>
@@ -322,7 +326,7 @@ module.exports = async function handler(req, res) {
     const name = sanitizeText(body.name || body.nombre);
     const email = sanitizeText(body.email || body.correo);
     const category = sanitizeText(body.category || body.tipoConsulta);
-    const message = sanitizeText(body.message || body.mensaje);
+    const message = sanitizeMessage(body.message || body.mensaje);
 
     if (!name || name.length < 2) {
       return res.status(400).json({
