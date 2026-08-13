@@ -2,10 +2,10 @@ const GEMINI_API_BASE = [
   "https://generativelanguage.googleapis.com",
   "v1beta",
   "models",
-  "gemini-2.5-flash:generateContent"
+  "gemini-3.7-flash:generateContent"
 ].join("/");
 
-const DEFAULT_MODEL_LABEL = "gemini-2.5-flash";
+const DEFAULT_MODEL_LABEL = "gemini-3.7-flash";
 
 function getGeminiApiKey() {
   const apiKey = process.env.GEMINI_API_KEY;
