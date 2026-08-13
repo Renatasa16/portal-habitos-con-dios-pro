@@ -1,0 +1,230 @@
+{
+  "products": [
+    {
+      "id": "21dias",
+      "name": "21 Días Más Cerca de Dios",
+
+      "availability": {
+        "status": "active",
+        "message": "Disponible a través de Shopify."
+      },
+
+      "commercial_stage": "active",
+
+      "sales_description": "Kit Devocional Premium diseñado para ayudar a las personas a desarrollar una rutina espiritual diaria y fortalecer su relación con Dios mediante oración, reflexión, gratitud y práctica constante.",
+
+      "transformation": "Pasar de una relación espiritual irregular a una experiencia diaria más cercana, intencional y práctica con Dios.",
+
+      "target_audience": [
+        "mujeres cristianas",
+        "adultos cristianos",
+        "personas que desean fortalecer su vida espiritual",
+        "personas que desean crear hábitos espirituales diarios"
+      ],
+
+      "app": {
+        "name": "Mi Tiempo con Dios",
+
+        "description": "App Premium diseñada para acompañar el progreso espiritual diario mediante devocionales, reflexión, seguimiento de avance, favoritos, gratitud y hábitos de oración.",
+
+        "features": [
+          "devocionales guiados",
+          "seguimiento de progreso",
+          "registro de oración",
+          "gratitud",
+          "favoritos",
+          "insignias",
+          "niveles"
+        ]
+      },
+
+      "ebook": {
+        "name": "21 Días Más Cerca de Dios",
+
+        "description": "Devocional de 21 días orientado a fortalecer la relación con Dios a través de prácticas simples y sostenibles."
+      },
+
+      "bonuses": [
+        "Diario de Oración",
+        "Planner Espiritual",
+        "Guía Práctica para Escuchar al Espíritu Santo",
+        "Tarjetas de Fe"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": null
+    },
+
+    {
+      "id": "familia",
+      "name": "Pequeños Momentos con Dios",
+
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium para familias que desean compartir la fe en casa mediante actividades sencillas, conversaciones significativas, oración y momentos de gratitud.",
+
+      "transformation": "Ayudar a las familias a integrar la fe en la vida cotidiana mediante momentos simples y accesibles.",
+
+      "target_audience": [
+        "familias",
+        "padres",
+        "madres",
+        "abuelos",
+        "cuidadores",
+        "niños"
+      ],
+
+      "app": {
+        "name": "Momentos con Dios en Familia",
+
+        "description": "App Premium orientada al acompañamiento familiar mediante actividades, dinámicas, conversaciones guiadas y momentos devocionales.",
+
+        "features": [
+          "actividades familiares",
+          "conversaciones guiadas",
+          "gratitud",
+          "oraciones familiares",
+          "registro de actividades",
+          "dinámicas para niños"
+        ]
+      },
+
+      "ebook": {
+        "name": "Pequeños Momentos con Dios",
+
+        "description": "Guía familiar diseñada para facilitar momentos de fe compartidos entre adultos y niños."
+      },
+
+      "bonuses": [
+        "Mi Primer Diario con Dios",
+        "Oraciones Cortas para Niños",
+        "Calendario de Gratitud",
+        "Tarjetas de Fe para Niños"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    },
+
+    {
+      "id": "palabras_duelen",
+      "name": "Cuando las Palabras Duelen",
+
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium diseñado para acompañar a adolescentes, jóvenes y familias que enfrentan palabras hirientes, rechazo, bullying o cyberbullying.",
+
+      "transformation": "Ayudar a recordar el valor personal en Dios, desarrollar hábitos de paz y fortalecer una identidad saludable desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "adolescentes",
+        "jóvenes",
+        "familias",
+        "líderes juveniles"
+      ],
+
+      "app": {
+        "name": "Diario de Paz Digital",
+
+        "description": "App Premium orientada a la reflexión, journaling, seguimiento de hábitos de paz y fortalecimiento de la identidad en Dios.",
+
+        "features": [
+          "journaling guiado",
+          "identidad en Dios",
+          "seguimiento emocional",
+          "reflexiones",
+          "hábitos de paz",
+          "registro personal"
+        ]
+      },
+
+      "ebook": {
+        "name": "Cuando las Palabras Duelen",
+
+        "description": "Devocional diseñado para acompañar procesos relacionados con palabras hirientes, rechazo y restauración de la identidad."
+      },
+
+      "bonuses": [
+        "Diario de Identidad",
+        "Tarjetas de Verdad",
+        "Planner de Paz Digital",
+        "Guía Segura para Pedir Ayuda"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    },
+
+    {
+      "id": "hombre_hogar",
+      "name": "El Hombre que Edifica su Hogar",
+
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium creado para hombres cristianos que desean fortalecer su relación con Dios y liderar su hogar con humildad, carácter y propósito.",
+
+      "transformation": "Ayudar a desarrollar hábitos de oración, discernimiento y liderazgo familiar responsable desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "hombres cristianos",
+        "esposos",
+        "padres",
+        "futuros padres"
+      ],
+
+      "app": {
+        "name": "Mi Hogar con Propósito",
+
+        "description": "App Premium diseñada para acompañar procesos de oración, liderazgo familiar, planificación espiritual y crecimiento personal.",
+
+        "features": [
+          "devocionales diarios",
+          "oración",
+          "liderazgo familiar",
+          "discernimiento",
+          "planificación espiritual",
+          "seguimiento de progreso"
+        ]
+      },
+
+      "ebook": {
+        "name": "El Hombre que Edifica su Hogar",
+
+        "description": "Devocional de 21 días enfocado en carácter, discernimiento, liderazgo espiritual y vida familiar."
+      },
+
+      "bonuses": [
+        "Diario del Hombre que Ora",
+        "Guía de Discernimiento para Decisiones",
+        "Tarjetas de Liderazgo y Verdad",
+        "Planner de Liderazgo Familiar"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    }
+  ]
+}
