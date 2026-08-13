@@ -1,0 +1,218 @@
+{
+  "navigation_routes": [
+    {
+      "intent": "comprar_kit",
+
+      "title": "Quiero comprar una colección",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección",
+        "Botón Adquirir",
+        "Shopify"
+      ],
+
+      "response": "Si deseas adquirir una colección, ingresa a Mis Colecciones, selecciona el kit que te interesa y utiliza el botón Adquirir. La compra se completa en Shopify.",
+
+      "availability_note": "La disponibilidad comercial puede variar según las colecciones activas en Shopify."
+    },
+
+    {
+      "intent": "explorar_colecciones",
+
+      "title": "Quiero conocer las colecciones disponibles",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones"
+      ],
+
+      "response": "Desde Mis Colecciones puedes explorar las experiencias disponibles, conocer qué incluye cada kit y acceder a información detallada sobre Apps, ebooks, bonos y recursos imprimibles."
+    },
+
+    {
+      "intent": "acceder_app",
+
+      "title": "Quiero acceder a mi App",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Abrir App Premium"
+      ],
+
+      "response": "Las Apps Premium forman parte de la experiencia de cada kit. Ingresa a Mis Colecciones, selecciona tu colección y abre la App correspondiente."
+    },
+
+    {
+      "intent": "continuar_experiencia",
+
+      "title": "Quiero continuar donde dejé mi experiencia",
+
+      "route": [
+        "Inicio",
+        "Mi Experiencia con Dios",
+        "Continuar experiencia"
+      ],
+
+      "response": "Puedes continuar tu avance desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a tus experiencias activas."
+    },
+
+    {
+      "intent": "descargar_ebook",
+
+      "title": "Quiero descargar mi ebook",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Ebook Principal",
+        "Descargar"
+      ],
+
+      "response": "Dentro de tu colección encontrarás el ebook principal disponible para descarga."
+    },
+
+    {
+      "intent": "descargar_bonos",
+
+      "title": "Quiero descargar mis bonos",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Bonos Complementarios",
+        "Descargar"
+      ],
+
+      "response": "Los bonos complementarios se encuentran dentro de la colección adquirida y pueden descargarse desde la sección correspondiente."
+    },
+
+    {
+      "intent": "descargar_imprimibles",
+
+      "title": "Quiero descargar los imprimibles",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Recursos Imprimibles",
+        "Descargar"
+      ],
+
+      "response": "Las versiones imprimibles están disponibles dentro de cada colección para facilitar su uso en formato físico."
+    },
+
+    {
+      "intent": "acceder_centro_ayuda",
+
+      "title": "Quiero contactar soporte",
+
+      "route": [
+        "Inicio",
+        "Centro de Ayuda",
+        "Completar formulario",
+        "Enviar consulta"
+      ],
+
+      "response": "Si necesitas ayuda adicional, puedes utilizar el formulario disponible en Centro de Ayuda."
+    },
+
+    {
+      "intent": "iniciar_sesion",
+
+      "title": "Quiero iniciar sesión",
+
+      "route": [
+        "Inicio",
+        "Iniciar sesión",
+        "Ingresar correo electrónico",
+        "Abrir correo recibido",
+        "Hacer clic en el enlace enviado por Supabase"
+      ],
+
+      "response": "Para ingresar al portal, escribe tu correo electrónico y utiliza el enlace de acceso enviado por Supabase."
+    },
+
+    {
+      "intent": "no_recibi_email",
+
+      "title": "No recibí el correo de acceso",
+
+      "route": [
+        "Inicio",
+        "Iniciar sesión",
+        "Verificar correo electrónico ingresado",
+        "Revisar bandeja principal",
+        "Revisar spam",
+        "Revisar promociones",
+        "Solicitar nuevo enlace"
+      ],
+
+      "response": "Si no recibiste el correo de acceso, revisa spam, promociones y correo no deseado. Luego intenta solicitar un nuevo enlace."
+    },
+
+    {
+      "intent": "problema_acceso",
+
+      "title": "Compré y no puedo entrar",
+
+      "route": [
+        "Inicio",
+        "Iniciar sesión",
+        "Ingresar correo utilizado en Shopify",
+        "Abrir correo de Supabase",
+        "Hacer clic en el enlace de acceso",
+        "Ingresar al portal"
+      ],
+
+      "response": "Antes de continuar, valida que estás utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. El acceso se verifica utilizando ese mismo correo."
+    },
+
+    {
+      "intent": "no_veo_mi_kit",
+
+      "title": "Entré al portal pero no veo mi colección",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones"
+      ],
+
+      "response": "Primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Si el problema persiste, contacta al equipo de soporte."
+    },
+
+    {
+      "intent": "conocer_apps",
+
+      "title": "Quiero conocer las Apps disponibles",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Seleccionar colección",
+        "Ver App Premium"
+      ],
+
+      "response": "Cada colección incluye una App Premium diseñada para acompañar la experiencia principal del kit."
+    },
+
+    {
+      "intent": "ver_productos_adquiridos",
+
+      "title": "Quiero ver todo lo que compré",
+
+      "route": [
+        "Inicio",
+        "Mis Colecciones"
+      ],
+
+      "response": "En Mis Colecciones encontrarás todas las experiencias asociadas a tus permisos activos."
+    }
+  ]
+}
