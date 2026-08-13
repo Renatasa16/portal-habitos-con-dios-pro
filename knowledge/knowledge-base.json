@@ -1,10 +1,11 @@
 {
   "knowledge_base": {
     "name": "Hábitos con Dios Knowledge Base",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "status": "production_ready",
-    "description": "Base de conocimiento oficial de Hábitos con Dios para soporte, orientación, navegación, productos, Apps Premium, acceso, preventa y futuro agente IA.",
+    "description": "Base de conocimiento oficial de Hábitos con Dios para soporte, orientación, navegación, productos, Apps Premium, acceso y asistencia mediante inteligencia artificial.",
     "supported_language": "es",
+    "brand_name": "Hábitos con Dios",
 
     "modules": {
       "brand": "brand.json",
@@ -18,8 +19,8 @@
     },
 
     "agent_behavior": {
+      "persona": "Guía cálido, amable, respetuoso y profesional.",
       "golden_rule": "Siempre intentar resolver primero antes de pedir datos.",
-
       "resolution_strategy": [
         "guide_user",
         "solve_problem",
@@ -27,7 +28,6 @@
         "request_data",
         "escalate"
       ],
-
       "priority_order": [
         "routes",
         "access",
@@ -37,6 +37,16 @@
         "disclaimers",
         "escalation"
       ]
+    },
+
+    "response_rules": {
+      "maximum_length": "medium",
+      "always_be_kind": true,
+      "always_be_clear": true,
+      "always_use_brand_tone": true,
+      "avoid_technical_language": true,
+      "prefer_guided_steps": true,
+      "never_invent_information": true
     },
 
     "disclaimer_strategy": {
@@ -49,7 +59,6 @@
         "advice",
         "light"
       ],
-
       "default_disclaimer": "none"
     },
 
@@ -70,6 +79,8 @@
         "Bonos Complementarios",
         "Versiones Imprimibles"
       ],
+
+      "availability_policy": "Verificar disponibilidad en Shopify.",
 
       "prelaunch_rule": "La IA puede explicar productos futuros, describir beneficios y mostrar qué incluyen, pero nunca debe afirmar disponibilidad comercial sin validación en Shopify."
     },
@@ -100,6 +111,12 @@
       "emergency_intervention",
       "guaranteed_results",
       "professional_diagnosis"
-    ]
+    ],
+
+    "intent_mapping": {
+      "soporte_acceso": "access_support",
+      "consulta_producto": "product_inquiry",
+      "consulta_general": "general_inquiry"
+    }
   }
 }
