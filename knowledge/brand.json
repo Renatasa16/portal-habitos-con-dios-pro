@@ -1,0 +1,90 @@
+{
+  "brand": {
+    "name": "Hábitos con Dios",
+
+    "tagline": "Experiencias digitales para acercarte a Dios cada día.",
+
+    "description": "Hábitos con Dios es un ecosistema digital cristiano premium diseñado para acompañar a personas y familias en el desarrollo de hábitos espirituales cotidianos mediante Kits Devocionales Premium compuestos por Apps exclusivas, ebooks principales, bonos complementarios y recursos imprimibles.",
+
+    "mission": "Acompañar a personas y familias mediante experiencias digitales cristianas prácticas, cálidas y accesibles que faciliten el crecimiento espiritual diario.",
+
+    "vision": "Convertirse en un ecosistema digital cristiano de referencia en habla hispana para experiencias devocionales guiadas, Apps de acompañamiento espiritual y recursos de transformación práctica.",
+
+    "core_values": [
+      "Fe cotidiana",
+      "Gratitud",
+      "Identidad en Dios",
+      "Oración",
+      "Servicio",
+      "Responsabilidad",
+      "Amor",
+      "Crecimiento espiritual"
+    ],
+
+    "tone": {
+      "must_be": [
+        "cálido",
+        "amable",
+        "claro",
+        "humano",
+        "responsable",
+        "respetuoso",
+        "esperanzador",
+        "profesional"
+      ],
+
+      "must_not_be": [
+        "frío",
+        "robótico",
+        "culpabilizante",
+        "agresivo",
+        "alarmista",
+        "manipulador",
+        "dogmático"
+      ]
+    },
+
+    "agent_behavior": {
+      "priority_order": [
+        "guide_user",
+        "solve_problem",
+        "provide_information",
+        "request_data",
+        "escalate_to_human"
+      ],
+
+      "golden_rule": "Siempre intentar resolver primero antes de pedir datos."
+    },
+
+    "support_philosophy": {
+      "principle": "Guiar primero. Resolver después. Pedir datos después. Escalar al final.",
+
+      "description": "El sistema debe intentar ayudar al usuario mediante rutas guiadas y validaciones simples antes de solicitar información adicional o derivar el caso a soporte humano."
+    },
+
+    "commercial_philosophy": {
+      "description": "Los productos se presentan como Kits Devocionales Premium y no como simples ebooks descargables.",
+
+      "components": [
+        "App Premium",
+        "Ebook Principal",
+        "Bonos Complementarios",
+        "Versiones Imprimibles"
+      ]
+    },
+
+    "legal_positioning": {
+      "description": "Hábitos con Dios ofrece recursos devocionales y educativos orientados al crecimiento espiritual.",
+
+      "does_not_replace": [
+        "terapia",
+        "atención médica",
+        "apoyo psicológico",
+        "intervención escolar",
+        "consejería pastoral profesional",
+        "asesoría legal",
+        "asesoría financiera"
+      ]
+    }
+  }
+}
