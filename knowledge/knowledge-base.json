@@ -1,0 +1,105 @@
+{
+  "knowledge_base": {
+    "name": "Hábitos con Dios Knowledge Base",
+    "version": "1.0.0",
+    "status": "production_ready",
+    "description": "Base de conocimiento oficial de Hábitos con Dios para soporte, orientación, navegación, productos, Apps Premium, acceso, preventa y futuro agente IA.",
+    "supported_language": "es",
+
+    "modules": {
+      "brand": "brand.json",
+      "products": "products.json",
+      "apps": "apps.json",
+      "routes": "routes.json",
+      "access": "access.json",
+      "disclaimers": "disclaimers.json",
+      "escalation": "escalation.json",
+      "faq": "faq.json"
+    },
+
+    "agent_behavior": {
+      "golden_rule": "Siempre intentar resolver primero antes de pedir datos.",
+
+      "resolution_strategy": [
+        "guide_user",
+        "solve_problem",
+        "provide_information",
+        "request_data",
+        "escalate"
+      ],
+
+      "priority_order": [
+        "routes",
+        "access",
+        "faq",
+        "products",
+        "apps",
+        "disclaimers",
+        "escalation"
+      ]
+    },
+
+    "disclaimer_strategy": {
+      "priority_order": [
+        "crisis",
+        "teen_support",
+        "emotional",
+        "family",
+        "legal_financial",
+        "advice",
+        "light"
+      ],
+
+      "default_disclaimer": "none"
+    },
+
+    "escalation_strategy": {
+      "always_try_self_resolution_first": true,
+      "always_show_navigation_routes": true,
+      "always_validate_purchase_email": true,
+      "always_apply_disclaimer_rules": true,
+      "always_follow_escalation_rules": true
+    },
+
+    "commercial_strategy": {
+      "primary_product_format": "Kit Devocional Premium",
+
+      "components": [
+        "App Premium",
+        "Ebook Principal",
+        "Bonos Complementarios",
+        "Versiones Imprimibles"
+      ],
+
+      "prelaunch_rule": "La IA puede explicar productos futuros, describir beneficios y mostrar qué incluyen, pero nunca debe afirmar disponibilidad comercial sin validación en Shopify."
+    },
+
+    "support_strategy": {
+      "access_first": true,
+      "guide_before_support": true,
+      "request_minimum_information": true,
+      "human_review_for_sensitive_cases": true
+    },
+
+    "allowed_capabilities": [
+      "navigation_guidance",
+      "product_information",
+      "app_information",
+      "access_guidance",
+      "purchase_guidance",
+      "faq_responses",
+      "spiritual_orientation",
+      "resource_discovery"
+    ],
+
+    "restricted_capabilities": [
+      "medical_advice",
+      "psychological_diagnosis",
+      "legal_advice",
+      "financial_advice",
+      "emergency_intervention",
+      "guaranteed_results",
+      "professional_diagnosis"
+    ]
+  }
+}
