@@ -1,1 +1,55 @@
+{
+      "id": "hombre_hogar",
+      "name": "El Hombre que Edifica su Hogar",
 
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium creado para hombres cristianos que desean fortalecer su relación con Dios y liderar su hogar con humildad, carácter y propósito.",
+
+      "transformation": "Ayudar a desarrollar hábitos de oración, discernimiento y liderazgo familiar responsable desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "hombres cristianos",
+        "esposos",
+        "padres",
+        "futuros padres"
+      ],
+
+      "app": {
+        "name": "Mi Hogar con Propósito",
+
+        "description": "App Premium diseñada para acompañar procesos de oración, liderazgo familiar, planificación espiritual y crecimiento personal.",
+
+        "features": [
+          "devocionales diarios",
+          "oración",
+          "liderazgo familiar",
+          "discernimiento",
+          "planificación espiritual",
+          "seguimiento de progreso"
+        ]
+      },
+
+      "ebook": {
+        "name": "El Hombre que Edifica su Hogar",
+
+        "description": "Devocional de 21 días enfocado en carácter, discernimiento, liderazgo espiritual y vida familiar."
+      },
+
+      "bonuses": [
+        "Diario del Hombre que Ora",
+        "Guía de Discernimiento para Decisiones",
+        "Tarjetas de Liderazgo y Verdad",
+        "Planner de Liderazgo Familiar"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    }
