@@ -195,6 +195,24 @@ function getProductFiles() {
 
   return files;
 }
+function loadProductFile(productFileName) {
+  const productPath = path.join(
+    KNOWLEDGE_DIR,
+    "products",
+    productFileName
+  );
+
+  if (!fs.existsSync(productPath)) {
+    return null;
+  }
+
+  const rawContent = fs.readFileSync(
+    productPath,
+    "utf8"
+  );
+
+  return JSON.parse(rawContent);
+}
 module.exports = {
   loadKnowledgeBase,
   getKnowledgeSummary,
@@ -203,4 +221,5 @@ module.exports = {
   buildCompactPromptContext
   getProducts,
   getProductFiles,
+  loadProductFile,
 };
