@@ -1,1 +1,46 @@
+{
+      "id": "diario_de_paz_digital",
+      "name": "Diario de Paz Digital",
+      "product_id": "palabras_duelen",
+      "status": "prelaunch",
 
+      "description": "App Premium orientada a la reflexión personal, journaling guiado y fortalecimiento de la identidad en Dios.",
+
+      "purpose": "Acompañar procesos de crecimiento personal y construcción de hábitos de paz desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "adolescentes",
+        "jóvenes",
+        "familias"
+      ],
+
+      "features": [
+        "Journaling guiado",
+        "Registro personal",
+        "Reflexiones",
+        "Seguimiento de hábitos",
+        "Espacios para recordar verdades importantes",
+        "Progreso personal"
+      ],
+
+      "what_users_will_find": [
+        "Ejercicios de reflexión",
+        "Registro de pensamientos",
+        "Seguimiento de crecimiento personal",
+        "Recordatorios sobre identidad en Dios",
+        "Prácticas de paz y autocuidado"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "sensitive_content": true,
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Cuando las Palabras Duelen",
+        "Diario de Paz Digital"
+      ]
+    }
