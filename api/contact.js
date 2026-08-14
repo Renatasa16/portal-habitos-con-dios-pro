@@ -451,6 +451,10 @@ module.exports = async function handler(req, res) {
       const knowledgeContext = buildCompactPromptContext(
         categoryData.aiRoute
       );
+      console.log(
+  "KNOWLEDGE_CONTEXT_LENGTH",
+  knowledgeContext.length
+);
 
       aiResult = await generateGeminiResponse({
         name,
