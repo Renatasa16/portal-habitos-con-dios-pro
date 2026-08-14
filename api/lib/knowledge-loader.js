@@ -106,14 +106,10 @@ function getRelevantModulesByRoute(aiRoute) {
     ],
 
     product_inquiry: [
-      "brand",
-      "products",
-      "apps",
-      "routes",
-      "faq",
-      "disclaimers",
-      "escalation"
-    ],
+  "brand",
+  "products",
+  "apps"
+],
 
     general_inquiry: [
       "brand",
