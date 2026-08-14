@@ -178,10 +178,29 @@ function getProducts() {
 
   return knowledge.products?.products || [];
 }
+
+function getProductFiles() {
+  const productsDir = path.join(
+    KNOWLEDGE_DIR,
+    "products"
+  );
+
+  if (!fs.existsSync(productsDir)) {
+    return [];
+  }
+
+  const files = fs
+    .readdirSync(productsDir)
+    .filter((file) => file.endsWith(".json"));
+
+  return files;
+}
 module.exports = {
   loadKnowledgeBase,
   getKnowledgeSummary,
   getRelevantModulesByRoute,
   buildKnowledgeContext,
   buildCompactPromptContext
+  getProducts,
+  getProductFiles,
 };
