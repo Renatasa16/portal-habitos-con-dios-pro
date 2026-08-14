@@ -1,1 +1,57 @@
+{
+      "id": "familia",
+      "name": "Pequeños Momentos con Dios",
 
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium para familias que desean compartir la fe en casa mediante actividades sencillas, conversaciones significativas, oración y momentos de gratitud.",
+
+      "transformation": "Ayudar a las familias a integrar la fe en la vida cotidiana mediante momentos simples y accesibles.",
+
+      "target_audience": [
+        "familias",
+        "padres",
+        "madres",
+        "abuelos",
+        "cuidadores",
+        "niños"
+      ],
+
+      "app": {
+        "name": "Momentos con Dios en Familia",
+
+        "description": "App Premium orientada al acompañamiento familiar mediante actividades, dinámicas, conversaciones guiadas y momentos devocionales.",
+
+        "features": [
+          "actividades familiares",
+          "conversaciones guiadas",
+          "gratitud",
+          "oraciones familiares",
+          "registro de actividades",
+          "dinámicas para niños"
+        ]
+      },
+
+      "ebook": {
+        "name": "Pequeños Momentos con Dios",
+
+        "description": "Guía familiar diseñada para facilitar momentos de fe compartidos entre adultos y niños."
+      },
+
+      "bonuses": [
+        "Mi Primer Diario con Dios",
+        "Oraciones Cortas para Niños",
+        "Calendario de Gratitud",
+        "Tarjetas de Fe para Niños"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    }
