@@ -173,6 +173,11 @@ function buildCompactPromptContext(aiRoute) {
   return JSON.stringify(context, null, 2);
 }
 
+function getProducts() {
+  const knowledge = loadKnowledgeBase();
+
+  return knowledge.products?.products || [];
+}
 module.exports = {
   loadKnowledgeBase,
   getKnowledgeSummary,
