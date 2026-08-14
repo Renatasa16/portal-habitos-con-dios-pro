@@ -1,1 +1,46 @@
+{
+      "id": "momentos_con_dios_en_familia",
+      "name": "Momentos con Dios en Familia",
+      "product_id": "familia",
+      "status": "prelaunch",
 
+      "description": "App Premium diseñada para compartir momentos de fe en familia mediante actividades, conversaciones guiadas y experiencias sencillas para niños y adultos.",
+
+      "purpose": "Facilitar experiencias espirituales cotidianas que fortalezcan la conexión familiar y la fe compartida.",
+
+      "target_audience": [
+        "familias",
+        "padres",
+        "madres",
+        "abuelos",
+        "niños"
+      ],
+
+      "features": [
+        "Actividades familiares",
+        "Conversaciones guiadas",
+        "Momentos de gratitud",
+        "Oraciones familiares",
+        "Retos sencillos",
+        "Registro de actividades"
+      ],
+
+      "what_users_will_find": [
+        "Ideas para compartir en familia",
+        "Dinámicas para niños",
+        "Espacios de conversación",
+        "Momentos de gratitud",
+        "Experiencias devocionales familiares"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "Pequeños Momentos con Dios",
+        "Momentos con Dios en Familia"
+      ]
+    }
