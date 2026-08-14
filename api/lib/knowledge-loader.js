@@ -141,7 +141,7 @@ function buildKnowledgeContext(aiRoute) {
       aiRoute,
       modulesUsed: modulesToUse
     },
-
+    
     globalRules: {
       goldenRule:
         knowledge.knowledgeBase?.knowledge_base?.agent_behavior?.golden_rule ||
@@ -154,7 +154,10 @@ function buildKnowledgeContext(aiRoute) {
         knowledge.knowledgeBase?.knowledge_base?.restricted_capabilities || []
     }
   };
-
+console.log(
+  "KNOWLEDGE_MODULES_USED",
+  modulesToUse.join(", ")
+);
   modulesToUse.forEach((moduleName) => {
     if (knowledge[moduleName]) {
       context[moduleName] = knowledge[moduleName];
