@@ -1,5 +1,56 @@
 {
-  "id": "21dias",
-  "name": "21 Días Más Cerca de Dios",
-  ...
-}
+      "id": "21dias",
+      "name": "21 Días Más Cerca de Dios",
+
+      "availability": {
+        "status": "active",
+        "message": "Disponible a través de Shopify."
+      },
+
+      "commercial_stage": "active",
+
+      "sales_description": "Kit Devocional Premium diseñado para ayudar a las personas a desarrollar una rutina espiritual diaria y fortalecer su relación con Dios mediante oración, reflexión, gratitud y práctica constante.",
+
+      "transformation": "Pasar de una relación espiritual irregular a una experiencia diaria más cercana, intencional y práctica con Dios.",
+
+      "target_audience": [
+        "mujeres cristianas",
+        "adultos cristianos",
+        "personas que desean fortalecer su vida espiritual",
+        "personas que desean crear hábitos espirituales diarios"
+      ],
+
+      "app": {
+        "name": "Mi Tiempo con Dios",
+
+        "description": "App Premium diseñada para acompañar el progreso espiritual diario mediante devocionales, reflexión, seguimiento de avance, favoritos, gratitud y hábitos de oración.",
+
+        "features": [
+          "devocionales guiados",
+          "seguimiento de progreso",
+          "registro de oración",
+          "gratitud",
+          "favoritos",
+          "insignias",
+          "niveles"
+        ]
+      },
+
+      "ebook": {
+        "name": "21 Días Más Cerca de Dios",
+
+        "description": "Devocional de 21 días orientado a fortalecer la relación con Dios a través de prácticas simples y sostenibles."
+      },
+
+      "bonuses": [
+        "Diario de Oración",
+        "Planner Espiritual",
+        "Guía Práctica para Escuchar al Espíritu Santo",
+        "Tarjetas de Fe"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": null
+    }
