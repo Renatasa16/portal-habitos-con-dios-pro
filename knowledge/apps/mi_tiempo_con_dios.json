@@ -1,1 +1,44 @@
+{
+      "id": "mi_tiempo_con_dios",
+      "name": "Mi Tiempo con Dios",
+      "product_id": "21dias",
+      "status": "active",
 
+      "description": "App Premium diseñada para acompañar el desarrollo de hábitos espirituales diarios mediante reflexión, oración, gratitud y seguimiento de progreso.",
+
+      "purpose": "Ayudar al usuario a mantener una relación más cercana y constante con Dios mediante prácticas simples y sostenibles.",
+
+      "target_audience": [
+        "mujeres cristianas",
+        "adultos cristianos",
+        "personas que desean fortalecer sus hábitos espirituales"
+      ],
+
+      "features": [
+        "Devocionales diarios",
+        "Checklist de avance",
+        "Registro de oración",
+        "Diario espiritual",
+        "Gratitud diaria",
+        "Favoritos",
+        "Insignias",
+        "Niveles de progreso"
+      ],
+
+      "what_users_will_find": [
+        "Reflexiones guiadas",
+        "Espacios para registrar aprendizajes",
+        "Motivación diaria",
+        "Seguimiento de crecimiento espiritual",
+        "Herramientas para desarrollar constancia"
+      ],
+
+      "requires_login": true,
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "21 Días Más Cerca de Dios",
+        "Mi Tiempo con Dios"
+      ]
+    }
