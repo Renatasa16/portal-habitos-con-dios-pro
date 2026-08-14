@@ -1,1 +1,55 @@
+ {
+      "id": "palabras_duelen",
+      "name": "Cuando las Palabras Duelen",
 
+      "availability": {
+        "status": "prelaunch",
+        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
+      },
+
+      "commercial_stage": "featured_prelaunch",
+
+      "sales_description": "Kit Devocional Premium diseñado para acompañar a adolescentes, jóvenes y familias que enfrentan palabras hirientes, rechazo, bullying o cyberbullying.",
+
+      "transformation": "Ayudar a recordar el valor personal en Dios, desarrollar hábitos de paz y fortalecer una identidad saludable desde una perspectiva cristiana.",
+
+      "target_audience": [
+        "adolescentes",
+        "jóvenes",
+        "familias",
+        "líderes juveniles"
+      ],
+
+      "app": {
+        "name": "Diario de Paz Digital",
+
+        "description": "App Premium orientada a la reflexión, journaling, seguimiento de hábitos de paz y fortalecimiento de la identidad en Dios.",
+
+        "features": [
+          "journaling guiado",
+          "identidad en Dios",
+          "seguimiento emocional",
+          "reflexiones",
+          "hábitos de paz",
+          "registro personal"
+        ]
+      },
+
+      "ebook": {
+        "name": "Cuando las Palabras Duelen",
+
+        "description": "Devocional diseñado para acompañar procesos relacionados con palabras hirientes, rechazo y restauración de la identidad."
+      },
+
+      "bonuses": [
+        "Diario de Identidad",
+        "Tarjetas de Verdad",
+        "Planner de Paz Digital",
+        "Guía Segura para Pedir Ayuda"
+      ],
+
+      "printables": true,
+      "requires_login": true,
+
+      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+    }
