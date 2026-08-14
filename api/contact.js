@@ -467,6 +467,13 @@ module.exports = async function handler(req, res) {
 
     const aiResponseText = aiResult?.text || "";
 
+console.log("AI_RESPONSE_START");
+console.log(aiResponseText);
+console.log("AI_RESPONSE_END");
+
+const internalSubject =
+  `[${categoryData.label}] Nueva consulta de ${name}`;
+
     const internalSubject =
       `[${categoryData.label}] Nueva consulta de ${name}`;
 
