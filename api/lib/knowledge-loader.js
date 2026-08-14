@@ -106,7 +106,6 @@ function getRelevantModulesByRoute(aiRoute) {
     ],
 
     product_inquiry: [
-  "brand",
   "products",
   "apps"
 ],
