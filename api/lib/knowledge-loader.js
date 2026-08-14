@@ -155,6 +155,11 @@ console.log(
 );
   modulesToUse.forEach((moduleName) => {
     if (knowledge[moduleName]) {
+      console.log(
+  "MODULE_SIZE",
+  moduleName,
+  JSON.stringify(knowledge[moduleName]).length
+);
       context[moduleName] = knowledge[moduleName];
     }
   });
