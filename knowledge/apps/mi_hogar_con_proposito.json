@@ -1,1 +1,44 @@
+{
+      "id": "mi_hogar_con_proposito",
+      "name": "Mi Hogar con Propósito",
+      "product_id": "hombre_hogar",
+      "status": "prelaunch",
 
+      "description": "App Premium diseñada para acompañar a hombres cristianos en hábitos de oración, discernimiento, crecimiento espiritual y liderazgo familiar responsable.",
+
+      "purpose": "Ayudar a desarrollar hábitos espirituales prácticos que fortalezcan la relación con Dios y el servicio dentro del hogar.",
+
+      "target_audience": [
+        "hombres cristianos",
+        "esposos",
+        "padres",
+        "futuros padres"
+      ],
+
+      "features": [
+        "Devocionales diarios",
+        "Registro de oración",
+        "Herramientas de discernimiento",
+        "Seguimiento de progreso",
+        "Planificación espiritual",
+        "Reflexiones para el hogar"
+      ],
+
+      "what_users_will_find": [
+        "Reflexiones para liderazgo espiritual",
+        "Espacios para oración",
+        "Herramientas de organización",
+        "Seguimiento de hábitos",
+        "Recursos para crecimiento personal"
+      ],
+
+      "requires_login": true,
+
+      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
+
+      "navigation_route": [
+        "Inicio",
+        "Mis Colecciones",
+        "El Hombre que Edifica su Hogar",
+        "Mi Hogar con Propósito"
+      ]
