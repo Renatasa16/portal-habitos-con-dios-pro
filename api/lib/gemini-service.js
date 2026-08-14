@@ -154,18 +154,27 @@ async function generateGeminiResponse({
     throw new Error(errorMessage);
   }
 
-  const text =
-    data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+const candidate = data?.candidates?.[0];
+const parts = candidate?.content?.parts || [];
 
-  if (!text.trim()) {
-    throw new Error("Gemini no devolvió una respuesta válida.");
-  }
+const text = parts
+  .map((part) => part?.text || "")
+  .join("")
+  .trim();
 
-  return {
-    provider: "gemini",
-    model: DEFAULT_MODEL_LABEL,
-    text: text.trim()
-  };
+console.log("GEMINI_FINISH_REASON", candidate?.finishReason || "unknown");
+console.log("GEMINI_PARTS_COUNT", parts.length);
+console.log("GEMINI_TEXT_LENGTH", text.length);
+
+if (!text) {
+  throw new Error("Gemini no devolvió una respuesta válida.");
+}
+
+return {
+  provider: "gemini",
+  model: DEFAULT_MODEL_LABEL,
+  text
+};
 }
 
 module.exports = {
