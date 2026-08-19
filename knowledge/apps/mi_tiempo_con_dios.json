@@ -9,9 +9,8 @@
       "purpose": "Fomentar la constancia en el tiempo devocional diario mediante herramientas prácticas que ayuden a incorporar la oración, la reflexión y la gratitud como parte de la vida cotidiana.",
 
       "target_audience": [
-        "mujeres cristianas",
-        "adultos cristianos",
-        "personas que desean fortalecer sus hábitos espirituales"
+        "mujeres de Dios",
+        "mujeres que desean fortalecer sus hábitos espirituales"
       ],
 
       "features": [
@@ -27,13 +26,45 @@
 
       "what_users_will_find": [
   "Reflexiones diarias para profundizar la relación con Dios",
-  "Espacios para registrar aprendizajes, oraciones y experiencias personales",
+  "Espacios para registrar aprendizajes y oraciones personales",
   "Momentos de gratitud que ayudan a reconocer las bendiciones de cada día",
   "Herramientas que favorecen la constancia en el tiempo devocional",
   "Recursos prácticos para convertir la fe en hábitos cotidianos"
 ],
 
-      "requires_login": true,
+"email_presentation": {
+  "hero_title": "📱 Mi Tiempo con Dios",
+
+  "hero_subtitle": "Tu espacio digital de acompañamiento espiritual diario, diseñado para ayudarte a construir hábitos devocionales sólidos y fortalecer tu relación con Dios de manera constante y significativa.",
+
+  "transformation_title": "🌿 ¿Cómo puede ayudarte?",
+
+  "transformation_text": "Acompañarte cada día en tu crecimiento espiritual mediante herramientas prácticas de oración, reflexión, gratitud y seguimiento de tu progreso personal, ayudándote a desarrollar una vida de fe más consistente.",
+
+  "features_title": "✨ Funcionalidades principales",
+
+  "feature_items": [
+    "Devocionales guiados para cada día",
+    "Registro de oración y seguimiento espiritual",
+    "Espacios para reflexiones y aprendizajes personales",
+    "Herramientas de gratitud diaria",
+    "Sistema de progreso y logros",
+    "Favoritos para guardar contenidos importantes"
+  ],
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Mujeres que desean fortalecer su tiempo con Dios",
+    "Quienes buscan desarrollar hábitos espirituales sostenibles",
+    "Mujeres que desean crecer en oración y reflexión",
+    "Mujeres que valoran el acompañamiento espiritual diario"
+  ],
+
+  "closing_text": "✨ Cada herramienta fue diseñada para ayudarte a mantener la constancia en tu tiempo con Dios y disfrutar una experiencia espiritual más profunda, organizada y significativa."
+},
+
+"requires_login": true,
 
       "navigation_route": [
         "Inicio",
