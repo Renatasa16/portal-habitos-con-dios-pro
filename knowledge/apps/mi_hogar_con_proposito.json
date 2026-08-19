@@ -4,9 +4,9 @@
       "product_id": "hombre_hogar",
       "status": "prelaunch",
 
-      "description": "App Premium diseñada para acompañar a hombres cristianos en hábitos de oración, discernimiento, crecimiento espiritual y liderazgo familiar responsable.",
+      "description": "App Premium diseñada para ayudar a hombres de Dios a fortalecer su vida espiritual, cultivar una relación más cercana con Él y liderar su hogar con humildad, carácter y propósito.",
 
-      "purpose": "Ayudar a desarrollar hábitos espirituales prácticos que fortalezcan la relación con Dios y el servicio dentro del hogar.",
+      "purpose": "Ayudar a cultivar hábitos espirituales consistentes, fortalecer la vida de oración y desarrollar un liderazgo basado en principios que inspiren, guíen y fortalezcan el hogar.",
 
       "target_audience": [
         "hombres cristianos",
@@ -25,12 +25,12 @@
       ],
 
       "what_users_will_find": [
-        "Reflexiones para liderazgo espiritual",
-        "Espacios para oración",
-        "Herramientas de organización",
-        "Seguimiento de hábitos",
-        "Recursos para crecimiento personal"
-      ],
+  "Reflexiones para fortalecer el liderazgo espiritual en el hogar",
+  "Espacios para desarrollar una vida de oración constante",
+  "Herramientas para organizar metas y prioridades con propósito",
+  "Seguimiento de hábitos que promueven el crecimiento personal y espiritual",
+  "Recursos prácticos para tomar decisiones con sabiduría y principios"
+],
 
       "requires_login": true,
 
