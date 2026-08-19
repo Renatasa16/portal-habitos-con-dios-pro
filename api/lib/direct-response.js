@@ -311,14 +311,35 @@ function buildDisclaimerResponse(disclaimerKey, classificationResult) {
 function getProductCandidates(product, fileName) {
   return [
     fileName?.replace(".json", ""),
+
+    // Identificadores principales
     product?.id,
     product?.name,
+
+    // Aliases del producto
+    ...(Array.isArray(product?.aliases)
+      ? product.aliases
+      : []),
+
+    // Contenido relacionado
     product?.sales_description,
     product?.transformation,
+
+    // App asociada
     product?.app?.name,
+
+    // Ebook principal
     product?.ebook?.name,
-    ...getSafeArray(product?.target_audience),
-    ...getSafeArray(product?.bonuses)
+
+    // Público objetivo
+    ...(Array.isArray(product?.target_audience)
+      ? product.target_audience
+      : []),
+
+    // Bonuses
+    ...(Array.isArray(product?.bonuses)
+      ? product.bonuses
+      : [])
   ].filter(Boolean);
 }
 
