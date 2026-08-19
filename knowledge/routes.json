@@ -352,7 +352,7 @@
 
     "closing_text": "✨ Desde Mis Colecciones podrás gestionar todas tus experiencias, retomar tu progreso, acceder a tus aplicaciones y disfrutar de cada recurso incluido en tus compras."
   }
-},
+],
  
 "routing_rules": {
   "fallback_route": "acceder_centro_ayuda",
