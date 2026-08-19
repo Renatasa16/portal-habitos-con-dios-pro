@@ -546,3 +546,265 @@ function findAccessResponse(message) {
   if (!bestMatch || bestMatch.score < 25) {
     return null;
   }
+  return buildAccessResponse({
+    text: bestMatch.text,
+    intent: bestMatch.intent
+  });
+}
+
+function findRouteResponse(message, preferredIntent = null) {
+  const knowledge = loadKnowledgeBase();
+  const routes = knowledge.routes?.navigation_routes || [];
+
+  if (!Array.isArray(routes) || routes.length === 0) {
+    return null;
+  }
+
+  if (preferredIntent) {
+    const directRoute = routes.find((route) => route.intent === preferredIntent);
+
+    if (directRoute) {
+      return buildRouteResponse(directRoute);
+    }
+  }
+
+  let bestMatch = null;
+
+  for (const route of routes) {
+    const candidates = [
+      route.intent,
+      route.title,
+      route.response,
+      ...getSafeArray(route.route)
+    ].filter(Boolean);
+
+    const score = getBestScore(message, candidates);
+
+    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+      bestMatch = {
+        route,
+        score
+      };
+    }
+  }
+
+  if (!bestMatch || bestMatch.score < 25) {
+    return null;
+  }
+
+  return buildRouteResponse(bestMatch.route);
+}
+
+function findFaqResponse(message, preferredCategory = null) {
+  const knowledge = loadKnowledgeBase();
+  const faqItems = knowledge.faq?.faq || [];
+
+  if (!Array.isArray(faqItems) || faqItems.length === 0) {
+    return null;
+  }
+
+  let bestMatch = null;
+
+  for (const item of faqItems) {
+    if (!item.answer) {
+      continue;
+    }
+
+    const categoryScore =
+      preferredCategory && normalize(item.category) === normalize(preferredCategory)
+        ? 15
+        : 0;
+
+    const candidates = [
+      item.id,
+      item.question,
+      item.answer,
+      item.category
+    ].filter(Boolean);
+
+    const score = getBestScore(message, candidates) + categoryScore;
+
+    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+      bestMatch = {
+        item,
+        score
+      };
+    }
+  }
+
+  if (!bestMatch || bestMatch.score < 30) {
+    return null;
+  }
+
+  return buildFaqResponse(bestMatch.item);
+}
+
+function findPurchaseResponse(message) {
+  return (
+    findRouteResponse(message, "comprar_kit") ||
+    findFaqResponse(message, "purchase")
+  );
+}
+
+function findDownloadResponse(message) {
+  const route =
+    findRouteResponse(message, "descargar_ebook") ||
+    findRouteResponse(message, "descargar_bonos") ||
+    findRouteResponse(message, "descargar_imprimibles");
+
+  if (route) {
+    return route;
+  }
+
+  return findFaqResponse(message, "navigation");
+}
+
+function shouldSkipAutomaticDirectResponse(message) {
+  const normalizedMessage = normalize(message);
+
+  const crisisKeywords = [
+    "suicidio",
+    "me quiero morir",
+    "hacerme daño",
+    "hacer dano",
+    "autolesion",
+    "autolesión",
+    "violencia",
+    "abuso",
+    "amenaza",
+    "amenazas",
+    "emergencia",
+    "peligro"
+  ];
+
+  return crisisKeywords.some((keyword) =>
+    normalizedMessage.includes(normalize(keyword))
+  );
+}
+
+function buildNoDirectMatch(reason = "no_direct_match") {
+  return {
+    found: false,
+    reason
+  };
+}
+
+function getDirectResponse(message) {
+  if (!message || typeof message !== "string") {
+    return buildNoDirectMatch("empty_message");
+  }
+
+  if (shouldSkipAutomaticDirectResponse(message)) {
+    console.log("DIRECT_RESPONSE_SKIPPED", "critical_or_crisis_case");
+
+    return buildNoDirectMatch("critical_or_crisis_case");
+  }
+
+  const classificationResult = classifyMessage(message, null);
+
+  console.log("DIRECT_RESPONSE_CLASSIFICATION_INTENT", classificationResult.intent);
+  console.log("DIRECT_RESPONSE_CLASSIFICATION_CATEGORY", classificationResult.category);
+  console.log("DIRECT_RESPONSE_CLASSIFICATION_SOURCE", classificationResult.source);
+  console.log(
+    "DIRECT_RESPONSE_CLASSIFICATION_KEYWORD",
+    classificationResult.matchedKeyword || "none"
+  );
+
+  let result = null;
+
+  switch (classificationResult.intent) {
+    case "product_information":
+      result =
+        findBestProductResponse(message) ||
+        findFaqResponse(message, "product") ||
+        findRouteResponse(message);
+      break;
+
+    case "app_information":
+      result =
+        findBestAppResponse(message) ||
+        findFaqResponse(message, "app") ||
+        findRouteResponse(message);
+      break;
+
+    case "access_problem":
+      result =
+        findAccessResponse(message) ||
+        findRouteResponse(message, "problema_acceso") ||
+        findFaqResponse(message, "access");
+      break;
+
+    case "navigation_help":
+      result =
+        findRouteResponse(message) ||
+        findFaqResponse(message, "navigation") ||
+        findAccessResponse(message);
+      break;
+
+    case "download_help":
+      result =
+        findDownloadResponse(message) ||
+        findRouteResponse(message) ||
+        findFaqResponse(message, "navigation");
+      break;
+
+    case "purchase_guidance":
+      result =
+        findPurchaseResponse(message) ||
+        findFaqResponse(message, "purchase") ||
+        findRouteResponse(message);
+      break;
+
+    case "personal_advice":
+    case "family_issue":
+    case "emotional_support":
+    case "teen_support":
+    case "legal_financial":
+      result = buildDisclaimerResponse(
+        classificationResult.disclaimer,
+        classificationResult
+      );
+      break;
+
+    case "crisis":
+      result = null;
+      break;
+
+    default:
+      result =
+        findAccessResponse(message) ||
+        findRouteResponse(message) ||
+        findBestProductResponse(message) ||
+        findBestAppResponse(message) ||
+        findFaqResponse(message);
+      break;
+  }
+
+  if (result?.found) {
+    console.log("DIRECT_RESPONSE_FOUND", true);
+    console.log("DIRECT_RESPONSE_SOURCE", result.source);
+    console.log("DIRECT_RESPONSE_INTENT", result.intent);
+    console.log("DIRECT_RESPONSE_FILE", result.usedFile || "none");
+
+    return {
+      ...result,
+      classification: {
+        intent: classificationResult.intent,
+        category: classificationResult.category,
+        source: classificationResult.source,
+        matchedKeyword: classificationResult.matchedKeyword || null,
+        score: classificationResult.score || null,
+        escalate: Boolean(classificationResult.escalate),
+        disclaimer: classificationResult.disclaimer || "none"
+      }
+    };
+  }
+
+  console.log("DIRECT_RESPONSE_FOUND", false);
+
+  return buildNoDirectMatch("no_direct_match");
+}
+
+module.exports = {
+  getDirectResponse
+};
