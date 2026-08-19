@@ -389,11 +389,264 @@ function findAccessResponse(message) {
       ],
       response: wrongEmailResponse || access.responses?.purchase_email_help
     },
-    {
+        {
       intent: "login_help",
       keywords: [
         "como ingreso",
         "cómo ingreso",
         "iniciar sesion",
         "iniciar sesión",
-        "login"
+        "login",
+        "entrar al portal",
+        "acceder al portal"
+      ],
+      response: access.responses?.login_help
+    },
+    {
+      intent: "collection_not_visible",
+      keywords: [
+        "no veo mi coleccion",
+        "no veo mi colección",
+        "no aparece mi coleccion",
+        "no aparece mi colección",
+        "no encuentro mi kit",
+        "no veo mi kit",
+        "no veo mis recursos"
+      ],
+      response:
+        collectionNotVisibleResponse ||
+        access.responses?.collection_access_help
+    },
+    {
+      intent: "magic_link_expired",
+      keywords: [
+        "enlace expiro",
+        "enlace expiró",
+        "link expiro",
+        "link expiró",
+        "magic link expiro",
+        "magic link expiró"
+      ],
+      response: magicLinkExpiredResponse
+    }
+  ];
+
+  for (const rule of directRules) {
+    const matched = rule.keywords.some((keyword) =>
+      normalizedMessage.includes(normalize(keyword))
+    );
+
+    if (matched && rule.response) {
+      return buildAccessResponse({
+        text: rule.response,
+        intent: rule.intent
+      });
+    }
+  }
+
+  return null;
+}
+
+function findRouteResponse(message) {
+  const knowledge = loadKnowledgeBase();
+  const routes = knowledge.routes?.navigation_routes || [];
+  const normalizedMessage = normalize(message);
+
+  if (!Array.isArray(routes) || routes.length === 0) {
+    return null;
+  }
+
+  const routeMatches = [
+    {
+      keywords: ["comprar", "adquirir", "shopify"],
+      intent: "comprar_kit"
+    },
+    {
+      keywords: ["colecciones disponibles", "explorar colecciones"],
+      intent: "explorar_colecciones"
+    },
+    {
+      keywords: ["app", "aplicacion", "aplicación"],
+      intent: "acceder_app"
+    },
+    {
+      keywords: ["continuar experiencia", "donde deje", "dónde dejé"],
+      intent: "continuar_experiencia"
+    },
+    {
+      keywords: ["ebook", "libro", "descargar ebook"],
+      intent: "descargar_ebook"
+    },
+    {
+      keywords: ["bono", "bonos"],
+      intent: "descargar_bonos"
+    },
+    {
+      keywords: ["imprimible", "imprimibles"],
+      intent: "descargar_imprimibles"
+    },
+    {
+      keywords: ["soporte", "ayuda", "centro de ayuda", "contactar"],
+      intent: "acceder_centro_ayuda"
+    },
+    {
+      keywords: ["iniciar sesion", "iniciar sesión", "login"],
+      intent: "iniciar_sesion"
+    },
+    {
+      keywords: ["no recibi email", "no recibí email", "no recibi correo"],
+      intent: "no_recibi_email"
+    },
+    {
+      keywords: ["no puedo entrar", "no puedo ingresar", "problema acceso"],
+      intent: "problema_acceso"
+    },
+    {
+      keywords: ["no veo mi kit", "no veo mi coleccion", "no veo mi colección"],
+      intent: "no_veo_mi_kit"
+    },
+    {
+      keywords: ["apps disponibles", "conocer apps"],
+      intent: "conocer_apps"
+    },
+    {
+      keywords: [
+        "todo lo que compre",
+        "todo lo que compré",
+        "productos adquiridos"
+      ],
+      intent: "ver_productos_adquiridos"
+    }
+  ];
+
+  for (const routeMatch of routeMatches) {
+    const matched = routeMatch.keywords.some((keyword) =>
+      normalizedMessage.includes(normalize(keyword))
+    );
+
+    if (!matched) {
+      continue;
+    }
+
+    const route = routes.find((item) => item.intent === routeMatch.intent);
+
+    if (route) {
+      return buildRouteResponse(route);
+    }
+  }
+
+  return null;
+}
+
+function findFaqResponse(message) {
+  const knowledge = loadKnowledgeBase();
+  const faqItems = knowledge.faq?.faq || [];
+  const normalizedMessage = normalize(message);
+
+  if (!Array.isArray(faqItems) || faqItems.length === 0) {
+    return null;
+  }
+
+  for (const item of faqItems) {
+    const question = normalize(item.question);
+    const answer = normalize(item.answer);
+    const id = normalize(item.id);
+
+    const matched =
+      normalizedMessage.includes(question) ||
+      question.includes(normalizedMessage) ||
+      hasTokenMatch(message, question, 2) ||
+      hasTokenMatch(message, id, 1) ||
+      hasTokenMatch(message, answer, 3);
+
+    if (matched && item.answer) {
+      return buildFaqResponse(item);
+    }
+  }
+
+  return null;
+}
+
+function shouldSkipDirectResponse(message) {
+  const normalizedMessage = normalize(message);
+
+  const sensitiveKeywords = [
+    "violencia",
+    "abuso",
+    "amenaza",
+    "amenazas",
+    "autolesion",
+    "autolesión",
+    "suicidio",
+    "hacerme daño",
+    "me quiero morir",
+    "tengo miedo",
+    "peligro",
+    "bullying",
+    "cyberbullying",
+    "depresion",
+    "depresión",
+    "ansiedad",
+    "crisis",
+    "matrimonio",
+    "divorcio",
+    "asesoria legal",
+    "asesoría legal",
+    "asesoria financiera",
+    "asesoría financiera"
+  ];
+
+  return sensitiveKeywords.some((keyword) =>
+    normalizedMessage.includes(normalize(keyword))
+  );
+}
+
+function getDirectResponse(message) {
+  if (!message || typeof message !== "string") {
+    return {
+      found: false,
+      reason: "empty_message"
+    };
+  }
+
+  if (shouldSkipDirectResponse(message)) {
+    console.log("DIRECT_RESPONSE_SKIPPED", "sensitive_or_complex_case");
+
+    return {
+      found: false,
+      reason: "sensitive_or_complex_case"
+    };
+  }
+
+  const checks = [
+    findProductResponse,
+    findAppResponse,
+    findAccessResponse,
+    findRouteResponse,
+    findFaqResponse
+  ];
+
+  for (const check of checks) {
+    const result = check(message);
+
+    if (result?.found) {
+      console.log("DIRECT_RESPONSE_FOUND", true);
+      console.log("DIRECT_RESPONSE_SOURCE", result.source);
+      console.log("DIRECT_RESPONSE_INTENT", result.intent);
+      console.log("DIRECT_RESPONSE_FILE", result.usedFile || "none");
+
+      return result;
+    }
+  }
+
+  console.log("DIRECT_RESPONSE_FOUND", false);
+
+  return {
+    found: false,
+    reason: "no_direct_match"
+  };
+}
+
+module.exports = {
+  getDirectResponse
+};
