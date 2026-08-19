@@ -214,5 +214,12 @@
 
       "response": "En Mis Colecciones encontrarás todas las experiencias asociadas a tus permisos activos."
     }
-  ]
+  ],
+"routing_rules": {
+  "fallback_route": "acceder_centro_ayuda",
+  "escalate_on_access_failure": true,
+  "escalate_on_purchase_issue": true,
+  "escalate_on_unknown_intent": true,
+  "default_category": "navigation"
+}
 }
