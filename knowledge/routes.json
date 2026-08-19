@@ -13,7 +13,7 @@
         "Shopify"
       ],
 
-      "response": "Si deseas adquirir una colección, ingresa a Mis Colecciones, selecciona el kit que te interesa y utiliza el botón Adquirir. La compra se completa en Shopify.",
+      "response": "Si deseas comenzar una nueva experiencia, ingresa a Mis Colecciones, selecciona el Kit Devocional Premium que más te interese y utiliza el botón Adquirir. La compra se realiza de forma segura a través de Shopify.",
 
       "availability_note": "La disponibilidad comercial puede variar según las colecciones activas en Shopify."
     },
@@ -28,7 +28,7 @@
         "Mis Colecciones"
       ],
 
-      "response": "Desde Mis Colecciones puedes explorar las experiencias disponibles, conocer qué incluye cada kit y acceder a información detallada sobre Apps, ebooks, bonos y recursos imprimibles."
+      "response": "Desde Mis Colecciones puedes descubrir las experiencias disponibles, conocer qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos diseñados para acompañar tu caminar de fe."
     },
 
     {
@@ -43,7 +43,7 @@
         "Abrir App Premium"
       ],
 
-      "response": "Las Apps Premium forman parte de la experiencia de cada kit. Ingresa a Mis Colecciones, selecciona tu colección y abre la App correspondiente."
+      "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu experiencia. Ingresa a Mis Colecciones, selecciona tu colección y accede a la App correspondiente para continuar tu recorrido."
     },
 
     {
@@ -57,7 +57,7 @@
         "Continuar experiencia"
       ],
 
-      "response": "Puedes continuar tu avance desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a tus experiencias activas."
+      "response": "Puedes retomar tu experiencia desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a las experiencias que estás disfrutando actualmente."
     },
 
     {
@@ -73,7 +73,7 @@
         "Descargar"
       ],
 
-      "response": "Dentro de tu colección encontrarás el ebook principal disponible para descarga."
+      "response": "Dentro de la colección que adquiriste encontrarás el ebook principal de tu experiencia, disponible para descargar y consultar cuando lo necesites."
     },
 
     {
@@ -89,7 +89,7 @@
         "Descargar"
       ],
 
-      "response": "Los bonos complementarios se encuentran dentro de la colección adquirida y pueden descargarse desde la sección correspondiente."
+      "response": "Dentro de la colección que adquiriste encontrarás todos los bonos complementarios incluidos en tu experiencia. Podrás acceder a ellos y descargarlos desde la sección correspondiente cuando lo necesites."
     },
 
     {
@@ -105,7 +105,7 @@
         "Descargar"
       ],
 
-      "response": "Las versiones imprimibles están disponibles dentro de cada colección para facilitar su uso en formato físico."
+      "response": "Dentro de tu colección encontrarás recursos imprimibles diseñados para complementar tu experiencia. Puedes descargarlos y utilizarlos cuando desees en formato físico. Además, han sido preparados con un diseño pensado para favorecer un consumo moderado de tinta durante la impresión."
     },
 
     {
@@ -120,7 +120,7 @@
         "Enviar consulta"
       ],
 
-      "response": "Si necesitas ayuda adicional, puedes utilizar el formulario disponible en Centro de Ayuda."
+      "response": "Si necesitas ayuda adicional, puedes acceder desde Menú → Inicio → Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación."
     },
 
     {
@@ -136,7 +136,7 @@
         "Hacer clic en el enlace enviado por Supabase"
       ],
 
-      "response": "Para ingresar al portal, escribe tu correo electrónico y utiliza el enlace de acceso enviado por Supabase."
+      "response": "Para ingresar al portal, escribe tu correo electrónico y utiliza el enlace seguro que recibirás en tu bandeja de entrada. Una vez abierto, podrás acceder a tu experiencia de forma simple y rápida."
     },
 
     {
@@ -154,7 +154,7 @@
         "Solicitar nuevo enlace"
       ],
 
-      "response": "Si no recibiste el correo de acceso, revisa spam, promociones y correo no deseado. Luego intenta solicitar un nuevo enlace."
+      "response": "Si no encuentras el correo de acceso, revisa tu bandeja principal, spam, promociones o correo no deseado. Si aún no aparece, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión."
     },
 
     {
@@ -171,7 +171,7 @@
         "Ingresar al portal"
       ],
 
-      "response": "Antes de continuar, valida que estás utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. El acceso se verifica utilizando ese mismo correo."
+      "response": "Si no puedes acceder a tu experiencia, primero verifica que estás utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. Ese correo permite identificar correctamente tus permisos y habilitar el acceso a todos los recursos incluidos."
     },
 
     {
@@ -184,7 +184,7 @@
         "Mis Colecciones"
       ],
 
-      "response": "Primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Si el problema persiste, contacta al equipo de soporte."
+      "response": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo electrónico utilizado durante la compra. Si después de esta validación sigues sin verla en Mis Colecciones, puedes dirigirte a Menú → Inicio → Centro de Ayuda y completar el formulario de contacto para que podamos revisar tu caso."
     },
 
     {
