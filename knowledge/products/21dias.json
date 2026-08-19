@@ -21,6 +21,37 @@
     "devocional para acercarme a dios"
   ],
 
+  "email_presentation": {
+    "hero_title": "✨ 21 Días Más Cerca de Dios",
+
+    "hero_subtitle": "Una experiencia devocional premium creada para ayudarte a fortalecer tu relación con Dios a través de hábitos espirituales simples, significativos y sostenibles.",
+
+    "transformation_title": "🌿 ¿Qué transformación busca generar?",
+
+    "transformation_text": "Ayudarte a pasar de una vida espiritual ocasional a una relación diaria, cercana y consciente con Dios, desarrollando hábitos que fortalezcan tu fe, tu vida de oración y tu crecimiento espiritual de manera sostenible.",
+
+    "includes_title": "📦 ¿Qué incluye?",
+
+    "app_label": "📱 App Premium",
+    "ebook_label": "📘 Ebook Principal",
+    "bonuses_label": "🎁 Bonificaciones Exclusivas",
+    "printables_label": "🖨️ Recursos Imprimibles",
+
+    "printables_text": "Material complementario para profundizar la experiencia y acompañar tu tiempo devocional en formato físico.",
+
+    "audience_title": "❤️ Ideal para",
+
+    "audience_items": [
+      "Mujeres que desean fortalecer su relación con Dios",
+      "Mujeres que buscan establecer hábitos espirituales saludables",
+      "Mujeres que desean crear un tiempo devocional constante",
+      "Mujeres que buscan crecer en oración, reflexión y gratitud",
+      "Mujeres que desean vivir una fe más intencional en su día a día"
+    ],
+
+    "closing_text": "✨ Cada recurso fue diseñado para acompañarte paso a paso en tu tiempo con Dios, ayudándote a construir una vida espiritual más profunda, constante y significativa."
+  },
+
   "availability": {
     "status": "active",
     "message": "Disponible a través de Shopify."
