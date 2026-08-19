@@ -4,9 +4,9 @@
       "product_id": "palabras_duelen",
       "status": "prelaunch",
 
-      "description": "App Premium orientada a la reflexión personal, journaling guiado y fortalecimiento de la identidad en Dios.",
+      "description": "App Premium diseñada para brindar un espacio seguro de reflexión personal, ayudando a procesar emociones, fortalecer la autoestima y recordar el valor e identidad que cada persona tiene en Dios.",
 
-      "purpose": "Acompañar procesos de crecimiento personal y construcción de hábitos de paz desde una perspectiva cristiana.",
+      "purpose": "Ofrecer herramientas prácticas que ayuden a transformar pensamientos y emociones en oportunidades de crecimiento, promoviendo hábitos de paz, resiliencia y bienestar emocional desde una perspectiva basada en la fe.",
 
       "target_audience": [
         "adolescentes",
@@ -24,12 +24,12 @@
       ],
 
       "what_users_will_find": [
-        "Ejercicios de reflexión",
-        "Registro de pensamientos",
-        "Seguimiento de crecimiento personal",
-        "Recordatorios sobre identidad en Dios",
-        "Prácticas de paz y autocuidado"
-      ],
+  "Espacios para expresar pensamientos y emociones de manera segura",
+  "Ejercicios guiados para fortalecer la confianza y la autoestima",
+  "Reflexiones que ayudan a recordar el valor personal y la identidad en Dios",
+  "Herramientas para desarrollar hábitos de paz y bienestar emocional",
+  "Recursos prácticos para afrontar situaciones difíciles con esperanza y resiliencia"
+],
 
       "requires_login": true,
 
