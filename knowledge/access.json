@@ -6,7 +6,7 @@
 
     "access_method": {
       "name": "Supabase Magic Link",
-      "description": "El acceso al portal utiliza autenticación mediante Magic Link enviado por correo electrónico.",
+      "description": "El acceso al portal se realiza mediante un enlace seguro enviado a tu correo electrónico, permitiéndote ingresar de forma simple y rápida sin necesidad de recordar contraseñas.",
 
       "steps": [
         "Ingresar correo electrónico en el login.",
@@ -20,7 +20,7 @@
 
     "purchase_validation": {
       "required_email": true,
-      "message": "El acceso a Apps, ebooks, bonos e imprimibles se valida utilizando el mismo correo electrónico empleado durante la compra en Shopify."
+      "message": "Para acceder a tus Apps, ebooks, bonos y recursos imprimibles, es importante utilizar el mismo correo electrónico con el que realizaste tu compra en Shopify. Esto permite identificar correctamente tus permisos y habilitar tu contenido."
     },
 
     "permissions": {
@@ -42,7 +42,7 @@
         "category": "purchase_access",
         "priority": "high",
         "title": "Validar mismo correo de compra",
-        "response": "Antes de continuar, por favor valida que estés utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify."
+        "response": "Antes de continuar, verifica que estés utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. Este paso suele resolver la mayoría de los problemas de acceso y nos ayuda a identificar correctamente tus permisos."
       },
 
       {
@@ -50,7 +50,7 @@
         "category": "login",
         "priority": "medium",
         "title": "No recibí el correo de acceso",
-        "response": "Revisa la bandeja principal, spam, promociones y correo no deseado. Luego intenta solicitar un nuevo enlace de acceso."
+        "response": "Si no encuentras el correo de acceso, revisa tu bandeja principal, spam, promociones o correo no deseado. Si aún no aparece, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión."
       },
 
       {
@@ -58,7 +58,7 @@
         "category": "login",
         "priority": "medium",
         "title": "No abrí el enlace",
-        "response": "Debes abrir el enlace enviado por Supabase para validar tu sesión y acceder al portal."
+        "response": "Para completar el acceso al portal, es necesario abrir el enlace enviado a tu correo electrónico. Este paso permite validar tu sesión y habilitar el ingreso a tu experiencia."
       },
 
       {
@@ -66,7 +66,7 @@
         "category": "login",
         "priority": "medium",
         "title": "El enlace expiró",
-        "response": "Solicita un nuevo enlace desde la pantalla de inicio de sesión."
+        "response": "Si el enlace de acceso expiró, puedes solicitar uno nuevo desde la pantalla de inicio de sesión. Se enviará un nuevo enlace a tu correo electrónico para que puedas continuar con el acceso."
       },
 
       {
@@ -130,7 +130,7 @@
     "fecha aproximada de compra"
   ],
 
-  "message": "Si ya validaste todos los pasos anteriores y aún no puedes acceder, por favor comparte la información solicitada para que podamos revisar tu caso.",
+  "message": "Si ya realizaste las validaciones anteriores y aún no puedes acceder a tu experiencia, por favor comparte la información solicitada. Con esos datos podremos revisar tu caso con mayor detalle y ayudarte a encontrar una solución.",
 
   "escalation_cases": [
     "purchase_verified_but_no_access",
@@ -142,11 +142,11 @@
 },
 
     "responses": {
-  "login_help": "Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Supabase enviará un enlace de acceso a ese correo. Una vez abierto el enlace, podrás acceder a tu experiencia.",
+  "login_help": "Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Recibirás un enlace seguro en tu correo electrónico y, una vez abierto, podrás acceder a tu experiencia de forma simple y rápida.",
 
-  "purchase_email_help": "Recuerda utilizar el mismo correo electrónico registrado durante la compra para que el sistema pueda identificar tus permisos activos.",
+  "purchase_email_help": "Recuerda utilizar el mismo correo electrónico con el que realizaste tu compra. Esto permite identificar correctamente tus permisos y habilitar el acceso a todos los recursos incluidos en tu experiencia.",
 
-  "collection_access_help": "Las Apps, ebooks, bonos y recursos imprimibles asociados a tus compras se habilitan automáticamente cuando el correo autenticado coincide con el correo utilizado durante la compra."
+  "collection_access_help": "Cuando ingresas con el mismo correo electrónico utilizado durante la compra, el sistema habilita automáticamente el acceso a las Apps, ebooks, bonos y recursos imprimibles incluidos en tu experiencia."
 }
 }
 }
