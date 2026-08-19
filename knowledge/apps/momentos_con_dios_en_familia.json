@@ -4,9 +4,9 @@
       "product_id": "familia",
       "status": "prelaunch",
 
-      "description": "App Premium diseñada para compartir momentos de fe en familia mediante actividades, conversaciones guiadas y experiencias sencillas para niños y adultos.",
+      "description": "App Premium diseñada para ayudar a las familias a crear momentos especiales de conexión, aprendizaje y fe compartida, a través de actividades y conversaciones que pueden disfrutarse juntos en el hogar.",
 
-      "purpose": "Facilitar experiencias espirituales cotidianas que fortalezcan la conexión familiar y la fe compartida.",
+      "purpose": "Promover espacios significativos de conversación, aprendizaje y participación familiar, ayudando a incorporar valores, gratitud y momentos de reflexión en la vida cotidiana.",
 
       "target_audience": [
         "familias",
@@ -26,12 +26,12 @@
       ],
 
       "what_users_will_find": [
-        "Ideas para compartir en familia",
-        "Dinámicas para niños",
-        "Espacios de conversación",
-        "Momentos de gratitud",
-        "Experiencias devocionales familiares"
-      ],
+  "Actividades sencillas para disfrutar y aprender juntos en familia",
+  "Preguntas y conversaciones que fortalecen la comunicación entre adultos y niños",
+  "Momentos especiales para reflexionar y compartir experiencias de vida",
+  "Ideas prácticas para incorporar la fe en situaciones cotidianas del hogar",
+  "Recursos que ayudan a crear recuerdos significativos alrededor de valores y enseñanzas cristianas"
+],
 
       "requires_login": true,
 
