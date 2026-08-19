@@ -9,9 +9,9 @@
 
       "commercial_stage": "featured_prelaunch",
 
-      "sales_description": "Kit Devocional Premium diseñado para acompañar a adolescentes, jóvenes y familias que enfrentan palabras hirientes, rechazo, bullying o cyberbullying.",
+      "sales_description": "Una experiencia diseñada para acompañar a adolescentes, jóvenes y familias que han sido afectados por palabras hirientes, rechazo, bullying o cyberbullying, ayudándoles a redescubrir su valor, fortalecer su identidad y encontrar esperanza en Dios."
 
-      "transformation": "Ayudar a recordar el valor personal en Dios, desarrollar hábitos de paz y fortalecer una identidad saludable desde una perspectiva cristiana.",
+      "transformation": "Pasar del dolor causado por palabras hirientes y el rechazo a una comprensión más profunda del propio valor, fortaleciendo la identidad, la confianza y la paz interior a la luz de lo que Dios dice sobre cada persona."
 
       "target_audience": [
         "adolescentes",
@@ -23,7 +23,7 @@
       "app": {
         "name": "Diario de Paz Digital",
 
-        "description": "App Premium orientada a la reflexión, journaling, seguimiento de hábitos de paz y fortalecimiento de la identidad en Dios.",
+        "description": "Una aplicación creada para brindar un espacio seguro de reflexión personal, ayudando a procesar emociones, fortalecer la autoestima y recordar la identidad y el valor que cada persona tiene en Dios."
 
         "features": [
           "journaling guiado",
@@ -38,7 +38,7 @@
       "ebook": {
         "name": "Cuando las Palabras Duelen",
 
-        "description": "Devocional diseñado para acompañar procesos relacionados con palabras hirientes, rechazo y restauración de la identidad."
+        "description": "Un recorrido devocional que invita a reflexionar sobre el impacto de las palabras, reconocer el valor personal y avanzar hacia un proceso de restauración, confianza y esperanza desde una perspectiva basada en la fe."
       },
 
       "bonuses": [
