@@ -15,206 +15,345 @@
 
       "response": "Si deseas comenzar una nueva experiencia, ingresa a Mis Colecciones, selecciona el Kit Devocional Premium que más te interese y utiliza el botón Adquirir. La compra se realiza de forma segura a través de Shopify.",
 
+      "route_presentation": {
+  "hero_title": "🛍️ Cómo adquirir una nueva colección",
+
+  "hero_subtitle": "Te acompañamos paso a paso para que puedas acceder a la experiencia devocional que mejor se adapte a tu momento de vida.",
+
+  "steps_title": "📍 Ruta recomendada",
+
+  "closing_text": "✨ Cada colección fue diseñada para acompañarte en tu crecimiento espiritual a través de recursos prácticos, herramientas digitales y experiencias significativas."
+},
+
       "availability_note": "La disponibilidad comercial puede variar según las colecciones activas en Shopify."
     },
 
     {
-      "intent": "explorar_colecciones",
+  "intent": "explorar_colecciones",
 
-      "title": "Quiero conocer las colecciones disponibles",
+  "title": "Quiero conocer las colecciones disponibles",
 
-      "route": [
-        "Inicio",
-        "Mis Colecciones"
-      ],
-
-      "response": "Desde Mis Colecciones puedes descubrir las experiencias disponibles, conocer qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos diseñados para acompañar tu caminar de fe."
-    },
-
-    {
-      "intent": "acceder_app",
-
-      "title": "Quiero acceder a mi App",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones",
-        "Seleccionar colección adquirida",
-        "Abrir App Premium"
-      ],
-
-      "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu experiencia. Ingresa a Mis Colecciones, selecciona tu colección y accede a la App correspondiente para continuar tu recorrido."
-    },
-
-    {
-      "intent": "continuar_experiencia",
-
-      "title": "Quiero continuar donde dejé mi experiencia",
-
-      "route": [
-        "Inicio",
-        "Mi Experiencia con Dios",
-        "Continuar experiencia"
-      ],
-
-      "response": "Puedes retomar tu experiencia desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a las experiencias que estás disfrutando actualmente."
-    },
-
-    {
-      "intent": "descargar_ebook",
-
-      "title": "Quiero descargar mi ebook",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones",
-        "Seleccionar colección adquirida",
-        "Ebook Principal",
-        "Descargar"
-      ],
-
-      "response": "Dentro de la colección que adquiriste encontrarás el ebook principal de tu experiencia, disponible para descargar y consultar cuando lo necesites."
-    },
-
-    {
-      "intent": "descargar_bonos",
-
-      "title": "Quiero descargar mis bonos",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones",
-        "Seleccionar colección adquirida",
-        "Bonos Complementarios",
-        "Descargar"
-      ],
-
-      "response": "Dentro de la colección que adquiriste encontrarás todos los bonos complementarios incluidos en tu experiencia. Podrás acceder a ellos y descargarlos desde la sección correspondiente cuando lo necesites."
-    },
-
-    {
-      "intent": "descargar_imprimibles",
-
-      "title": "Quiero descargar los imprimibles",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones",
-        "Seleccionar colección adquirida",
-        "Recursos Imprimibles",
-        "Descargar"
-      ],
-
-      "response": "Dentro de tu colección encontrarás recursos imprimibles diseñados para complementar tu experiencia. Puedes descargarlos y utilizarlos cuando desees en formato físico. Además, han sido preparados con un diseño pensado para favorecer un consumo moderado de tinta durante la impresión."
-    },
-
-    {
-      "intent": "acceder_centro_ayuda",
-
-      "title": "Quiero contactar soporte",
-
-      "route": [
-        "Inicio",
-        "Centro de Ayuda",
-        "Completar formulario",
-        "Enviar consulta"
-      ],
-
-      "response": "Si necesitas ayuda adicional, puedes acceder desde Menú → Inicio → Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación."
-    },
-
-    {
-      "intent": "iniciar_sesion",
-
-      "title": "Quiero iniciar sesión",
-
-      "route": [
-        "Inicio",
-        "Iniciar sesión",
-        "Ingresar correo electrónico",
-        "Abrir correo recibido",
-        "Hacer clic en el enlace enviado por Supabase"
-      ],
-
-      "response": "Para ingresar al portal, escribe tu correo electrónico y utiliza el enlace seguro que recibirás en tu bandeja de entrada. Una vez abierto, podrás acceder a tu experiencia de forma simple y rápida."
-    },
-
-    {
-      "intent": "no_recibi_email",
-
-      "title": "No recibí el correo de acceso",
-
-      "route": [
-        "Inicio",
-        "Iniciar sesión",
-        "Verificar correo electrónico ingresado",
-        "Revisar bandeja principal",
-        "Revisar spam",
-        "Revisar promociones",
-        "Solicitar nuevo enlace"
-      ],
-
-      "response": "Si no encuentras el correo de acceso, revisa tu bandeja principal, spam, promociones o correo no deseado. Si aún no aparece, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión."
-    },
-
-    {
-      "intent": "problema_acceso",
-
-      "title": "Compré y no puedo entrar",
-
-      "route": [
-        "Inicio",
-        "Iniciar sesión",
-        "Ingresar correo utilizado en Shopify",
-        "Abrir correo de Supabase",
-        "Hacer clic en el enlace de acceso",
-        "Ingresar al portal"
-      ],
-
-      "response": "Si no puedes acceder a tu experiencia, primero verifica que estás utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. Ese correo permite identificar correctamente tus permisos y habilitar el acceso a todos los recursos incluidos."
-    },
-
-    {
-      "intent": "no_veo_mi_kit",
-
-      "title": "Entré al portal pero no veo mi colección",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones"
-      ],
-
-      "response": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo electrónico utilizado durante la compra. Si después de esta validación sigues sin verla en Mis Colecciones, puedes dirigirte a Menú → Inicio → Centro de Ayuda y completar el formulario de contacto para que podamos revisar tu caso."
-    },
-
-    {
-      "intent": "conocer_apps",
-
-      "title": "Quiero conocer las Apps disponibles",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones",
-        "Seleccionar colección",
-        "Ver App Premium"
-      ],
-
-      "response": "Cada colección incluye una App Premium diseñada para acompañar la experiencia principal del kit."
-    },
-
-    {
-      "intent": "ver_productos_adquiridos",
-
-      "title": "Quiero ver todo lo que compré",
-
-      "route": [
-        "Inicio",
-        "Mis Colecciones"
-      ],
-
-      "response": "En Mis Colecciones encontrarás todas las experiencias asociadas a tus permisos activos."
-    }
+  "route": [
+    "Inicio",
+    "Mis Colecciones"
   ],
+
+  "response": "Desde Mis Colecciones puedes descubrir las experiencias disponibles, conocer qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos diseñados para acompañar tu caminar de fe.",
+
+  "route_presentation": {
+    "hero_title": "📚 Explorar Colecciones Disponibles",
+
+    "hero_subtitle": "Descubre las experiencias devocionales disponibles y encuentra la colección que mejor se adapte a tu etapa de vida, tus necesidades y tu crecimiento espiritual.",
+
+    "steps_title": "📍 Dónde encontrarlas",
+
+    "closing_text": "✨ Cada colección fue creada para ayudarte a crecer en tu fe mediante recursos prácticos, herramientas digitales y experiencias diseñadas para acompañarte día a día."
+  }
+},
+
+    {
+  "intent": "acceder_app",
+
+  "title": "Quiero acceder a mi App",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+    "Seleccionar colección adquirida",
+    "Abrir App Premium"
+  ],
+
+  "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu experiencia. Ingresa a Mis Colecciones, selecciona tu colección y accede a la App correspondiente para continuar tu recorrido.",
+
+  "route_presentation": {
+    "hero_title": "📱 Cómo acceder a tu App Premium",
+
+    "hero_subtitle": "Te guiamos paso a paso para que puedas ingresar a tu aplicación y aprovechar todos los recursos incluidos en tu experiencia devocional.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Tu App Premium fue diseñada para acompañarte cada día con herramientas prácticas, recursos exclusivos y experiencias que fortalecerán tu crecimiento espiritual."
+  }
+},
+
+    {
+  "intent": "continuar_experiencia",
+
+  "title": "Quiero continuar donde dejé mi experiencia",
+
+  "route": [
+    "Inicio",
+    "Mi Experiencia con Dios",
+    "Continuar experiencia"
+  ],
+
+  "response": "Puedes retomar tu experiencia desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a las experiencias que estás disfrutando actualmente.",
+
+  "route_presentation": {
+    "hero_title": "▶️ Continuar tu experiencia",
+
+    "hero_subtitle": "Retoma tu recorrido exactamente donde lo dejaste y continúa avanzando en tu crecimiento espiritual con todos tus avances guardados.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Tu progreso se guarda para que puedas continuar cada experiencia a tu propio ritmo, manteniendo la constancia y disfrutando cada paso de tu proceso de crecimiento."
+  }
+},
+
+    {
+  "intent": "descargar_ebook",
+
+  "title": "Quiero descargar mi ebook",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+    "Seleccionar colección adquirida",
+    "Ebook Principal",
+    "Descargar"
+  ],
+
+  "response": "Dentro de la colección que adquiriste encontrarás el ebook principal de tu experiencia, disponible para descargar y consultar cuando lo necesites.",
+
+  "route_presentation": {
+    "hero_title": "📘 Descargar tu Ebook Principal",
+
+    "hero_subtitle": "Accede al ebook principal incluido en tu experiencia y disfruta de su contenido cuando lo necesites, desde cualquier dispositivo compatible.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Tu ebook fue diseñado para acompañarte durante todo el proceso de aprendizaje, reflexión y crecimiento espiritual que forma parte de tu experiencia."
+  }
+},
+
+    {
+  "intent": "descargar_bonos",
+
+  "title": "Quiero descargar mis bonos",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+    "Seleccionar colección adquirida",
+    "Bonos Incluidos",
+    "Descargar"
+  ],
+
+  "response": "Dentro de la colección que adquiriste encontrarás todos los bonos complementarios incluidos en tu experiencia. Podrás acceder a ellos y descargarlos desde la sección correspondiente cuando lo necesites.",
+
+  "route_presentation": {
+    "hero_title": "🎁 Acceder a tus Bonificaciones",
+
+    "hero_subtitle": "Descubre y descarga todos los recursos complementarios incluidos en tu experiencia para potenciar tu aprendizaje, reflexión y crecimiento espiritual.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Cada bonificación fue creada para enriquecer tu experiencia, ayudarte a poner en práctica lo aprendido y acompañarte en tu crecimiento espiritual de manera integral."
+  }
+},
+
+    {
+  "intent": "descargar_imprimibles",
+
+  "title": "Quiero descargar los imprimibles",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+    "Seleccionar colección adquirida",
+    "Versiones Imprimibles",
+    "Descargar"
+  ],
+
+  "response": "Dentro de tu colección encontrarás recursos imprimibles diseñados para complementar tu experiencia. Puedes descargarlos y utilizarlos cuando desees en formato físico. Además, han sido preparados con un diseño pensado para favorecer un consumo moderado de tinta durante la impresión.",
+
+  "route_presentation": {
+    "hero_title": "🖨️ Descargar Versiones Imprimibles",
+
+    "hero_subtitle": "Accede a todos los materiales imprimibles incluidos en tu experiencia para complementar tu aprendizaje, reflexión y crecimiento espiritual también fuera de la pantalla.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Cada recurso imprimible fue diseñado para ayudarte a poner en práctica lo aprendido, acompañar tus momentos de reflexión y enriquecer tu experiencia de manera sencilla y accesible."
+  }
+},
+
+    {
+  "intent": "acceder_centro_ayuda",
+
+  "title": "Quiero contactar soporte",
+
+  "route": [
+    "Inicio",
+    "Centro de Ayuda",
+    "Completar formulario",
+    "Enviar consulta"
+  ],
+
+  "response": "Si necesitas ayuda adicional, puedes acceder desde Menú → Inicio → Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.",
+
+  "route_presentation": {
+    "hero_title": "🤝 Centro de Ayuda",
+
+    "hero_subtitle": "Estamos aquí para acompañarte. Si necesitas asistencia, orientación o resolver alguna situación relacionada con tu experiencia, puedes contactarnos desde el Centro de Ayuda.",
+
+    "steps_title": "📍 Cómo enviar tu consulta",
+
+    "closing_text": "✨ Cada consulta es importante para nosotros. Compartiendo la mayor cantidad de detalles posible, podremos orientarte de manera más rápida y precisa."
+  }
+},
+
+    {
+  "intent": "iniciar_sesion",
+
+  "title": "Quiero iniciar sesión",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+     "Seleccionar colección adquirida",
+     "Entrar a la App"
+  ],
+
+  "response": "Para acceder a tu experiencia, ingresa al portal y dirígete a Mis Colecciones. Desde allí podrás seleccionar tu colección y utilizar la opción Entrar a la App para continuar tu recorrido, acceder a tus recursos y retomar tu progreso.",
+
+  "route_presentation": {
+    "hero_title": "🔐 Acceder a tu experiencia",
+
+    "hero_subtitle": "Ingresa fácilmente a tu colección y continúa disfrutando de todos los recursos incluidos en tu experiencia devocional.",
+
+    "steps_title": "📍 Ruta recomendada",
+
+    "closing_text": "✨ Desde tu App podrás acceder a contenidos exclusivos, registrar tu progreso, consultar tus recursos y continuar creciendo en tu caminar de fe a tu propio ritmo."
+  }
+},
+
+    {
+  "intent": "no_recibi_email",
+
+  "title": "No recibí el correo de acceso",
+
+  "route": [
+    "Inicio",
+    "Iniciar sesión",
+    "Verificar correo electrónico ingresado",
+    "Revisar bandeja principal",
+    "Revisar spam",
+    "Revisar promociones",
+    "Solicitar nuevo enlace"
+  ],
+
+  "response": "Si no encuentras el correo de acceso, verifica primero que hayas ingresado correctamente tu dirección de correo electrónico. Luego revisa tu bandeja principal, correo no deseado, spam y promociones. Si el mensaje aún no aparece, puedes solicitar un nuevo enlace de acceso.",
+
+  "route_presentation": {
+    "hero_title": "📩 No recibí el correo de acceso",
+
+    "hero_subtitle": "No te preocupes. En la mayoría de los casos el correo puede encontrarse en otra bandeja o resolverse con un nuevo envío del enlace de acceso.",
+
+    "steps_title": "✅ Revisa estos pasos",
+
+    "closing_text": "✨ Si después de revisar todas las carpetas el correo sigue sin aparecer, puedes solicitar un nuevo enlace o contactarnos desde el Centro de Ayuda para que podamos orientarte."
+  }
+},
+
+    {
+  "intent": "problema_acceso",
+
+  "title": "Compré y no puedo entrar",
+
+  "route": [
+    "Inicio",
+    "Iniciar sesión",
+    "Ingresar correo utilizado en Shopify",
+    "Abrir correo de acceso",
+    "Ingresar al portal",
+    "Mis Colecciones"
+  ],
+
+  "response": "Si no puedes acceder a tu experiencia, verifica primero que estás utilizando exactamente el mismo correo electrónico con el que realizaste tu compra. Ese correo es el que permite identificar correctamente tus colecciones, recursos y permisos de acceso dentro del portal.",
+
+  "route_presentation": {
+    "hero_title": "🔑 Compré y no puedo ingresar",
+
+    "hero_subtitle": "La mayoría de los problemas de acceso se resuelven verificando que el correo utilizado para iniciar sesión sea el mismo que se utilizó durante la compra.",
+
+    "steps_title": "✅ Revisa estos pasos",
+
+    "closing_text": "✨ Una vez que ingreses con el correo correcto, podrás acceder a tus colecciones, aplicaciones, ebooks, bonificaciones y recursos incluidos en tu experiencia."
+  }
+},
+
+    {
+  "intent": "no_veo_mi_kit",
+
+  "title": "Entré al portal pero no veo mi colección",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones"
+  ],
+
+  "response": "Si no encuentras tu colección, verifica primero que hayas iniciado sesión con el mismo correo electrónico que utilizaste durante la compra. El sistema utiliza ese correo para identificar tus permisos y mostrar correctamente las experiencias adquiridas. Si después de esta validación aún no ves tu colección, puedes contactarnos desde el Centro de Ayuda para que podamos revisar tu caso.",
+
+  "route_presentation": {
+    "hero_title": "📚 No veo mi colección",
+
+    "hero_subtitle": "No te preocupes. En la mayoría de los casos esto ocurre cuando se inicia sesión con un correo electrónico diferente al utilizado durante la compra.",
+
+    "steps_title": "✅ Verifica lo siguiente",
+
+    "closing_text": "✨ Si después de iniciar sesión con el correo correcto tu colección sigue sin aparecer, nuestro equipo podrá ayudarte a revisar la situación y orientarte sobre los siguientes pasos."
+  }
+},
+
+    {
+  "intent": "conocer_apps",
+
+  "title": "Quiero conocer las Apps disponibles",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones",
+    "Seleccionar colección",
+    "Ver App Premium"
+  ],
+
+  "response": "Cada colección incluye una App Premium diseñada para acompañar la experiencia principal del kit. Dentro de cada colección podrás conocer las funcionalidades disponibles y acceder a herramientas diseñadas para fortalecer tu aprendizaje, reflexión y crecimiento espiritual.",
+
+  "route_presentation": {
+    "hero_title": "📱 Conoce las Apps Premium",
+
+    "hero_subtitle": "Cada experiencia incluye una aplicación exclusiva creada para acompañarte durante tu recorrido espiritual con herramientas prácticas, seguimiento de progreso y recursos personalizados.",
+
+    "steps_title": "📍 Dónde encontrarlas",
+
+    "closing_text": "✨ Las Apps Premium fueron diseñadas para ayudarte a vivir una experiencia más completa, integrando reflexión, crecimiento espiritual y herramientas que facilitan la constancia en tu día a día."
+  }
+},
+
+    {
+  "intent": "ver_productos_adquiridos",
+
+  "title": "Quiero ver todo lo que compré",
+
+  "route": [
+    "Inicio",
+    "Mis Colecciones"
+  ],
+
+  "response": "En Mis Colecciones encontrarás todas las experiencias asociadas a tus permisos activos. Desde allí podrás acceder a tus Apps Premium, ebooks principales, bonificaciones, recursos imprimibles y cualquier contenido habilitado para tu cuenta.",
+
+  "route_presentation": {
+    "hero_title": "📚 Ver Mis Colecciones",
+
+    "hero_subtitle": "Accede a todas las experiencias vinculadas a tu cuenta desde un único lugar, organizadas para que puedas encontrar fácilmente cada recurso adquirido.",
+
+    "steps_title": "📍 Dónde encontrarlas",
+
+    "closing_text": "✨ Desde Mis Colecciones podrás gestionar todas tus experiencias, retomar tu progreso, acceder a tus aplicaciones y disfrutar de cada recurso incluido en tus compras."
+  }
+},
+ 
 "routing_rules": {
   "fallback_route": "acceder_centro_ayuda",
   "escalate_on_access_failure": true,
