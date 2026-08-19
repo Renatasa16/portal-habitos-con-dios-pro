@@ -1,8 +1,42 @@
 {
-      "id": "hombre_hogar",
-      "name": "El Hombre que Edifica su Hogar",
+  "id": "hombre_hogar",
+  "name": "El Hombre que Edifica su Hogar",
 
-      "availability": {
+  "aliases": [
+    "hombre hogar",
+    "el hombre que edifica su hogar",
+    "edifica su hogar",
+    "hombre de dios",
+    "liderazgo espiritual",
+    "lider espiritual",
+    "liderazgo familiar",
+    "lider del hogar",
+    "líder del hogar",
+    "esposos",
+    "padres",
+    "futuros padres",
+    "hombre cristiano",
+    "hombres cristianos",
+    "fortalecer mi hogar",
+    "fortalecer la familia",
+    "guiar a mi familia",
+    "guia espiritual para hombres",
+    "guía espiritual para hombres",
+    "devocional para hombres",
+    "devocional masculino",
+    "crecimiento espiritual para hombres",
+    "cabeza del hogar",
+    "rol del hombre",
+    "hombre de fe",
+    "matrimonio cristiano",
+    "esposo cristiano",
+    "liderar con proposito",
+    "liderar con propósito",
+    "mi hogar con proposito",
+    "mi hogar con propósito"
+  ],
+
+  "availability": {
         "status": "prelaunch",
         "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
       },
