@@ -309,15 +309,15 @@ function buildUserEmailTemplate({
 
       <div style="padding:20px 22px; background:#f3eee5; border-bottom:1px solid #eadfce;">
         <div style="display:inline-block; padding:7px 12px; background:#315c4b; color:#ffffff; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;">
-          Respuesta inicial
+          Gracias por confiar en Hábitos con Dios
         </div>
 
         <h2 style="margin:14px 0 6px; font-size:21px; line-height:1.35; color:#2f2a24; font-weight:700;">
-          Te compartimos una primera orientación
+          Hemos preparado una orientación pensada para tu experiencia
         </h2>
 
         <p style="margin:0; font-size:14px; line-height:1.7; color:#6f5a3b;">
-          Esta respuesta fue preparada con la información disponible en nuestra base de conocimiento de Hábitos con Dios.
+          Queremos acompañarte con una respuesta clara, cercana y alineada con la información disponible para que puedas avanzar con confianza dentro de tu experiencia.
         </p>
       </div>
 
@@ -329,7 +329,7 @@ function buildUserEmailTemplate({
 
       <div style="padding:18px 22px; background:#faf6ee; border-top:1px solid #eadfce;">
         <p style="margin:0; font-size:14px; line-height:1.7; color:#7a684f;">
-          Si necesitas más ayuda, puedes responder este correo o completar una nueva consulta desde el Centro de Ayuda.
+          ✨ Si necesitas orientación adicional, puedes completar nuevamente el formulario desde el Centro de Ayuda. Estaremos encantados de acompañarte.
         </p>
       </div>
 
