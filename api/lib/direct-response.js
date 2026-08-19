@@ -754,6 +754,7 @@ function buildNoDirectMatch(reason = "no_direct_match") {
 }
 
 function getDirectResponse(message) {
+  console.log("DIRECT_RESPONSE_VERSION", "2026-08-19-R1");
   if (!message || typeof message !== "string") {
     return buildNoDirectMatch("empty_message");
   }
