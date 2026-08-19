@@ -1,8 +1,35 @@
 {
-      "id": "familia",
-      "name": "Pequeños Momentos con Dios",
+  "id": "familia",
+  "name": "Pequeños Momentos con Dios",
 
-      "availability": {
+  "aliases": [
+    "pequeños momentos",
+    "pequenos momentos",
+    "pequeños momentos con dios",
+    "pequenos momentos con dios",
+    "momentos con dios",
+    "momentos con dios en familia",
+    "kit familia",
+    "kit familiar",
+    "devocional familiar",
+    "devocional para familias",
+    "familias",
+    "padres",
+    "madres",
+    "crianza cristiana",
+    "fe en familia",
+    "tiempo con mis hijos",
+    "actividades cristianas para niños",
+    "devocional para niños",
+    "fortalecer la familia",
+    "compartir la fe en casa",
+    "orar en familia",
+    "crecimiento espiritual familiar",
+    "educación cristiana en el hogar",
+    "educacion cristiana en el hogar"
+  ],
+
+  "availability": {
         "status": "prelaunch",
         "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
       },
