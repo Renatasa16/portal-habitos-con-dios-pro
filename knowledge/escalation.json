@@ -171,11 +171,11 @@
     },
 
     "support_messages": {
-      "access_review": "Gracias por validar los pasos anteriores. Para revisar tu caso, por favor comparte el correo utilizado durante la compra, el nombre de la colección adquirida y la fecha aproximada de compra.",
+      "access_review": "Gracias por realizar las validaciones anteriores. Para que podamos revisar tu caso con mayor detalle, por favor comparte el correo utilizado durante la compra, el nombre de la colección adquirida y la fecha aproximada en que realizaste la compra.",
 
-      "payment_review": "Gracias por escribirnos. Para poder revisar tu consulta necesitamos algunos datos adicionales sobre la compra realizada.",
+      "payment_review": "Gracias por contactarnos. Queremos ayudarte a revisar lo ocurrido con tu compra. Para ello, necesitaremos algunos datos que nos permitan identificar la operación y brindarte una respuesta más precisa.",
 
-      "sensitive_case": "Gracias por compartir lo que estás viviendo. Queremos acompañarte con respeto y cuidado. Además de los recursos disponibles, te recomendamos buscar el apoyo adecuado para tu situación específica."
+      "sensitive_case": "Gracias por confiar en nosotros y compartir lo que estás viviendo. Queremos acompañarte con respeto y cuidado. Aunque nuestros recursos pueden ofrecer orientación y reflexión, algunas situaciones requieren apoyo especializado. Por eso, te animamos a buscar la ayuda adecuada según tus necesidades y circunstancias."
     },
 
     "agent_rules": {
