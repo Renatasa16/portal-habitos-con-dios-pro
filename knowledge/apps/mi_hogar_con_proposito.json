@@ -31,6 +31,38 @@
   "Seguimiento de hábitos que promueven el crecimiento personal y espiritual",
   "Recursos prácticos para tomar decisiones con sabiduría y principios"
 ],
+      "email_presentation": {
+  "hero_title": "🏡 Mi Hogar con Propósito",
+
+  "hero_subtitle": "Una experiencia digital diseñada para acompañar a hombres que desean fortalecer su vida espiritual, liderar su hogar con sabiduría y construir una familia guiada por principios, propósito y fe.",
+
+  "transformation_title": "🌿 ¿Cómo puede ayudarte?",
+
+  "transformation_text": "Ayudarte a crecer como hombre de Dios, fortalecer tu liderazgo espiritual y desarrollar hábitos que impacten positivamente tu vida personal, tu familia y las generaciones que vienen detrás de ti.",
+
+  "features_title": "✨ Herramientas incluidas",
+
+  "feature_items": [
+    "Devocionales diarios para fortalecer tu fe",
+    "Registro personal de oración y crecimiento espiritual",
+    "Herramientas para el discernimiento y la toma de decisiones",
+    "Seguimiento de hábitos y objetivos personales",
+    "Planificación espiritual para una vida con mayor propósito",
+    "Reflexiones prácticas para aplicar en el hogar"
+  ],
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Hombres que desean fortalecer su relación con Dios",
+    "Esposos que buscan liderar su hogar con sabiduría",
+    "Padres que desean dejar un legado espiritual",
+    "Futuros padres que desean prepararse para su llamado",
+    "Hombres que buscan crecer en carácter, propósito y liderazgo"
+  ],
+
+  "closing_text": "✨ Cada herramienta fue diseñada para ayudarte a convertir principios en hábitos, fortalecer tu liderazgo espiritual y construir un hogar donde Dios ocupe el centro de cada decisión y cada relación."
+},
 
       "requires_login": true,
 
