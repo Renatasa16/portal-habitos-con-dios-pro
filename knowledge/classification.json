@@ -116,6 +116,17 @@
         "cómo llego",
         "dónde está",
         "cómo descargo"
+        "dónde veo",
+"dónde encuentro mi app",
+"dónde encuentro mis bonos",
+"dónde encuentro mi ebook",
+"dónde encuentro los imprimibles",
+"cómo continúo",
+"cómo continuo",
+"cómo sigo",
+"como sigo",
+"mis colecciones",
+"centro de ayuda"
       ],
       "knowledge_sources": [
         "routes.json"
@@ -128,10 +139,24 @@
       "intent": "download_help",
       "category": "downloads",
       "keywords": [
-        "descargar",
-        "ebook",
-        "bonos",
-        "imprimibles"
+  "descargar",
+  "ebook",
+  "bonos",
+  "imprimibles",
+
+  "descarga",
+  "bajar ebook",
+  "descargar ebook",
+  "descargar app",
+  "descargar bono",
+  "descargar bonos",
+  "descargar imprimible",
+  "descargar imprimibles",
+  "material imprimible",
+  "materiales imprimibles",
+  "pdf",
+  "archivo"
+],
       ],
       "knowledge_sources": [
         "routes.json"
@@ -147,7 +172,18 @@
         "comprar",
         "adquirir",
         "precio",
-        "colección disponible"
+        "colección disponible",
+        "costo",
+"valor",
+"cuánto cuesta",
+"cuanto cuesta",
+"qué incluye la compra",
+"que incluye la compra",
+"quiero comprar",
+"quiero adquirir",
+"colecciones disponibles",
+"kit disponible",
+"experiencia disponible"
       ],
       "knowledge_sources": [
         "faq.json",
