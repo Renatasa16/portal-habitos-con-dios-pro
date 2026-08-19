@@ -293,7 +293,7 @@ function buildUserEmailTemplate({
     </div>
   `;
 
-  const aiBlock = aiResponseText
+  const aiBlock = aiennialsResponseText => aiResponseText
     ? `
       <div style="margin-top:22px; padding:22px 20px; background:#ffffff; border-radius:16px; border:1px solid #eadfce;">
         <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#8a7456; font-weight:700; margin-bottom:10px;">
@@ -306,7 +306,7 @@ function buildUserEmailTemplate({
     `
     : `
       <p style="margin:0 0 22px; font-size:16px; line-height:1.8; color:#4a4035;">
-        Revisaremos tu consulta y te responderemos a la brevedad desde nuestro canal de soporte.
+        Revisaremos tu consulta y te responderemos desde nuestro canal de soporte.
       </p>
     `;
 
@@ -326,7 +326,7 @@ function buildUserEmailTemplate({
     contentHtml: `
       ${greeting}
       ${baseIntro}
-      ${isSensitive ? sensitiveNotice : aiBlock}
+      ${isSensitive ? sensitiveNotice : aiBlock(aiResponseText)}
       ${accessReminder}
     `
   });
@@ -449,12 +449,14 @@ module.exports = async function handler(req, res) {
 
     try {
       const knowledgeContext = buildCompactPromptContext(
-        categoryData.aiRoute
+        categoryData.aiRoute,
+        message
       );
-      console.log(
-  "KNOWLEDGE_CONTEXT_LENGTH",
-  knowledgeContext.length
-);
+
+      console.log("CONTACT_AI_ROUTE", categoryData.aiRoute);
+      console.log("CONTACT_CATEGORY", category);
+      console.log("CONTACT_IS_SENSITIVE", isSensitive);
+      console.log("CONTACT_KNOWLEDGE_CONTEXT_LENGTH", knowledgeContext.length);
 
       aiResult = await generateGeminiResponse({
         name,
@@ -471,9 +473,10 @@ module.exports = async function handler(req, res) {
 
     const aiResponseText = aiResult?.text || "";
 
-console.log("AI_RESPONSE_START");
-console.log(aiResponseText);
-console.log("AI_RESPONSE_END");
+    console.log("AI_RESPONSE_START");
+    console.log(aiResponseText);
+    console.log("AI_RESPONSE_END");
+    console.log("AI_RESPONSE_TEXT_LENGTH", aiResponseText.length);
 
     const internalSubject =
       `[${categoryData.label}] Nueva consulta de ${name}`;
@@ -521,7 +524,7 @@ console.log("AI_RESPONSE_END");
       message:
         aiResponseText && !isSensitive
           ? "Tu consulta fue enviada correctamente y te enviamos una respuesta inicial por correo."
-          : "Tu consulta fue enviada correctamente. Te responderemos a la brevedad.",
+          : "Tu consulta fue enviada correctamente. Te responderemos desde nuestro canal de soporte.",
       category: {
         value: category,
         label: categoryData.label,
