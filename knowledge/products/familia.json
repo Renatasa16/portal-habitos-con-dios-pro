@@ -29,6 +29,37 @@
     "educacion cristiana en el hogar"
   ],
 
+  "email_presentation": {
+  "hero_title": "✨ Pequeños Momentos con Dios",
+
+  "hero_subtitle": "Una experiencia familiar diseñada para ayudarte a convertir pequeños momentos cotidianos en encuentros significativos con Dios, fortaleciendo los vínculos familiares y creando recuerdos que permanecerán en el corazón de quienes más amas.",
+
+  "transformation_title": "🌿 ¿Qué transformación busca generar?",
+
+  "transformation_text": "Ayudar a las familias a incorporar la fe en su vida diaria de manera natural, fortaleciendo los vínculos familiares, promoviendo conversaciones significativas y creando hábitos espirituales que perduren con el tiempo.",
+
+  "includes_title": "📦 ¿Qué incluye?",
+
+  "app_label": "📱 App Premium",
+  "ebook_label": "📘 Ebook Principal",
+  "bonuses_label": "🎁 Bonificaciones Exclusivas",
+  "printables_label": "🖨️ Recursos Imprimibles",
+
+  "printables_text": "Material complementario diseñado para acompañar actividades familiares, momentos de reflexión y experiencias de aprendizaje compartidas en el hogar.",
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Familias que desean crecer juntas en la fe",
+    "Padres y madres que buscan compartir valores cristianos con sus hijos",
+    "Abuelos y cuidadores que desean fortalecer los vínculos familiares",
+    "Hogares que buscan crear hábitos espirituales significativos",
+    "Familias que desean incorporar momentos de oración y reflexión en su rutina diaria"
+  ],
+
+  "closing_text": "✨ Cada recurso fue creado para ayudar a tu familia a vivir la fe de manera práctica, cercana y significativa, construyendo recuerdos, conversaciones y experiencias que fortalecerán su caminar con Dios."
+},
+
   "availability": {
         "status": "prelaunch",
         "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
