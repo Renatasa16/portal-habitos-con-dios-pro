@@ -26,7 +26,37 @@
   "como comunicarme mejor",
   "expresar emociones",
   "restaurar vínculos"
-]
+],
+  "email_presentation": {
+  "hero_title": "✨ Cuando las Palabras Duelen",
+
+  "hero_subtitle": "Una experiencia devocional diseñada para acompañar a jóvenes, familias y personas que desean sanar heridas emocionales, fortalecer la comunicación y aprender a construir relaciones más saludables desde una perspectiva basada en la fe.",
+
+  "transformation_title": "🌿 ¿Qué transformación busca generar?",
+
+  "transformation_text": "Ayudar a reconocer el impacto que tienen las palabras en nuestra vida, comprender cómo influyen en nuestras relaciones y desarrollar herramientas prácticas para comunicarnos con mayor amor, empatía y sabiduría.",
+
+  "includes_title": "📦 ¿Qué incluye?",
+
+  "app_label": "📱 App Premium",
+  "ebook_label": "📘 Ebook Principal",
+  "bonuses_label": "🎁 Bonificaciones Exclusivas",
+  "printables_label": "🖨️ Recursos Imprimibles",
+
+  "printables_text": "Material complementario diseñado para profundizar la reflexión personal, fortalecer habilidades de comunicación y acompañar procesos de restauración emocional.",
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Jóvenes que desean fortalecer su bienestar emocional",
+    "Familias que buscan mejorar la comunicación en el hogar",
+    "Personas que desean sanar heridas provocadas por palabras o conflictos",
+    "Quienes buscan restaurar relaciones importantes",
+    "Personas que desean expresar sus emociones de manera más saludable"
+  ],
+
+  "closing_text": "✨ Cada recurso fue creado para acompañarte paso a paso en un camino de reflexión, restauración y crecimiento espiritual, ayudándote a construir relaciones más sanas y significativas."
+},
 
       "availability": {
         "status": "prelaunch",
