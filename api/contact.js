@@ -6,6 +6,10 @@ const {
   generateGeminiResponse
 } = require("./lib/gemini-service");
 
+const {
+  getDirectResponse
+} = require("./lib/direct-response");
+
 const RESEND_API_URL = "https://api.resend.com/emails";
 
 const BRAND_NAME = "Hábitos con Dios";
@@ -182,15 +186,19 @@ function buildInternalEmailTemplate({
   aiRoute,
   aiResponseText,
   aiError,
-  isSensitive
+  isSensitive,
+  responseProvider,
+  responseModel
 }) {
   const aiStatus = aiResponseText
     ? isSensitive
-      ? "Respuesta IA sugerida para revisión humana"
-      : "Respuesta IA generada automáticamente"
+      ? "Respuesta sugerida para revisión humana"
+      : responseProvider === "direct-response"
+        ? "Respuesta directa generada desde la base estructurada"
+        : "Respuesta IA generada automáticamente"
     : aiError
-      ? "No se pudo generar respuesta IA"
-      : "Sin respuesta IA generada";
+      ? "No se pudo generar respuesta automática"
+      : "Sin respuesta automática generada";
 
   const contentHtml = `
     <div style="margin-bottom:22px;">
@@ -232,7 +240,9 @@ function buildInternalEmailTemplate({
     <div style="padding:18px 20px; background:#f3eee5; border-radius:16px; border-left:4px solid #315c4b; margin-bottom:18px;">
       <div style="font-size:13px; color:#6f5a3b; line-height:1.6;">
         <strong>Ruta IA:</strong> ${escapeHtml(aiRoute)}<br />
-        <strong>Estado IA:</strong> ${escapeHtml(aiStatus)}<br />
+        <strong>Estado:</strong> ${escapeHtml(aiStatus)}<br />
+        <strong>Proveedor:</strong> ${escapeHtml(responseProvider || "none")}<br />
+        <strong>Fuente/modelo:</strong> ${escapeHtml(responseModel || "none")}<br />
         <strong>Caso sensible:</strong> ${isSensitive ? "Sí" : "No"}
       </div>
     </div>
@@ -241,7 +251,7 @@ function buildInternalEmailTemplate({
       aiResponseText
         ? `<div style="background:#fffdf8; padding:22px 20px; border-radius:16px; border:1px solid #d8c7a7;">
             <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#8a7456; font-weight:700; margin-bottom:10px;">
-              Respuesta IA
+              Respuesta generada
             </div>
             <div style="font-size:15px; color:#2f2a24; line-height:1.75; white-space:pre-line;">
               ${nl2br(aiResponseText)}
@@ -293,7 +303,7 @@ function buildUserEmailTemplate({
     </div>
   `;
 
-  const aiBlock = (aiResponseText) => aiResponseText
+  const aiBlock = aiResponseText
     ? `
       <div style="margin-top:22px; padding:22px 20px; background:#ffffff; border-radius:16px; border:1px solid #eadfce;">
         <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#8a7456; font-weight:700; margin-bottom:10px;">
@@ -326,7 +336,7 @@ function buildUserEmailTemplate({
     contentHtml: `
       ${greeting}
       ${baseIntro}
-      ${isSensitive ? sensitiveNotice : aiBlock(aiResponseText)}
+      ${isSensitive ? sensitiveNotice : aiBlock}
       ${accessReminder}
     `
   });
@@ -446,37 +456,72 @@ module.exports = async function handler(req, res) {
 
     let aiResult = null;
     let aiError = null;
+    let directResponse = null;
 
-    try {
-      const knowledgeContext = buildCompactPromptContext(
-        categoryData.aiRoute,
-        message
-      );
+    if (!isSensitive) {
+      try {
+        directResponse = getDirectResponse(message);
 
-      console.log("CONTACT_AI_ROUTE", categoryData.aiRoute);
-      console.log("CONTACT_CATEGORY", category);
-      console.log("CONTACT_IS_SENSITIVE", isSensitive);
-      console.log("CONTACT_KNOWLEDGE_CONTEXT_LENGTH", knowledgeContext.length);
+        if (directResponse?.found) {
+          console.log("DIRECT_RESPONSE_USED", directResponse.source);
+          console.log("DIRECT_RESPONSE_INTENT", directResponse.intent);
+          console.log("DIRECT_RESPONSE_FILE", directResponse.usedFile || "none");
 
-      aiResult = await generateGeminiResponse({
-        name,
-        email,
-        categoryLabel: categoryData.label,
-        message,
-        aiRoute: categoryData.aiRoute,
-        knowledgeContext
-      });
-    } catch (error) {
-      console.error("Error generando respuesta IA:", error);
-      aiError = error?.message || "Error desconocido generando respuesta IA.";
+          aiResult = {
+            provider: "direct-response",
+            model: directResponse.usedFile || directResponse.source,
+            text: directResponse.text
+          };
+        }
+      } catch (error) {
+        console.error("Error generando respuesta directa:", error);
+      }
+    } else {
+      console.log("DIRECT_RESPONSE_SKIPPED", "sensitive_message_detected");
+    }
+
+    if (!aiResult) {
+      try {
+        const knowledgeContext = buildCompactPromptContext(
+          categoryData.aiRoute,
+          message
+        );
+
+        console.log("CONTACT_AI_ROUTE", categoryData.aiRoute);
+        console.log("CONTACT_CATEGORY", category);
+        console.log("CONTACT_IS_SENSITIVE", isSensitive);
+        console.log(
+          "CONTACT_KNOWLEDGE_CONTEXT_LENGTH",
+          knowledgeContext.length
+        );
+
+        aiResult = await generateGeminiResponse({
+          name,
+          email,
+          categoryLabel: categoryData.label,
+          message,
+          aiRoute: categoryData.aiRoute,
+          knowledgeContext
+        });
+      } catch (error) {
+        console.error("Error generando respuesta IA:", error);
+
+        aiError =
+          error?.message ||
+          "Error desconocido generando respuesta IA.";
+      }
     }
 
     const aiResponseText = aiResult?.text || "";
+    const responseProvider = aiResult?.provider || null;
+    const responseModel = aiResult?.model || null;
 
     console.log("AI_RESPONSE_START");
     console.log(aiResponseText);
     console.log("AI_RESPONSE_END");
     console.log("AI_RESPONSE_TEXT_LENGTH", aiResponseText.length);
+    console.log("AI_RESPONSE_PROVIDER", responseProvider || "none");
+    console.log("AI_RESPONSE_MODEL", responseModel || "none");
 
     const internalSubject =
       `[${categoryData.label}] Nueva consulta de ${name}`;
@@ -490,7 +535,9 @@ module.exports = async function handler(req, res) {
       aiRoute: categoryData.aiRoute,
       aiResponseText,
       aiError,
-      isSensitive
+      isSensitive,
+      responseProvider,
+      responseModel
     });
 
     await sendEmail({
@@ -519,23 +566,31 @@ module.exports = async function handler(req, res) {
       replyTo: TO_EMAIL
     });
 
-    return res.status(200).json({
+    const respondedAutomatically = Boolean(aiResponseText && !isSensitive);
+
+       return res.status(200).json({
       ok: true,
-      message:
-        aiResponseText && !isSensitive
-          ? "Tu consulta fue enviada correctamente y te enviamos una respuesta inicial por correo."
-          : "Tu consulta fue enviada correctamente. Te responderemos desde nuestro canal de soporte.",
+      message: respondedAutomatically
+        ? "Tu consulta fue enviada correctamente y te enviamos una respuesta inicial por correo."
+        : "Tu consulta fue enviada correctamente. Te responderemos desde nuestro canal de soporte.",
       category: {
         value: category,
         label: categoryData.label,
         aiRoute: categoryData.aiRoute
       },
       ai: {
-        attempted: true,
-        respondedAutomatically: Boolean(aiResponseText && !isSensitive),
+        attempted: Boolean(aiResult || aiError),
+        respondedAutomatically,
         requiresHumanReview: Boolean(isSensitive),
-        provider: aiResult?.provider || null,
-        model: aiResult?.model || null
+        provider: responseProvider,
+        model: responseModel
+      },
+      directResponse: {
+        attempted: Boolean(!isSensitive),
+        used: Boolean(directResponse?.found),
+        source: directResponse?.source || null,
+        intent: directResponse?.intent || null,
+        file: directResponse?.usedFile || null
       }
     });
   } catch (error) {
