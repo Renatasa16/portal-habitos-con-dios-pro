@@ -293,7 +293,7 @@ function buildUserEmailTemplate({
     </div>
   `;
 
-  const aiBlock = aiennialsResponseText => aiResponseText
+  const aiBlock = (aiResponseText) => aiResponseText
     ? `
       <div style="margin-top:22px; padding:22px 20px; background:#ffffff; border-radius:16px; border:1px solid #eadfce;">
         <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#8a7456; font-weight:700; margin-bottom:10px;">
