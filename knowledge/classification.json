@@ -1,0 +1,238 @@
+{
+  "classification_metadata": {
+    "version": "1.0",
+    "module": "classification",
+    "description": "Motor de clasificación de consultas para seleccionar únicamente los archivos de conocimiento necesarios antes de generar una respuesta."
+  },
+
+  "default_behavior": {
+    "fallback_intent": "navigation_help",
+    "fallback_knowledge_sources": [
+      "routes.json"
+    ],
+    "fallback_disclaimer": "none",
+    "fallback_escalation": false
+  },
+
+  "intent_mappings": [
+    {
+      "intent": "product_information",
+      "category": "product",
+      "keywords": [
+        "qué incluye",
+        "qué es",
+        "colección",
+        "kit",
+        "producto"
+      ],
+      "knowledge_sources": [
+        "products/*"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "app_information",
+      "category": "app",
+      "keywords": [
+        "app",
+        "aplicación",
+        "mi tiempo con dios",
+        "diario",
+        "experiencia"
+      ],
+      "knowledge_sources": [
+        "apps/*"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "access_problem",
+      "category": "access",
+      "keywords": [
+        "no puedo entrar",
+        "no puedo ingresar",
+        "compré y no puedo entrar",
+        "magic link",
+        "no recibí correo",
+        "no recibí email",
+        "iniciar sesión"
+      ],
+      "knowledge_sources": [
+        "access.json",
+        "escalation.json"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "navigation_help",
+      "category": "navigation",
+      "keywords": [
+        "dónde encuentro",
+        "cómo accedo",
+        "cómo llego",
+        "dónde está",
+        "cómo descargo"
+      ],
+      "knowledge_sources": [
+        "routes.json"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "download_help",
+      "category": "downloads",
+      "keywords": [
+        "descargar",
+        "ebook",
+        "bonos",
+        "imprimibles"
+      ],
+      "knowledge_sources": [
+        "routes.json"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "purchase_guidance",
+      "category": "purchase",
+      "keywords": [
+        "comprar",
+        "adquirir",
+        "precio",
+        "colección disponible"
+      ],
+      "knowledge_sources": [
+        "faq.json",
+        "routes.json"
+      ],
+      "escalate": false,
+      "disclaimer": "none"
+    },
+
+    {
+      "intent": "personal_advice",
+      "category": "sensitive",
+      "keywords": [
+        "necesito consejo",
+        "qué debo hacer",
+        "orientación personal",
+        "decisión importante"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "advice"
+    },
+
+    {
+      "intent": "family_issue",
+      "category": "sensitive",
+      "keywords": [
+        "familia",
+        "matrimonio",
+        "crianza",
+        "problemas familiares"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "family"
+    },
+
+    {
+      "intent": "emotional_support",
+      "category": "sensitive",
+      "keywords": [
+        "ansiedad",
+        "tristeza",
+        "bullying",
+        "cyberbullying",
+        "rechazo",
+        "dolor emocional"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "emotional"
+    },
+
+    {
+      "intent": "teen_support",
+      "category": "sensitive",
+      "keywords": [
+        "adolescente",
+        "joven",
+        "escuela",
+        "presión social"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "teen_support"
+    },
+
+    {
+      "intent": "crisis",
+      "category": "critical",
+      "keywords": [
+        "violencia",
+        "abuso",
+        "amenazas",
+        "autolesión",
+        "emergencia"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "crisis"
+    },
+
+    {
+      "intent": "legal_financial",
+      "category": "critical",
+      "keywords": [
+        "legal",
+        "abogado",
+        "demanda",
+        "deuda",
+        "finanzas"
+      ],
+      "knowledge_sources": [
+        "disclaimers.json",
+        "escalation.json"
+      ],
+      "escalate": true,
+      "disclaimer": "legal_financial"
+    }
+  ],
+
+  "classification_rules": {
+    "load_only_required_files": true,
+    "prioritize_specific_sources": true,
+    "avoid_loading_full_knowledge_base": true,
+    "prefer_product_files_over_faq": true,
+    "prefer_app_files_over_faq": true,
+    "always_check_escalation_rules": true,
+    "always_check_disclaimers_for_sensitive_cases": true
+  }
+}
