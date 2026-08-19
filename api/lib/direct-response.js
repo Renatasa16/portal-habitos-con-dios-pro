@@ -338,6 +338,51 @@ function getAppCandidates(app, fileName) {
 function findBestProductResponse(message) {
   const productFiles = getProductFiles();
 
+  const normalizedMessage = normalize(message);
+
+  //
+  // PASO 1
+  // Coincidencia exacta
+  //
+  for (const fileName of productFiles) {
+    const product = loadProductFile(fileName);
+
+    if (!product) {
+      continue;
+    }
+
+    const exactCandidates = [
+      fileName.replace(".json", ""),
+      product.id,
+      product.name
+    ].filter(Boolean);
+
+    const exactMatch = exactCandidates.some((candidate) => {
+      const normalizedCandidate = normalize(candidate);
+
+      return (
+        normalizedMessage.includes(normalizedCandidate) ||
+        normalizedCandidate.includes(normalizedMessage)
+      );
+    });
+
+    if (exactMatch) {
+      console.log(
+        "PRODUCT_EXACT_MATCH",
+        product.name || fileName
+      );
+
+      return buildProductResponse(
+        product,
+        fileName
+      );
+    }
+  }
+
+  //
+  // PASO 2
+  // Fallback por score
+  //
   let bestMatch = null;
 
   for (const fileName of productFiles) {
@@ -347,10 +392,20 @@ function findBestProductResponse(message) {
       continue;
     }
 
-    const candidates = getProductCandidates(product, fileName);
-    const score = getBestScore(message, candidates);
+    const candidates = getProductCandidates(
+      product,
+      fileName
+    );
 
-    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+    const score = getBestScore(
+      message,
+      candidates
+    );
+
+    if (
+      score > 0 &&
+      (!bestMatch || score > bestMatch.score)
+    ) {
       bestMatch = {
         score,
         fileName,
@@ -363,7 +418,16 @@ function findBestProductResponse(message) {
     return null;
   }
 
-  return buildProductResponse(bestMatch.product, bestMatch.fileName);
+  console.log(
+    "PRODUCT_SCORE_MATCH",
+    bestMatch.product?.name || bestMatch.fileName,
+    bestMatch.score
+  );
+
+  return buildProductResponse(
+    bestMatch.product,
+    bestMatch.fileName
+  );
 }
 
 function findBestAppResponse(message) {
