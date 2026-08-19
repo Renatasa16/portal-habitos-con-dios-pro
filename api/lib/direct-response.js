@@ -336,19 +336,58 @@ function buildAccessResponse({ text, intent = "access_information", source = "ac
 
 function buildRouteResponse(route) {
   const content = [];
+  const presentation = route?.route_presentation;
 
-  if (route.response) {
-    content.push(route.response);
-  }
+  if (presentation) {
+    content.push(
+      presentation.hero_title ||
+      route.title ||
+      "📍 Guía de navegación"
+    );
 
-  if (Array.isArray(route.route) && route.route.length > 0) {
+    if (presentation.hero_subtitle) {
+      content.push("");
+      content.push(presentation.hero_subtitle);
+    }
+
     content.push("");
-    content.push(`Ruta sugerida: ${routeToText(route.route)}`);
-  }
+    content.push(
+      presentation.steps_title ||
+      "📍 Ruta recomendada"
+    );
 
-  if (route.availability_note) {
-    content.push("");
-    content.push(route.availability_note);
+    if (Array.isArray(route.route) && route.route.length > 0) {
+      content.push(routeToText(route.route));
+    }
+
+    if (route.response) {
+      content.push("");
+      content.push(route.response);
+    }
+
+    if (presentation.closing_text) {
+      content.push("");
+      content.push(presentation.closing_text);
+    }
+
+    if (route.availability_note) {
+      content.push("");
+      content.push(route.availability_note);
+    }
+  } else {
+    if (route.response) {
+      content.push(route.response);
+    }
+
+    if (Array.isArray(route.route) && route.route.length > 0) {
+      content.push("");
+      content.push(`Ruta sugerida: ${routeToText(route.route)}`);
+    }
+
+    if (route.availability_note) {
+      content.push("");
+      content.push(route.availability_note);
+    }
   }
 
   return {
