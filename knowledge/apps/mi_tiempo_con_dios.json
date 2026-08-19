@@ -4,9 +4,9 @@
       "product_id": "21dias",
       "status": "active",
 
-      "description": "App Premium diseñada para acompañar el desarrollo de hábitos espirituales diarios mediante reflexión, oración, gratitud y seguimiento de progreso.",
+      "description": "App Premium diseñada para ayudarte a reservar un espacio especial cada día para encontrarte con Dios, fortaleciendo hábitos de reflexión, oración y gratitud de una manera sencilla y significativa.",
 
-      "purpose": "Ayudar al usuario a mantener una relación más cercana y constante con Dios mediante prácticas simples y sostenibles.",
+      "purpose": "Fomentar la constancia en el tiempo devocional diario mediante herramientas prácticas que ayuden a incorporar la oración, la reflexión y la gratitud como parte de la vida cotidiana.",
 
       "target_audience": [
         "mujeres cristianas",
@@ -26,12 +26,12 @@
       ],
 
       "what_users_will_find": [
-        "Reflexiones guiadas",
-        "Espacios para registrar aprendizajes",
-        "Motivación diaria",
-        "Seguimiento de crecimiento espiritual",
-        "Herramientas para desarrollar constancia"
-      ],
+  "Reflexiones diarias para profundizar la relación con Dios",
+  "Espacios para registrar aprendizajes, oraciones y experiencias personales",
+  "Momentos de gratitud que ayudan a reconocer las bendiciones de cada día",
+  "Herramientas que favorecen la constancia en el tiempo devocional",
+  "Recursos prácticos para convertir la fe en hábitos cotidianos"
+],
 
       "requires_login": true,
 
