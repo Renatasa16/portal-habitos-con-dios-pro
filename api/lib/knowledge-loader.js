@@ -25,8 +25,13 @@ function normalizeText(value) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[_-]/g, " ")
+    .replace(/[^\w\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function compactText(value) {
+  return normalizeText(value).replace(/\s+/g, "");
 }
 
 function readJsonFile(fileName) {
@@ -142,49 +147,145 @@ function loadAppFile(appFileName) {
   return readNestedJsonFile("apps", appFileName);
 }
 
-function findMatchingFiles(folderName, message, availableFiles) {
-  const normalizedMessage = normalizeText(message);
+function getRelevantTokens(value) {
+  const stopWords = new Set([
+    "que",
+    "como",
+    "donde",
+    "cuando",
+    "cual",
+    "para",
+    "por",
+    "con",
+    "del",
+    "los",
+    "las",
+    "una",
+    "uno",
+    "unos",
+    "unas",
+    "este",
+    "esta",
+    "estos",
+    "estas",
+    "quiero",
+    "necesito",
+    "ayuda",
+    "saber",
+    "sobre",
+    "tengo",
+    "mi",
+    "mis",
+    "el",
+    "la",
+    "de",
+    "en",
+    "y",
+    "o",
+    "un"
+  ]);
 
-  if (!normalizedMessage) {
-    return [];
+  return normalizeText(value)
+    .split(" ")
+    .filter((token) => token.length >= 3 && !stopWords.has(token));
+}
+
+function scoreTextMatch(message, candidate) {
+  const normalizedMessage = normalizeText(message);
+  const normalizedCandidate = normalizeText(candidate);
+
+  if (!normalizedMessage || !normalizedCandidate) {
+    return 0;
   }
 
-  return availableFiles.filter((fileName) => {
-    const normalizedFileName = normalizeText(fileName.replace(".json", ""));
-    const fileTokens = normalizedFileName.split(" ").filter(Boolean);
+  if (normalizedMessage.includes(normalizedCandidate)) {
+    return 100 + normalizedCandidate.length;
+  }
 
-    return fileTokens.some((token) => {
-      return token.length >= 4 && normalizedMessage.includes(token);
-    });
-  });
+  if (compactText(normalizedMessage).includes(compactText(normalizedCandidate))) {
+    return 90 + compactText(normalizedCandidate).length;
+  }
+
+  const candidateTokens = getRelevantTokens(candidate);
+
+  if (candidateTokens.length === 0) {
+    return 0;
+  }
+
+  const matchedTokens = candidateTokens.filter((token) =>
+    normalizedMessage.includes(token)
+  );
+
+  if (matchedTokens.length === 0) {
+    return 0;
+  }
+
+  const matchRatio = matchedTokens.length / candidateTokens.length;
+
+  if (candidateTokens.length === 1 && matchedTokens.length === 1) {
+    return 20 + matchedTokens[0].length;
+  }
+
+  if (matchRatio >= 0.6) {
+    return 50 + matchedTokens.length * 10;
+  }
+
+  return 0;
+}
+
+function getClassificationMappings() {
+  const knowledge = loadKnowledgeBase();
+
+  return (
+    knowledge.classification?.intent_mappings ||
+    knowledge.classification?.classification?.intent_mappings ||
+    []
+  );
 }
 
 function classifyMessage(message, aiRoute) {
   const knowledge = loadKnowledgeBase();
   const normalizedMessage = normalizeText(message);
-  const mappings =
-    knowledge.classification?.intent_mappings ||
-    knowledge.classification?.classification?.intent_mappings ||
-    [];
+  const mappings = getClassificationMappings();
 
   if (normalizedMessage && Array.isArray(mappings)) {
+    let bestMatch = null;
+
     for (const mapping of mappings) {
-      const keywords = mapping.keywords || [];
+      const keywords = Array.isArray(mapping.keywords) ? mapping.keywords : [];
 
-      const hasMatch = keywords.some((keyword) => {
-        return normalizedMessage.includes(normalizeText(keyword));
-      });
+      let bestKeywordScore = 0;
+      let bestKeyword = null;
 
-      if (hasMatch) {
-        return {
+      for (const keyword of keywords) {
+        const keywordScore = scoreTextMatch(normalizedMessage, keyword);
+
+        if (keywordScore > bestKeywordScore) {
+          bestKeywordScore = keywordScore;
+          bestKeyword = keyword;
+        }
+      }
+
+      if (bestKeywordScore > 0) {
+        const candidate = {
           intent: mapping.intent,
           category: mapping.category,
           knowledgeSources: mapping.knowledge_sources || [],
           escalate: Boolean(mapping.escalate),
           disclaimer: mapping.disclaimer || "none",
-          source: "classification.json"
+          source: "classification.json",
+          matchedKeyword: bestKeyword,
+          score: bestKeywordScore
         };
+
+        if (!bestMatch || candidate.score > bestMatch.score) {
+          bestMatch = candidate;
+        }
       }
+    }
+
+    if (bestMatch) {
+      return bestMatch;
     }
   }
 
@@ -207,8 +308,8 @@ function classifyMessage(message, aiRoute) {
       intent: "product_information",
       category: "product",
       knowledgeSources: [
-        "products.json",
-        "apps.json",
+        "products/*",
+        "apps/*",
         "faq.json",
         "routes.json"
       ],
@@ -242,13 +343,78 @@ function classifyMessage(message, aiRoute) {
   return {
     intent: defaultBehavior.fallback_intent || "navigation_help",
     category: "navigation",
-    knowledgeSources: defaultBehavior.fallback_knowledge_sources || [
-      "routes.json"
-    ],
+    knowledgeSources: defaultBehavior.fallback_knowledge_sources || ["routes.json"],
     escalate: Boolean(defaultBehavior.fallback_escalation),
     disclaimer: defaultBehavior.fallback_disclaimer || "none",
     source: "default_behavior"
   };
+}
+
+function getProductCandidates(product, fileName) {
+  return [
+    fileName?.replace(".json", ""),
+    product?.id,
+    product?.name,
+    product?.sales_description,
+    product?.transformation,
+    product?.app?.name,
+    product?.ebook?.name,
+    ...(Array.isArray(product?.target_audience) ? product.target_audience : []),
+    ...(Array.isArray(product?.bonuses) ? product.bonuses : [])
+  ].filter(Boolean);
+}
+
+function getAppCandidates(app, fileName) {
+  return [
+    fileName?.replace(".json", ""),
+    app?.id,
+    app?.name,
+    app?.product_id,
+    app?.description,
+    app?.purpose,
+    ...(Array.isArray(app?.features) ? app.features : []),
+    ...(Array.isArray(app?.what_users_will_find)
+      ? app.what_users_will_find
+      : [])
+  ].filter(Boolean);
+}
+
+function findMatchingFiles(folderName, message, availableFiles) {
+  const normalizedMessage = normalizeText(message);
+
+  if (!normalizedMessage || !Array.isArray(availableFiles)) {
+    return [];
+  }
+
+  const scoredFiles = availableFiles
+    .map((fileName) => {
+      const content =
+        folderName === "products"
+          ? loadProductFile(fileName)
+          : folderName === "apps"
+            ? loadAppFile(fileName)
+            : null;
+
+      const candidates =
+        folderName === "products"
+          ? getProductCandidates(content, fileName)
+          : folderName === "apps"
+            ? getAppCandidates(content, fileName)
+            : [fileName.replace(".json", "")];
+
+      const bestScore = candidates.reduce((maxScore, candidate) => {
+        return Math.max(maxScore, scoreTextMatch(normalizedMessage, candidate));
+      }, 0);
+
+      return {
+        fileName,
+        score: bestScore
+      };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  return scoredFiles.map((item) => item.fileName);
 }
 
 function addModuleToContext(context, moduleName, moduleData) {
@@ -271,6 +437,7 @@ function addFaqEntries(context, knowledge, message, category) {
     const question = normalizeText(item.question);
     const answer = normalizeText(item.answer);
     const itemCategory = normalizeText(item.category);
+    const id = normalizeText(item.id);
 
     if (category && itemCategory === normalizeText(category)) {
       return true;
@@ -283,7 +450,9 @@ function addFaqEntries(context, knowledge, message, category) {
     return (
       normalizedMessage.includes(question) ||
       question.includes(normalizedMessage) ||
-      answer.includes(normalizedMessage)
+      normalizedMessage.includes(id) ||
+      scoreTextMatch(normalizedMessage, question) >= 40 ||
+      scoreTextMatch(normalizedMessage, answer) >= 70
     );
   });
 
@@ -381,6 +550,8 @@ function buildKnowledgeContext(aiRoute, message = "") {
       detectedIntent: classificationResult.intent,
       detectedCategory: classificationResult.category,
       classificationSource: classificationResult.source,
+      matchedKeyword: classificationResult.matchedKeyword || null,
+      score: classificationResult.score || null,
       disclaimer: classificationResult.disclaimer,
       escalate: classificationResult.escalate,
       modulesUsed: Array.from(resolvedSources.modules),
@@ -400,7 +571,13 @@ function buildKnowledgeContext(aiRoute, message = "") {
         knowledge.knowledgeBase?.knowledge_base?.restricted_capabilities || [],
 
       responseRules:
-        knowledge.knowledgeBase?.knowledge_base?.response_rules || {}
+        knowledge.knowledgeBase?.knowledge_base?.response_rules || {},
+
+      brandTone:
+        knowledge.brand?.brand?.tone || {},
+
+      responsePersonality:
+        knowledge.brand?.brand?.response_personality || {}
     }
   };
 
@@ -465,6 +642,9 @@ function buildKnowledgeContext(aiRoute, message = "") {
 
   console.log("KNOWLEDGE_INTENT", classificationResult.intent);
   console.log("KNOWLEDGE_CATEGORY", classificationResult.category);
+  console.log("KNOWLEDGE_CLASSIFICATION_SOURCE", classificationResult.source);
+  console.log("KNOWLEDGE_MATCHED_KEYWORD", classificationResult.matchedKeyword || "none");
+  console.log("KNOWLEDGE_SCORE", classificationResult.score || "none");
   console.log("KNOWLEDGE_MODULES_USED", context.metadata.modulesUsed.join(", "));
   console.log("KNOWLEDGE_PRODUCT_FILES_USED", context.metadata.productFilesUsed.join(", "));
   console.log("KNOWLEDGE_APP_FILES_USED", context.metadata.appFilesUsed.join(", "));
@@ -494,6 +674,33 @@ function getProducts() {
   return knowledge.products?.products || [];
 }
 
+function getApps() {
+  const knowledge = loadKnowledgeBase();
+
+  return knowledge.apps?.apps || [];
+}
+
+function getDisclaimerText(disclaimerKey = "none") {
+  const knowledge = loadKnowledgeBase();
+
+  if (!disclaimerKey || disclaimerKey === "none") {
+    return null;
+  }
+
+  return knowledge.disclaimers?.disclaimers?.[disclaimerKey]?.text || null;
+}
+
+function getEscalationMessages() {
+  const knowledge = loadKnowledgeBase();
+
+  return knowledge.escalation?.escalation?.support_messages || {};
+}
+
+function clearKnowledgeCache() {
+  cachedKnowledge = null;
+  cachedJsonFiles.clear();
+}
+
 module.exports = {
   loadKnowledgeBase,
   getKnowledgeSummary,
@@ -501,9 +708,16 @@ module.exports = {
   buildKnowledgeContext,
   buildCompactPromptContext,
   classifyMessage,
+  resolveKnowledgeSources,
+  normalizeText,
+  scoreTextMatch,
   getProducts,
+  getApps,
   getProductFiles,
   getAppFiles,
   loadProductFile,
-  loadAppFile
+  loadAppFile,
+  getDisclaimerText,
+  getEscalationMessages,
+  clearKnowledgeCache
 };
