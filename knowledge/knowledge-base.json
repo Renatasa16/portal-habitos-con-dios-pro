@@ -31,11 +31,11 @@
       ],
       "priority_order": [
   "classification",
-  "routes",
-  "access",
-  "faq",
   "products",
   "apps",
+  "faq",
+  "routes",
+  "access",
   "disclaimers",
   "escalation"
 ]
