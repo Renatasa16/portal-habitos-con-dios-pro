@@ -91,57 +91,165 @@ function getAvailabilityMessage(item) {
 
 function buildProductResponse(product, fileName) {
   const content = [];
+  const presentation = product?.email_presentation;
 
-  const productName = product.name || "Esta experiencia";
-
-  content.push(`${productName} es un Kit Devocional Premium de Hábitos con Dios.`);
-
-  if (product.sales_description) {
-    content.push("");
-    content.push(product.sales_description);
-  }
-
-  if (product.transformation) {
-    content.push("");
-    content.push(`Esta experiencia busca acompañarte en este proceso: ${product.transformation}`);
-  }
-
-  content.push("");
-  content.push("Incluye:");
-
-  if (product.app?.name) {
-    content.push(`• App Premium: ${product.app.name}`);
-
-    if (product.app.description) {
-      content.push(`  ${product.app.description}`);
-    }
-  }
-
-  if (product.ebook?.name) {
-    content.push(`• Ebook principal: ${product.ebook.name}`);
-
-    if (product.ebook.description) {
-      content.push(`  ${product.ebook.description}`);
-    }
-  }
-
-  if (Array.isArray(product.bonuses) && product.bonuses.length > 0) {
-    product.bonuses.forEach((bonus) => {
-      content.push(`• ${bonus}`);
-    });
-  }
-
-  if (product.printables) {
+  if (presentation) {
     content.push(
-      "• Recursos imprimibles diseñados para complementar la experiencia en formato físico."
+      presentation.hero_title ||
+      `✨ ${product.name || "Esta experiencia"}`
     );
-  }
 
-  const availabilityMessage = getAvailabilityMessage(product);
+    if (presentation.hero_subtitle) {
+      content.push("");
+      content.push(presentation.hero_subtitle);
+    }
 
-  if (availabilityMessage) {
+    if (presentation.transformation_title && presentation.transformation_text) {
+      content.push("");
+      content.push(presentation.transformation_title);
+      content.push("");
+      content.push(presentation.transformation_text);
+    }
+
     content.push("");
-    content.push(availabilityMessage);
+    content.push(
+      presentation.includes_title ||
+      "📦 ¿Qué incluye?"
+    );
+
+    if (product.app?.name) {
+      content.push("");
+      content.push(
+        presentation.app_label ||
+        "📱 App Premium"
+      );
+      content.push(product.app.name);
+
+      if (product.app.description) {
+        content.push(product.app.description);
+      }
+    }
+
+    if (product.ebook?.name) {
+      content.push("");
+      content.push(
+        presentation.ebook_label ||
+        "📘 Ebook Principal"
+      );
+      content.push(product.ebook.name);
+
+      if (product.ebook.description) {
+        content.push(product.ebook.description);
+      }
+    }
+
+    if (Array.isArray(product.bonuses) && product.bonuses.length > 0) {
+      content.push("");
+      content.push(
+        presentation.bonuses_label ||
+        "🎁 Bonificaciones Exclusivas"
+      );
+
+      product.bonuses.forEach((bonus) => {
+        content.push(`• ${bonus}`);
+      });
+    }
+
+    if (product.printables) {
+      content.push("");
+      content.push(
+        presentation.printables_label ||
+        "🖨️ Recursos Imprimibles"
+      );
+
+      content.push(
+        presentation.printables_text ||
+        "Material complementario incluido para profundizar la experiencia."
+      );
+    }
+
+    if (
+      Array.isArray(presentation.audience_items) &&
+      presentation.audience_items.length > 0
+    ) {
+      content.push("");
+      content.push(
+        presentation.audience_title ||
+        "❤️ Ideal para"
+      );
+
+      presentation.audience_items.forEach((item) => {
+        content.push(`• ${item}`);
+      });
+    }
+
+    if (presentation.closing_text) {
+      content.push("");
+      content.push(presentation.closing_text);
+    }
+
+    const availabilityMessage = getAvailabilityMessage(product);
+
+    if (availabilityMessage) {
+      content.push("");
+      content.push(`✅ Disponibilidad: ${availabilityMessage}`);
+    }
+  } else {
+    const productName = product.name || "Esta experiencia";
+
+    content.push(
+      `${productName} es un Kit Devocional Premium de Hábitos con Dios.`
+    );
+
+    if (product.sales_description) {
+      content.push("");
+      content.push(product.sales_description);
+    }
+
+    if (product.transformation) {
+      content.push("");
+      content.push(
+        `Esta experiencia busca acompañarte en este proceso: ${product.transformation}`
+      );
+    }
+
+    content.push("");
+    content.push("Incluye:");
+
+    if (product.app?.name) {
+      content.push(`• App Premium: ${product.app.name}`);
+
+      if (product.app.description) {
+        content.push(`  ${product.app.description}`);
+      }
+    }
+
+    if (product.ebook?.name) {
+      content.push(`• Ebook principal: ${product.ebook.name}`);
+
+      if (product.ebook.description) {
+        content.push(`  ${product.ebook.description}`);
+      }
+    }
+
+    if (Array.isArray(product.bonuses) && product.bonuses.length > 0) {
+      product.bonuses.forEach((bonus) => {
+        content.push(`• ${bonus}`);
+      });
+    }
+
+    if (product.printables) {
+      content.push(
+        "• Recursos imprimibles diseñados para complementar la experiencia en formato físico."
+      );
+    }
+
+    const availabilityMessage = getAvailabilityMessage(product);
+
+    if (availabilityMessage) {
+      content.push("");
+      content.push(availabilityMessage);
+    }
   }
 
   return {
