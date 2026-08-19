@@ -31,7 +31,40 @@
   "Recursos prácticos para afrontar situaciones difíciles con esperanza y resiliencia"
 ],
 
-      "requires_login": true,
+"email_presentation": {
+  "hero_title": "🕊️ Diario de Paz Digital",
+
+  "hero_subtitle": "Un espacio diseñado para ayudarte a reflexionar, expresar tus emociones y encontrar mayor equilibrio emocional y espiritual a través de una experiencia guiada, práctica y profundamente significativa.",
+
+  "transformation_title": "🌿 ¿Cómo puede ayudarte?",
+
+  "transformation_text": "Acompañarte en procesos de reflexión personal, expresión emocional y crecimiento espiritual, ayudándote a reconocer tus avances, comprender mejor tus emociones y fortalecer tu bienestar interior desde una perspectiva basada en la fe.",
+
+  "features_title": "✨ Lo que encontrarás",
+
+  "feature_items": [
+    "Espacios guiados para registrar pensamientos y emociones",
+    "Herramientas de reflexión personal",
+    "Momentos de gratitud y aprendizaje",
+    "Seguimiento de experiencias y crecimiento emocional",
+    "Recursos para fortalecer la paz interior",
+    "Ejercicios prácticos para el bienestar emocional"
+  ],
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Personas que desean expresar y comprender mejor sus emociones",
+    "Jóvenes y adultos que buscan fortalecer su bienestar emocional",
+    "Personas que desean desarrollar hábitos de reflexión personal",
+    "Quienes buscan crecer espiritualmente mientras cuidan su salud emocional",
+    "Personas que desean encontrar un espacio seguro para registrar su proceso personal"
+  ],
+
+  "closing_text": "✨ Cada herramienta fue creada para ayudarte a avanzar paso a paso hacia una vida más consciente, equilibrada y llena de esperanza, fortaleciendo tanto tu bienestar emocional como tu crecimiento espiritual."
+},
+
+"requires_login": true,
 
       "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
 
