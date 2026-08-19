@@ -1,8 +1,9 @@
 {
   "escalation": {
+    "version": "1.1",
+
     "philosophy": {
       "golden_rule": "Intentar ayudar primero mediante rutas guiadas, validaciones y respuestas de la base de conocimiento antes de escalar a soporte humano.",
-
       "objective": "Resolver la mayor cantidad posible de consultas comunes sin intervención humana, manteniendo siempre una experiencia cálida, responsable y segura."
     },
 
@@ -10,27 +11,19 @@
       {
         "level": 1,
         "name": "Auto Resolution",
-
         "description": "La IA puede responder completamente utilizando la Base de Conocimiento.",
-
         "requires_human": false
       },
-
       {
         "level": 2,
         "name": "Assisted Resolution",
-
         "description": "La IA intenta resolver y solicita información adicional antes de derivar.",
-
         "requires_human": false
       },
-
       {
         "level": 3,
         "name": "Human Review",
-
         "description": "El caso requiere revisión humana.",
-
         "requires_human": true
       }
     ],
@@ -40,37 +33,30 @@
         "intent": "product_information",
         "action": "answer"
       },
-
       {
         "intent": "app_information",
         "action": "answer"
       },
-
       {
         "intent": "navigation_help",
         "action": "answer"
       },
-
       {
         "intent": "purchase_guidance",
         "action": "answer"
       },
-
       {
         "intent": "download_help",
         "action": "answer"
       },
-
       {
         "intent": "magic_link_help",
         "action": "answer"
       },
-
       {
         "intent": "login_help",
         "action": "answer"
       },
-
       {
         "intent": "availability_question",
         "action": "answer"
@@ -80,18 +66,15 @@
     "needs_additional_validation": [
       {
         "intent": "cannot_login",
-
         "required_steps": [
           "validar mismo correo de compra",
-          "validar recepcion del correo",
+          "validar recepción del correo",
           "validar apertura del enlace",
-          "validar si el enlace expiro"
+          "validar si el enlace expiró"
         ]
       },
-
       {
         "intent": "cannot_find_collection",
-
         "required_steps": [
           "validar mismo correo",
           "validar login exitoso",
@@ -103,37 +86,32 @@
     "human_review": [
       {
         "intent": "purchase_problem",
-
+        "priority": "high",
         "reason": "Requiere validación de compra."
       },
-
       {
         "intent": "payment_problem",
-
+        "priority": "high",
         "reason": "Problema relacionado con cobros o pagos."
       },
-
       {
         "intent": "refund_request",
-
+        "priority": "high",
         "reason": "Solicitud de reembolso."
       },
-
       {
         "intent": "email_change_request",
-
+        "priority": "high",
         "reason": "Cambio de correo electrónico asociado a la compra."
       },
-
       {
         "intent": "manual_access_review",
-
+        "priority": "high",
         "reason": "Revisión manual de permisos."
       },
-
       {
         "intent": "missing_entitlements",
-
+        "priority": "high",
         "reason": "Posible problema de permisos o sincronización."
       }
     ],
@@ -141,51 +119,32 @@
     "sensitive_cases": [
       {
         "intent": "family_issue",
-
         "requires_disclaimer": true,
-
         "disclaimer": "family",
-
         "requires_escalation": true
       },
-
       {
         "intent": "emotional_support",
-
         "requires_disclaimer": true,
-
         "disclaimer": "emotional",
-
         "requires_escalation": true
       },
-
       {
         "intent": "teen_support",
-
         "requires_disclaimer": true,
-
         "disclaimer": "teen_support",
-
         "requires_escalation": true
       },
-
       {
         "intent": "crisis",
-
         "requires_disclaimer": true,
-
         "disclaimer": "crisis",
-
         "requires_escalation": true
       },
-
       {
         "intent": "legal_financial",
-
         "requires_disclaimer": true,
-
         "disclaimer": "legal_financial",
-
         "requires_escalation": true
       }
     ],
@@ -207,7 +166,7 @@
       "manual_review": [
         "correo utilizado durante la compra",
         "nombre de la colección",
-        "descripcion del problema"
+        "descripción del problema"
       ]
     },
 
@@ -221,19 +180,15 @@
 
     "agent_rules": {
       "always_try_to_help_first": true,
-
       "always_show_routes_before_escalation": true,
-
       "always_validate_purchase_email": true,
-
       "always_use_disclaimers_when_required": true,
 
+      "fallback_to_human_review": true,
+
       "never_provide_professional_advice": true,
-
       "never_make_legal_decisions": true,
-
       "never_make_medical_decisions": true,
-
       "never_make_financial_decisions": true
     }
   }
