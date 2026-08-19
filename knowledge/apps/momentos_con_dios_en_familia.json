@@ -32,6 +32,38 @@
   "Ideas prácticas para incorporar la fe en situaciones cotidianas del hogar",
   "Recursos que ayudan a crear recuerdos significativos alrededor de valores y enseñanzas cristianas"
 ],
+      "email_presentation": {
+  "hero_title": "👨‍👩‍👧‍👦 Momentos con Dios en Familia",
+
+  "hero_subtitle": "Una experiencia digital creada para ayudar a las familias a compartir la fe, fortalecer los vínculos familiares y transformar momentos cotidianos en recuerdos significativos llenos de propósito y amor.",
+
+  "transformation_title": "🌿 ¿Cómo puede ayudar a tu familia?",
+
+  "transformation_text": "Acompañar a padres, madres, abuelos y niños en la construcción de hábitos que fortalezcan la comunicación, promuevan valores cristianos y ayuden a crear una vida familiar más conectada y consciente de la presencia de Dios.",
+
+  "features_title": "✨ Lo que encontrarás",
+
+  "feature_items": [
+    "Actividades familiares para compartir momentos especiales",
+    "Conversaciones guiadas para fortalecer la comunicación",
+    "Espacios para la oración y la gratitud en familia",
+    "Retos sencillos para poner en práctica valores cristianos",
+    "Recursos para crear experiencias significativas en el hogar",
+    "Herramientas para registrar avances y recuerdos familiares"
+  ],
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Familias que desean crecer juntas en la fe",
+    "Padres y madres que buscan fortalecer la conexión con sus hijos",
+    "Abuelos y cuidadores que desean transmitir valores cristianos",
+    "Hogares que desean incorporar momentos espirituales en su rutina diaria",
+    "Familias que buscan crear recuerdos significativos alrededor de la fe"
+  ],
+
+  "closing_text": "✨ Cada actividad, reflexión y recurso fue diseñado para ayudarte a construir una cultura familiar basada en el amor, la fe y los pequeños momentos que dejan huellas para toda la vida."
+},
 
       "requires_login": true,
 
