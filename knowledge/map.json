@@ -1,0 +1,228 @@
+{
+  "map_metadata": {
+    "version": "1.0",
+    "module": "map",
+    "description": "Mapa maestro de relaciones entre productos, apps, rutas, soporte y archivos de conocimiento de Hábitos con Dios."
+  },
+
+  "products": {
+    "21dias": {
+      "product_file": "products/21dias.json",
+      "product_name": "21 Días Más Cerca de Dios",
+      "app_id": "mi_tiempo_con_dios",
+      "app_file": "apps/mi_tiempo_con_dios.json",
+      "primary_routes": [
+        "acceder_app",
+        "continuar_experiencia",
+        "descargar_ebook",
+        "descargar_bonos",
+        "descargar_imprimibles",
+        "ver_productos_adquiridos"
+      ],
+      "support_routes": [
+        "problema_acceso",
+        "no_veo_mi_kit",
+        "no_recibi_email",
+        "acceder_centro_ayuda"
+      ],
+      "related_knowledge_sources": [
+        "access.json",
+        "routes.json",
+        "faq.json",
+        "escalation.json"
+      ]
+    },
+
+    "familia": {
+      "product_file": "products/familia.json",
+      "product_name": "Pequeños Momentos con Dios",
+      "app_id": "momentos_con_dios_en_familia",
+      "app_file": "apps/momentos_con_dios_en_familia.json",
+      "primary_routes": [
+        "acceder_app",
+        "continuar_experiencia",
+        "descargar_ebook",
+        "descargar_bonos",
+        "descargar_imprimibles",
+        "ver_productos_adquiridos"
+      ],
+      "support_routes": [
+        "problema_acceso",
+        "no_veo_mi_kit",
+        "no_recibi_email",
+        "acceder_centro_ayuda"
+      ],
+      "related_knowledge_sources": [
+        "access.json",
+        "routes.json",
+        "faq.json",
+        "escalation.json"
+      ]
+    },
+
+    "hombre_hogar": {
+      "product_file": "products/hombre_hogar.json",
+      "product_name": "El Hombre que Edifica su Hogar",
+      "app_id": "mi_hogar_con_proposito",
+      "app_file": "apps/mi_hogar_con_proposito.json",
+      "primary_routes": [
+        "acceder_app",
+        "continuar_experiencia",
+        "descargar_ebook",
+        "descargar_bonos",
+        "descargar_imprimibles",
+        "ver_productos_adquiridos"
+      ],
+      "support_routes": [
+        "problema_acceso",
+        "no_veo_mi_kit",
+        "no_recibi_email",
+        "acceder_centro_ayuda"
+      ],
+      "related_knowledge_sources": [
+        "access.json",
+        "routes.json",
+        "faq.json",
+        "escalation.json"
+      ]
+    },
+
+    "palabras_duelen": {
+      "product_file": "products/palabras_duelen.json",
+      "product_name": "Cuando las Palabras Duelen",
+      "app_id": "diario_de_paz_digital",
+      "app_file": "apps/diario_de_paz_digital.json",
+      "primary_routes": [
+        "acceder_app",
+        "continuar_experiencia",
+        "descargar_ebook",
+        "descargar_bonos",
+        "descargar_imprimibles",
+        "ver_productos_adquiridos"
+      ],
+      "support_routes": [
+        "problema_acceso",
+        "no_veo_mi_kit",
+        "no_recibi_email",
+        "acceder_centro_ayuda"
+      ],
+      "related_knowledge_sources": [
+        "access.json",
+        "routes.json",
+        "faq.json",
+        "escalation.json"
+      ]
+    }
+  },
+
+  "route_groups": {
+    "purchase": [
+      "comprar_kit",
+      "explorar_colecciones"
+    ],
+
+    "product_access": [
+      "ver_productos_adquiridos",
+      "acceder_app",
+      "continuar_experiencia"
+    ],
+
+    "downloads": [
+      "descargar_ebook",
+      "descargar_bonos",
+      "descargar_imprimibles"
+    ],
+
+    "support": [
+      "acceder_centro_ayuda",
+      "problema_acceso",
+      "no_recibi_email",
+      "no_veo_mi_kit"
+    ],
+
+    "apps": [
+      "conocer_apps",
+      "acceder_app"
+    ]
+  },
+
+  "hybrid_response_rules": {
+    "enable_product_plus_route": true,
+    "enable_product_plus_access": true,
+    "enable_route_plus_support": true,
+
+    "examples": [
+      {
+        "user_intent": "Compré un producto y quiero descargar un recurso",
+        "response_strategy": [
+          "detect_product",
+          "detect_route",
+          "combine_product_summary_with_route"
+        ]
+      },
+      {
+        "user_intent": "Compré un producto pero no aparece en Mis Colecciones",
+        "response_strategy": [
+          "detect_product",
+          "detect_access_problem",
+          "combine_product_context_with_support_steps"
+        ]
+      },
+      {
+        "user_intent": "Quiero entrar a la app de una colección específica",
+        "response_strategy": [
+          "detect_product",
+          "detect_app",
+          "combine_app_details_with_route"
+        ]
+      }
+    ]
+  },
+
+  "support_priority_map": {
+    "no_recibi_email": {
+      "priority": "medium",
+      "knowledge_sources": [
+        "access.json",
+        "routes.json"
+      ]
+    },
+
+    "problema_acceso": {
+      "priority": "high",
+      "knowledge_sources": [
+        "access.json",
+        "escalation.json",
+        "routes.json"
+      ]
+    },
+
+    "no_veo_mi_kit": {
+      "priority": "high",
+      "knowledge_sources": [
+        "access.json",
+        "escalation.json",
+        "routes.json"
+      ]
+    },
+
+    "acceder_centro_ayuda": {
+      "priority": "normal",
+      "knowledge_sources": [
+        "routes.json",
+        "escalation.json"
+      ]
+    }
+  },
+
+  "rules": {
+    "map_is_index_only": true,
+    "do_not_duplicate_product_content": true,
+    "do_not_duplicate_app_content": true,
+    "use_product_files_as_source_of_truth": true,
+    "use_app_files_as_source_of_truth": true,
+    "use_routes_json_for_navigation_steps": true,
+    "use_access_json_for_access_support": true,
+    "use_escalation_json_for_human_review": true
+  }
+}
