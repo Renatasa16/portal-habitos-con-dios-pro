@@ -9,9 +9,9 @@
 
       "commercial_stage": "featured_prelaunch",
 
-      "sales_description": "Kit Devocional Premium para familias que desean compartir la fe en casa mediante actividades sencillas, conversaciones significativas, oración y momentos de gratitud.",
+      "sales_description": "Una experiencia familiar diseñada para ayudar a padres, madres y cuidadores a compartir la fe de manera natural en el hogar, creando espacios de conversación, oración y conexión espiritual que fortalezcan los vínculos familiares."
 
-      "transformation": "Ayudar a las familias a integrar la fe en la vida cotidiana mediante momentos simples y accesibles.",
+      "transformation": "Transformar pequeños momentos cotidianos en oportunidades significativas para compartir la fe, fortalecer los vínculos familiares y crecer juntos en la presencia de Dios."
 
       "target_audience": [
         "familias",
@@ -25,7 +25,7 @@
       "app": {
         "name": "Momentos con Dios en Familia",
 
-        "description": "App Premium orientada al acompañamiento familiar mediante actividades, dinámicas, conversaciones guiadas y momentos devocionales.",
+        "description": "Una aplicación pensada para inspirar momentos especiales en familia, ayudando a crear espacios de conversación, aprendizaje y fe compartida a través de actividades sencillas y significativas."
 
         "features": [
           "actividades familiares",
@@ -40,7 +40,7 @@
       "ebook": {
         "name": "Pequeños Momentos con Dios",
 
-        "description": "Guía familiar diseñada para facilitar momentos de fe compartidos entre adultos y niños."
+        "description": "Una guía práctica con ideas, actividades y reflexiones que ayudan a incorporar conversaciones sobre Dios de manera natural y significativa en la vida familiar."
       },
 
       "bonuses": [
