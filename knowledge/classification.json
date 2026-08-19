@@ -19,12 +19,31 @@
       "intent": "product_information",
       "category": "product",
       "keywords": [
-        "qué incluye",
-        "qué es",
-        "colección",
-        "kit",
-        "producto"
-      ],
+  "qué incluye",
+  "qué es",
+  "colección",
+  "kit",
+  "producto",
+
+  "21 días",
+  "21 dias",
+  "más cerca de dios",
+  "pequeños momentos",
+  "familia",
+  "hombre que edifica",
+  "hombre que edifica su hogar",
+  "palabras duelen",
+"devocional",
+"qué contiene",
+"qué trae",
+"qué recibo",
+"qué obtengo",
+
+"kit devocional",
+"kit devocional premium",
+"experiencia",
+"experiencia premium"
+],
       "knowledge_sources": [
         "products/*"
       ],
@@ -36,12 +55,22 @@
       "intent": "app_information",
       "category": "app",
       "keywords": [
-        "app",
-        "aplicación",
-        "mi tiempo con dios",
-        "diario",
-        "experiencia"
-      ],
+  "app",
+  "aplicación",
+  "mi tiempo con dios",
+  "diario",
+  "experiencia",
+
+  "momentos con dios en familia",
+  "mi hogar con propósito",
+  "mi hogar con proposito",
+  "diario de paz digital",
+  "app premium",
+  "qué hace la app",
+  "qué incluye la app",
+  "cómo funciona la app",
+  "como funciona la app"
+],
       "knowledge_sources": [
         "apps/*"
       ],
@@ -60,6 +89,15 @@
         "no recibí correo",
         "no recibí email",
         "iniciar sesión"
+        "no veo mi colección",
+"no veo mi kit",
+"no encuentro mi colección",
+"no encuentro mi kit",
+"no tengo acceso",
+"no puedo acceder",
+"el enlace expiró",
+"correo de acceso",
+"email de acceso"
       ],
       "knowledge_sources": [
         "access.json",
