@@ -4,7 +4,6 @@
     "module": "classification",
     "description": "Motor de clasificación de consultas para seleccionar únicamente los archivos de conocimiento necesarios antes de generar una respuesta."
   },
-
   "default_behavior": {
     "fallback_intent": "navigation_help",
     "fallback_knowledge_sources": [
@@ -13,71 +12,65 @@
     "fallback_disclaimer": "none",
     "fallback_escalation": false
   },
-
   "intent_mappings": [
     {
       "intent": "product_information",
       "category": "product",
       "keywords": [
-  "qué incluye",
-  "qué es",
-  "colección",
-  "kit",
-  "producto",
-
-  "21 días",
-  "21 dias",
-  "más cerca de dios",
-  "pequeños momentos",
-  "familia",
-  "hombre que edifica",
-  "hombre que edifica su hogar",
-  "palabras duelen",
-"devocional",
-"qué contiene",
-"qué trae",
-"qué recibo",
-"qué obtengo",
-
-"kit devocional",
-"kit devocional premium",
-"experiencia",
-"experiencia premium"
-],
+        "qué incluye",
+        "qué es",
+        "colección",
+        "kit",
+        "producto",
+        "21 días",
+        "21 dias",
+        "más cerca de dios",
+        "pequeños momentos",
+        "familia",
+        "hombre que edifica",
+        "hombre que edifica su hogar",
+        "palabras duelen",
+        "devocional",
+        "qué contiene",
+        "qué trae",
+        "qué recibo",
+        "qué obtengo",
+        "kit devocional",
+        "kit devocional premium",
+        "experiencia",
+        "experiencia premium"
+      ],
       "knowledge_sources": [
         "products/*"
       ],
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "app_information",
       "category": "app",
       "keywords": [
-  "app",
-  "aplicación",
-  "mi tiempo con dios",
-  "diario",
-  "experiencia",
-
-  "momentos con dios en familia",
-  "mi hogar con propósito",
-  "mi hogar con proposito",
-  "diario de paz digital",
-  "app premium",
-  "qué hace la app",
-  "qué incluye la app",
-  "cómo funciona la app",
-  "como funciona la app"
-],
+        "app",
+        "aplicación",
+        "mi tiempo con dios",
+        "diario",
+        "experiencia",
+        "momentos con dios en familia",
+        "mi hogar con propósito",
+        "mi hogar con proposito",
+        "diario de paz digital",
+        "app premium",
+        "qué hace la app",
+        "qué incluye la app",
+        "cómo funciona la app",
+        "como funciona la app"
+      ],
       "knowledge_sources": [
         "apps/*"
       ],
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "access_problem",
       "category": "access",
@@ -88,16 +81,16 @@
         "magic link",
         "no recibí correo",
         "no recibí email",
-        "iniciar sesión"
+        "iniciar sesión",
         "no veo mi colección",
-"no veo mi kit",
-"no encuentro mi colección",
-"no encuentro mi kit",
-"no tengo acceso",
-"no puedo acceder",
-"el enlace expiró",
-"correo de acceso",
-"email de acceso"
+        "no veo mi kit",
+        "no encuentro mi colección",
+        "no encuentro mi kit",
+        "no tengo acceso",
+        "no puedo acceder",
+        "el enlace expiró",
+        "correo de acceso",
+        "email de acceso"
       ],
       "knowledge_sources": [
         "access.json",
@@ -106,7 +99,6 @@
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "navigation_help",
       "category": "navigation",
@@ -115,18 +107,18 @@
         "cómo accedo",
         "cómo llego",
         "dónde está",
-        "cómo descargo"
+        "cómo descargo",
         "dónde veo",
-"dónde encuentro mi app",
-"dónde encuentro mis bonos",
-"dónde encuentro mi ebook",
-"dónde encuentro los imprimibles",
-"cómo continúo",
-"cómo continuo",
-"cómo sigo",
-"como sigo",
-"mis colecciones",
-"centro de ayuda"
+        "dónde encuentro mi app",
+        "dónde encuentro mis bonos",
+        "dónde encuentro mi ebook",
+        "dónde encuentro los imprimibles",
+        "cómo continúo",
+        "cómo continuo",
+        "cómo sigo",
+        "como sigo",
+        "mis colecciones",
+        "centro de ayuda"
       ],
       "knowledge_sources": [
         "routes.json"
@@ -134,29 +126,26 @@
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "download_help",
       "category": "downloads",
       "keywords": [
-  "descargar",
-  "ebook",
-  "bonos",
-  "imprimibles",
-
-  "descarga",
-  "bajar ebook",
-  "descargar ebook",
-  "descargar app",
-  "descargar bono",
-  "descargar bonos",
-  "descargar imprimible",
-  "descargar imprimibles",
-  "material imprimible",
-  "materiales imprimibles",
-  "pdf",
-  "archivo"
-],
+        "descargar",
+        "ebook",
+        "bonos",
+        "imprimibles",
+        "descarga",
+        "bajar ebook",
+        "descargar ebook",
+        "descargar app",
+        "descargar bono",
+        "descargar bonos",
+        "descargar imprimible",
+        "descargar imprimibles",
+        "material imprimible",
+        "materiales imprimibles",
+        "pdf",
+        "archivo"
       ],
       "knowledge_sources": [
         "routes.json"
@@ -164,7 +153,6 @@
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "purchase_guidance",
       "category": "purchase",
@@ -174,16 +162,16 @@
         "precio",
         "colección disponible",
         "costo",
-"valor",
-"cuánto cuesta",
-"cuanto cuesta",
-"qué incluye la compra",
-"que incluye la compra",
-"quiero comprar",
-"quiero adquirir",
-"colecciones disponibles",
-"kit disponible",
-"experiencia disponible"
+        "valor",
+        "cuánto cuesta",
+        "cuanto cuesta",
+        "qué incluye la compra",
+        "que incluye la compra",
+        "quiero comprar",
+        "quiero adquirir",
+        "colecciones disponibles",
+        "kit disponible",
+        "experiencia disponible"
       ],
       "knowledge_sources": [
         "faq.json",
@@ -192,7 +180,6 @@
       "escalate": false,
       "disclaimer": "none"
     },
-
     {
       "intent": "personal_advice",
       "category": "sensitive",
@@ -209,7 +196,6 @@
       "escalate": true,
       "disclaimer": "advice"
     },
-
     {
       "intent": "family_issue",
       "category": "sensitive",
@@ -226,7 +212,6 @@
       "escalate": true,
       "disclaimer": "family"
     },
-
     {
       "intent": "emotional_support",
       "category": "sensitive",
@@ -245,7 +230,6 @@
       "escalate": true,
       "disclaimer": "emotional"
     },
-
     {
       "intent": "teen_support",
       "category": "sensitive",
@@ -262,7 +246,6 @@
       "escalate": true,
       "disclaimer": "teen_support"
     },
-
     {
       "intent": "crisis",
       "category": "critical",
@@ -280,7 +263,6 @@
       "escalate": true,
       "disclaimer": "crisis"
     },
-
     {
       "intent": "legal_financial",
       "category": "critical",
@@ -299,7 +281,6 @@
       "disclaimer": "legal_financial"
     }
   ],
-
   "classification_rules": {
     "load_only_required_files": true,
     "prioritize_specific_sources": true,
