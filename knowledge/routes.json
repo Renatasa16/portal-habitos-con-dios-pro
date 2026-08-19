@@ -4,6 +4,36 @@
       "intent": "comprar_kit",
 
       "title": "Quiero comprar una colección",
+      "aliases": [
+  "comprar",
+  "comprar kit",
+  "comprar colección",
+  "comprar una colección",
+  "quiero comprar",
+  "quiero adquirir",
+  "adquirir colección",
+  "adquirir kit",
+  "comprar producto",
+  "cómo comprar",
+  "como comprar",
+  "dónde comprar",
+  "donde comprar",
+  "quiero comenzar una experiencia",
+  "quiero empezar una experiencia",
+  "quiero adquirir una experiencia",
+  "colecciones disponibles para comprar",
+  "quiero ver las colecciones",
+  "quiero una colección",
+  "quiero comprar un devocional",
+  "quiero comprar un kit devocional",
+  "cómo adquiero una colección",
+  "como adquiero una colección",
+  "cómo puedo comprar",
+  "como puedo comprar",
+  "shopify",
+  "hacer una compra",
+  "realizar una compra"
+],
 
       "route": [
         "Inicio",
@@ -31,7 +61,43 @@
     {
   "intent": "explorar_colecciones",
 
-  "title": "Quiero conocer las colecciones disponibles",
+  "title": "Quiero conocer las colecciones disponibles",  
+      "aliases": [
+  "colecciones",
+  "colecciones disponibles",
+  "conocer colecciones",
+  "ver colecciones",
+  "explorar colecciones",
+  "qué colecciones hay",
+  "que colecciones hay",
+  "qué experiencias hay",
+  "que experiencias hay",
+  "qué puedo comprar",
+  "que puedo comprar",
+  "qué productos tienen",
+  "que productos tienen",
+  "ver productos",
+  "ver experiencias",
+  "colecciones activas",
+  "experiencias disponibles",
+  "kits disponibles",
+  "kits devocionales",
+  "qué kits tienen",
+  "que kits tienen",
+  "quiero conocer las colecciones",
+  "quiero ver las colecciones",
+  "quiero explorar las colecciones",
+  "quiero conocer los productos",
+  "qué opciones hay",
+  "que opciones hay",
+  "qué experiencias ofrecen",
+  "que experiencias ofrecen",
+  "productos disponibles",
+  "catálogo",
+  "catalogo",
+  "ver catálogo",
+  "ver catalogo"
+],
 
   "route": [
     "Inicio",
@@ -55,6 +121,18 @@
   "intent": "acceder_app",
 
   "title": "Quiero acceder a mi App",
+      "aliases": [
+  "app",
+  "mi app",
+  "abrir app",
+  "entrar a la app",
+  "acceder a la app",
+  "como entrar a la app",
+  "cómo entrar a la app",
+  "abrir aplicación",
+  "ingresar a mi aplicación",
+  "app premium"
+],
 
   "route": [
     "Inicio",
@@ -80,6 +158,17 @@
   "intent": "continuar_experiencia",
 
   "title": "Quiero continuar donde dejé mi experiencia",
+      "aliases": [
+  "continuar experiencia",
+  "seguir experiencia",
+  "retomar experiencia",
+  "continuar donde quedé",
+  "continuar donde deje",
+  "retomar donde quedé",
+  "retomar donde deje",
+  "seguir devocional",
+  "ver progreso"
+],
 
   "route": [
     "Inicio",
@@ -104,6 +193,19 @@
   "intent": "descargar_ebook",
 
   "title": "Quiero descargar mi ebook",
+      "aliases": [
+  "ebook",
+  "mi ebook",
+  "descargar ebook",
+  "descargar mi ebook",
+  "donde esta mi ebook",
+  "dónde está mi ebook",
+  "no encuentro mi ebook",
+  "como descargo mi ebook",
+  "cómo descargo mi ebook",
+  "libro principal",
+  "ebook principal
+  ],
 
   "route": [
     "Inicio",
@@ -130,6 +232,19 @@
   "intent": "descargar_bonos",
 
   "title": "Quiero descargar mis bonos",
+      "aliases": [
+  "bonos",
+  "mis bonos",
+  "bonificaciones",
+  "bonos incluidos",
+  "donde estan los bonos",
+  "dónde están los bonos",
+  "descargar bonos",
+  "descargar mis bonos",
+  "no encuentro los bonos",
+  "acceder a los bonos",
+  "bonos complementarios"
+],
 
   "route": [
     "Inicio",
@@ -156,7 +271,18 @@
   "intent": "descargar_imprimibles",
 
   "title": "Quiero descargar los imprimibles",
-
+      
+"aliases": [
+  "imprimibles",
+  "versiones imprimibles",
+  "descargar imprimibles",
+  "descargar versiones imprimibles",
+  "material para imprimir",
+  "documentos para imprimir",
+  "recursos imprimibles",
+  "donde estan los imprimibles",
+  "dónde están los imprimibles"
+],
   "route": [
     "Inicio",
     "Mis Colecciones",
@@ -182,6 +308,43 @@
   "intent": "acceder_centro_ayuda",
 
   "title": "Quiero contactar soporte",
+      "aliases": [
+  "soporte",
+  "contactar soporte",
+  "necesito ayuda",
+  "necesito soporte",
+  "ayuda",
+  "centro de ayuda",
+  "quiero ayuda",
+  "contactar ayuda",
+  "hablar con soporte",
+  "hablar con alguien",
+  "quiero contactar soporte",
+  "quiero contactar ayuda",
+  "abrir ticket",
+  "enviar consulta",
+  "hacer una consulta",
+  "necesito asistencia",
+  "asistencia",
+  "soporte técnico",
+  "soporte tecnico",
+  "resolver un problema",
+  "tengo un problema",
+  "tengo una consulta",
+  "cómo contacto soporte",
+  "como contacto soporte",
+  "cómo contacto ayuda",
+  "como contacto ayuda",
+  "dónde está el centro de ayuda",
+  "donde esta el centro de ayuda",
+  "cómo enviar una consulta",
+  "como enviar una consulta",
+  "quiero reportar un problema",
+  "necesito comunicarme con ustedes",
+  "necesito contactarlos",
+  "contacto",
+  "formulario de contacto"
+],
 
   "route": [
     "Inicio",
@@ -207,6 +370,53 @@
   "intent": "iniciar_sesion",
 
   "title": "Quiero iniciar sesión",
+      "aliases": [
+  "iniciar sesión",
+  "iniciar sesion",
+  "acceder",
+  "acceder al portal",
+  "ingresar",
+  "ingresar al portal",
+  "entrar",
+  "entrar al portal",
+  "acceder a mi experiencia",
+  "entrar a mi experiencia",
+  "quiero ingresar",
+  "quiero entrar",
+  "quiero iniciar sesión",
+  "quiero iniciar sesion",
+  "cómo ingreso",
+  "como ingreso",
+  "cómo entrar",
+  "como entrar",
+  "cómo accedo",
+  "como accedo",
+  "cómo acceder",
+  "como acceder",
+  "abrir mi cuenta",
+  "ingresar a mis colecciones",
+  "entrar a la app",
+  "ingresar a la app",
+  "abrir la app",
+  "acceder a la app",
+  "entrar a mi colección",
+  "entrar a mi coleccion",
+  "acceder a mis colecciones",
+  "abrir mi experiencia",
+  "entrar a mi experiencia",
+  "acceder a mi experiencia",
+  "continuar mi experiencia",
+  "quiero acceder a mis recursos",
+  "quiero acceder a mi colección",
+  "quiero acceder a mi coleccion",
+  "no sé cómo entrar",
+  "no se como entrar",
+  "cómo ingreso a mis compras",
+  "como ingreso a mis compras",
+  "ya compré y quiero entrar",
+  "ya compre y quiero entrar",
+  "abrir mis colecciones"
+],
 
   "route": [
     "Inicio",
@@ -232,6 +442,17 @@
   "intent": "no_recibi_email",
 
   "title": "No recibí el correo de acceso",
+      "aliases": [
+  "no recibi el correo",
+  "no recibí el correo",
+  "no llega el correo",
+  "correo de acceso",
+  "no me llega el email",
+  "no me llega el correo",
+  "no recibo el enlace",
+  "no encuentro el correo",
+  "correo de ingreso"
+],
 
   "route": [
     "Inicio",
@@ -260,6 +481,17 @@
   "intent": "problema_acceso",
 
   "title": "Compré y no puedo entrar",
+      "aliases": [
+  "no puedo entrar",
+  "no puedo ingresar",
+  "compré y no puedo entrar",
+  "compre y no puedo entrar",
+  "no tengo acceso",
+  "problema de acceso",
+  "no puedo acceder",
+  "compré pero no veo nada",
+  "no puedo abrir mi cuenta"
+],
 
   "route": [
     "Inicio",
@@ -287,6 +519,17 @@
   "intent": "no_veo_mi_kit",
 
   "title": "Entré al portal pero no veo mi colección",
+      "aliases": [
+  "no veo mi colección",
+  "no veo mi kit",
+  "no aparecen mis productos",
+  "no aparecen mis compras",
+  "mis colecciones están vacías",
+  "mis colecciones estan vacias",
+  "no encuentro mi colección",
+  "no encuentro mi kit",
+  "no veo mis recursos"
+],
 
   "route": [
     "Inicio",
@@ -310,6 +553,16 @@
   "intent": "conocer_apps",
 
   "title": "Quiero conocer las Apps disponibles",
+      "aliases": [
+  "apps",
+  "aplicaciones",
+  "apps disponibles",
+  "conocer apps",
+  "que apps hay",
+  "qué apps hay",
+  "ver aplicaciones",
+  "apps premium"
+],
 
   "route": [
     "Inicio",
@@ -335,6 +588,18 @@
   "intent": "ver_productos_adquiridos",
 
   "title": "Quiero ver todo lo que compré",
+     "aliases": [
+  "ver mis compras",
+  "mis compras",
+  "que compre",
+  "qué compré",
+  "productos adquiridos",
+  "ver productos adquiridos",
+  "mis colecciones",
+  "mis productos",
+  "todo lo que compré",
+  "todo lo que compre"
+],
 
   "route": [
     "Inicio",
