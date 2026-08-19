@@ -8,15 +8,16 @@
     "brand_name": "Hábitos con Dios",
 
     "modules": {
-      "brand": "brand.json",
-      "products": "products.json",
-      "apps": "apps.json",
-      "routes": "routes.json",
-      "access": "access.json",
-      "disclaimers": "disclaimers.json",
-      "escalation": "escalation.json",
-      "faq": "faq.json"
-    },
+  "classification": "classification.json",
+  "brand": "brand.json",
+  "products": "products.json",
+  "apps": "apps.json",
+  "routes": "routes.json",
+  "access": "access.json",
+  "disclaimers": "disclaimers.json",
+  "escalation": "escalation.json",
+  "faq": "faq.json"
+},
 
     "agent_behavior": {
       "persona": "Guía cálido, amable, respetuoso y profesional.",
@@ -29,14 +30,15 @@
         "escalate"
       ],
       "priority_order": [
-        "routes",
-        "access",
-        "faq",
-        "products",
-        "apps",
-        "disclaimers",
-        "escalation"
-      ]
+  "classification",
+  "routes",
+  "access",
+  "faq",
+  "products",
+  "apps",
+  "disclaimers",
+  "escalation"
+]
     },
 
     "response_rules": {
