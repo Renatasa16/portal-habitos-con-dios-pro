@@ -1,26 +1,26 @@
 {
   "access": {
+    "version": "1.1",
+
     "golden_rule": "Siempre intentar resolver primero antes de pedir datos.",
 
     "access_method": {
       "name": "Supabase Magic Link",
-
-      "description": "El acceso al portal utiliza autenticación por enlace mágico (Magic Link) enviado por correo electrónico.",
+      "description": "El acceso al portal utiliza autenticación mediante Magic Link enviado por correo electrónico.",
 
       "steps": [
-        "Ingresar correo electrónico en el login",
-        "Recibir correo enviado por Supabase",
-        "Abrir el correo recibido",
-        "Hacer clic en el enlace de acceso",
-        "Validar sesión",
-        "Ingresar al portal"
+        "Ingresar correo electrónico en el login.",
+        "Recibir correo enviado por Supabase.",
+        "Abrir el correo recibido.",
+        "Hacer clic en el enlace de acceso.",
+        "Validar sesión.",
+        "Ingresar al portal."
       ]
     },
 
     "purchase_validation": {
       "required_email": true,
-
-      "message": "El acceso a Apps, ebooks, bonos e imprimibles se verifica utilizando el mismo correo electrónico empleado durante la compra en Shopify."
+      "message": "El acceso a Apps, ebooks, bonos e imprimibles se valida utilizando el mismo correo electrónico empleado durante la compra en Shopify."
     },
 
     "permissions": {
@@ -39,56 +39,56 @@
     "common_problems": [
       {
         "id": "same_email_validation",
-
+        "category": "purchase_access",
+        "priority": "high",
         "title": "Validar mismo correo de compra",
-
         "response": "Antes de continuar, por favor valida que estés utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify."
       },
 
       {
         "id": "email_not_received",
-
+        "category": "login",
+        "priority": "medium",
         "title": "No recibí el correo de acceso",
-
         "response": "Revisa la bandeja principal, spam, promociones y correo no deseado. Luego intenta solicitar un nuevo enlace de acceso."
       },
 
       {
         "id": "magic_link_not_opened",
-
+        "category": "login",
+        "priority": "medium",
         "title": "No abrí el enlace",
-
         "response": "Debes abrir el enlace enviado por Supabase para validar tu sesión y acceder al portal."
       },
 
       {
         "id": "magic_link_expired",
-
+        "category": "login",
+        "priority": "medium",
         "title": "El enlace expiró",
-
         "response": "Solicita un nuevo enlace desde la pantalla de inicio de sesión."
       },
 
       {
         "id": "collection_not_visible",
-
+        "category": "permissions",
+        "priority": "high",
         "title": "No veo mi colección",
-
         "response": "Verifica que hayas iniciado sesión utilizando el mismo correo empleado durante la compra."
       },
 
       {
         "id": "wrong_purchase_email",
-
+        "category": "purchase_access",
+        "priority": "high",
         "title": "Compré con otro correo",
-
         "response": "El sistema identifica los permisos utilizando el correo registrado durante la compra."
       }
     ],
 
     "decision_trees": [
       {
-        "intent": "compré_y_no_puedo_entrar",
+        "intent": "compre_y_no_puedo_entrar",
 
         "initial_response": "Gracias por escribirnos. Antes de continuar, por favor valida que estás intentando ingresar con el mismo correo electrónico utilizado durante tu compra en Shopify.",
 
@@ -121,22 +121,32 @@
       }
     ],
 
-    "support_escalation": {
-      "required_information": [
-        "correo utilizado durante la compra",
-        "nombre de la colección adquirida",
-        "fecha aproximada de compra"
-      ],
+   "support_escalation": {
+  "escalate_to_human": true,
 
-      "message": "Si ya validaste todos los pasos anteriores y aún no puedes acceder, por favor comparte la información solicitada para que podamos revisar tu caso."
-    },
+  "required_information": [
+    "correo utilizado durante la compra",
+    "nombre de la colección adquirida",
+    "fecha aproximada de compra"
+  ],
+
+  "message": "Si ya validaste todos los pasos anteriores y aún no puedes acceder, por favor comparte la información solicitada para que podamos revisar tu caso.",
+
+  "escalation_cases": [
+    "purchase_verified_but_no_access",
+    "collection_not_visible_after_validation",
+    "email_change_request",
+    "permission_mismatch",
+    "technical_access_failure"
+  ]
+},
 
     "responses": {
-      "login_help": "Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Supabase enviará un enlace de acceso a ese correo. Una vez abierto el enlace, podrás acceder a tu experiencia.",
+  "login_help": "Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Supabase enviará un enlace de acceso a ese correo. Una vez abierto el enlace, podrás acceder a tu experiencia.",
 
-      "purchase_email_help": "Recuerda utilizar el mismo correo electrónico registrado durante la compra para que el sistema pueda identificar tus permisos activos.",
+  "purchase_email_help": "Recuerda utilizar el mismo correo electrónico registrado durante la compra para que el sistema pueda identificar tus permisos activos.",
 
-      "collection_access_help": "Las Apps, ebooks, bonos y recursos imprimibles asociados a tus compras se habilitan automáticamente cuando el correo autenticado coincide con el correo utilizado durante la compra."
-    }
-  }
+  "collection_access_help": "Las Apps, ebooks, bonos y recursos imprimibles asociados a tus compras se habilitan automáticamente cuando el correo autenticado coincide con el correo utilizado durante la compra."
+}
+}
 }
