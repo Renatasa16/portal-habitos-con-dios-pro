@@ -1,12 +1,30 @@
 {
-      "id": "21dias",
-      "name": "21 Días Más Cerca de Dios",
+  "id": "21dias",
+  "name": "21 Días Más Cerca de Dios",
 
-      "availability": {
-        "status": "active",
-        "message": "Disponible a través de Shopify."
-      },
+  "aliases": [
+    "21 dias",
+    "21 días",
+    "kit 21 dias",
+    "kit 21 días",
+    "devocional 21 dias",
+    "devocional 21 días",
+    "mas cerca de dios",
+    "más cerca de dios",
+    "el kit de 21 dias",
+    "el kit de 21 días",
+    "el de 21 dias",
+    "el de 21 días",
+    "programa de 21 dias",
+    "programa de 21 días",
+    "acercarme a dios",
+    "devocional para acercarme a dios"
+  ],
 
+  "availability": {
+    "status": "active",
+    "message": "Disponible a través de Shopify."
+  },
       "commercial_stage": "active",
 
       "sales_description": "Una experiencia devocional completa diseñada para ayudarte a construir hábitos espirituales sólidos, profundizar tu relación con Dios y encontrar un espacio diario de reflexión, oración y crecimiento personal.",
