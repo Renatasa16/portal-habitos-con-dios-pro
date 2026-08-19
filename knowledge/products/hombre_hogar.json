@@ -36,6 +36,37 @@
     "mi hogar con propósito"
   ],
 
+  "email_presentation": {
+  "hero_title": "✨ El Hombre que Edifica su Hogar",
+
+  "hero_subtitle": "Una experiencia devocional diseñada para acompañar a hombres que desean construir un hogar sólido, fortalecer su liderazgo espiritual y vivir con propósito el llamado que Dios ha puesto sobre su vida y su familia.",
+
+  "transformation_title": "🌿 ¿Qué transformación busca generar?",
+
+  "transformation_text": "Ayudarte a convertirte en un hombre que lidera desde el ejemplo, fortalece los vínculos familiares, desarrolla una vida espiritual consistente y construye un legado de fe para las próximas generaciones.",
+
+  "includes_title": "📦 ¿Qué incluye?",
+
+  "app_label": "📱 App Premium",
+  "ebook_label": "📘 Ebook Principal",
+  "bonuses_label": "🎁 Bonificaciones Exclusivas",
+  "printables_label": "🖨️ Recursos Imprimibles",
+
+  "printables_text": "Material de apoyo diseñado para reforzar la reflexión personal, establecer metas espirituales y aplicar los principios aprendidos en la vida cotidiana.",
+
+  "audience_title": "❤️ Ideal para",
+
+  "audience_items": [
+    "Hombres que desean fortalecer su relación con Dios",
+    "Esposos que buscan liderar su hogar con sabiduría",
+    "Padres que desean dejar un legado espiritual a sus hijos",
+    "Hombres que buscan crecer en carácter y propósito",
+    "Personas que desean construir una familia fundada sobre principios cristianos"
+  ],
+
+  "closing_text": "✨ Cada recurso fue creado para ayudarte a crecer como hombre de fe, fortalecer tu liderazgo espiritual y convertir tu hogar en un lugar donde Dios ocupe el centro de cada decisión y cada relación."
+},
+
   "availability": {
         "status": "prelaunch",
         "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
