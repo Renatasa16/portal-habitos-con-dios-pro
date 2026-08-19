@@ -304,21 +304,44 @@ function buildUserEmailTemplate({
   `;
 
   const aiBlock = aiResponseText
-    ? `
-      <div style="margin-top:22px; padding:22px 20px; background:#ffffff; border-radius:16px; border:1px solid #eadfce;">
-        <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#8a7456; font-weight:700; margin-bottom:10px;">
+  ? `
+    <div style="margin-top:24px; background:#fffdf8; border:1px solid #eadfce; border-radius:20px; overflow:hidden; box-shadow:0 10px 26px rgba(69, 49, 25, 0.08);">
+
+      <div style="padding:20px 22px; background:#f3eee5; border-bottom:1px solid #eadfce;">
+        <div style="display:inline-block; padding:7px 12px; background:#315c4b; color:#ffffff; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;">
           Respuesta inicial
         </div>
-        <div style="font-size:16px; line-height:1.8; color:#4a4035; white-space:pre-line;">
+
+        <h2 style="margin:14px 0 6px; font-size:21px; line-height:1.35; color:#2f2a24; font-weight:700;">
+          Te compartimos una primera orientación
+        </h2>
+
+        <p style="margin:0; font-size:14px; line-height:1.7; color:#6f5a3b;">
+          Esta respuesta fue preparada con la información disponible en nuestra base de conocimiento de Hábitos con Dios.
+        </p>
+      </div>
+
+      <div style="padding:24px 22px;">
+        <div style="font-size:16px; line-height:1.85; color:#3f372f; white-space:pre-line;">
           ${nl2br(aiResponseText)}
         </div>
       </div>
-    `
-    : `
-      <p style="margin:0 0 22px; font-size:16px; line-height:1.8; color:#4a4035;">
-        Revisaremos tu consulta y te responderemos desde nuestro canal de soporte.
+
+      <div style="padding:18px 22px; background:#faf6ee; border-top:1px solid #eadfce;">
+        <p style="margin:0; font-size:14px; line-height:1.7; color:#7a684f;">
+          Si necesitas más ayuda, puedes responder este correo o completar una nueva consulta desde el Centro de Ayuda.
+        </p>
+      </div>
+
+    </div>
+  `
+  : `
+    <div style="margin-top:22px; padding:22px 20px; background:#fffdf8; border-radius:18px; border:1px solid #eadfce;">
+      <p style="margin:0; font-size:16px; line-height:1.8; color:#4a4035;">
+        Recibimos tu consulta correctamente. Nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.
       </p>
-    `;
+    </div>
+  `;
 
   const accessReminder = `
     <div style="padding:18px 20px; background:#faf6ee; border-radius:16px; border:1px solid #eadfce; margin-top:18px;">
