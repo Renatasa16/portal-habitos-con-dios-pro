@@ -85,7 +85,42 @@ function escapeHtml(value) {
 function nl2br(value) {
   return escapeHtml(value).replace(/\n/g, "<br />");
 }
+function formatResponseForEmail(value) {
+  if (!value) return "";
 
+  const lines = String(value).split("\n");
+  const output = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const current = lines[i].trim();
+    const next = lines[i + 1]?.trim();
+
+    const isLinkLabel = current.startsWith("🔗 ");
+    const isUrl =
+      next &&
+      (
+        next.startsWith("http://") ||
+        next.startsWith("https://")
+      );
+
+    if (isLinkLabel && isUrl) {
+      const label = current.replace("🔗 ", "");
+
+      output.push(`
+        <a
+          href="${escapeHtml(next)}"tml(label)}
+        </a>
+      `);
+
+      i++;
+      continue;
+    }
+
+    output.push(escapeHtml(current));
+  }
+
+  return output.join("<br />");
+}
 function getCategoryData(category) {
   return ALLOWED_CATEGORIES[category] || null;
 }
@@ -254,7 +289,7 @@ function buildInternalEmailTemplate({
               Respuesta generada
             </div>
             <div style="font-size:15px; color:#2f2a24; line-height:1.75; white-space:pre-line;">
-              ${nl2br(aiResponseText)}
+              ${formatResponseForEmail(aiResponseText)}
             </div>
           </div>`
         : ""
