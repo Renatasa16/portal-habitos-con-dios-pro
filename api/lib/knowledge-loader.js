@@ -13,7 +13,8 @@ const MODULE_FILES = {
   disclaimers: "disclaimers.json",
   escalation: "escalation.json",
   faq: "faq.json",
-  knowledgeBase: "knowledge-base.json"
+  knowledgeBase: "knowledge-base.json",
+  map: "map.json"
 };
 
 let cachedKnowledge = null;
@@ -94,7 +95,8 @@ function loadKnowledgeBase() {
     disclaimers: readJsonFile(MODULE_FILES.disclaimers),
     escalation: readJsonFile(MODULE_FILES.escalation),
     faq: readJsonFile(MODULE_FILES.faq),
-    knowledgeBase: readJsonFile(MODULE_FILES.knowledgeBase)
+    knowledgeBase: readJsonFile(MODULE_FILES.knowledgeBase),
+    map: readJsonFile(MODULE_FILES.map)
   };
 
   cachedKnowledge = knowledge;
