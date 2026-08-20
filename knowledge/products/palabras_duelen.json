@@ -41,9 +41,9 @@
   "app_label": "📱 App Premium",
   "ebook_label": "📘 Ebook Principal",
   "bonuses_label": "🎁 Bonificaciones Exclusivas",
-  "printables_label": "🖨️ Recursos Imprimibles",
+  "printables_label": "🖨️ Versión Imprimibles",
 
-  "printables_text": "Material complementario diseñado para profundizar la reflexión personal, fortalecer habilidades de comunicación y acompañar procesos de restauración emocional.",
+  "printables_text": "Si disfrutas escribir, reflexionar o estudiar en papel, encontrarás el ebook principal y recursos seleccionados en una versión especialmente adaptada para imprimir, pensada para una lectura cómoda y un uso responsable de tinta.",
 
   "audience_title": "❤️ Ideal para",
 
@@ -59,9 +59,11 @@
 },
 
       "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "Cuando las Palabras Duelen",
+  "shopify_url": "https://skoolrenovae.store/products/cuando-las-palabras-duelen"
+},
 
       "commercial_stage": "featured_prelaunch",
 
