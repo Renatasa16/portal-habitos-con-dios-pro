@@ -90,8 +90,8 @@
     "palabras_duelen": {
       "product_file": "products/palabras_duelen.json",
       "product_name": "Cuando las Palabras Duelen",
-      "app_id": "diario_de_paz_digital",
-      "app_file": "apps/diario_de_paz_digital.json",
+      "app_id": "diario_paz_digital",
+      "app_file": "apps/diario_paz_digital.json",
       "primary_routes": [
         "acceder_app",
         "continuar_experiencia",
