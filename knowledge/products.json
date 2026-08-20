@@ -5,9 +5,11 @@
       "name": "21 Días Más Cerca de Dios",
 
       "availability": {
-        "status": "active",
-        "message": "Disponible a través de Shopify."
-      },
+  "status": "active",
+  "message": "Disponible actualmente.",
+  "shopify_label": "21 Días Más Cerca de Dios",
+  "shopify_url": "https://skoolrenovae.store/products/21diasmascercadedios"
+},
 
       "commercial_stage": "active",
 
@@ -62,9 +64,11 @@
       "name": "Pequeños Momentos con Dios",
 
       "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "Pequeños Momentos con Dios",
+  "shopify_url": "https://skoolrenovae.store/products/pequenos-momentos-con-dios"
+},
 
       "commercial_stage": "featured_prelaunch",
 
@@ -119,10 +123,12 @@
       "id": "palabras_duelen",
       "name": "Cuando las Palabras Duelen",
 
-      "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+     "availability": {
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "Cuando las Palabras Duelen",
+  "shopify_url": "https://skoolrenovae.store/products/cuando-las-palabras-duelen"
+},
 
       "commercial_stage": "featured_prelaunch",
 
@@ -176,9 +182,11 @@
       "name": "El Hombre que Edifica su Hogar",
 
       "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "El Hombre que Edifica su Hogar",
+  "shopify_url": "https://skoolrenovae.store/products/🏡-el-hombre-que-edifica-su-hogar"
+},
 
       "commercial_stage": "featured_prelaunch",
 
