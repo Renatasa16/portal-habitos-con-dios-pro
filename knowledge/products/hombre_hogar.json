@@ -50,9 +50,9 @@
   "app_label": "📱 App Premium",
   "ebook_label": "📘 Ebook Principal",
   "bonuses_label": "🎁 Bonificaciones Exclusivas",
-  "printables_label": "🖨️ Recursos Imprimibles",
+  "printables_label": "🖨️ Versión Imprimible",
 
-  "printables_text": "Material de apoyo diseñado para reforzar la reflexión personal, establecer metas espirituales y aplicar los principios aprendidos en la vida cotidiana.",
+  "printables_text": "Si disfrutas escribir, reflexionar o estudiar en papel, encontrarás el ebook principal y recursos seleccionados en una versión especialmente adaptada para imprimir, pensada para una lectura cómoda y un uso responsable de tinta.",
 
   "audience_title": "❤️ Ideal para",
 
@@ -68,9 +68,11 @@
 },
 
   "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "El Hombre que Edifica su Hogar",
+  "shopify_url": "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar"
+},
 
       "commercial_stage": "featured_prelaunch",
 
