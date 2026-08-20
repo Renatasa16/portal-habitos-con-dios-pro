@@ -188,12 +188,19 @@ function buildProductResponse(product, fileName) {
       content.push(presentation.closing_text);
     }
 
-    const availabilityMessage = getAvailabilityMessage(product);
+    const availability = product?.availability;
+const availabilityMessage = getAvailabilityMessage(product);
 
-    if (availabilityMessage) {
-      content.push("");
-      content.push(`✅ Disponibilidad: ${availabilityMessage}`);
-    }
+if (availabilityMessage) {
+  content.push("");
+  content.push(`✅ Disponibilidad: ${availabilityMessage}`);
+
+  if (availability?.shopify_label && availability?.shopify_url) {
+    content.push("");
+    content.push(`🔗 ${availability.shopify_label}`);
+    content.push(availability.shopify_url);
+  }
+}
   } else {
     const productName = product.name || "Esta experiencia";
 
@@ -240,7 +247,7 @@ function buildProductResponse(product, fileName) {
 
     if (product.printables) {
       content.push(
-        "• Recursos imprimibles diseñados para complementar la experiencia en formato físico."
+        "• El ebook principal y recursos seleccionados también están disponibles en una versión especialmente preparada para imprimir, diseñada para una lectura cómoda y un uso responsable de tinta."
       );
     }
 
