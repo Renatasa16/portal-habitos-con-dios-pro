@@ -35,9 +35,9 @@
     "app_label": "📱 App Premium",
     "ebook_label": "📘 Ebook Principal",
     "bonuses_label": "🎁 Bonificaciones Exclusivas",
-    "printables_label": "🖨️ Recursos Imprimibles",
+    "printables_label": "🖨️ Versión Imprimible",
 
-    "printables_text": "Material complementario para profundizar la experiencia y acompañar tu tiempo devocional en formato físico.",
+    "printables_text": "Si disfrutas escribir, reflexionar o estudiar en papel, encontrarás el ebook principal y recursos seleccionados en una versión especialmente adaptada para imprimir, pensada para una lectura cómoda y un uso responsable de tinta.",
 
     "audience_title": "❤️ Ideal para",
 
@@ -53,9 +53,11 @@
   },
 
   "availability": {
-    "status": "active",
-    "message": "Disponible a través de Shopify."
-  },
+  "status": "active",
+  "message": "Disponible actualmente.",
+  "shopify_label": "21 Días Más Cerca de Dios",
+  "shopify_url": "https://skoolrenovae.store/products/21diasmascercadedios"
+},
       "commercial_stage": "active",
 
       "sales_description": "Una experiencia devocional completa diseñada para ayudarte a construir hábitos espirituales sólidos, profundizar tu relación con Dios y encontrar un espacio diario de reflexión, oración y crecimiento personal.",
