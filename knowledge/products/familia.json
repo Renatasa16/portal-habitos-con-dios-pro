@@ -43,7 +43,7 @@
   "app_label": "📱 App Premium",
   "ebook_label": "📘 Ebook Principal",
   "bonuses_label": "🎁 Bonificaciones Exclusivas",
-  "printables_label": "🖨️ Recursos Imprimibles",
+  "printables_label": "🖨️ Versión Imprimible",
 
   "printables_text": "Material complementario diseñado para acompañar actividades familiares, momentos de reflexión y experiencias de aprendizaje compartidas en el hogar.",
 
@@ -61,9 +61,11 @@
 },
 
   "availability": {
-        "status": "prelaunch",
-        "message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente."
-      },
+  "status": "prelaunch",
+  "message": "Próximamente disponible.",
+  "shopify_label": "Pequeños Momentos con Dios",
+  "shopify_url": "https://skoolrenovae.store/products/pequenos-momentos-con-dios"
+},
 
       "commercial_stage": "featured_prelaunch",
 
