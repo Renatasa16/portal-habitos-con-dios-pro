@@ -876,42 +876,6 @@ function findFaqResponse(message, preferredCategory = null) {
   return buildFaqResponse(bestMatch.item);
 }
 
-  let bestMatch = null;
-
-  for (const item of faqItems) {
-    if (!item.answer) {
-      continue;
-    }
-
-    const categoryScore =
-      preferredCategory && normalize(item.category) === normalize(preferredCategory)
-        ? 15
-        : 0;
-
-    const candidates = [
-      item.id,
-      item.question,
-      item.answer,
-      item.category
-    ].filter(Boolean);
-
-    const score = getBestScore(message, candidates) + categoryScore;
-
-    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
-      bestMatch = {
-        item,
-        score
-      };
-    }
-  }
-
-  if (!bestMatch || bestMatch.score < 30) {
-    return null;
-  }
-
-  return buildFaqResponse(bestMatch.item);
-}
-
 function findPurchaseResponse(message) {
   return (
     findRouteResponse(message, "comprar_kit") ||
