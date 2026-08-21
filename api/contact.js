@@ -140,6 +140,10 @@ function getCategoryData(category) {
   return ALLOWED_CATEGORIES[category] || null;
 }
 
+function getProductData(product) {
+  return ALLOWED_PRODUCTS[product] || null;
+}
+
 function detectSensitiveMessage(message) {
   const value = String(message || "").toLowerCase();
 
@@ -515,19 +519,19 @@ const message = sanitizeMessage(
     }
 
 const categoryData = getCategoryData(category);
+const productData = getProductData(product);
 
 console.log("CONTACT_PRODUCT", product);
 console.log("CONTACT_CATEGORY", category);
 console.log("CONTACT_EMAIL", email);
-    const productData = getProductData(product);
 
 if (!categoryData) {
-      return res.status(400).json({
-        ok: false,
-        message: "Por favor selecciona un tipo de consulta válido.",
-        allowedCategories: Object.keys(ALLOWED_CATEGORIES)
-      });
-    }
+  return res.status(400).json({
+    ok: false,
+    message: "Por favor selecciona un tipo de consulta válido.",
+    allowedCategories: Object.keys(ALLOWED_CATEGORIES)
+  });
+}
 
     if (!message || message.length < 10) {
       return res.status(400).json({
