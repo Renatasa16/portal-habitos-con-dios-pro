@@ -39,38 +39,75 @@ function getSafeArray(value) {
 }
 
 function getBestScore(message, candidates = []) {
-  return candidates.reduce((bestScore, candidate) => {
-    if (!candidate) return bestScore;
+  return candidates.reduce(
+    (bestScore, candidate) => {
+      if (!candidate) {
+        return bestScore;
+      }
 
-    if (typeof scoreTextMatch === "function") {
-      return Math.max(bestScore, scoreTextMatch(message, candidate));
-    }
+      if (
+        typeof scoreTextMatch === "function"
+      ) {
+        return Math.max(
+          bestScore,
+          scoreTextMatch(
+            message,
+            candidate
+          )
+        );
+      }
 
-    const normalizedMessage = normalize(message);
-    const normalizedCandidate = normalize(candidate);
+      const normalizedMessage =
+        normalize(message);
 
-    if (!normalizedMessage || !normalizedCandidate) {
-      return bestScore;
-    }
+      const normalizedCandidate =
+        normalize(candidate);
 
-    if (normalizedMessage.includes(normalizedCandidate)) {
-      return Math.max(bestScore, 100 + normalizedCandidate.length);
-    }
+      if (
+        !normalizedMessage ||
+        !normalizedCandidate
+      ) {
+        return bestScore;
+      }
 
-    const candidateTokens = normalizedCandidate
-      .split(" ")
-      .filter((token) => token.length >= 3);
+      if (
+        normalizedMessage.includes(
+          normalizedCandidate
+        )
+      ) {
+        return Math.max(
+          bestScore,
+          100 + normalizedCandidate.length
+        );
+      }
 
-    const matchedTokens = candidateTokens.filter((token) =>
-      normalizedMessage.includes(token)
-    );
+      const candidateTokens =
+        normalizedCandidate
+          .split(" ")
+          .filter(
+            (token) =>
+              token.length >= 3
+          );
 
-    if (matchedTokens.length === 0) {
-      return bestScore;
-    }
+      const matchedTokens =
+        candidateTokens.filter(
+          (token) =>
+            normalizedMessage.includes(
+              token
+            )
+        );
 
-    return Math.max(bestScore, matchedTokens.length * 20);
-  }, 0);
+      if (matchedTokens.length === 0) {
+        return bestScore;
+      }
+
+      return Math.max(
+        bestScore,
+        matchedTokens.length * 20
+      );
+    },
+    0
+  );
 }
 
 function getAvailabilityMessage(item) {
@@ -89,29 +126,47 @@ function getAvailabilityMessage(item) {
   return null;
 }
 
-function buildProductResponse(product, fileName) {
+function buildProductResponse(
+  product,
+  fileName
+) {
   const content = [];
-  const presentation = product?.email_presentation;
+
+  const presentation =
+    product?.email_presentation;
 
   if (presentation) {
     content.push(
       presentation.hero_title ||
-      `✨ ${product.name || "Esta experiencia"}`
+      `✨ ${
+        product.name ||
+        "Esta experiencia"
+      }`
     );
 
     if (presentation.hero_subtitle) {
       content.push("");
-      content.push(presentation.hero_subtitle);
+      content.push(
+        presentation.hero_subtitle
+      );
     }
 
-    if (presentation.transformation_title && presentation.transformation_text) {
+    if (
+      presentation.transformation_title &&
+      presentation.transformation_text
+    ) {
       content.push("");
-      content.push(presentation.transformation_title);
+      content.push(
+        presentation.transformation_title
+      );
       content.push("");
-      content.push(presentation.transformation_text);
+      content.push(
+        presentation.transformation_text
+      );
     }
 
     content.push("");
+
     content.push(
       presentation.includes_title ||
       "📦 ¿Qué incluye?"
@@ -119,44 +174,65 @@ function buildProductResponse(product, fileName) {
 
     if (product.app?.name) {
       content.push("");
+
       content.push(
         presentation.app_label ||
         "📱 App Premium"
       );
-      content.push(product.app.name);
+
+      content.push(
+        product.app.name
+      );
 
       if (product.app.description) {
-        content.push(product.app.description);
+        content.push(
+          product.app.description
+        );
       }
     }
 
     if (product.ebook?.name) {
       content.push("");
+
       content.push(
         presentation.ebook_label ||
         "📘 Ebook Principal"
       );
-      content.push(product.ebook.name);
+
+      content.push(
+        product.ebook.name
+      );
 
       if (product.ebook.description) {
-        content.push(product.ebook.description);
+        content.push(
+          product.ebook.description
+        );
       }
     }
 
-    if (Array.isArray(product.bonuses) && product.bonuses.length > 0) {
+    if (
+      Array.isArray(product.bonuses) &&
+      product.bonuses.length > 0
+    ) {
       content.push("");
+
       content.push(
         presentation.bonuses_label ||
         "🎁 Bonificaciones Exclusivas"
       );
 
-      product.bonuses.forEach((bonus) => {
-        content.push(`• ${bonus}`);
-      });
+      product.bonuses.forEach(
+        (bonus) => {
+          content.push(
+            `• ${bonus}`
+          );
+        }
+      );
     }
 
     if (product.printables) {
       content.push("");
+
       content.push(
         presentation.printables_label ||
         "🖨️ Recursos Imprimibles"
@@ -169,40 +245,66 @@ function buildProductResponse(product, fileName) {
     }
 
     if (
-      Array.isArray(presentation.audience_items) &&
-      presentation.audience_items.length > 0
+      Array.isArray(
+        presentation.audience_items
+      ) &&
+      presentation.audience_items
+        .length > 0
     ) {
       content.push("");
+
       content.push(
         presentation.audience_title ||
         "❤️ Ideal para"
       );
 
-      presentation.audience_items.forEach((item) => {
-        content.push(`• ${item}`);
-      });
+      presentation.audience_items
+        .forEach((item) => {
+          content.push(
+            `• ${item}`
+          );
+        });
     }
 
     if (presentation.closing_text) {
       content.push("");
-      content.push(presentation.closing_text);
+      content.push(
+        presentation.closing_text
+      );
     }
 
-    const availability = product?.availability;
-const availabilityMessage = getAvailabilityMessage(product);
+    const availability =
+      product?.availability;
 
-if (availabilityMessage) {
-  content.push("");
-  content.push(`✅ Disponibilidad: ${availabilityMessage}`);
+    const availabilityMessage =
+      getAvailabilityMessage(product);
 
-  if (availability?.shopify_label && availability?.shopify_url) {
-    content.push("");
-    content.push(`🔗 ${availability.shopify_label}`);
-    content.push(availability.shopify_url);
-  }
-}
+    if (availabilityMessage) {
+      content.push("");
+
+      content.push(
+        `✅ Disponibilidad: ${availabilityMessage}`
+      );
+
+      if (
+        availability?.shopify_label &&
+        availability?.shopify_url
+      ) {
+        content.push("");
+
+        content.push(
+          `🔗 ${availability.shopify_label}`
+        );
+
+        content.push(
+          availability.shopify_url
+        );
+      }
+    }
   } else {
-    const productName = product.name || "Esta experiencia";
+    const productName =
+      product.name ||
+      "Esta experiencia";
 
     content.push(
       `${productName} es un Kit Devocional Premium de Hábitos con Dios.`
@@ -210,11 +312,14 @@ if (availabilityMessage) {
 
     if (product.sales_description) {
       content.push("");
-      content.push(product.sales_description);
+      content.push(
+        product.sales_description
+      );
     }
 
     if (product.transformation) {
       content.push("");
+
       content.push(
         `Esta experiencia busca acompañarte en este proceso: ${product.transformation}`
       );
@@ -224,26 +329,36 @@ if (availabilityMessage) {
     content.push("Incluye:");
 
     if (product.app?.name) {
-      content.push(`• App Premium: ${product.app.name}`);
+      content.push(
+        `• App Premium: ${product.app.name}`
+      );
 
       if (product.app.description) {
-        content.push(`  ${product.app.description}`);
+        content.push(
+          `  ${product.app.description}`
+        );
       }
     }
 
     if (product.ebook?.name) {
-      content.push(`• Ebook principal: ${product.ebook.name}`);
+      content.push(
+        `• Ebook principal: ${product.ebook.name}`
+      );
 
       if (product.ebook.description) {
-        content.push(`  ${product.ebook.description}`);
+        content.push(
+          `  ${product.ebook.description}`
+        );
       }
     }
 
-    if (Array.isArray(product.bonuses) && product.bonuses.length > 0) {
-      product.bonuses.forEach((bonus) => {
-        content.push(`• ${bonus}`);
-      });
-    }
+    getSafeArray(
+      product.bonuses
+    ).forEach((bonus) => {
+      content.push(
+        `• ${bonus}`
+      );
+    });
 
     if (product.printables) {
       content.push(
@@ -251,11 +366,14 @@ if (availabilityMessage) {
       );
     }
 
-    const availabilityMessage = getAvailabilityMessage(product);
+    const availabilityMessage =
+      getAvailabilityMessage(product);
 
     if (availabilityMessage) {
       content.push("");
-      content.push(availabilityMessage);
+      content.push(
+        availabilityMessage
+      );
     }
   }
 
@@ -268,58 +386,104 @@ if (availabilityMessage) {
   };
 }
 
-function buildAppResponse(app, fileName) {
+function buildAppResponse(
+  app,
+  fileName
+) {
   const content = [];
 
-  const appName = app.name || "Esta App Premium";
+  const appName =
+    app.name ||
+    "Esta App Premium";
 
-  content.push(`${appName} es una App Premium de Hábitos con Dios.`);
+  content.push(
+    `${appName} es una App Premium de Hábitos con Dios.`
+  );
 
   if (app.description) {
     content.push("");
-    content.push(app.description);
+    content.push(
+      app.description
+    );
   }
 
   if (app.purpose) {
     content.push("");
-    content.push(app.purpose);
+    content.push(
+      app.purpose
+    );
   }
 
-  if (Array.isArray(app.what_users_will_find) && app.what_users_will_find.length > 0) {
+  if (
+    Array.isArray(
+      app.what_users_will_find
+    ) &&
+    app.what_users_will_find.length > 0
+  ) {
     content.push("");
-    content.push("Dentro de la App encontrarás:");
 
-    app.what_users_will_find.forEach((item) => {
-      content.push(`• ${item}`);
-    });
+    content.push(
+      "Dentro de la App encontrarás:"
+    );
+
+    app.what_users_will_find
+      .forEach((item) => {
+        content.push(
+          `• ${item}`
+        );
+      });
   }
 
-  if (Array.isArray(app.features) && app.features.length > 0) {
+  if (
+    Array.isArray(app.features) &&
+    app.features.length > 0
+  ) {
     content.push("");
-    content.push("También incluye herramientas como:");
 
-    app.features.forEach((feature) => {
-      content.push(`• ${feature}`);
-    });
+    content.push(
+      "También incluye herramientas como:"
+    );
+
+    app.features.forEach(
+      (feature) => {
+        content.push(
+          `• ${feature}`
+        );
+      }
+    );
   }
 
-  if (Array.isArray(app.navigation_route) && app.navigation_route.length > 0) {
+  if (
+    Array.isArray(
+      app.navigation_route
+    ) &&
+    app.navigation_route.length > 0
+  ) {
     content.push("");
-    content.push(`Ruta sugerida: ${routeToText(app.navigation_route)}`);
+
+    content.push(
+      `Ruta sugerida: ${routeToText(
+        app.navigation_route
+      )}`
+    );
   }
 
   if (app.requires_login) {
     content.push("");
+
     content.push(
       "Para acceder, recuerda iniciar sesión con el mismo correo electrónico utilizado durante la compra."
     );
   }
 
-  const availabilityMessage = getAvailabilityMessage(app);
+  const availabilityMessage =
+    getAvailabilityMessage(app);
 
   if (availabilityMessage) {
     content.push("");
-    content.push(availabilityMessage);
+    content.push(
+      availabilityMessage
+    );
   }
 
   return {
@@ -331,7 +495,120 @@ function buildAppResponse(app, fileName) {
   };
 }
 
-function buildAccessResponse({ text, intent = "access_information", source = "access" }) {
+function buildEbookResponse(
+  product,
+  fileName
+) {
+  if (!product) {
+    return null;
+  }
+
+  const ebook =
+    product.ebook || {};
+
+  const content = [];
+
+  content.push(
+    ebook.name ||
+    product.name ||
+    "Ebook de Hábitos con Dios"
+  );
+
+  if (ebook.description) {
+    content.push("");
+    content.push(
+      ebook.description
+    );
+  }
+
+  if (product.sales_description) {
+    content.push("");
+    content.push(
+      product.sales_description
+    );
+  }
+
+  if (product.printables) {
+    content.push("");
+
+    content.push(
+      "El ebook principal también está disponible en una versión especialmente preparada para imprimir, diseñada para una lectura cómoda y un uso responsable de tinta."
+    );
+  }
+
+  const availabilityMessage =
+    getAvailabilityMessage(product);
+
+  if (availabilityMessage) {
+    content.push("");
+
+    content.push(
+      `✅ Disponibilidad: ${availabilityMessage}`
+    );
+  }
+
+  return {
+    found: true,
+    source: "product",
+    intent: "ebook_information",
+    usedFile: fileName,
+    text: content.join("\n")
+  };
+}
+
+function buildBonusesResponse(
+  product,
+  fileName
+) {
+  if (
+    !product ||
+    !Array.isArray(product.bonuses) ||
+    product.bonuses.length === 0
+  ) {
+    return null;
+  }
+
+  const content = [];
+
+  content.push(
+    `🎁 Bonos incluidos en ${
+      product.name ||
+      "esta experiencia"
+    }`
+  );
+
+  content.push("");
+
+  product.bonuses.forEach(
+    (bonus) => {
+      content.push(
+        `• ${bonus}`
+      );
+    }
+  );
+
+  if (product.printables) {
+    content.push("");
+
+    content.push(
+      "Los recursos imprimibles están preparados para facilitar una lectura cómoda y un uso responsable de tinta."
+    );
+  }
+
+  return {
+    found: true,
+    source: "product",
+    intent: "bonuses_information",
+    usedFile: fileName,
+    text: content.join("\n")
+  };
+}
+
+function buildAccessResponse({
+  text,
+  intent = "access_information",
+  source = "access"
+}) {
   return {
     found: true,
     source,
@@ -343,7 +620,9 @@ function buildAccessResponse({ text, intent = "access_information", source = "ac
 
 function buildRouteResponse(route) {
   const content = [];
-  const presentation = route?.route_presentation;
+
+  const presentation =
+    route?.route_presentation;
 
   if (presentation) {
     content.push(
@@ -352,55 +631,91 @@ function buildRouteResponse(route) {
       "📍 Guía de navegación"
     );
 
-    if (presentation.hero_subtitle) {
+    if (
+      presentation.hero_subtitle
+    ) {
       content.push("");
-      content.push(presentation.hero_subtitle);
+
+      content.push(
+        presentation.hero_subtitle
+      );
     }
 
     content.push("");
+
     content.push(
       presentation.steps_title ||
       "📍 Ruta recomendada"
     );
 
-    if (Array.isArray(route.route) && route.route.length > 0) {
-      content.push(routeToText(route.route));
+    if (
+      Array.isArray(route.route) &&
+      route.route.length > 0
+    ) {
+      content.push(
+        routeToText(route.route)
+      );
     }
 
     if (route.response) {
       content.push("");
-      content.push(route.response);
+      content.push(
+        route.response
+      );
     }
 
-    if (presentation.closing_text) {
+    if (
+      presentation.closing_text
+    ) {
       content.push("");
-      content.push(presentation.closing_text);
+
+      content.push(
+        presentation.closing_text
+      );
     }
 
     if (route.availability_note) {
       content.push("");
-      content.push(route.availability_note);
+
+      content.push(
+        route.availability_note
+      );
     }
   } else {
     if (route.response) {
-      content.push(route.response);
+      content.push(
+        route.response
+      );
     }
 
-    if (Array.isArray(route.route) && route.route.length > 0) {
+    if (
+      Array.isArray(route.route) &&
+      route.route.length > 0
+    ) {
       content.push("");
-      content.push(`Ruta sugerida: ${routeToText(route.route)}`);
+
+      content.push(
+        `Ruta sugerida: ${routeToText(
+          route.route
+        )}`
+      );
     }
 
     if (route.availability_note) {
       content.push("");
-      content.push(route.availability_note);
+
+      content.push(
+        route.availability_note
+      );
     }
   }
 
   return {
     found: true,
     source: "route",
-    intent: route.intent || "navigation_help",
+    intent:
+      route.intent ||
+      "navigation_help",
     usedFile: "routes.json",
     text: content.join("\n")
   };
@@ -410,24 +725,44 @@ function buildFaqResponse(faqItem) {
   return {
     found: true,
     source: "faq",
-    intent: faqItem.id || "faq_response",
+    intent:
+      faqItem.id ||
+      "faq_response",
     usedFile: "faq.json",
     text: faqItem.answer
   };
 }
 
-function buildDisclaimerResponse(disclaimerKey, classificationResult) {
-  const knowledge = loadKnowledgeBase();
+function buildDisclaimerResponse(
+  disclaimerKey,
+  classificationResult
+) {
+  const knowledge =
+    loadKnowledgeBase();
 
   let disclaimerText = null;
 
-  if (typeof getDisclaimerText === "function") {
-    disclaimerText = getDisclaimerText(disclaimerKey);
+  if (
+    typeof getDisclaimerText ===
+    "function"
+  ) {
+    disclaimerText =
+      getDisclaimerText(
+        disclaimerKey
+      );
   }
 
-  if (!disclaimerText && disclaimerKey && disclaimerKey !== "none") {
+  if (
+    !disclaimerText &&
+    disclaimerKey &&
+    disclaimerKey !== "none"
+  ) {
     disclaimerText =
-      knowledge.disclaimers?.disclaimers?.[disclaimerKey]?.text || null;
+      knowledge.disclaimers
+        ?.disclaimers
+        ?.[disclaimerKey]
+        ?.text ||
+      null;
   }
 
   if (!disclaimerText) {
@@ -436,68 +771,87 @@ function buildDisclaimerResponse(disclaimerKey, classificationResult) {
 
   let escalationMessage = null;
 
-  if (typeof getEscalationMessages === "function") {
-    escalationMessage = getEscalationMessages()?.sensitive_case || null;
+  if (
+    typeof getEscalationMessages ===
+    "function"
+  ) {
+    escalationMessage =
+      getEscalationMessages()
+        ?.sensitive_case ||
+      null;
   }
 
   if (!escalationMessage) {
     escalationMessage =
-      knowledge.escalation?.escalation?.support_messages?.sensitive_case || null;
+      knowledge.escalation
+        ?.escalation
+        ?.support_messages
+        ?.sensitive_case ||
+      null;
   }
 
-  const content = [disclaimerText];
+  const content = [
+    disclaimerText
+  ];
 
-  if (classificationResult?.escalate && escalationMessage) {
+  if (
+    classificationResult?.escalate &&
+    escalationMessage
+  ) {
     content.push("");
-    content.push(escalationMessage);
+    content.push(
+      escalationMessage
+    );
   }
 
   return {
     found: true,
     source: "disclaimer",
-    intent: classificationResult?.intent || "sensitive_case",
+    intent:
+      classificationResult?.intent ||
+      "sensitive_case",
     usedFile: "disclaimers.json",
-    requiresHumanReview: Boolean(classificationResult?.escalate),
+    requiresHumanReview:
+      Boolean(
+        classificationResult
+          ?.escalate
+      ),
     text: content.join("\n")
   };
 }
 
-function getProductCandidates(product, fileName) {
+function getProductCandidates(
+  product,
+  fileName
+) {
   return [
     fileName?.replace(".json", ""),
-
-    // Identificadores principales
     product?.id,
     product?.name,
 
-    // Aliases del producto
-    ...(Array.isArray(product?.aliases)
-      ? product.aliases
-      : []),
+    ...getSafeArray(
+      product?.aliases
+    ),
 
-    // Contenido relacionado
     product?.sales_description,
     product?.transformation,
-
-    // App asociada
     product?.app?.name,
-
-    // Ebook principal
     product?.ebook?.name,
 
-    // Público objetivo
-    ...(Array.isArray(product?.target_audience)
-      ? product.target_audience
-      : []),
+    ...getSafeArray(
+      product?.target_audience
+    ),
 
-    // Bonuses
-    ...(Array.isArray(product?.bonuses)
-      ? product.bonuses
-      : [])
+    ...getSafeArray(
+      product?.bonuses
+    )
   ].filter(Boolean);
 }
 
-function getAppCandidates(app, fileName) {
+function getAppCandidates(
+  app,
+  fileName
+) {
   return [
     fileName?.replace(".json", ""),
     app?.id,
@@ -505,46 +859,67 @@ function getAppCandidates(app, fileName) {
     app?.product_id,
     app?.description,
     app?.purpose,
-    ...getSafeArray(app?.features),
-    ...getSafeArray(app?.what_users_will_find)
+
+    ...getSafeArray(
+      app?.features
+    ),
+
+    ...getSafeArray(
+      app?.what_users_will_find
+    )
   ].filter(Boolean);
 }
 
-function findBestProductResponse(message) {
-  const productFiles = getProductFiles();
+function findBestProductResponse(
+  message
+) {
+  const productFiles =
+    getProductFiles();
 
-  const normalizedMessage = normalize(message);
+  const normalizedMessage =
+    normalize(message);
 
-  //
-  // PASO 1
-  // Coincidencia exacta
-  //
-  for (const fileName of productFiles) {
-    const product = loadProductFile(fileName);
+  for (
+    const fileName of productFiles
+  ) {
+    const product =
+      loadProductFile(fileName);
 
     if (!product) {
       continue;
     }
 
     const exactCandidates = [
-      fileName.replace(".json", ""),
+      fileName.replace(
+        ".json",
+        ""
+      ),
       product.id,
       product.name
     ].filter(Boolean);
 
-    const exactMatch = exactCandidates.some((candidate) => {
-      const normalizedCandidate = normalize(candidate);
+    const exactMatch =
+      exactCandidates.some(
+        (candidate) => {
+          const normalizedCandidate =
+            normalize(candidate);
 
-      return (
-        normalizedMessage.includes(normalizedCandidate) ||
-        normalizedCandidate.includes(normalizedMessage)
+          return (
+            normalizedMessage.includes(
+              normalizedCandidate
+            ) ||
+            normalizedCandidate.includes(
+              normalizedMessage
+            )
+          );
+        }
       );
-    });
 
     if (exactMatch) {
       console.log(
         "PRODUCT_EXACT_MATCH",
-        product.name || fileName
+        product.name ||
+        fileName
       );
 
       return buildProductResponse(
@@ -554,32 +929,36 @@ function findBestProductResponse(message) {
     }
   }
 
-  //
-  // PASO 2
-  // Fallback por score
-  //
   let bestMatch = null;
 
-  for (const fileName of productFiles) {
-    const product = loadProductFile(fileName);
+  for (
+    const fileName of productFiles
+  ) {
+    const product =
+      loadProductFile(fileName);
 
     if (!product) {
       continue;
     }
 
-    const candidates = getProductCandidates(
-      product,
-      fileName
-    );
+    const candidates =
+      getProductCandidates(
+        product,
+        fileName
+      );
 
-    const score = getBestScore(
-      message,
-      candidates
-    );
+    const score =
+      getBestScore(
+        message,
+        candidates
+      );
 
     if (
       score > 0 &&
-      (!bestMatch || score > bestMatch.score)
+      (
+        !bestMatch ||
+        score > bestMatch.score
+      )
     ) {
       bestMatch = {
         score,
@@ -589,13 +968,17 @@ function findBestProductResponse(message) {
     }
   }
 
-  if (!bestMatch || bestMatch.score < 35) {
+  if (
+    !bestMatch ||
+    bestMatch.score < 35
+  ) {
     return null;
   }
 
   console.log(
     "PRODUCT_SCORE_MATCH",
-    bestMatch.product?.name || bestMatch.fileName,
+    bestMatch.product?.name ||
+    bestMatch.fileName,
     bestMatch.score
   );
 
@@ -605,22 +988,43 @@ function findBestProductResponse(message) {
   );
 }
 
-function findBestAppResponse(message) {
-  const appFiles = getAppFiles();
+function findBestAppResponse(
+  message
+) {
+  const appFiles =
+    getAppFiles();
 
   let bestMatch = null;
 
-  for (const fileName of appFiles) {
-    const app = loadAppFile(fileName);
+  for (
+    const fileName of appFiles
+  ) {
+    const app =
+      loadAppFile(fileName);
 
     if (!app) {
       continue;
     }
 
-    const candidates = getAppCandidates(app, fileName);
-    const score = getBestScore(message, candidates);
+    const candidates =
+      getAppCandidates(
+        app,
+        fileName
+      );
 
-    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+    const score =
+      getBestScore(
+        message,
+        candidates
+      );
+
+    if (
+      score > 0 &&
+      (
+        !bestMatch ||
+        score > bestMatch.score
+      )
+    ) {
       bestMatch = {
         score,
         fileName,
@@ -629,27 +1033,49 @@ function findBestAppResponse(message) {
     }
   }
 
-  if (!bestMatch || bestMatch.score < 35) {
+  if (
+    !bestMatch ||
+    bestMatch.score < 35
+  ) {
     return null;
   }
 
-  return buildAppResponse(bestMatch.app, bestMatch.fileName);
+  return buildAppResponse(
+    bestMatch.app,
+    bestMatch.fileName
+  );
 }
 
-function findAccessResponse(message) {
-  const knowledge = loadKnowledgeBase();
-  const access = knowledge.access?.access;
+function findAccessResponse(
+  message
+) {
+  const knowledge =
+    loadKnowledgeBase();
+
+  const access =
+    knowledge.access?.access;
 
   if (!access) {
     return null;
   }
 
-  const normalizedMessage = normalize(message);
+  const normalizedMessage =
+    normalize(message);
 
-  const commonProblems = getSafeArray(access.common_problems);
-  const decisionTrees = getSafeArray(access.decision_trees);
+  const commonProblems =
+    getSafeArray(
+      access.common_problems
+    );
 
-  const supportEscalationMessage = access.support_escalation?.message || null;
+  const decisionTrees =
+    getSafeArray(
+      access.decision_trees
+    );
+
+  const supportEscalationMessage =
+    access.support_escalation
+      ?.message ||
+    null;
 
   const alreadyValidatedKeywords = [
     "ya valide",
@@ -670,53 +1096,87 @@ function findAccessResponse(message) {
     "sigue sin aparecer"
   ];
 
-  const needsEscalationMessage = alreadyValidatedKeywords.some((keyword) =>
-    normalizedMessage.includes(normalize(keyword))
-  );
+  const needsEscalationMessage =
+    alreadyValidatedKeywords.some(
+      (keyword) =>
+        normalizedMessage.includes(
+          normalize(keyword)
+        )
+    );
 
-  if (needsEscalationMessage && supportEscalationMessage) {
+  if (
+    needsEscalationMessage &&
+    supportEscalationMessage
+  ) {
     return buildAccessResponse({
-      text: supportEscalationMessage,
-      intent: "access_escalation_ready",
-      source: "access_escalation"
+      text:
+        supportEscalationMessage,
+      intent:
+        "access_escalation_ready",
+      source:
+        "access_escalation"
     });
   }
 
-  const accessResponseCandidates = [];
+  const accessResponseCandidates =
+    [];
 
-  commonProblems.forEach((item) => {
-    accessResponseCandidates.push({
-      intent: item.id || "access_problem",
-      text: item.response,
-      candidates: [
-        item.id,
-        item.title,
-        item.category,
-        item.response
-      ].filter(Boolean)
-    });
-  });
+  commonProblems.forEach(
+    (item) => {
+      accessResponseCandidates.push({
+        intent:
+          item.id ||
+          "access_problem",
 
-  decisionTrees.forEach((tree) => {
-    accessResponseCandidates.push({
-      intent: tree.intent || "access_decision_tree",
-      text: tree.initial_response,
-      candidates: [
-        tree.intent,
-        tree.initial_response,
-        ...getSafeArray(tree.steps).flatMap((step) => [
-          step.question,
-          step.if_no,
-          step.if_yes
-        ])
-      ].filter(Boolean)
-    });
-  });
+        text:
+          item.response,
 
-  if (access.responses?.login_help) {
+        candidates: [
+          item.id,
+          item.title,
+          item.category,
+          item.response
+        ].filter(Boolean)
+      });
+    }
+  );
+
+  decisionTrees.forEach(
+    (tree) => {
+      accessResponseCandidates.push({
+        intent:
+          tree.intent ||
+          "access_decision_tree",
+
+        text:
+          tree.initial_response,
+
+        candidates: [
+          tree.intent,
+          tree.initial_response,
+
+          ...getSafeArray(
+            tree.steps
+          ).flatMap((step) => [
+            step.question,
+            step.if_no,
+            step.if_yes
+          ])
+        ].filter(Boolean)
+      });
+    }
+  );
+
+  if (
+    access.responses?.login_help
+  ) {
     accessResponseCandidates.push({
-      intent: "login_help",
-      text: access.responses.login_help,
+      intent:
+        "login_help",
+
+      text:
+        access.responses.login_help,
+
       candidates: [
         "ingresar",
         "entrar",
@@ -731,10 +1191,18 @@ function findAccessResponse(message) {
     });
   }
 
-  if (access.responses?.purchase_email_help) {
+  if (
+    access.responses
+      ?.purchase_email_help
+  ) {
     accessResponseCandidates.push({
-      intent: "purchase_email_help",
-      text: access.responses.purchase_email_help,
+      intent:
+        "purchase_email_help",
+
+      text:
+        access.responses
+          .purchase_email_help,
+
       candidates: [
         "mismo correo",
         "correo de compra",
@@ -742,15 +1210,24 @@ function findAccessResponse(message) {
         "compré con otro correo",
         "compre con otro correo",
         "otro correo",
-        access.responses.purchase_email_help
+        access.responses
+          .purchase_email_help
       ]
     });
   }
 
-  if (access.responses?.collection_access_help) {
+  if (
+    access.responses
+      ?.collection_access_help
+  ) {
     accessResponseCandidates.push({
-      intent: "collection_access_help",
-      text: access.responses.collection_access_help,
+      intent:
+        "collection_access_help",
+
+      text:
+        access.responses
+          .collection_access_help,
+
       candidates: [
         "no veo mi coleccion",
         "no veo mi colección",
@@ -760,21 +1237,35 @@ function findAccessResponse(message) {
         "no aparecen mis recursos",
         "no veo mis recursos",
         "mis colecciones",
-        access.responses.collection_access_help
+        access.responses
+          .collection_access_help
       ]
     });
   }
 
   let bestMatch = null;
 
-  for (const candidate of accessResponseCandidates) {
+  for (
+    const candidate of
+    accessResponseCandidates
+  ) {
     if (!candidate.text) {
       continue;
     }
 
-    const score = getBestScore(message, candidate.candidates);
+    const score =
+      getBestScore(
+        message,
+        candidate.candidates
+      );
 
-    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+    if (
+      score > 0 &&
+      (
+        !bestMatch ||
+        score > bestMatch.score
+      )
+    ) {
       bestMatch = {
         ...candidate,
         score
@@ -782,28 +1273,50 @@ function findAccessResponse(message) {
     }
   }
 
-  if (!bestMatch || bestMatch.score < 25) {
+  if (
+    !bestMatch ||
+    bestMatch.score < 25
+  ) {
     return null;
   }
+
   return buildAccessResponse({
     text: bestMatch.text,
     intent: bestMatch.intent
   });
 }
 
-function findRouteResponse(message, preferredIntent = null) {
-  const knowledge = loadKnowledgeBase();
-  const routes = knowledge.routes?.navigation_routes || [];
+function findRouteResponse(
+  message,
+  preferredIntent = null
+) {
+  const knowledge =
+    loadKnowledgeBase();
 
-  if (!Array.isArray(routes) || routes.length === 0) {
+  const routes =
+    knowledge.routes
+      ?.navigation_routes ||
+    [];
+
+  if (
+    !Array.isArray(routes) ||
+    routes.length === 0
+  ) {
     return null;
   }
 
   if (preferredIntent) {
-    const directRoute = routes.find((route) => route.intent === preferredIntent);
+    const directRoute =
+      routes.find(
+        (route) =>
+          route.intent ===
+          preferredIntent
+      );
 
     if (directRoute) {
-      return buildRouteResponse(directRoute);
+      return buildRouteResponse(
+        directRoute
+      );
     }
   }
 
@@ -814,12 +1327,25 @@ function findRouteResponse(message, preferredIntent = null) {
       route.intent,
       route.title,
       route.response,
-      ...getSafeArray(route.route)
+
+      ...getSafeArray(
+        route.route
+      )
     ].filter(Boolean);
 
-    const score = getBestScore(message, candidates);
+    const score =
+      getBestScore(
+        message,
+        candidates
+      );
 
-    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+    if (
+      score > 0 &&
+      (
+        !bestMatch ||
+        score > bestMatch.score
+      )
+    ) {
       bestMatch = {
         route,
         score
@@ -827,31 +1353,51 @@ function findRouteResponse(message, preferredIntent = null) {
     }
   }
 
-  if (!bestMatch || bestMatch.score < 25) {
+  if (
+    !bestMatch ||
+    bestMatch.score < 25
+  ) {
     return null;
   }
 
-  return buildRouteResponse(bestMatch.route);
+  return buildRouteResponse(
+    bestMatch.route
+  );
 }
 
-function findFaqResponse(message, preferredCategory = null) {
-  const knowledge = loadKnowledgeBase();
-  const faqItems = knowledge.faq?.faq || [];
+function findFaqResponse(
+  message,
+  preferredCategory = null
+) {
+  const knowledge =
+    loadKnowledgeBase();
 
-  if (!Array.isArray(faqItems) || faqItems.length === 0) {
+  const faqItems =
+    knowledge.faq?.faq ||
+    [];
+
+  if (
+    !Array.isArray(faqItems) ||
+    faqItems.length === 0
+  ) {
     return null;
   }
 
   let bestMatch = null;
 
-  for (const item of faqItems) {
+  for (
+    const item of faqItems
+  ) {
     if (!item.answer) {
       continue;
     }
 
     const categoryScore =
       preferredCategory &&
-      normalize(item.category) === normalize(preferredCategory)
+      normalize(item.category) ===
+        normalize(
+          preferredCategory
+        )
         ? 15
         : 0;
 
@@ -862,12 +1408,18 @@ function findFaqResponse(message, preferredCategory = null) {
     ].filter(Boolean);
 
     const score =
-      getBestScore(message, candidates) +
+      getBestScore(
+        message,
+        candidates
+      ) +
       categoryScore;
 
     if (
       score > 0 &&
-      (!bestMatch || score > bestMatch.score)
+      (
+        !bestMatch ||
+        score > bestMatch.score
+      )
     ) {
       bestMatch = {
         item,
@@ -876,35 +1428,65 @@ function findFaqResponse(message, preferredCategory = null) {
     }
   }
 
-  if (!bestMatch || bestMatch.score < 30) {
+  if (
+    !bestMatch ||
+    bestMatch.score < 30
+  ) {
     return null;
   }
 
-  return buildFaqResponse(bestMatch.item);
-}
-
-function findPurchaseResponse(message) {
-  return (
-    findRouteResponse(message, "comprar_kit") ||
-    findFaqResponse(message, "purchase")
+  return buildFaqResponse(
+    bestMatch.item
   );
 }
 
-function findDownloadResponse(message) {
+function findPurchaseResponse(
+  message
+) {
+  return (
+    findRouteResponse(
+      message,
+      "comprar_kit"
+    ) ||
+    findFaqResponse(
+      message,
+      "purchase"
+    )
+  );
+}
+
+function findDownloadResponse(
+  message
+) {
   const route =
-    findRouteResponse(message, "descargar_ebook") ||
-    findRouteResponse(message, "descargar_bonos") ||
-    findRouteResponse(message, "descargar_imprimibles");
+    findRouteResponse(
+      message,
+      "descargar_ebook"
+    ) ||
+    findRouteResponse(
+      message,
+      "descargar_bonos"
+    ) ||
+    findRouteResponse(
+      message,
+      "descargar_imprimibles"
+    );
 
   if (route) {
     return route;
   }
 
-  return findFaqResponse(message, "navigation");
+  return findFaqResponse(
+    message,
+    "navigation"
+  );
 }
 
-function shouldSkipAutomaticDirectResponse(message) {
-  const normalizedMessage = normalize(message);
+function shouldSkipAutomaticDirectResponse(
+  message
+) {
+  const normalizedMessage =
+    normalize(message);
 
   const crisisKeywords = [
     "suicidio",
@@ -921,22 +1503,33 @@ function shouldSkipAutomaticDirectResponse(message) {
     "peligro"
   ];
 
-  return crisisKeywords.some((keyword) =>
-    normalizedMessage.includes(normalize(keyword))
+  return crisisKeywords.some(
+    (keyword) =>
+      normalizedMessage.includes(
+        normalize(keyword)
+      )
   );
 }
-function getFormRoutingTarget(product, category) {
+
+function getFormRoutingTarget(
+  product,
+  category
+) {
   if (!product || !category) {
     return null;
   }
 
-  const knowledge = loadKnowledgeBase();
+  const knowledge =
+    loadKnowledgeBase();
 
   const formRouting =
-    knowledge?.map?.form_routing || {};
+    knowledge?.map
+      ?.form_routing ||
+    {};
 
   const productRouting =
-    formRouting[product] || null;
+    formRouting[product] ||
+    null;
 
   if (!productRouting) {
     console.log(
@@ -948,7 +1541,8 @@ function getFormRoutingTarget(product, category) {
   }
 
   const target =
-    productRouting[category] || null;
+    productRouting[category] ||
+    null;
 
   console.log(
     "FORM_ROUTING_PRODUCT",
@@ -968,120 +1562,70 @@ function getFormRoutingTarget(product, category) {
   return target;
 }
 
-function buildEbookResponse(product, fileName) {
-  if (!product) {
-    return null;
-  }
+function findFormRoutedResponse({
+  message = "",
+  product = null,
+  category = null
+}) {
+  /*
+   * PRIORIDAD:
+   *
+   * 1. Categoría seleccionada.
+   * 2. Producto seleccionado.
+   * 3. Mensaje libre, solamente cuando
+   *    es necesario distinguir una acción.
+   */
 
-  const ebook = product.ebook || {};
-  const content = [];
-
-  content.push(
-    ebook.name ||
-    product.name ||
-    "Ebook de Hábitos con Dios"
-  );
-
-  if (ebook.description) {
-    content.push("");
-    content.push(ebook.description);
-  }
-
-  if (product.sales_description) {
-    content.push("");
-    content.push(product.sales_description);
-  }
-
-  if (product.printables) {
-    content.push("");
-    content.push(
-      "El ebook principal también está disponible en una versión especialmente preparada para imprimir, diseñada para una lectura cómoda y un uso responsable de tinta."
-    );
-  }
-
-  const availabilityMessage =
-    getAvailabilityMessage(product);
-
-  if (availabilityMessage) {
-    content.push("");
-    content.push(
-      `✅ Disponibilidad: ${availabilityMessage}`
-    );
-  }
-
-  return {
-    found: true,
-    source: "product",
-    intent: "ebook_information",
-    usedFile: fileName,
-    text: content.join("\n")
-  };
-}
-
-function buildBonusesResponse(product, fileName) {
-  if (
-    !product ||
-    !Array.isArray(product.bonuses) ||
-    product.bonuses.length === 0
-  ) {
-    return null;
-  }
-
-  const content = [];
-
-  content.push(
-    `🎁 Bonos incluidos en ${product.name || "esta experiencia"}`
-  );
-
-  content.push("");
-
-  product.bonuses.forEach((bonus) => {
-    content.push(`• ${bonus}`);
-  });
-
-  if (product.printables) {
-    content.push("");
-    content.push(
-      "Los recursos imprimibles están preparados para facilitar una lectura cómoda y un uso responsable de tinta."
-    );
-  }
-
-  return {
-    found: true,
-    source: "product",
-    intent: "bonuses_information",
-    usedFile: fileName,
-    text: content.join("\n")
-  };
-}
-
-function buildNoDirectMatch(reason = "no_direct_match") {
-
-  const target =
-    getFormRoutingTarget(product, category);
-
-  if (!target) {
+  if (!category) {
     console.log(
-      "FORM_ROUTING_DIRECT_RESPONSE",
-      "no_target"
+      "FORM_ROUTING_CATEGORY_NOT_PROVIDED"
     );
 
     return null;
   }
 
   /*
-   * CATEGORÍA: APP
+   * APP
    *
-   * La categoría determina que debemos consultar
-   * directamente la carpeta apps.
+   * La categoría determina la carpeta apps.
+   * El producto determina la App exacta.
+   * El mensaje no participa en esta selección.
    */
   if (category === "app") {
-    const appFileName = `${target}.json`;
-    const app = loadAppFile(appFileName);
+    if (!product) {
+      console.log(
+        "FORM_ROUTING_APP_PRODUCT_NOT_PROVIDED"
+      );
+
+      return null;
+    }
+
+    const target =
+      getFormRoutingTarget(
+        product,
+        category
+      );
+
+    if (!target) {
+      console.log(
+        "FORM_ROUTING_APP_TARGET_NOT_FOUND",
+        product
+      );
+
+      return null;
+    }
+
+    const appFileName =
+      `${target}.json`;
+
+    const app =
+      loadAppFile(
+        appFileName
+      );
 
     if (!app) {
       console.log(
-        "FORM_ROUTING_APP_NOT_FOUND",
+        "FORM_ROUTING_APP_FILE_NOT_FOUND",
         appFileName
       );
 
@@ -1100,24 +1644,46 @@ function buildNoDirectMatch(reason = "no_direct_match") {
   }
 
   /*
-   * CATEGORÍAS RELACIONADAS CON EL PRODUCTO
+   * EBOOK
    *
-   * Ebook, bonos, compra y determinadas consultas
-   * de descarga utilizan el archivo específico
-   * del producto seleccionado.
+   * La categoría determina la carpeta products.
+   * El producto determina el archivo exacto.
    */
-  if (
-    category === "ebook" ||
-    category === "bonos" ||
-    category === "compra"
-  ) {
-    const productFileName = `${target}.json`;
+  if (category === "ebook") {
+    if (!product) {
+      console.log(
+        "FORM_ROUTING_EBOOK_PRODUCT_NOT_PROVIDED"
+      );
+
+      return null;
+    }
+
+    const target =
+      getFormRoutingTarget(
+        product,
+        category
+      );
+
+    if (!target) {
+      console.log(
+        "FORM_ROUTING_EBOOK_TARGET_NOT_FOUND",
+        product
+      );
+
+      return null;
+    }
+
+    const productFileName =
+      `${target}.json`;
+
     const productContent =
-      loadProductFile(productFileName);
+      loadProductFile(
+        productFileName
+      );
 
     if (!productContent) {
       console.log(
-        "FORM_ROUTING_PRODUCT_FILE_NOT_FOUND",
+        "FORM_ROUTING_EBOOK_FILE_NOT_FOUND",
         productFileName
       );
 
@@ -1125,23 +1691,125 @@ function buildNoDirectMatch(reason = "no_direct_match") {
     }
 
     console.log(
-      "FORM_ROUTING_PRODUCT_FILE",
+      "FORM_ROUTING_EBOOK_FILE",
       productFileName
     );
 
-    if (category === "ebook") {
-      return buildEbookResponse(
-        productContent,
-        productFileName
+    return buildEbookResponse(
+      productContent,
+      productFileName
+    );
+  }
+
+  /*
+   * BONOS
+   *
+   * La categoría determina la sección bonos.
+   * El producto determina el archivo exacto.
+   */
+  if (category === "bonos") {
+    if (!product) {
+      console.log(
+        "FORM_ROUTING_BONUSES_PRODUCT_NOT_PROVIDED"
       );
+
+      return null;
     }
 
-    if (category === "bonos") {
-      return buildBonusesResponse(
-        productContent,
+    const target =
+      getFormRoutingTarget(
+        product,
+        category
+      );
+
+    if (!target) {
+      console.log(
+        "FORM_ROUTING_BONUSES_TARGET_NOT_FOUND",
+        product
+      );
+
+      return null;
+    }
+
+    const productFileName =
+      `${target}.json`;
+
+    const productContent =
+      loadProductFile(
         productFileName
       );
+
+    if (!productContent) {
+      console.log(
+        "FORM_ROUTING_BONUSES_FILE_NOT_FOUND",
+        productFileName
+      );
+
+      return null;
     }
+
+    console.log(
+      "FORM_ROUTING_BONUSES_FILE",
+      productFileName
+    );
+
+    return buildBonusesResponse(
+      productContent,
+      productFileName
+    );
+  }
+
+  /*
+   * COMPRA
+   *
+   * La categoría identifica una consulta comercial.
+   * El producto determina la experiencia exacta.
+   */
+  if (category === "compra") {
+    if (!product) {
+      console.log(
+        "FORM_ROUTING_PURCHASE_PRODUCT_NOT_PROVIDED"
+      );
+
+      return null;
+    }
+
+    const target =
+      getFormRoutingTarget(
+        product,
+        category
+      );
+
+    if (!target) {
+      console.log(
+        "FORM_ROUTING_PURCHASE_TARGET_NOT_FOUND",
+        product
+      );
+
+      return null;
+    }
+
+    const productFileName =
+      `${target}.json`;
+
+    const productContent =
+      loadProductFile(
+        productFileName
+      );
+
+    if (!productContent) {
+      console.log(
+        "FORM_ROUTING_PURCHASE_FILE_NOT_FOUND",
+        productFileName
+      );
+
+      return null;
+    }
+
+    console.log(
+      "FORM_ROUTING_PURCHASE_FILE",
+      productFileName
+    );
 
     return buildProductResponse(
       productContent,
@@ -1150,13 +1818,18 @@ function buildNoDirectMatch(reason = "no_direct_match") {
   }
 
   /*
-   * CATEGORÍA: ACCESO
+   * ACCESO
    *
-   * Primero consulta access.json.
-   * Si no encuentra una coincidencia precisa,
-   * continúa con las rutas y FAQ de acceso.
+   * La categoría determina access.json.
+   * El mensaje se usa para diferenciar el
+   * inconveniente específico.
    */
   if (category === "acceso") {
+    console.log(
+      "FORM_ROUTING_ACCESS_PRODUCT",
+      product || "none"
+    );
+
     return (
       findAccessResponse(message) ||
       findRouteResponse(
@@ -1171,17 +1844,44 @@ function buildNoDirectMatch(reason = "no_direct_match") {
   }
 
   /*
-   * CATEGORÍA: DESCARGA
+   * DESCARGA
    *
-   * Prioriza las rutas de descarga.
-   * El producto seleccionado continúa disponible
-   * como contexto mediante form_routing.
+   * La categoría determina las rutas de descarga.
+   * El producto identifica la experiencia.
+   * El mensaje diferencia ebook, bonos o imprimibles.
    */
   if (category === "descarga") {
-    const downloadResponse =
-      findDownloadResponse(message);
+    if (!product) {
+      console.log(
+        "FORM_ROUTING_DOWNLOAD_PRODUCT_NOT_PROVIDED"
+      );
 
-    if (downloadResponse?.found) {
+      return null;
+    }
+
+    const target =
+      getFormRoutingTarget(
+        product,
+        category
+      );
+
+    if (!target) {
+      console.log(
+        "FORM_ROUTING_DOWNLOAD_TARGET_NOT_FOUND",
+        product
+      );
+
+      return null;
+    }
+
+    const downloadResponse =
+      findDownloadResponse(
+        message
+      );
+
+    if (
+      downloadResponse?.found
+    ) {
       return downloadResponse;
     }
 
@@ -1189,9 +1889,16 @@ function buildNoDirectMatch(reason = "no_direct_match") {
       `${target}.json`;
 
     const productContent =
-      loadProductFile(productFileName);
+      loadProductFile(
+        productFileName
+      );
 
     if (!productContent) {
+      console.log(
+        "FORM_ROUTING_DOWNLOAD_FILE_NOT_FOUND",
+        productFileName
+      );
+
       return null;
     }
 
@@ -1202,14 +1909,34 @@ function buildNoDirectMatch(reason = "no_direct_match") {
   }
 
   /*
-   * Consulta general o categoría desconocida:
-   * no se fuerza una respuesta específica.
-   * El sistema continúa con FAQ, Brand,
-   * clasificación y fallbacks existentes.
+   * CONSULTA GENERAL
+   *
+   * No fuerza una respuesta de producto o App.
+   * Continúa con la clasificación por mensaje.
    */
+  if (
+    category ===
+    "consulta_general"
+  ) {
+    console.log(
+      "FORM_ROUTING_GENERAL_FALLBACK",
+      product || "none"
+    );
+
+    return null;
+  }
+
+  console.log(
+    "FORM_ROUTING_UNKNOWN_CATEGORY",
+    category
+  );
+
   return null;
 }
-function buildNoDirectMatch(reason = "no_direct_match") {
+
+function buildNoDirectMatch(
+  reason = "no_direct_match"
+) {
   return {
     found: false,
     reason
@@ -1221,27 +1948,34 @@ function getDirectResponse({
   product = null,
   category = null
 }) {
-
   console.log(
-    "DIRECT_RESPONSE_PRODUCT",
-    product || "none"
+    "DIRECT_RESPONSE_VERSION",
+    "2026-08-21-R2"
   );
 
   console.log(
-    "DIRECT_RESPONSE_CATEGORY",
+    "DIRECT_RESPONSE_FORM_CATEGORY",
     category || "none"
   );
 
   console.log(
-    "DIRECT_RESPONSE_VERSION",
-    "2026-08-19-R1"
+    "DIRECT_RESPONSE_FORM_PRODUCT",
+    product || "none"
   );
 
-  if (!message || typeof message !== "string") {
-    return buildNoDirectMatch("empty_message");
-  }
-
-  if (shouldSkipAutomaticDirectResponse(message)) {
+  /*
+   * FILTRO DE SEGURIDAD
+   *
+   * Este control no clasifica la consulta.
+   * Solo evita respuestas automáticas ante
+   * términos críticos.
+   */
+  if (
+    typeof message === "string" &&
+    shouldSkipAutomaticDirectResponse(
+      message
+    )
+  ) {
     console.log(
       "DIRECT_RESPONSE_SKIPPED",
       "critical_or_crisis_case"
@@ -1252,175 +1986,227 @@ function getDirectResponse({
     );
   }
 
-console.log(
-  "DIRECT_RESPONSE_FORM_PRODUCT",
-  product || "none"
-);
+  /*
+   * PRIORIDAD 1: CATEGORÍA
+   * PRIORIDAD 2: PRODUCTO
+   * PRIORIDAD 3: MENSAJE
+   */
+  const formRoutedResponse =
+    findFormRoutedResponse({
+      message:
+        typeof message === "string"
+          ? message
+          : "",
 
-console.log(
-  "DIRECT_RESPONSE_FORM_CATEGORY",
-  category || "none"
-);
+      product,
+      category
+    });
 
-/*
- * PRIORIDAD 1
- *
- * La categoría seleccionada determina la fuente:
- * app      -> apps/
- * ebook    -> products/
- * bonos    -> products/
- * acceso   -> access.json
- * descarga -> routes.json y products/
- * compra   -> products/
- *
- * El producto seleccionado identifica el archivo
- * exacto mediante map.json > form_routing.
- */
-const formRoutedResponse =
-  findFormRoutedResponse({
-    message,
-    product,
-    category
-  });
+  if (
+    formRoutedResponse?.found
+  ) {
+    console.log(
+      "DIRECT_RESPONSE_FORM_ROUTING_USED",
+      true
+    );
 
-if (formRoutedResponse?.found) {
+    console.log(
+      "DIRECT_RESPONSE_FORM_ROUTING_SOURCE",
+      formRoutedResponse.source
+    );
+
+    console.log(
+      "DIRECT_RESPONSE_FORM_ROUTING_INTENT",
+      formRoutedResponse.intent
+    );
+
+    console.log(
+      "DIRECT_RESPONSE_FORM_ROUTING_FILE",
+      formRoutedResponse.usedFile ||
+      "none"
+    );
+
+    return {
+      ...formRoutedResponse,
+
+      classification: {
+        intent:
+          formRoutedResponse.intent ||
+          "form_routed_response",
+
+        category:
+          category ||
+          "none",
+
+        source:
+          "map.json/form_routing",
+
+        matchedKeyword:
+          null,
+
+        score:
+          null,
+
+        escalate:
+          Boolean(
+            formRoutedResponse
+              .requiresHumanReview
+          ),
+
+        disclaimer:
+          "none",
+
+        formProduct:
+          product ||
+          null,
+
+        formCategory:
+          category ||
+          null
+      }
+    };
+  }
+
   console.log(
     "DIRECT_RESPONSE_FORM_ROUTING_USED",
-    true
+    false
+  );
+
+  /*
+   * El mensaje se valida aquí porque recién
+   * ahora se utilizará como fallback.
+   */
+  if (
+    !message ||
+    typeof message !== "string"
+  ) {
+    return buildNoDirectMatch(
+      "empty_message"
+    );
+  }
+
+  /*
+   * FALLBACK POR MENSAJE
+   *
+   * Solo se ejecuta cuando Categoría + Producto
+   * no generaron una respuesta directa.
+   */
+  const classificationResult =
+    classifyMessage(
+      message,
+      null
+    );
+
+  console.log(
+    "DIRECT_RESPONSE_CLASSIFICATION_INTENT",
+    classificationResult.intent
   );
 
   console.log(
-    "DIRECT_RESPONSE_FORM_ROUTING_SOURCE",
-    formRoutedResponse.source
+    "DIRECT_RESPONSE_CLASSIFICATION_CATEGORY",
+    classificationResult.category
   );
 
   console.log(
-    "DIRECT_RESPONSE_FORM_ROUTING_INTENT",
-    formRoutedResponse.intent
+    "DIRECT_RESPONSE_CLASSIFICATION_SOURCE",
+    classificationResult.source
   );
 
   console.log(
-    "DIRECT_RESPONSE_FORM_ROUTING_FILE",
-    formRoutedResponse.usedFile || "none"
+    "DIRECT_RESPONSE_CLASSIFICATION_KEYWORD",
+    classificationResult
+      .matchedKeyword ||
+    "none"
   );
-
-  return {
-    ...formRoutedResponse,
-
-    classification: {
-      intent:
-        formRoutedResponse.intent ||
-        "form_routed_response",
-
-      category:
-        category ||
-        "none",
-
-      source:
-        "map.json/form_routing",
-
-      matchedKeyword:
-        null,
-
-      score:
-        null,
-
-      escalate:
-        Boolean(
-          formRoutedResponse.requiresHumanReview
-        ),
-
-      disclaimer:
-        "none",
-
-      formProduct:
-        product ||
-        null,
-
-      formCategory:
-        category ||
-        null
-    }
-  };
-}
-
-console.log(
-  "DIRECT_RESPONSE_FORM_ROUTING_USED",
-  false
-);
-
-/*
- * PRIORIDAD 2
- *
- * Solo si la selección del formulario no produce
- * una respuesta directa, se analiza el mensaje.
- */
-const classificationResult =
-  classifyMessage(message, null);
-
-console.log(
-  "DIRECT_RESPONSE_CLASSIFICATION_INTENT",
-  classificationResult.intent
-);
-
-console.log(
-  "DIRECT_RESPONSE_CLASSIFICATION_CATEGORY",
-  classificationResult.category
-);
-
-console.log(
-  "DIRECT_RESPONSE_CLASSIFICATION_SOURCE",
-  classificationResult.source
-);
-
-console.log(
-  "DIRECT_RESPONSE_CLASSIFICATION_KEYWORD",
-  classificationResult.matchedKeyword || "none"
-);
 
   let result = null;
 
-  switch (classificationResult.intent) {
+  switch (
+    classificationResult.intent
+  ) {
     case "product_information":
       result =
-        findBestProductResponse(message) ||
-        findFaqResponse(message, "product") ||
-        findRouteResponse(message);
+        findBestProductResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message,
+          "product"
+        ) ||
+        findRouteResponse(
+          message
+        );
       break;
 
     case "app_information":
       result =
-        findBestAppResponse(message) ||
-        findFaqResponse(message, "app") ||
-        findRouteResponse(message);
+        findBestAppResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message,
+          "app"
+        ) ||
+        findRouteResponse(
+          message
+        );
       break;
 
     case "access_problem":
       result =
-        findAccessResponse(message) ||
-        findRouteResponse(message, "problema_acceso") ||
-        findFaqResponse(message, "access");
+        findAccessResponse(
+          message
+        ) ||
+        findRouteResponse(
+          message,
+          "problema_acceso"
+        ) ||
+        findFaqResponse(
+          message,
+          "access"
+        );
       break;
 
     case "navigation_help":
       result =
-        findRouteResponse(message) ||
-        findFaqResponse(message, "navigation") ||
-        findAccessResponse(message);
+        findRouteResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message,
+          "navigation"
+        ) ||
+        findAccessResponse(
+          message
+        );
       break;
 
     case "download_help":
       result =
-        findDownloadResponse(message) ||
-        findRouteResponse(message) ||
-        findFaqResponse(message, "navigation");
+        findDownloadResponse(
+          message
+        ) ||
+        findRouteResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message,
+          "navigation"
+        );
       break;
 
     case "purchase_guidance":
       result =
-        findPurchaseResponse(message) ||
-        findFaqResponse(message, "purchase") ||
-        findRouteResponse(message);
+        findPurchaseResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message,
+          "purchase"
+        ) ||
+        findRouteResponse(
+          message
+        );
       break;
 
     case "personal_advice":
@@ -1428,10 +2214,12 @@ console.log(
     case "emotional_support":
     case "teen_support":
     case "legal_financial":
-      result = buildDisclaimerResponse(
-        classificationResult.disclaimer,
-        classificationResult
-      );
+      result =
+        buildDisclaimerResponse(
+          classificationResult
+            .disclaimer,
+          classificationResult
+        );
       break;
 
     case "crisis":
@@ -1440,37 +2228,90 @@ console.log(
 
     default:
       result =
-        findAccessResponse(message) ||
-        findRouteResponse(message) ||
-        findBestProductResponse(message) ||
-        findBestAppResponse(message) ||
-        findFaqResponse(message);
+        findAccessResponse(
+          message
+        ) ||
+        findRouteResponse(
+          message
+        ) ||
+        findBestProductResponse(
+          message
+        ) ||
+        findBestAppResponse(
+          message
+        ) ||
+        findFaqResponse(
+          message
+        );
       break;
   }
 
   if (result?.found) {
-    console.log("DIRECT_RESPONSE_FOUND", true);
-    console.log("DIRECT_RESPONSE_SOURCE", result.source);
-    console.log("DIRECT_RESPONSE_INTENT", result.intent);
-    console.log("DIRECT_RESPONSE_FILE", result.usedFile || "none");
+    console.log(
+      "DIRECT_RESPONSE_FOUND",
+      true
+    );
+
+    console.log(
+      "DIRECT_RESPONSE_SOURCE",
+      result.source
+    );
+
+    console.log(
+      "DIRECT_RESPONSE_INTENT",
+      result.intent
+    );
+
+    console.log(
+      "DIRECT_RESPONSE_FILE",
+      result.usedFile ||
+      "none"
+    );
 
     return {
       ...result,
+
       classification: {
-        intent: classificationResult.intent,
-        category: classificationResult.category,
-        source: classificationResult.source,
-        matchedKeyword: classificationResult.matchedKeyword || null,
-        score: classificationResult.score || null,
-        escalate: Boolean(classificationResult.escalate),
-        disclaimer: classificationResult.disclaimer || "none"
+        intent:
+          classificationResult.intent,
+
+        category:
+          classificationResult.category,
+
+        source:
+          classificationResult.source,
+
+        matchedKeyword:
+          classificationResult
+            .matchedKeyword ||
+          null,
+
+        score:
+          classificationResult.score ||
+          null,
+
+        escalate:
+          Boolean(
+            classificationResult
+              .escalate
+          ),
+
+        disclaimer:
+          classificationResult
+            .disclaimer ||
+          "none"
       }
     };
   }
 
-  console.log("DIRECT_RESPONSE_FOUND", false);
+  console.log(
+    "DIRECT_RESPONSE_FOUND",
+    false
+  );
 
-  return buildNoDirectMatch("no_direct_match");
+  return buildNoDirectMatch(
+    "no_direct_match"
+  );
 }
 
 module.exports = {
