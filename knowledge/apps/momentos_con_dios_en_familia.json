@@ -4,9 +4,9 @@
       "product_id": "familia",
       "status": "prelaunch",
 
-      "description": "App Premium diseñada para ayudar a las familias a crear momentos especiales de conexión, aprendizaje y fe compartida, a través de actividades y conversaciones que pueden disfrutarse juntos en el hogar.",
+      "description": "🏡 Una aplicación pensada para ayudar a las familias a compartir tiempo de calidad, fortalecer los vínculos y cultivar la fe juntos mediante actividades, conversaciones y espacios de reflexión que pueden disfrutarse en el hogar.",
 
-      "purpose": "Promover espacios significativos de conversación, aprendizaje y participación familiar, ayudando a incorporar valores, gratitud y momentos de reflexión en la vida cotidiana.",
+      "purpose": "💛 Acompañar a las familias en la creación de hábitos que fomenten la comunicación, la gratitud, la fe y los valores cristianos, convirtiendo los momentos cotidianos en oportunidades para crecer juntos.",
 
       "target_audience": [
         "familias",
@@ -17,25 +17,26 @@
       ],
 
       "features": [
-        "Actividades familiares",
-        "Conversaciones guiadas",
-        "Momentos de gratitud",
-        "Oraciones familiares",
-        "Retos sencillos",
-        "Registro de actividades"
-      ],
+  "🎲 Actividades para compartir en familia",
+  "🗣️ Conversaciones guiadas",
+  "💛 Momentos de gratitud",
+  "🙏 Oraciones en familia",
+  "🌱 Retos sencillos para crecer juntos",
+  "📖 Registro de recuerdos y actividades"
+],
 
       "what_users_will_find": [
-  "Actividades sencillas para disfrutar y aprender juntos en familia",
-  "Preguntas y conversaciones que fortalecen la comunicación entre adultos y niños",
-  "Momentos especiales para reflexionar y compartir experiencias de vida",
-  "Ideas prácticas para incorporar la fe en situaciones cotidianas del hogar",
-  "Recursos que ayudan a crear recuerdos significativos alrededor de valores y enseñanzas cristianas"
-],
+  "🏡 Actividades sencillas para disfrutar tiempo de calidad en familia",
+  "💬 Preguntas y conversaciones que fortalecen la comunicación entre grandes y pequeños",
+  "✨ Espacios para reflexionar, compartir aprendizajes y crear recuerdos que perduren",
+  "🌿 Ideas prácticas para incorporar la fe en las situaciones cotidianas del hogar",
+  "❤️ Recursos que ayudan a transmitir valores cristianos de una manera cercana y significativa"
+]
+,
       "email_presentation": {
   "hero_title": "👨‍👩‍👧‍👦 Momentos con Dios en Familia",
 
-  "hero_subtitle": "Una experiencia digital creada para ayudar a las familias a compartir la fe, fortalecer los vínculos familiares y transformar momentos cotidianos en recuerdos significativos llenos de propósito y amor.",
+  "hero_subtitle": "Un espacio creado para ayudar a las familias a compartir la fe, fortalecer sus vínculos y transformar los momentos cotidianos en recuerdos llenos de propósito, amor y gratitud.",
 
   "transformation_title": "🌿 ¿Cómo puede ayudar a tu familia?",
 
@@ -44,13 +45,13 @@
   "features_title": "✨ Lo que encontrarás",
 
   "feature_items": [
-    "Actividades familiares para compartir momentos especiales",
-    "Conversaciones guiadas para fortalecer la comunicación",
-    "Espacios para la oración y la gratitud en familia",
-    "Retos sencillos para poner en práctica valores cristianos",
-    "Recursos para crear experiencias significativas en el hogar",
-    "Herramientas para registrar avances y recuerdos familiares"
-  ],
+  "Actividades para compartir momentos valiosos en familia",
+  "Conversaciones guiadas para fortalecer la comunicación",
+  "Espacios para la oración y la gratitud familiar",
+  "Retos sencillos para vivir los valores cristianos en el día a día",
+  "Recursos para crear recuerdos que permanezcan en el corazón",
+  "Herramientas para registrar aprendizajes y momentos compartidos"
+],
 
   "audience_title": "❤️ Ideal para",
 
@@ -62,7 +63,7 @@
     "Familias que buscan crear recuerdos significativos alrededor de la fe"
   ],
 
-  "closing_text": "✨ Cada actividad, reflexión y recurso fue diseñado para ayudarte a construir una cultura familiar basada en el amor, la fe y los pequeños momentos que dejan huellas para toda la vida."
+  "✨ Cada actividad, conversación y momento de reflexión fue pensado para ayudar a tu familia a crecer unida en la fe, fortalecer sus vínculos y atesorar recuerdos que permanecerán por generaciones."
 },
 
       "requires_login": true,
@@ -73,6 +74,6 @@
         "Inicio",
         "Mis Colecciones",
         "Pequeños Momentos con Dios",
-        "Momentos con Dios en Familia"
+        "Entrar a la App"
       ]
     }
