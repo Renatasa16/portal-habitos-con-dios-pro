@@ -40,7 +40,7 @@
 
   "transformation_title": "🌿 ¿Cómo puede ayudar a tu familia?",
 
-  "transformation_text": "Acompañar a padres, madres, abuelos y niños en la construcción de hábitos que fortalezcan la comunicación, promuevan valores cristianos y ayuden a crear una vida familiar más conectada y consciente de la presencia de Dios.",
+  "transformation_text": "Acompañar a padres, madres, abuelos y niños en la construcción de hábitos que fortalezcan la comunicación, promuevan valores cristianos y ayuden a crear un hogar donde la fe forme parte de la vida cotidiana.",
 
   "features_title": "✨ Lo que encontrarás",
 
@@ -56,14 +56,14 @@
   "audience_title": "❤️ Ideal para",
 
   "audience_items": [
-    "Familias que desean crecer juntas en la fe",
-    "Padres y madres que buscan fortalecer la conexión con sus hijos",
-    "Abuelos y cuidadores que desean transmitir valores cristianos",
-    "Hogares que desean incorporar momentos espirituales en su rutina diaria",
-    "Familias que buscan crear recuerdos significativos alrededor de la fe"
-  ],
+  "Familias que desean crecer juntas en la fe",
+  "Padres y madres que buscan fortalecer la conexión con sus hijos",
+  "Abuelos y cuidadores que desean transmitir valores cristianos",
+  "Hogares que desean incorporar momentos espirituales en su rutina diaria",
+  "Familias que buscan crear recuerdos significativos alrededor de la fe"
+],
 
-  "✨ Cada actividad, conversación y momento de reflexión fue pensado para ayudar a tu familia a crecer unida en la fe, fortalecer sus vínculos y atesorar recuerdos que permanecerán por generaciones."
+"closing_text": "✨ Cada actividad, conversación y momento de reflexión fue pensado para ayudar a tu familia a crecer unida en la fe, fortalecer sus vínculos y atesorar recuerdos que permanecerán por generaciones."
 },
 
       "requires_login": true,
