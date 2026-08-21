@@ -1055,14 +1055,7 @@ function buildBonusesResponse(product, fileName) {
   };
 }
 
-function findFormRoutedResponse({
-  message,
-  product,
-  category
-}) {
-  if (!product || !category) {
-    return null;
-  }
+function buildNoDirectMatch(reason = "no_direct_match") {
 
   const target =
     getFormRoutingTarget(product, category);
