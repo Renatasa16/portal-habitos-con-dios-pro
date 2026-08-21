@@ -7,378 +7,645 @@
   <title>Centro de Ayuda | Hábitos con Dios</title>
 
   <style>
-    :root{
-      --bg:#f7f2ea;
-      --card:#fffdf8;
-      --border:#eadfce;
-      --text:#2f2a24;
-      --text-soft:#6f5a3b;
-      --primary:#315c4b;
-      --primary-light:#6f8f72;
-      --accent:#efe7d8;
-      --success:#2e7d32;
-      --shadow:0 18px 45px rgba(69,49,25,.10);
-      --radius:22px;
+    :root {
+      --bg: #f7f2ea;
+      --card: #fffdf8;
+      --border: #eadfce;
+      --text: #2f2a24;
+      --text-soft: #6f5a3b;
+      --primary: #315c4b;
+      --primary-dark: #274b3d;
+      --primary-light: #6f8f72;
+      --accent: #efe7d8;
+      --accent-soft: #faf6ee;
+      --gold: #c9a65a;
+      --success: #2e7d32;
+      --shadow: 0 18px 45px rgba(69, 49, 25, 0.10);
+      --radius: 22px;
     }
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.6;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    .container{
-      width:min(1100px,92%);
-      margin:auto;
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
     }
 
-    header{
-      padding:24px 0;
+    header {
+      padding: 24px 0;
     }
 
-    .top-bar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
-      flex-wrap:wrap;
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .brand{
-      font-size:1.1rem;
-      font-weight:700;
-      color:var(--primary);
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
     }
 
-    .back-link{
-      text-decoration:none;
-      color:var(--primary);
-      font-weight:600;
+    .back-link {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
     }
 
-    .hero{
-      text-align:center;
-      padding:50px 0 30px;
+    .back-link:hover {
+      color: var(--primary-dark);
     }
 
-    .badge{
-      display:inline-block;
-      background:var(--accent);
-      color:var(--text-soft);
-      padding:8px 14px;
-      border-radius:999px;
-      font-size:.85rem;
-      font-weight:700;
-      margin-bottom:18px;
+    .hero {
+      padding: 50px 0 30px;
+      text-align: center;
     }
 
-    .hero h1{
-      font-size:clamp(2rem,4vw,3rem);
-      margin-bottom:18px;
+    .badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 700;
     }
 
-    .hero p{
-      max-width:700px;
-      margin:auto;
-      color:var(--text-soft);
-      font-size:1.05rem;
+    .hero h1 {
+      margin-bottom: 18px;
+      color: var(--primary);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
     }
 
-    .support-wrapper{
-      display:grid;
-      grid-template-columns:1fr 430px;
-      gap:30px;
-      align-items:start;
-      margin:50px 0 80px;
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: var(--text-soft);
+      font-size: 1.05rem;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:35px;
-      box-shadow:var(--shadow);
+    .support-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 30px;
+      align-items: start;
+      margin: 50px 0 80px;
     }
 
-    .card h2{
-      margin-bottom:20px;
+    .card {
+      padding: 35px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
     }
 
-    .form-group{
-      margin-bottom:18px;
+    .card h2 {
+      margin-bottom: 12px;
+      color: var(--primary);
     }
 
-    label{
-      display:block;
-      margin-bottom:8px;
-      font-weight:600;
+    .form-introduction {
+      margin-bottom: 24px;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .recommendation-box {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      margin-bottom: 26px;
+      padding: 17px 18px;
+      border: 1px solid rgba(201, 166, 90, 0.38);
+      border-radius: 16px;
+      background: #fff8e8;
+    }
+
+    .recommendation-icon {
+      flex: 0 0 auto;
+      font-size: 1.25rem;
+      line-height: 1.35;
+    }
+
+    .recommendation-content strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .recommendation-content p {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .form-group {
+      margin-bottom: 19px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .required-mark {
+      color: #b42318;
+    }
+
+    .field-help {
+      display: block;
+      margin-top: 7px;
+      color: var(--text-soft);
+      font-size: 0.82rem;
+      line-height: 1.45;
     }
 
     input,
     select,
-    textarea{
-      width:100%;
-      padding:14px;
-      border:1px solid #d9cdbb;
-      border-radius:14px;
-      font-size:1rem;
-      background:#fff;
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9cdbb;
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    select {
+      cursor: pointer;
     }
 
     input:focus,
     select:focus,
-    textarea:focus{
-      outline:none;
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(49,92,75,.12);
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(49, 92, 75, 0.12);
     }
 
-    textarea{
-      resize:vertical;
-      min-height:160px;
+    textarea {
+      min-height: 160px;
+      resize: vertical;
     }
 
-    .submit-btn{
-      width:100%;
-      border:none;
-      cursor:pointer;
-      padding:16px;
-      border-radius:14px;
-      background:linear-gradient(
-        135deg,
-        var(--primary),
-        var(--primary-light)
-      );
-      color:white;
-      font-size:1rem;
-      font-weight:700;
-      transition:.3s;
+    .submit-btn {
+      width: 100%;
+      min-height: 52px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+      color: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
-    .submit-btn:hover{
-      opacity:.95;
-      transform:translateY(-1px);
+    .submit-btn:hover:not(:disabled) {
+      opacity: 0.96;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(49, 92, 75, 0.18);
     }
 
-    .submit-btn:disabled{
-      opacity:.6;
-      cursor:not-allowed;
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
-    .message-box{
-      margin-top:20px;
-      display:none;
-      padding:16px;
-      border-radius:14px;
-      font-weight:600;
+    .message-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 600;
+      line-height: 1.55;
     }
 
-    .success{
-      display:block;
-      background:#ebf7ed;
-      color:#1b5e20;
-      border:1px solid #cde8d0;
+    .message-box.success {
+      display: block;
+      border: 1px solid #cde8d0;
+      background: #ebf7ed;
+      color: #1b5e20;
     }
 
-    .error{
-      display:block;
-      background:#fff1f1;
-      color:#b42318;
-      border:1px solid #ffd4d4;
+    .message-box.error {
+      display: block;
+      border: 1px solid #ffd4d4;
+      background: #fff1f1;
+      color: #b42318;
     }
 
-    .info-card h3{
-      margin-bottom:16px;
+    .info-card h3 {
+      margin-bottom: 16px;
+      color: var(--primary);
     }
 
-    .info-card p{
-      color:var(--text-soft);
-      margin-bottom:18px;
+    .info-card > p {
+      margin-bottom: 18px;
+      color: var(--text-soft);
     }
 
-    .support-list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
+    .support-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .support-item{
-      background:#faf6ee;
-      border:1px solid var(--border);
-      padding:14px;
-      border-radius:14px;
+    .support-item {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--accent-soft);
     }
 
-    footer{
-      padding:40px 0 60px;
-      text-align:center;
-      color:var(--text-soft);
+    .support-item strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--primary);
+      font-size: 0.92rem;
     }
 
-    @media (max-width: 900px){
+    .support-item span {
+      display: block;
+      color: var(--text-soft);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
 
-      .support-wrapper{
-        grid-template-columns:1fr;
+    .privacy-note {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .support-wrapper {
+        grid-template-columns: 1fr;
       }
 
-      .card{
-        padding:24px;
+      .card {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding-top: 28px;
       }
 
+      .card {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .recommendation-box {
+        padding: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div class="container top-bar">
-    <div class="brand">Hábitos con Dios</div>
+  <header>
+    <div class="container top-bar">
+      <div class="brand">Hábitos con Dios</div>
 
-    <a href="index.html" class="back-link">
-      ← Volver al inicio
-    </a>
-  </div>
-</header>
+      <a href="index.html" class="back-link">
+        ← Volver al inicio
+      </a>
+    </div>
+  </header>
 
-<section class="hero container">
-  <div class="badge">
-    Centro de Ayuda
-  </div>
+  <section class="hero container">
+    <div class="badge">
+      Centro de Ayuda
+    </div>
 
-  <h1>Estamos aquí para ayudarte</h1>
+    <h1>Estamos aquí para ayudarte</h1>
+
+    <p>
+      Si necesitas ayuda con el acceso a tus Apps Premium, ebooks,
+      bonos complementarios o tienes otra consulta, selecciona la
+      experiencia y el tipo de ayuda que necesitas.
+    </p>
+  </section>
+
+  <main class="container">
+
+    <div class="support-wrapper">
+
+      <div class="card">
+
+        <h2>Enviar una consulta</h2>
+
+        <p class="form-introduction">
+          Completa los campos para que podamos identificar el producto
+          y el tema de tu consulta con mayor precisión.
+        </p>
+
+        <div class="recommendation-box" role="note">
+          <div class="recommendation-icon" aria-hidden="true">
+            ✨
+          </div>
+
+          <div class="recommendation-content">
+            <strong>
+              Una consulta por cada tema
+            </strong>
+
+            <p>
+              Para brindarte una respuesta más clara y precisa, te
+              recomendamos enviar un formulario independiente por cada
+              pregunta o tema. Si necesitas ayuda con diferentes productos,
+              Apps, bonos o accesos, completa una nueva consulta para cada caso.
+            </p>
+          </div>
+        </div>
+
+        <form id="contactForm">
+
+          <div class="form-group">
+            <label for="name">
+              Nombre completo
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              Correo electrónico
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="product">
+              Producto o experiencia
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+
+            <select
+              id="product"
+              name="product"
+              required
+            >
+              <option value="">
+                Selecciona una opción
+              </option>
+
+              <option value="prod_21dias">
+                21 Días Más Cerca de Dios
+              </option>
+
+              <option value="prod_pequenos_momentos">
+                Pequeños Momentos con Dios
+              </option>
+
+              <option value="prod_palabras_duelen">
+                Cuando las Palabras Duelen
+              </option>
+
+              <option value="prod_hombre_edifica">
+                El Hombre que Edifica su Hogar
+              </option>
+
+              <option value="prod_no_seguro">
+                No estoy seguro de qué opción elegir
+              </option>
+            </select>
+
+            <small class="field-help">
+              Selecciona el producto o la experiencia con la que está
+              relacionada tu consulta.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="category">
+              Tipo de consulta
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+
+            <select
+              id="category"
+              name="category"
+              required
+            >
+              <option value="">
+                Selecciona una opción
+              </option>
+
+              <option value="app">
+                App
+              </option>
+
+              <option value="acceso">
+                Acceso
+              </option>
+
+              <option value="ebook">
+                Ebook
+              </option>
+
+              <option value="bonos">
+                Bonos
+              </option>
+
+              <option value="descarga">
+                Descarga
+              </option>
+
+              <option value="compra">
+                Compra
+              </option>
+
+              <option value="consulta_general">
+                Consulta general
+              </option>
+            </select>
+
+           <small class="field-help">
+Elige la opción que mejor describa el tema principal de tu consulta.
+</small>
+</div>
+
+<div class="form-group">
+  <label for="message">
+    Mensaje
+    <span class="required-mark" aria-hidden="true">*</span>
+  </label>
+
+  <textarea
+    id="message"
+    name="message"
+    placeholder="Describe aquí una sola pregunta o tema para que podamos orientarte con mayor precisión..."
+    required
+  ></textarea>
+
+  <small class="field-help">
+    Incluye los detalles necesarios, pero evita combinar consultas sobre distintos productos o temas en el mismo mensaje.
+  </small>
+</div>
+
+<button
+  type="submit"
+  class="submit-btn"
+  id="submitBtn"
+>
+  Enviar consulta
+</button>
+
+<div
+  id="formMessage"
+  class="message-box"
+  role="status"
+  aria-live="polite"
+></div>
+
+</form>
+
+</div>
+
+<aside class="card info-card">
+
+  <h3>Acompañamiento y soporte</h3>
 
   <p>
-    Si necesitas ayuda con el acceso a tus Apps Premium,
-    ebooks, bonos complementarios o tienes cualquier otra consulta,
-    envíanos un mensaje y te responderemos a la brevedad.
+    Puedes utilizar este espacio para consultas relacionadas con:
   </p>
-</section>
 
-<main class="container">
+  <div class="support-list">
 
-  <div class="support-wrapper">
-
-    <div class="card">
-
-      <h2>Enviar una consulta</h2>
-
-      <form id="contactForm">
-
-        <div class="form-group">
-          <label for="name">Nombre completo</label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="email">Correo electrónico</label>
-
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="category">Tipo de consulta</label>
-
-          <select
-            id="category"
-            name="category"
-            required
-          >
-            <option value="">
-              Selecciona una opción
-            </option>
-
-            <option value="soporte_acceso">
-              Soporte para acceso
-            </option>
-
-            <option value="consulta_producto">
-              Consulta sobre productos
-            </option>
-
-            <option value="consulta_general">
-              Consulta general
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Mensaje</label>
-
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Cuéntanos cómo podemos ayudarte..."
-            required
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          class="submit-btn"
-          id="submitBtn"
-        >
-          Enviar consulta
-        </button>
-
-        <div id="formMessage" class="message-box"></div>
-
-      </form>
-
+    <div class="support-item">
+      <strong>Apps Premium</strong>
+      <span>
+        Uso de la App, funciones disponibles y consultas relacionadas.
+      </span>
     </div>
 
-    <div class="card info-card">
+    <div class="support-item">
+      <strong>Acceso</strong>
+      <span>
+        Ingreso al portal, permisos o dificultades para acceder.
+      </span>
+    </div>
 
-      <h3>Acompañamiento y soporte</h3>
+    <div class="support-item">
+      <strong>Ebooks y descargas</strong>
+      <span>
+        Acceso a ebooks y materiales digitales descargables.
+      </span>
+    </div>
 
-      <p>
-        Puedes utilizar este espacio para consultas relacionadas con:
-      </p>
+    <div class="support-item">
+      <strong>Bonos complementarios</strong>
+      <span>
+        Consultas sobre recursos adicionales incluidos en cada experiencia.
+      </span>
+    </div>
 
-      <div class="support-list">
+    <div class="support-item">
+      <strong>Compras realizadas</strong>
+      <span>
+        Consultas relacionadas con productos o experiencias adquiridas.
+      </span>
+    </div>
 
-        <div class="support-item">
-          Acceso a Apps Premium
-        </div>
-
-        <div class="support-item">
-          Ebooks y recursos descargables
-        </div>
-
-        <div class="support-item">
-          Bonos complementarios
-        </div>
-
-        <div class="support-item">
-          Compras realizadas
-        </div>
-
-        <div class="support-item">
-          Consultas generales
-        </div>
-
-      </div>
-
+    <div class="support-item">
+      <strong>Consultas generales</strong>
+      <span>
+        Si no estás seguro de qué opción elegir, selecciona:
+        "No estoy seguro de qué opción elegir".
+      </span>
     </div>
 
   </div>
+
+  <p class="privacy-note">
+    Comparte únicamente la información necesaria para revisar tu consulta.
+    No incluyas contraseñas, datos bancarios ni información confidencial.
+  </p>
+
+</aside>
+
+</div>
 
 </main>
 
@@ -389,34 +656,35 @@
 </footer>
 
 <script>
+const form = document.getElementById("contactForm");
+const messageBox = document.getElementById("formMessage");
+const submitBtn = document.getElementById("submitBtn");
 
-const form = document.getElementById('contactForm');
-const messageBox = document.getElementById('formMessage');
-const submitBtn = document.getElementById('submitBtn');
+form.addEventListener("submit", async (event) => {
 
-form.addEventListener('submit', async (e) => {
+  event.preventDefault();
 
-  e.preventDefault();
-
-  messageBox.className = 'message-box';
-  messageBox.style.display = 'none';
+  messageBox.className = "message-box";
+  messageBox.style.display = "none";
+  messageBox.textContent = "";
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Enviando...';
+  submitBtn.textContent = "Enviando...";
 
   try {
 
     const payload = {
-      name: document.getElementById('name').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      category: document.getElementById('category').value,
-      message: document.getElementById('message').value.trim()
+      name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      product: document.getElementById("product").value,
+      category: document.getElementById("category").value,
+      message: document.getElementById("message").value.trim()
     };
 
-    const response = await fetch('/api/contact', {
-      method: 'POST',
+    const response = await fetch("/api/contact", {
+      method: "POST",
       headers: {
-        'Content-Type':'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     });
@@ -424,33 +692,38 @@ form.addEventListener('submit', async (e) => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || 'No fue posible enviar la consulta');
+      throw new Error(
+        data.message ||
+        "No fue posible enviar la consulta."
+      );
     }
 
-    messageBox.classList.add('success');
+    messageBox.className = "message-box success";
 
     messageBox.textContent =
-      'Tu consulta fue enviada correctamente. Te responderemos a la brevedad.';
+      "Tu consulta fue enviada correctamente. Te responderemos a la brevedad.";
 
     form.reset();
 
   } catch (error) {
 
-    messageBox.classList.add('error');
+    console.error(error);
+
+    messageBox.className = "message-box error";
 
     messageBox.textContent =
       error.message ||
-      'Ocurrió un error al enviar la consulta.';
+      "Ocurrió un error al enviar la consulta.";
 
+  } finally {
+
+    messageBox.style.display = "block";
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Enviar consulta";
   }
 
-  messageBox.style.display = 'block';
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'Enviar consulta';
-
 });
-
 </script>
 
 </body>
