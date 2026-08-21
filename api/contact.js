@@ -556,7 +556,11 @@ if (!categoryData) {
 
     if (!isSensitive) {
       try {
-        directResponse = getDirectResponse(message);
+       directResponse = getDirectResponse({
+  message,
+  product,
+  category
+});
 
         if (directResponse?.found) {
           console.log("DIRECT_RESPONSE_USED", directResponse.source);
