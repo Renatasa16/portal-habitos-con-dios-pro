@@ -16,7 +16,7 @@
       "question": "¿Qué es Hábitos con Dios?",
       "category": "general",
       "priority": "high",
-      "answer": "Hábitos con Dios es un ecosistema de experiencias digitales diseñado para acompañar a personas y familias en su caminar de fe. A través de diferentes Kits Devocionales Premium, encontrarás recursos prácticos, momentos de reflexión y herramientas que te ayudarán a acercarte más a Dios en tu vida cotidiana.",
+      "answer": "Hábitos con Dios es un espacio creado para acompañar a personas y familias en su caminar de fe. A través de diferentes Kits Devocionales Premium encontrarás recursos prácticos, momentos de reflexión y herramientas que te inspirarán a acercarte más a Dios en la vida cotidiana.",
       "knowledge_source": [
         "brand.json"
       ],
@@ -43,7 +43,7 @@
       "question": "¿Qué incluye 21 Días Más Cerca de Dios?",
       "category": "product",
       "priority": "medium",
-      "answer": "21 Días Más Cerca de Dios es una experiencia completa diseñada para ayudarte a desarrollar hábitos de fe en tu día a día. Incluye la App Premium Mi Tiempo con Dios, el ebook principal y recursos complementarios como el Diario de Oración, Planner Espiritual, Guía Práctica para Escuchar al Espíritu Santo, Tarjetas de Fe y materiales imprimibles.",
+      "answer": "21 Días Más Cerca de Dios reúne recursos especialmente pensados para ayudarte a fortalecer tus hábitos espirituales. Incluye la App Premium Mi Tiempo con Dios, el ebook principal y materiales complementarios como el Diario de Oración, Planner Espiritual, Guía Práctica para Escuchar al Espíritu Santo, Tarjetas de Fe y sus versiones imprimibles.",
       "knowledge_source": [
         "products/21_dias_mas_cerca_de_dios.json",
         "apps/mi_tiempo_con_dios.json"
@@ -57,7 +57,7 @@
       "question": "¿Qué es Mi Tiempo con Dios?",
       "category": "app",
       "priority": "medium",
-      "answer": "Mi Tiempo con Dios es una App Premium diseñada para ayudarte a reservar un espacio especial cada día para encontrarte con Dios. A través de reflexiones, oración, gratitud y herramientas prácticas, te acompaña en el desarrollo de hábitos de fe de una manera sencilla y significativa.",
+      "answer": "🌷 Mi Tiempo con Dios es una aplicación creada para ayudarte a reservar un momento especial cada día para encontrarte con Dios. A través de reflexiones, oración, gratitud y herramientas prácticas, te acompaña en la construcción de hábitos de fe de una manera sencilla y significativa.",
       "knowledge_source": [
         "apps/mi_tiempo_con_dios.json"
       ],
@@ -70,7 +70,7 @@
       "question": "¿Qué es Pequeños Momentos con Dios?",
       "category": "product",
       "priority": "medium",
-      "answer": "Es una experiencia familiar diseñada para fortalecer la fe compartida mediante actividades, conversaciones guiadas, oración y momentos de gratitud. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🏡 Pequeños Momentos con Dios fue creado para ayudar a las familias a compartir la fe de una manera cercana y natural. Incluye actividades, conversaciones guiadas, oración y espacios de gratitud que fortalecen los vínculos familiares mientras construyen recuerdos valiosos alrededor de Dios. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
       "knowledge_source": [
         "products/pequenos_momentos_con_dios.json"
       ],
@@ -83,7 +83,7 @@
       "question": "¿Qué es Cuando las Palabras Duelen?",
       "category": "product",
       "priority": "medium",
-      "answer": "Cuando las Palabras Duelen es una experiencia diseñada para acompañar a adolescentes, jóvenes y familias que han sido afectados por palabras hirientes, rechazo, bullying o cyberbullying. A través de reflexiones y recursos prácticos, promueve el fortalecimiento de la identidad, la confianza y la paz interior desde una perspectiva basada en la fe. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🕊️ Cuando las Palabras Duelen busca acompañar a adolescentes, jóvenes y familias que han atravesado situaciones de rechazo, palabras hirientes, bullying o cyberbullying. A través de reflexiones y recursos prácticos, promueve el fortalecimiento de la identidad, la confianza y la paz interior desde una perspectiva basada en la fe. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
       "knowledge_source": [
         "products/cuando_las_palabras_duelen.json"
       ],
@@ -96,7 +96,7 @@
       "question": "¿Qué es El Hombre que Edifica su Hogar?",
       "category": "product",
       "priority": "medium",
-      "answer": "El Hombre que Edifica su Hogar es una experiencia diseñada para hombres de Dios que desean fortalecer su relación con Él y liderar su hogar con humildad, carácter y propósito. A través de recursos prácticos y momentos de reflexión, acompaña el desarrollo de un liderazgo espiritual que impacte positivamente a la familia. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🏡 El Hombre que Edifica su Hogar fue pensado para hombres que desean fortalecer su relación con Dios y liderar su hogar con sabiduría, carácter y propósito. A través de recursos prácticos y espacios de reflexión, impulsa el desarrollo de un liderazgo espiritual que impacte positivamente a la familia y a las generaciones futuras. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
       "knowledge_source": [
         "products/el_hombre_que_edifica_su_hogar.json"
       ],
