@@ -458,9 +458,23 @@ module.exports = async function handler(req, res) {
         : req.body || {};
 
     const name = sanitizeText(body.name || body.nombre);
-    const email = sanitizeText(body.email || body.correo);
-    const category = sanitizeText(body.category || body.tipoConsulta);
-    const message = sanitizeMessage(body.message || body.mensaje);
+const email = sanitizeText(body.email || body.correo);
+
+const product = sanitizeText(
+  body.product ||
+  body.producto ||
+  ""
+);
+
+const category = sanitizeText(
+  body.category ||
+  body.tipoConsulta
+);
+
+const message = sanitizeMessage(
+  body.message ||
+  body.mensaje
+);
 
     if (!name || name.length < 2) {
       return res.status(400).json({
@@ -536,6 +550,7 @@ module.exports = async function handler(req, res) {
           message
         );
 
+        console.log("CONTACT_PRODUCT", product);
         console.log("CONTACT_AI_ROUTE", categoryData.aiRoute);
         console.log("CONTACT_CATEGORY", category);
         console.log("CONTACT_IS_SENSITIVE", isSensitive);
