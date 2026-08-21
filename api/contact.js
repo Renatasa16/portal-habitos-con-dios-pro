@@ -17,16 +17,42 @@ const FROM_EMAIL = "soporte@skoolrenovae.store";
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL;
 
 const ALLOWED_CATEGORIES = {
-  soporte_acceso: {
-    label: "Soporte para acceso",
+  app: {
+    label: "App",
     priority: "Alta",
-    aiRoute: "access_support"
+    aiRoute: "app"
   },
-  consulta_producto: {
-    label: "Consulta sobre productos",
+
+  acceso: {
+    label: "Acceso",
+    priority: "Alta",
+    aiRoute: "access"
+  },
+
+  ebook: {
+    label: "Ebook",
     priority: "Media",
-    aiRoute: "product_inquiry"
+    aiRoute: "ebook"
   },
+
+  bonos: {
+    label: "Bonos",
+    priority: "Media",
+    aiRoute: "bonuses"
+  },
+
+  descarga: {
+    label: "Descarga",
+    priority: "Media",
+    aiRoute: "download"
+  },
+
+  compra: {
+    label: "Compra",
+    priority: "Media",
+    aiRoute: "purchase"
+  },
+
   consulta_general: {
     label: "Consulta general",
     priority: "Normal",
