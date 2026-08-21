@@ -4,9 +4,9 @@
       "product_id": "21dias",
       "status": "active",
 
-      "description": "App Premium diseñada para ayudarte a reservar un espacio especial cada día para encontrarte con Dios, fortaleciendo hábitos de reflexión, oración y gratitud de una manera sencilla y significativa.",
+      "description": "🌷Una aplicación diseñada para ayudarte a reservar un momento especial cada día para encontrarte con Dios, cultivando hábitos de oración, reflexión y gratitud que fortalezcan tu vida espiritual de forma sencilla y significativa.",
 
-      "purpose": "Fomentar la constancia en el tiempo devocional diario mediante herramientas prácticas que ayuden a incorporar la oración, la reflexión y la gratitud como parte de la vida cotidiana.",
+      "purpose": "🙏 Acompañarte en la construcción de un tiempo devocional constante, brindándote herramientas prácticas que te ayuden a integrar la oración, la reflexión y la gratitud en tu vida cotidiana.",
 
       "target_audience": [
         "mujeres de Dios",
@@ -14,32 +14,32 @@
       ],
 
       "features": [
-        "Devocionales diarios",
-        "Checklist de avance",
-        "Registro de oración",
-        "Diario espiritual",
-        "Gratitud diaria",
-        "Favoritos",
-        "Insignias",
-        "Niveles de progreso"
-      ],
+  "📅 Devocionales diarios",
+  "✅ Seguimiento de avance",
+  "🙏 Registro de oración",
+  "📔 Diario espiritual",
+  "💛 Gratitud diaria",
+  "⭐ Contenido favorito",
+  "🏆 Insignias de progreso",
+  "🌿 Niveles de crecimiento"
+],
 
       "what_users_will_find": [
-  "Reflexiones diarias para profundizar la relación con Dios",
-  "Espacios para registrar aprendizajes y oraciones personales",
-  "Momentos de gratitud que ayudan a reconocer las bendiciones de cada día",
-  "Herramientas que favorecen la constancia en el tiempo devocional",
-  "Recursos prácticos para convertir la fe en hábitos cotidianos"
+  "📖 Reflexiones diarias que te ayudarán a profundizar tu relación con Dios",
+  "📝 Espacios personales para registrar aprendizajes, pensamientos y oraciones",
+  "💛 Momentos de gratitud que te permitirán reconocer las bendiciones de cada día",
+  "🌱 Herramientas pensadas para favorecer la constancia en tu tiempo devocional",
+  "✨ Recursos prácticos que te ayudarán a convertir la fe en hábitos que permanezcan en el tiempo"
 ],
 
 "email_presentation": {
   "hero_title": "📱 Mi Tiempo con Dios",
 
-  "hero_subtitle": "Tu espacio digital de acompañamiento espiritual diario, diseñado para ayudarte a construir hábitos devocionales sólidos y fortalecer tu relación con Dios de manera constante y significativa.",
+  "hero_subtitle": "Un espacio pensado para acompañarte cada día en tu tiempo con Dios, fortaleciendo hábitos de oración, reflexión y gratitud que te acerquen más a Él.",
 
   "transformation_title": "🌿 ¿Cómo puede ayudarte?",
 
-  "transformation_text": "Acompañarte cada día en tu crecimiento espiritual mediante herramientas prácticas de oración, reflexión, gratitud y seguimiento de tu progreso personal, ayudándote a desarrollar una vida de fe más consistente.",
+  "transformation_text": "Acompañarte cada día en tu crecimiento espiritual a través de momentos de oración, reflexión y gratitud que te ayuden a construir una vida de fe más cercana, constante y significativa.",
 
   "features_title": "✨ Funcionalidades principales",
 
@@ -48,7 +48,7 @@
     "Registro de oración y seguimiento espiritual",
     "Espacios para reflexiones y aprendizajes personales",
     "Herramientas de gratitud diaria",
-    "Sistema de progreso y logros",
+    "Seguimiento de tu crecimiento espiritual",
     "Favoritos para guardar contenidos importantes"
   ],
 
@@ -61,7 +61,7 @@
     "Mujeres que valoran el acompañamiento espiritual diario"
   ],
 
-  "closing_text": "✨ Cada herramienta fue diseñada para ayudarte a mantener la constancia en tu tiempo con Dios y disfrutar una experiencia espiritual más profunda, organizada y significativa."
+  "closing_text": "✨ Cada detalle fue pensado para ayudarte a disfrutar un tiempo con Dios más intencional, constante y significativo, acompañándote paso a paso en tu caminar espiritual."
 },
 
 "requires_login": true,
@@ -70,6 +70,6 @@
         "Inicio",
         "Mis Colecciones",
         "21 Días Más Cerca de Dios",
-        "Mi Tiempo con Dios"
+        "Entrar a la App"
       ]
     }
