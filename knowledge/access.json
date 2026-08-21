@@ -6,7 +6,7 @@
 
     "access_method": {
       "name": "Supabase Magic Link",
-      "description": "El acceso al portal se realiza mediante un enlace seguro enviado a tu correo electrónico, permitiéndote ingresar de forma simple y rápida sin necesidad de recordar contraseñas.",
+      "description": "🔐 Acceder al portal es muy sencillo. Solo necesitas ingresar tu correo electrónico y recibirás un enlace seguro que te permitirá entrar de forma rápida, cómoda y sin necesidad de recordar contraseñas.",
 
       "steps": [
         "Ingresar correo electrónico en el login.",
@@ -20,7 +20,7 @@
 
     "purchase_validation": {
       "required_email": true,
-      "message": "Para acceder a tus Apps, ebooks, bonos y recursos imprimibles, es importante utilizar el mismo correo electrónico con el que realizaste tu compra en Shopify. Esto permite identificar correctamente tus permisos y habilitar tu contenido."
+      "message": "📧 Para acceder a tus Apps Premium, ebook principal, materiales complementarios y versiones imprimibles de los recursos incluidos, es importante utilizar el mismo correo electrónico con el que realizaste tu compra. Esto nos permite identificar correctamente tus permisos y habilitar tu contenido."
     },
 
     "permissions": {
@@ -33,7 +33,7 @@
         "active"
       ],
 
-      "description": "El portal valida los permisos activos asociados al correo electrónico autenticado."
+      "description": "Una vez que inicias sesión, el portal verifica automáticamente los permisos asociados a tu correo electrónico para mostrar las colecciones y recursos que forman parte de tu experiencia."
     },
 
     "common_problems": [
@@ -42,7 +42,7 @@
         "category": "purchase_access",
         "priority": "high",
         "title": "Validar mismo correo de compra",
-        "response": "Antes de continuar, verifica que estés utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. Este paso suele resolver la mayoría de los problemas de acceso y nos ayuda a identificar correctamente tus permisos."
+        "response": "📧 Antes de realizar otras validaciones, te recomendamos confirmar que estás utilizando el mismo correo electrónico con el que realizaste tu compra. Este sencillo paso suele resolver la mayoría de los casos relacionados con el acceso al portal."
       },
 
       {
@@ -50,7 +50,7 @@
         "category": "login",
         "priority": "medium",
         "title": "No recibí el correo de acceso",
-        "response": "Si no encuentras el correo de acceso, revisa tu bandeja principal, spam, promociones o correo no deseado. Si aún no aparece, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión."
+        "response": "📬 Si no encuentras el correo de acceso, revisa tu bandeja principal, promociones, spam o correo no deseado. En ocasiones puede tardar unos minutos en llegar. Si aún no lo encuentras, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión."
       },
 
       {
@@ -58,7 +58,7 @@
         "category": "login",
         "priority": "medium",
         "title": "No abrí el enlace",
-        "response": "Para completar el acceso al portal, es necesario abrir el enlace enviado a tu correo electrónico. Este paso permite validar tu sesión y habilitar el ingreso a tu experiencia."
+        "response": "🔗 Para completar el acceso al portal es necesario abrir el enlace recibido en tu correo electrónico. Este paso permite validar tu sesión y habilitar el acceso a tus colecciones y recursos."
       },
 
       {
@@ -66,7 +66,7 @@
         "category": "login",
         "priority": "medium",
         "title": "El enlace expiró",
-        "response": "Si el enlace de acceso expiró, puedes solicitar uno nuevo desde la pantalla de inicio de sesión. Se enviará un nuevo enlace a tu correo electrónico para que puedas continuar con el acceso."
+        "response": "⏳ Si el enlace ya no está vigente, no te preocupes. Puedes solicitar uno nuevo desde la pantalla de inicio de sesión y recibirás un nuevo acceso seguro en tu correo electrónico."
       },
 
       {
@@ -74,7 +74,7 @@
         "category": "permissions",
         "priority": "high",
         "title": "No veo mi colección",
-        "response": "Verifica que hayas iniciado sesión utilizando el mismo correo empleado durante la compra."
+        "response": "📚 Si no encuentras tu colección, verifica primero que hayas iniciado sesión con el mismo correo utilizado durante la compra. Una vez validado, el sistema debería mostrar automáticamente el contenido asociado a tu cuenta."
       },
 
       {
@@ -82,7 +82,7 @@
         "category": "purchase_access",
         "priority": "high",
         "title": "Compré con otro correo",
-        "response": "El sistema identifica los permisos utilizando el correo registrado durante la compra."
+        "response": "📧 El acceso a las colecciones se habilita utilizando el correo electrónico registrado durante la compra. Si realizaste tu compra con un correo diferente, deberás iniciar sesión utilizando esa misma dirección para visualizar correctamente tus recursos."
       }
     ],
 
@@ -90,7 +90,7 @@
       {
         "intent": "compre_y_no_puedo_entrar",
 
-        "initial_response": "Gracias por escribirnos. Antes de continuar, por favor valida que estás intentando ingresar con el mismo correo electrónico utilizado durante tu compra en Shopify.",
+        "initial_response": "💜 Gracias por escribirnos. Vamos a revisar juntos algunas validaciones rápidas que suelen resolver la mayoría de los inconvenientes de acceso.",
 
         "steps": [
           {
@@ -130,7 +130,7 @@
     "fecha aproximada de compra"
   ],
 
-  "message": "Si ya realizaste las validaciones anteriores y aún no puedes acceder a tu experiencia, por favor comparte la información solicitada. Con esos datos podremos revisar tu caso con mayor detalle y ayudarte a encontrar una solución.",
+  "message": "🛟 Si ya realizaste las validaciones anteriores y el acceso sigue sin funcionar, comparte la información solicitada. Con esos datos podremos revisar tu caso con mayor detalle y acompañarte en la búsqueda de una solución.",
 
   "escalation_cases": [
     "purchase_verified_but_no_access",
@@ -142,11 +142,11 @@
 },
 
     "responses": {
-  "login_help": "Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Recibirás un enlace seguro en tu correo electrónico y, una vez abierto, podrás acceder a tu experiencia de forma simple y rápida.",
+  "login_help": "🔐 Para ingresar al portal, escribe tu correo electrónico en la pantalla de acceso. Recibirás un enlace seguro que te permitirá acceder a tus colecciones de forma rápida y sencilla, sin necesidad de utilizar contraseñas.",
 
-  "purchase_email_help": "Recuerda utilizar el mismo correo electrónico con el que realizaste tu compra. Esto permite identificar correctamente tus permisos y habilitar el acceso a todos los recursos incluidos en tu experiencia.",
+  "purchase_email_help": "📧 Recuerda iniciar sesión con el mismo correo electrónico que utilizaste durante tu compra. Esto permite identificar correctamente tus permisos y mostrar todos los contenidos asociados a tu colección.",
 
-  "collection_access_help": "Cuando ingresas con el mismo correo electrónico utilizado durante la compra, el sistema habilita automáticamente el acceso a las Apps, ebooks, bonos y recursos imprimibles incluidos en tu experiencia."
+  "collection_access_help": "📚 Cuando ingresas con el mismo correo electrónico utilizado durante la compra, el sistema habilita automáticamente el acceso a las Apps Premium, ebook principal, materiales complementarios y versiones imprimibles de los recursos incluidos en tu colección."
 }
 }
 }
