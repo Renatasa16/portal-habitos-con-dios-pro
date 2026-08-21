@@ -4,9 +4,9 @@
       "product_id": "palabras_duelen",
       "status": "prelaunch",
 
-      "description": "App Premium diseñada para brindar un espacio seguro de reflexión personal, ayudando a procesar emociones, fortalecer la autoestima y recordar el valor e identidad que cada persona tiene en Dios.",
+      "description": "🕊️ Una aplicación creada para ofrecerte un espacio de calma y reflexión donde puedas expresar lo que sientes, reconocer tu valor y fortalecer tu identidad a la luz del amor de Dios.",
 
-      "purpose": "Ofrecer herramientas prácticas que ayuden a transformar pensamientos y emociones en oportunidades de crecimiento, promoviendo hábitos de paz, resiliencia y bienestar emocional desde una perspectiva basada en la fe.",
+      "purpose": "💛 Acompañarte en el desarrollo de hábitos que favorezcan la paz interior, la resiliencia y el bienestar emocional, ayudándote a transformar pensamientos y emociones en oportunidades de crecimiento desde una perspectiva basada en la fe.",
 
       "target_audience": [
         "adolescentes",
@@ -15,26 +15,26 @@
       ],
 
       "features": [
-        "Journaling guiado",
-        "Registro personal",
-        "Reflexiones",
-        "Seguimiento de hábitos",
-        "Espacios para recordar verdades importantes",
-        "Progreso personal"
-      ],
+  "📔 Journaling guiado",
+  "📝 Registro personal",
+  "🌿 Reflexiones para el crecimiento interior",
+  "✅ Seguimiento de hábitos",
+  "✨ Recordatorios de verdades importantes",
+  "🌱 Camino de crecimiento personal"
+],
 
       "what_users_will_find": [
-  "Espacios para expresar pensamientos y emociones de manera segura",
-  "Ejercicios guiados para fortalecer la confianza y la autoestima",
-  "Reflexiones que ayudan a recordar el valor personal y la identidad en Dios",
-  "Herramientas para desarrollar hábitos de paz y bienestar emocional",
-  "Recursos prácticos para afrontar situaciones difíciles con esperanza y resiliencia"
+  "🕊️ Espacios seguros para expresar pensamientos y emociones con libertad",
+  "💛 Ejercicios guiados para fortalecer la confianza y la autoestima",
+  "✨ Reflexiones que ayudan a recordar el valor personal y la identidad en Dios",
+  "🌿 Herramientas para desarrollar hábitos que favorezcan la paz y el bienestar emocional",
+  "🤍 Recursos prácticos para afrontar desafíos con esperanza, fortaleza y resiliencia"
 ],
 
 "email_presentation": {
   "hero_title": "🕊️ Diario de Paz Digital",
 
-  "hero_subtitle": "Un espacio diseñado para ayudarte a reflexionar, expresar tus emociones y encontrar mayor equilibrio emocional y espiritual a través de una experiencia guiada, práctica y profundamente significativa.",
+  "hero_subtitle": "Un lugar donde podrás detenerte, escuchar lo que sucede en tu interior y encontrar herramientas que te ayuden a avanzar con mayor paz, esperanza y claridad.",
 
   "transformation_title": "🌿 ¿Cómo puede ayudarte?",
 
@@ -54,14 +54,14 @@
   "audience_title": "❤️ Ideal para",
 
   "audience_items": [
-    "Personas que desean expresar y comprender mejor sus emociones",
-    "Jóvenes y adultos que buscan fortalecer su bienestar emocional",
-    "Personas que desean desarrollar hábitos de reflexión personal",
-    "Quienes buscan crecer espiritualmente mientras cuidan su salud emocional",
-    "Personas que desean encontrar un espacio seguro para registrar su proceso personal"
-  ],
+  "Personas que desean comprender mejor sus emociones",
+  "Adolescentes y jóvenes que buscan fortalecer su autoestima e identidad",
+  "Personas que desean desarrollar hábitos de reflexión personal",
+  "Quienes buscan crecer espiritualmente mientras cuidan su bienestar emocional",
+  "Personas que desean contar con un espacio seguro para registrar su proceso de crecimiento"
+],
 
-  "closing_text": "✨ Cada herramienta fue creada para ayudarte a avanzar paso a paso hacia una vida más consciente, equilibrada y llena de esperanza, fortaleciendo tanto tu bienestar emocional como tu crecimiento espiritual."
+  "closing_text": "✨ Cada herramienta fue pensada para acompañarte con sensibilidad y esperanza, ayudándote a avanzar paso a paso hacia una vida más serena, consciente y fortalecida en tu identidad y valor delante de Dios."
 },
 
 "requires_login": true,
@@ -74,6 +74,6 @@
         "Inicio",
         "Mis Colecciones",
         "Cuando las Palabras Duelen",
-        "Diario de Paz Digital"
+        "Entrar a la App"
       ]
     }
