@@ -154,6 +154,18 @@
   }
 
 },
+  "prod_no_seguro": {
+  "app": null,
+  "acceso": "access",
+  "ebook": null,
+  "bonos": null,
+  "descarga": null,
+  "compra": null,
+  "fallback": [
+    "faq.json",
+    "brand.json"
+  ]
+},
   "route_groups": {
     "purchase": [
       "comprar_kit",
