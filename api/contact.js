@@ -60,6 +60,30 @@ const ALLOWED_CATEGORIES = {
   }
 };
 
+const ALLOWED_PRODUCTS = {
+
+  prod_21dias: {
+    label: "21 Días Más Cerca de Dios"
+  },
+
+  prod_pequenos_momentos: {
+    label: "Pequeños Momentos con Dios"
+  },
+
+  prod_palabras_duelen: {
+    label: "Cuando las Palabras Duelen"
+  },
+
+  prod_hombre_edifica: {
+    label: "El Hombre que Edifica su Hogar"
+  },
+
+  prod_no_seguro: {
+    label: "No estoy seguro de qué opción elegir"
+  }
+
+};
+
 function setSecurityHeaders(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -490,9 +514,14 @@ const message = sanitizeMessage(
       });
     }
 
-    const categoryData = getCategoryData(category);
+const categoryData = getCategoryData(category);
 
-    if (!categoryData) {
+console.log("CONTACT_PRODUCT", product);
+console.log("CONTACT_CATEGORY", category);
+console.log("CONTACT_EMAIL", email);
+    const productData = getProductData(product);
+
+if (!categoryData) {
       return res.status(400).json({
         ok: false,
         message: "Por favor selecciona un tipo de consulta válido.",
@@ -550,9 +579,7 @@ const message = sanitizeMessage(
           message
         );
 
-        console.log("CONTACT_PRODUCT", product);
         console.log("CONTACT_AI_ROUTE", categoryData.aiRoute);
-        console.log("CONTACT_CATEGORY", category);
         console.log("CONTACT_IS_SENSITIVE", isSensitive);
         console.log(
           "CONTACT_KNOWLEDGE_CONTEXT_LENGTH",
