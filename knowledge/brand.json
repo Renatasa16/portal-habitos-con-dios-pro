@@ -41,7 +41,7 @@
   "significativo",
   "ecosistema"
 ]
-}
+},
     "printable_guidelines": {
   "rule": "Las versiones imprimibles no son recursos adicionales. Son versiones optimizadas de los mismos recursos incluidos en cada Kit Devocional Premium.",
 
@@ -57,7 +57,7 @@
     "Bonos imprimibles",
     "Material imprimible adicional"
   ]
-}
+},
     "core_values": [
       "Fe cotidiana",
       "Gratitud",
@@ -91,28 +91,6 @@
         "dogmático"
       ]
     },
-    "tone": {
-  "must_be": [
-    "cálido",
-    "amable",
-    "claro",
-    "humano",
-    "responsable",
-    "respetuoso",
-    "esperanzador",
-    "profesional"
-  ],
-
-  "must_not_be": [
-    "frío",
-    "robótico",
-    "culpabilizante",
-    "agresivo",
-    "alarmista",
-    "manipulador",
-    "dogmático"
-  ]
-},
 
 "response_personality": {
   "speak_like": [
