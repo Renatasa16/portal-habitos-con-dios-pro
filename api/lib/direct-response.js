@@ -933,27 +933,74 @@ function buildNoDirectMatch(reason = "no_direct_match") {
   };
 }
 
-function getDirectResponse(message) {
-  console.log("DIRECT_RESPONSE_VERSION", "2026-08-19-R1");
+function getDirectResponse({
+  message,
+  product = null,
+  category = null
+}) {
+
+  console.log(
+    "DIRECT_RESPONSE_PRODUCT",
+    product || "none"
+  );
+
+  console.log(
+    "DIRECT_RESPONSE_CATEGORY",
+    category || "none"
+  );
+
+  console.log(
+    "DIRECT_RESPONSE_VERSION",
+    "2026-08-19-R1"
+  );
+
   if (!message || typeof message !== "string") {
     return buildNoDirectMatch("empty_message");
   }
 
   if (shouldSkipAutomaticDirectResponse(message)) {
-    console.log("DIRECT_RESPONSE_SKIPPED", "critical_or_crisis_case");
+    console.log(
+      "DIRECT_RESPONSE_SKIPPED",
+      "critical_or_crisis_case"
+    );
 
-    return buildNoDirectMatch("critical_or_crisis_case");
+    return buildNoDirectMatch(
+      "critical_or_crisis_case"
+    );
   }
 
-  const classificationResult = classifyMessage(message, null);
+const classificationResult =
+  classifyMessage(message, null);
 
-  console.log("DIRECT_RESPONSE_CLASSIFICATION_INTENT", classificationResult.intent);
-  console.log("DIRECT_RESPONSE_CLASSIFICATION_CATEGORY", classificationResult.category);
-  console.log("DIRECT_RESPONSE_CLASSIFICATION_SOURCE", classificationResult.source);
-  console.log(
-    "DIRECT_RESPONSE_CLASSIFICATION_KEYWORD",
-    classificationResult.matchedKeyword || "none"
-  );
+console.log(
+  "DIRECT_RESPONSE_FORM_PRODUCT",
+  product || "none"
+);
+
+console.log(
+  "DIRECT_RESPONSE_FORM_CATEGORY",
+  category || "none"
+);
+
+console.log(
+  "DIRECT_RESPONSE_CLASSIFICATION_INTENT",
+  classificationResult.intent
+);
+
+console.log(
+  "DIRECT_RESPONSE_CLASSIFICATION_CATEGORY",
+  classificationResult.category
+);
+
+console.log(
+  "DIRECT_RESPONSE_CLASSIFICATION_SOURCE",
+  classificationResult.source
+);
+
+console.log(
+  "DIRECT_RESPONSE_CLASSIFICATION_KEYWORD",
+  classificationResult.matchedKeyword || "none"
+);
 
   let result = null;
 
