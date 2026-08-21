@@ -4,18 +4,60 @@
 
     "name": "Hábitos con Dios",
 
-    "tagline": "Experiencias digitales para acercarte a Dios cada día.",
+    "tagline": "Un espacio para cultivar tu fe cada día.",
 
     "supported_languages": [
       "es"
     ],
 
-    "description": "Hábitos con Dios es un ecosistema de experiencias digitales diseñado para ayudar a personas y familias a integrar la fe en su vida cotidiana mediante recursos prácticos, momentos de reflexión y herramientas que acompañan el crecimiento espiritual día a día.",
+    "description": "Hábitos con Dios es un espacio creado para acompañar a personas y familias en su caminar de fe. A través de Kits Devocionales Premium, recursos prácticos y herramientas cuidadosamente desarrolladas, busca inspirar hábitos que fortalezcan la relación con Dios en la vida cotidiana.",
 
-    "mission": "Inspirar a personas y familias a desarrollar hábitos de fe que les permitan acercarse más a Dios e integrar principios espirituales en su vida cotidiana de una manera práctica, cercana y significativa.",
+    "mission": "Inspirar a personas y familias a cultivar hábitos de fe que fortalezcan su relación con Dios, integrando principios espirituales en la vida cotidiana de una manera cercana, práctica y significativa.",
 
-    "vision": "Ser una referencia en el mundo hispano para quienes desean fortalecer su relación con Dios mediante experiencias digitales accesibles, prácticas y significativas que acompañen su caminar de fe.",
+    "vision": "Ser un referente confiable para personas y familias de habla hispana que desean fortalecer su relación con Dios mediante recursos accesibles, cercanos y alineados con una vida de fe práctica y cotidiana.",
 
+    "editorial_guidelines": {
+  "prefer_words": [
+    "acompañar",
+    "acompañamiento",
+    "inspirar",
+    "cultivar",
+    "fortalecer",
+    "caminar",
+    "crecer",
+    "hogar",
+    "gratitud",
+    "esperanza",
+    "propósito",
+    "identidad",
+    "legado"
+    "fe"
+  ],
+
+  "avoid_overuse": [
+  "ayudarte",
+  "diseñado para",
+  "herramientas prácticas",
+  "significativo",
+  "ecosistema"
+]
+}
+    "printable_guidelines": {
+  "rule": "Las versiones imprimibles no son recursos adicionales. Son versiones optimizadas de los mismos recursos incluidos en cada Kit Devocional Premium.",
+
+  "preferred_terms": [
+    "Versiones imprimibles",
+    "Versiones imprimibles de los recursos incluidos",
+    "Recursos preparados para impresión",
+    "Versiones optimizadas para impresión"
+  ],
+
+  "avoid_terms": [
+    "Recursos imprimibles",
+    "Bonos imprimibles",
+    "Material imprimible adicional"
+  ]
+}
     "core_values": [
       "Fe cotidiana",
       "Gratitud",
