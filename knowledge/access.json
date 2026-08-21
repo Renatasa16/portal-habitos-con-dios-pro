@@ -33,7 +33,7 @@
         "active"
       ],
 
-      "description": "Una vez que inicias sesión, el portal verifica automáticamente los permisos asociados a tu correo electrónico para mostrar las colecciones y recursos que forman parte de tu experiencia."
+      "description": "Una vez que inicias sesión, el portal verifica automáticamente los permisos asociados a tu correo electrónico para mostrar las colecciones y los recursos incluidos en cada experiencia disponible para tu cuenta."
     },
 
     "common_problems": [
@@ -146,7 +146,7 @@
 
   "purchase_email_help": "📧 Recuerda iniciar sesión con el mismo correo electrónico que utilizaste durante tu compra. Esto permite identificar correctamente tus permisos y mostrar todos los contenidos asociados a tu colección.",
 
-  "collection_access_help": "📚 Cuando ingresas con el mismo correo electrónico utilizado durante la compra, el sistema habilita automáticamente el acceso a las Apps Premium, ebook principal, materiales complementarios y versiones imprimibles de los recursos incluidos en tu colección."
+  "collection_access_help": "📚 Cuando ingresas con el mismo correo electrónico utilizado durante la compra, el sistema habilita automáticamente el acceso a la experiencia adquirida y a todos los recursos incluidos: App Premium, ebook principal, materiales complementarios y versiones imprimibles."
 }
 }
 }
