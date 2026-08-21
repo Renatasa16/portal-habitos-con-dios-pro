@@ -925,7 +925,297 @@ function shouldSkipAutomaticDirectResponse(message) {
     normalizedMessage.includes(normalize(keyword))
   );
 }
+function getFormRoutingTarget(product, category) {
+  if (!product || !category) {
+    return null;
+  }
 
+  const knowledge = loadKnowledgeBase();
+
+  const formRouting =
+    knowledge?.map?.form_routing || {};
+
+  const productRouting =
+    formRouting[product] || null;
+
+  if (!productRouting) {
+    console.log(
+      "FORM_ROUTING_PRODUCT_NOT_FOUND",
+      product
+    );
+
+    return null;
+  }
+
+  const target =
+    productRouting[category] || null;
+
+  console.log(
+    "FORM_ROUTING_PRODUCT",
+    product
+  );
+
+  console.log(
+    "FORM_ROUTING_CATEGORY",
+    category
+  );
+
+  console.log(
+    "FORM_ROUTING_TARGET",
+    target || "none"
+  );
+
+  return target;
+}
+
+function buildEbookResponse(product, fileName) {
+  if (!product) {
+    return null;
+  }
+
+  const ebook = product.ebook || {};
+  const content = [];
+
+  content.push(
+    ebook.name ||
+    product.name ||
+    "Ebook de Hábitos con Dios"
+  );
+
+  if (ebook.description) {
+    content.push("");
+    content.push(ebook.description);
+  }
+
+  if (product.sales_description) {
+    content.push("");
+    content.push(product.sales_description);
+  }
+
+  if (product.printables) {
+    content.push("");
+    content.push(
+      "El ebook principal también está disponible en una versión especialmente preparada para imprimir, diseñada para una lectura cómoda y un uso responsable de tinta."
+    );
+  }
+
+  const availabilityMessage =
+    getAvailabilityMessage(product);
+
+  if (availabilityMessage) {
+    content.push("");
+    content.push(
+      `✅ Disponibilidad: ${availabilityMessage}`
+    );
+  }
+
+  return {
+    found: true,
+    source: "product",
+    intent: "ebook_information",
+    usedFile: fileName,
+    text: content.join("\n")
+  };
+}
+
+function buildBonusesResponse(product, fileName) {
+  if (
+    !product ||
+    !Array.isArray(product.bonuses) ||
+    product.bonuses.length === 0
+  ) {
+    return null;
+  }
+
+  const content = [];
+
+  content.push(
+    `🎁 Bonos incluidos en ${product.name || "esta experiencia"}`
+  );
+
+  content.push("");
+
+  product.bonuses.forEach((bonus) => {
+    content.push(`• ${bonus}`);
+  });
+
+  if (product.printables) {
+    content.push("");
+    content.push(
+      "Los recursos imprimibles están preparados para facilitar una lectura cómoda y un uso responsable de tinta."
+    );
+  }
+
+  return {
+    found: true,
+    source: "product",
+    intent: "bonuses_information",
+    usedFile: fileName,
+    text: content.join("\n")
+  };
+}
+
+function findFormRoutedResponse({
+  message,
+  product,
+  category
+}) {
+  if (!product || !category) {
+    return null;
+  }
+
+  const target =
+    getFormRoutingTarget(product, category);
+
+  if (!target) {
+    console.log(
+      "FORM_ROUTING_DIRECT_RESPONSE",
+      "no_target"
+    );
+
+    return null;
+  }
+
+  /*
+   * CATEGORÍA: APP
+   *
+   * La categoría determina que debemos consultar
+   * directamente la carpeta apps.
+   */
+  if (category === "app") {
+    const appFileName = `${target}.json`;
+    const app = loadAppFile(appFileName);
+
+    if (!app) {
+      console.log(
+        "FORM_ROUTING_APP_NOT_FOUND",
+        appFileName
+      );
+
+      return null;
+    }
+
+    console.log(
+      "FORM_ROUTING_APP_FILE",
+      appFileName
+    );
+
+    return buildAppResponse(
+      app,
+      appFileName
+    );
+  }
+
+  /*
+   * CATEGORÍAS RELACIONADAS CON EL PRODUCTO
+   *
+   * Ebook, bonos, compra y determinadas consultas
+   * de descarga utilizan el archivo específico
+   * del producto seleccionado.
+   */
+  if (
+    category === "ebook" ||
+    category === "bonos" ||
+    category === "compra"
+  ) {
+    const productFileName = `${target}.json`;
+    const productContent =
+      loadProductFile(productFileName);
+
+    if (!productContent) {
+      console.log(
+        "FORM_ROUTING_PRODUCT_FILE_NOT_FOUND",
+        productFileName
+      );
+
+      return null;
+    }
+
+    console.log(
+      "FORM_ROUTING_PRODUCT_FILE",
+      productFileName
+    );
+
+    if (category === "ebook") {
+      return buildEbookResponse(
+        productContent,
+        productFileName
+      );
+    }
+
+    if (category === "bonos") {
+      return buildBonusesResponse(
+        productContent,
+        productFileName
+      );
+    }
+
+    return buildProductResponse(
+      productContent,
+      productFileName
+    );
+  }
+
+  /*
+   * CATEGORÍA: ACCESO
+   *
+   * Primero consulta access.json.
+   * Si no encuentra una coincidencia precisa,
+   * continúa con las rutas y FAQ de acceso.
+   */
+  if (category === "acceso") {
+    return (
+      findAccessResponse(message) ||
+      findRouteResponse(
+        message,
+        "problema_acceso"
+      ) ||
+      findFaqResponse(
+        message,
+        "access"
+      )
+    );
+  }
+
+  /*
+   * CATEGORÍA: DESCARGA
+   *
+   * Prioriza las rutas de descarga.
+   * El producto seleccionado continúa disponible
+   * como contexto mediante form_routing.
+   */
+  if (category === "descarga") {
+    const downloadResponse =
+      findDownloadResponse(message);
+
+    if (downloadResponse?.found) {
+      return downloadResponse;
+    }
+
+    const productFileName =
+      `${target}.json`;
+
+    const productContent =
+      loadProductFile(productFileName);
+
+    if (!productContent) {
+      return null;
+    }
+
+    return buildProductResponse(
+      productContent,
+      productFileName
+    );
+  }
+
+  /*
+   * Consulta general o categoría desconocida:
+   * no se fuerza una respuesta específica.
+   * El sistema continúa con FAQ, Brand,
+   * clasificación y fallbacks existentes.
+   */
+  return null;
+}
 function buildNoDirectMatch(reason = "no_direct_match") {
   return {
     found: false,
@@ -969,9 +1259,6 @@ function getDirectResponse({
     );
   }
 
-const classificationResult =
-  classifyMessage(message, null);
-
 console.log(
   "DIRECT_RESPONSE_FORM_PRODUCT",
   product || "none"
@@ -981,6 +1268,102 @@ console.log(
   "DIRECT_RESPONSE_FORM_CATEGORY",
   category || "none"
 );
+
+/*
+ * PRIORIDAD 1
+ *
+ * La categoría seleccionada determina la fuente:
+ * app      -> apps/
+ * ebook    -> products/
+ * bonos    -> products/
+ * acceso   -> access.json
+ * descarga -> routes.json y products/
+ * compra   -> products/
+ *
+ * El producto seleccionado identifica el archivo
+ * exacto mediante map.json > form_routing.
+ */
+const formRoutedResponse =
+  findFormRoutedResponse({
+    message,
+    product,
+    category
+  });
+
+if (formRoutedResponse?.found) {
+  console.log(
+    "DIRECT_RESPONSE_FORM_ROUTING_USED",
+    true
+  );
+
+  console.log(
+    "DIRECT_RESPONSE_FORM_ROUTING_SOURCE",
+    formRoutedResponse.source
+  );
+
+  console.log(
+    "DIRECT_RESPONSE_FORM_ROUTING_INTENT",
+    formRoutedResponse.intent
+  );
+
+  console.log(
+    "DIRECT_RESPONSE_FORM_ROUTING_FILE",
+    formRoutedResponse.usedFile || "none"
+  );
+
+  return {
+    ...formRoutedResponse,
+
+    classification: {
+      intent:
+        formRoutedResponse.intent ||
+        "form_routed_response",
+
+      category:
+        category ||
+        "none",
+
+      source:
+        "map.json/form_routing",
+
+      matchedKeyword:
+        null,
+
+      score:
+        null,
+
+      escalate:
+        Boolean(
+          formRoutedResponse.requiresHumanReview
+        ),
+
+      disclaimer:
+        "none",
+
+      formProduct:
+        product ||
+        null,
+
+      formCategory:
+        category ||
+        null
+    }
+  };
+}
+
+console.log(
+  "DIRECT_RESPONSE_FORM_ROUTING_USED",
+  false
+);
+
+/*
+ * PRIORIDAD 2
+ *
+ * Solo si la selección del formulario no produce
+ * una respuesta directa, se analiza el mensaje.
+ */
+const classificationResult =
+  classifyMessage(message, null);
 
 console.log(
   "DIRECT_RESPONSE_CLASSIFICATION_INTENT",
