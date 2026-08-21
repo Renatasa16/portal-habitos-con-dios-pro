@@ -114,7 +114,46 @@
       ]
     }
   },
+   
+  "form_routing": {
 
+  "prod_21dias": {
+    "app": "mi_tiempo_con_dios",
+    "acceso": "access",
+    "ebook": "21dias",
+    "bonos": "21dias",
+    "descarga": "21dias",
+    "compra": "21dias"
+  },
+
+  "prod_pequenos_momentos": {
+    "app": "momentos_con_dios_en_familia",
+    "acceso": "access",
+    "ebook": "familia",
+    "bonos": "familia",
+    "descarga": "familia",
+    "compra": "familia"
+  },
+
+  "prod_palabras_duelen": {
+    "app": "diario_paz_digital",
+    "acceso": "access",
+    "ebook": "palabras_duelen",
+    "bonos": "palabras_duelen",
+    "descarga": "palabras_duelen",
+    "compra": "palabras_duelen"
+  },
+
+  "prod_hombre_edifica": {
+    "app": "mi_hogar_con_proposito",
+    "acceso": "access",
+    "ebook": "hombre_hogar",
+    "bonos": "hombre_hogar",
+    "descarga": "hombre_hogar",
+    "compra": "hombre_hogar"
+  }
+
+},
   "route_groups": {
     "purchase": [
       "comprar_kit",
