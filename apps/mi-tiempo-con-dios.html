@@ -1199,7 +1199,7 @@
               </button>
             </div>
 
-            <p class="reflection" id="reflectionText"></p>
+            <div class="reflection" id="reflectionText"></div>
             <div class="verse" id="verseText"></div>
 
             <div class="mini-cards">
@@ -1947,43 +1947,61 @@
 
       dayLabel.textContent = "Día " + devotional.day;
       dayTitle.textContent = devotional.title;
-      const reflectionParts =
+     const reflectionParts =
   devotional.reflection
     .split(/(?<=\.)\s+/)
     .filter(Boolean);
 
-const highlight =
-  reflectionParts[0] || "";
-
-document.getElementById(
-  "reflectionHighlight"
-).textContent =
-  "🌿 " + highlight;
-
-const bodyText =
-  reflectionParts.slice(1);
-
 let formattedReflection = "";
 
-for (let i = 0; i < bodyText.length; i += 3) {
+reflectionParts.forEach((paragraph, index) => {
 
-  formattedReflection += `
-    <p>
-      ${bodyText
-        .slice(i, i + 3)
-        .join(" ")}
-    </p>
-  `;
+  if(index === 0){
 
-}
+    formattedReflection += `
+      <div style="
+        background:#EEF3EA;
+        border-left:4px solid #3F4A35;
+        padding:16px;
+        border-radius:12px;
+        margin-bottom:18px;
+        font-weight:700;
+        color:#3F4A35;
+      ">
+        🌿 ${paragraph}
+      </div>
+    `;
+
+  } else {
+
+    formattedReflection += `
+      <p style="
+        margin-bottom:16px;
+        line-height:1.9;
+      ">
+        ${paragraph}
+      </p>
+    `;
+
+  }
+
+});
+
+formattedReflection += `
+  <div style="
+    margin-top:24px;
+    padding-top:16px;
+    border-top:1px solid #E8DECC;
+    color:#556544;
+    font-style:italic;
+    font-weight:700;
+  ">
+    ✨ Permite que esta verdad acompañe tu día y guíe tus próximos pasos.
+  </div>
+`;
 
 reflectionText.innerHTML =
   formattedReflection;
-
-document.getElementById(
-  "reflectionClosing"
-).textContent =
-  "✨ Permite que esta verdad acompañe tu día y guíe tus próximos pasos.";
       verseText.textContent = devotional.verse;
       focusText.textContent = devotional.focus;
       shortPrayerText.textContent = devotional.prayer;
