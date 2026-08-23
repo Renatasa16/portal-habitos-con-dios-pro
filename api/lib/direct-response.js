@@ -287,19 +287,19 @@ function buildProductResponse(
       );
 
       if (
-        availability?.shopify_label &&
-        availability?.shopify_url
-      ) {
-        content.push("");
+  availability?.shopify_label &&
+  availability?.shopify_url
+) {
+  content.push("");
 
-        content.push(
-          `🔗 ${availability.shopify_label}`
-        );
+  content.push(
+    `📦 Kit ${availability.shopify_label}`
+  );
 
-        content.push(
-          availability.shopify_url
-        );
-      }
+  content.push(
+    availability.shopify_url
+  );
+}
     }
   } else {
     const productName =
