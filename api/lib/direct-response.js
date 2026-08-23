@@ -297,7 +297,7 @@ function buildProductResponse(
   );
 
   content.push(
-    `[SHOPIFY_BUTTON:${availability.shopify_label}|${availability.shopify_url}]`
+    availability.shopify_url
   );
 }
     }
