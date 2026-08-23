@@ -1023,7 +1023,7 @@
           </h1>
 
           <p id="welcomeMessage">
-            Un espacio simple, cálido y práctico para acompañar tu recorrido de 21 días con reflexión, oración, gratitud, práctica y registro personal.
+            Un espacio cálido y práctico para recorrer 21 días con una referencia bíblica, reflexión, oración guiada, journaling, una acción concreta y una declaración de fe.
           </p>
 
           <p class="date-line" id="dateLine"></p>
@@ -1037,7 +1037,7 @@
         <aside class="progress-card" aria-label="Resumen de progreso">
           <h2>Tu recorrido</h2>
           <p>
-            Pequeños pasos sostenidos pueden ayudarte a crear una rutina espiritual más posible.
+            No se trata de cumplir. Se trata de crear un espacio real para encontrarte con Dios.
           </p>
 
           <div class="progress-circle-wrap">
@@ -1111,7 +1111,7 @@
             <div class="day-top">
               <div>
                 <span class="day-label" id="dayLabel">Día 1</span>
-                <h2 id="dayTitle">Comenzar con un paso sencillo</h2>
+                <h2 id="dayTitle">Dios te está esperando</h2>
               </div>
 
               <button class="favorite-btn" type="button" id="favoriteButton">
@@ -1134,8 +1134,18 @@
               </div>
 
               <div class="mini-card">
-                <strong>✨ Acción práctica</strong>
-                <span id="actionText">Regala unos minutos a tu vida espiritual.</span>
+                <strong>✨ Acción del día</strong>
+                <span id="actionText">Realiza la práctica propuesta para este día.</span>
+              </div>
+
+              <div class="mini-card">
+                <strong>✍️ Para tu journaling</strong>
+                <span id="journalPromptText">Escribe con sinceridad lo que este día despierta en tu corazón.</span>
+              </div>
+
+              <div class="mini-card">
+                <strong>🤍 Declaro con fe</strong>
+                <span id="declarationText">Hoy elijo caminar cerca de Dios.</span>
               </div>
             </div>
 
@@ -1159,7 +1169,7 @@
 
               <label class="check-item">
                 <input type="checkbox" data-check="practicar" />
-                <span>Elegí una práctica simple para hoy</span>
+                <span>Realicé la acción del día</span>
               </label>
             </div>
 
@@ -1276,195 +1286,279 @@
 
     const devotionals = [
       {
-        day: 1,
-        title: "Comenzar con un paso sencillo",
-        reflection: "Hoy no necesitas resolver todo. Puedes comenzar con un momento breve, honesto y posible delante de Dios.",
-        verse: "Un pequeño paso sostenido puede convertirse en una nueva rutina de fe.",
-        focus: "Comenzar sin exigirte perfección.",
-        prayer: "Dios, acompáñame a iniciar este recorrido con calma.",
-        action: "Aparta cinco minutos para leer y respirar."
+            "day": 1,
+            "week": 1,
+            "title": "Dios te está esperando",
+            "objective": "Volver a Dios sin culpa.",
+            "reflection": "A veces creemos que para volver a Dios necesitamos llegar con una versión perfecta de nosotras mismas. Pensamos que primero debemos ordenar nuestras emociones, vencer todos nuestros hábitos, sentirnos fuertes y tener palabras correctas para orar. Pero el amor de Dios no funciona como una puerta que se abre solo cuando cumplimos ciertos requisitos. Dios mira el corazón que decide volver, incluso si vuelve cansado, confundido o con lágrimas. Tal vez has sentido distancia espiritual. Tal vez has dejado pasar días, semanas o meses sin un tiempo intencional con Dios. Tal vez te pesa la culpa de haber comenzado antes y haber abandonado. Pero hoy no estás empezando desde el rechazo. Estás empezando desde una invitación. Dios no está esperando para señalarte todo lo que hiciste mal. Él está esperando para abrazarte, restaurarte y caminar contigo de nuevo. Este primer día no necesita ser perfecto. Solo necesita ser honesto. Puedes decirle: “Señor, quiero volver, pero necesito ayuda”. Esa oración simple ya es un comienzo. No subestimes el poder de acercarte con sinceridad. El hábito espiritual que deseas construir no nace de la vergüenza, sino del amor. Hoy, permite que esa verdad sea tu punto de partida: Dios te está esperando con brazos abiertos.",
+            "verse": "Lucas 15:20",
+            "focus": "Como el padre que sale al encuentro del hijo que regresa, Dios recibe con amor al corazón que decide volver.",
+            "prayer": "Señor, hoy vuelvo a Ti con un corazón sincero. Ayúdame a soltar la culpa que me hace sentir lejos de Tu presencia. Recuérdame que no necesito esconder mi cansancio ni fingir fortaleza para acercarme. Enséñame a recibir Tu amor y a comenzar este camino desde la gracia. Quiero volver a hablar contigo, escucharte y caminar contigo. Amén.",
+            "journal": "¿Qué culpa o pensamiento necesito soltar para acercarme libremente a Dios?",
+            "action": "Aparta 10 minutos para hablar con Dios con total honestidad, sin frases preparadas.",
+            "declaration": "Hoy me acerco a Dios sin culpa, confiando en Su amor."
       },
       {
-        day: 2,
-        title: "Volver al lugar de calma",
-        reflection: "Dios puede encontrarte en una pausa pequeña. No necesitas un escenario perfecto para acercarte.",
-        verse: "Busca un momento simple para respirar, orar y volver al centro.",
-        focus: "Hacer una pausa consciente.",
-        prayer: "Dios, ayúdame a encontrar calma en medio de mi día.",
-        action: "Haz una pausa antes de mirar el celular."
+            "day": 2,
+            "week": 1,
+            "title": "Acércate tal como estás",
+            "objective": "No necesitas estar perfecta para buscar a Dios.",
+            "reflection": "Muchas veces esperamos sentirnos espiritualmente fuertes para acercarnos a Dios, pero Jesús no llamó a los perfectos a descansar. Llamó a los cansados, a los cargados, a quienes sienten que ya no pueden sostener todo por sus propias fuerzas. Eso significa que tu cansancio no te descalifica. Tu confusión no te aleja. Tu necesidad puede convertirse en el lugar exacto donde comienzas a experimentar Su presencia. Acercarte tal como estás no significa resignarte a quedarte igual. Significa dejar de esconder lo que realmente llevas dentro. Dios no sana lo que fingimos no tener. Cuando llevas tus cargas a Jesús, abres espacio para que Su paz toque lugares que han estado cerrados por miedo, culpa o autosuficiencia. Quizá hoy no tienes una oración larga. Quizá solo puedes decir: “Jesús, estoy cansada”. Esa frase también puede ser oración. No minimices los momentos simples. A veces la transformación comienza cuando dejamos de luchar por aparentar y nos permitimos ser recibidas por Dios en verdad. Hoy, no intentes impresionar a Dios. Preséntate delante de Él con tu realidad. Tus cargas no son demasiado pesadas para Su amor.",
+            "verse": "Mateo 11:28",
+            "focus": "Jesús invita a los cansados y cargados a encontrar descanso en Él.",
+            "prayer": "Jesús, hoy me acerco a Ti tal como estoy. Vengo con mis cargas, mis pensamientos, mis preocupaciones y mi cansancio. No quiero fingir contigo. Enséñame a descansar en Tu presencia y a confiar en que me recibes con ternura. Ayúdame a entregar lo que he intentado cargar sola. Amén.",
+            "journal": "¿Qué carga emocional, espiritual o mental necesito entregarle hoy a Dios?",
+            "action": "Escribe una lista de tus cargas y ora por cada una, entregándolas conscientemente a Jesús.",
+            "declaration": "No necesito estar perfecta para acercarme a Dios."
       },
       {
-        day: 3,
-        title: "Crear espacio en medio de la rutina",
-        reflection: "A veces la vida se llena de ruido. Hoy puedes apartar unos minutos para escuchar, escribir y descansar.",
-        verse: "Un corazón disponible puede encontrarse con Dios en lo cotidiano.",
-        focus: "Crear un espacio sagrado y posible.",
-        prayer: "Dios, enséñame a abrir espacio para estar contigo.",
-        action: "Elige un lugar fijo para tu momento devocional."
+            "day": 3,
+            "week": 1,
+            "title": "Jesús quiere caminar contigo",
+            "objective": "Relación diaria con Jesús.",
+            "reflection": "La vida con Jesús no está pensada para limitarse a un momento aislado del día. Él no quiere ser una visita ocasional en tu agenda, sino una presencia constante en tu camino. Permanecer en Jesús significa aprender a incluirlo en lo simple: en tus decisiones, conversaciones, pensamientos, responsabilidades y descansos. A veces separamos lo espiritual de lo cotidiano, como si Dios solo estuviera presente cuando oramos, leemos la Biblia o vamos a la iglesia. Pero Jesús desea caminar contigo también mientras trabajas, cuidas, estudias, respondes mensajes, preparas comida o enfrentas decisiones. Esa es la belleza de una fe práctica: Dios no está lejos de tu día común. Crear un hábito con Dios no significa escapar de la vida diaria, sino aprender a vivirla acompañada. Cada pausa puede convertirse en una oración. Cada decisión puede ser una oportunidad para pedir dirección. Cada emoción puede ser presentada delante de Él. Hoy, pregúntate en qué áreas has intentado caminar sola. Jesús no fuerza Su presencia, pero siempre está dispuesto a acompañarte. Invitarlo a una parte concreta de tu día puede ser un acto pequeño, pero profundamente transformador.",
+            "verse": "Juan 15:4",
+            "focus": "Permanecer en Jesús implica vivir conectadas a Él en lo cotidiano.",
+            "prayer": "Jesús, quiero aprender a caminar contigo en lo cotidiano. A veces te busco solo en momentos difíciles, pero hoy quiero invitarte a cada área de mi vida. Ayúdame a permanecer en Ti, a recordarte durante el día y a vivir con más conciencia de Tu presencia. Amén.",
+            "journal": "¿En qué área concreta de mi día necesito invitar más a Jesús?",
+            "action": "Antes de iniciar una tarea importante, detente unos segundos y dile: “Jesús, camina conmigo en esto”.",
+            "declaration": "Jesús camina conmigo en cada parte de mi vida."
       },
       {
-        day: 4,
-        title: "Orar con palabras simples",
-        reflection: "La oración no necesita ser extensa. Puede comenzar con una frase sincera y un corazón presente.",
-        verse: "Habla con Dios desde donde estás, no desde donde crees que deberías estar.",
-        focus: "Orar con sinceridad.",
-        prayer: "Dios, hoy me acerco con palabras simples.",
-        action: "Escribe una oración de una sola frase."
+            "day": 4,
+            "week": 1,
+            "title": "Dios escucha tu voz",
+            "objective": "La oración como conversación.",
+            "reflection": "Orar no tiene que ser complicado. Muchas personas dejan de orar porque sienten que no saben hacerlo bien, que sus palabras no son suficientemente espirituales o que deberían sentir algo especial cada vez. Pero la oración, en su esencia más simple, es una conversación sincera con Dios. Dios escucha tu voz. No necesita frases perfectas para entender tu corazón. Puedes hablarle con palabras simples, con silencio, con lágrimas, con gratitud o con preguntas. Lo importante no es sonar espiritual, sino abrir un espacio verdadero de relación. Cuando oras, no estás informando a Dios algo que Él desconoce. Estás invitando Su presencia a tu realidad. Estás reconociendo que no quieres caminar sola. Estás entrenando tu corazón para depender, confiar y escuchar. Tal vez hoy tu oración sea breve. Tal vez sea desordenada. Tal vez empiece con una frase como: “Dios, no sé qué decirte, pero aquí estoy”. Esa oración también cuenta. La constancia en la oración se construye dejando de verla como una tarea difícil y comenzando a verla como un encuentro cotidiano con un Padre que escucha.",
+            "verse": "Jeremías 29:12",
+            "focus": "Dios promete escuchar cuando Su pueblo clama y se acerca a Él.",
+            "prayer": "Padre, gracias porque escuchas mi voz. Ayúdame a orar con sinceridad y no con miedo. Enséñame a hablar contigo como una hija que confía en Tu amor. Cuando no sepa qué decir, recuérdame que puedo acercarme igual. Quiero construir una vida de oración simple, real y constante. Amén.",
+            "journal": "¿Qué me cuesta expresarle a Dios cuando oro?",
+            "action": "Haz una oración de tres minutos usando tus propias palabras, sin leer ni preparar nada.",
+            "declaration": "Mi voz es escuchada por Dios."
       },
       {
-        day: 5,
-        title: "Reconocer lo recibido",
-        reflection: "La gratitud abre la mirada. Hoy observa un detalle pequeño por el que puedas dar gracias.",
-        verse: "La gratitud puede transformar la forma en que atraviesas el día.",
-        focus: "Practicar gratitud.",
-        prayer: "Dios, ayúdame a reconocer tus regalos cotidianos.",
-        action: "Anota tres cosas pequeñas por las que agradeces."
+            "day": 5,
+            "week": 1,
+            "title": "Silencio para oír a Dios",
+            "objective": "Crear espacio interior.",
+            "reflection": "Vivimos rodeadas de ruido. Notificaciones, responsabilidades, pensamientos, pendientes y preocupaciones compiten por nuestra atención. A veces creemos que Dios no habla, cuando en realidad nuestro interior está tan lleno de ruido que no tenemos espacio para escuchar. El silencio delante de Dios no es vacío. Es una forma de abrir el corazón. Es decirle: “Estoy aquí, quiero prestarte atención”. No siempre escucharás una respuesta inmediata o clara, pero la quietud comienza a ordenar lo que estaba disperso. Crear un hábito espiritual requiere aprender a detenerse. No para producir algo, no para resolver todo, sino para descansar en la presencia de Dios. El silencio puede incomodar al principio. Puede sacar a la superficie pensamientos que evitabas. Pero también puede convertirse en un lugar de paz, entrega y sensibilidad espiritual. Hoy, no llenes cada segundo con palabras. Permite que tu corazón respire delante de Dios. Deja el celular a un lado. Respira despacio. Repite internamente: “Señor, aquí estoy”. A veces, escuchar comienza cuando dejamos de correr.",
+            "verse": "Salmo 46:10",
+            "focus": "La quietud ayuda al corazón a reconocer que Dios es Dios.",
+            "prayer": "Espíritu Santo, ayúdame a hacer silencio interior. Enséñame a apagar el ruido que me distrae y a descansar en la presencia de Dios. Quiero aprender a escuchar con humildad, paciencia y sensibilidad. Ordena mis pensamientos y trae paz a mi corazón. Amén.",
+            "journal": "¿Qué ruido exterior o interior necesito apagar para escuchar mejor a Dios?",
+            "action": "Pasa cinco minutos en silencio delante de Dios, sin celular ni música.",
+            "declaration": "En la quietud, mi corazón aprende a descansar en Dios."
       },
       {
-        day: 6,
-        title: "Sostener el hábito con ternura",
-        reflection: "No se trata de hacerlo perfecto. Se trata de volver con paciencia cada vez que puedas.",
-        verse: "La constancia también se construye con comienzos pequeños.",
-        focus: "Volver sin culpa.",
-        prayer: "Dios, ayúdame a seguir con paciencia.",
-        action: "Retoma el hábito aunque ayer no lo hayas hecho."
+            "day": 6,
+            "week": 1,
+            "title": "La Palabra como alimento",
+            "objective": "Leer la Biblia con intención.",
+            "reflection": "La Biblia no es solo un libro de información espiritual. Es alimento para el alma. A través de la Palabra, Dios corrige, consuela, guía, fortalece y revela Su carácter. Pero para muchas personas, leer la Biblia puede parecer intimidante. No saben por dónde empezar, sienten que no entienden lo suficiente o se frustran cuando no logran leer mucho. Hoy quiero recordarte algo: no necesitas leer capítulos enteros para que Dios hable a tu corazón. A veces una frase leída con atención puede acompañarte durante todo el día. Lo importante no es la cantidad, sino la disposición del corazón. Leer con intención significa detenerte, preguntar, escuchar y aplicar. Puedes preguntarte: ¿Qué me muestra este pasaje sobre Dios? ¿Qué me revela sobre mi corazón? ¿Qué paso práctico puedo dar hoy? Cuando la Palabra se vuelve parte de tu rutina, tu interior empieza a recibir dirección. No siempre será emocionante, pero será formativo. Así como el cuerpo necesita alimento constante, tu fe también necesita nutrirse de la verdad de Dios.",
+            "verse": "Mateo 4:4",
+            "focus": "La vida espiritual se alimenta de la Palabra que viene de Dios.",
+            "prayer": "Señor, abre mi entendimiento para recibir Tu Palabra con humildad y fe. Ayúdame a no acercarme a la Biblia como una obligación, sino como un encuentro contigo. Que una frase, una verdad o una enseñanza pueda alimentar mi corazón hoy y guiar mis pasos. Amén.",
+            "journal": "¿Qué frase bíblica o verdad necesito recordar durante este día?",
+            "action": "Lee un pasaje corto y anota una frase que sientas importante para tu vida hoy.",
+            "declaration": "La Palabra de Dios alimenta mi corazón."
       },
       {
-        day: 7,
-        title: "Mirar la semana con honestidad",
-        reflection: "Hoy puedes revisar tu semana sin juicio. Mira lo que avanzaste y lo que deseas entregar a Dios.",
-        verse: "La reflexión honesta puede convertirse en dirección.",
-        focus: "Revisar sin juzgarte.",
-        prayer: "Dios, ayúdame a mirar mi semana con verdad y paz.",
-        action: "Escribe qué aprendiste en estos días."
+            "day": 7,
+            "week": 1,
+            "title": "Dios no se alejó de ti",
+            "objective": "Restaurar confianza.",
+            "reflection": "Cuando nos sentimos lejos de Dios, es fácil pensar que Él también se alejó. Pero la distancia espiritual no significa abandono divino. Muchas veces somos nosotras quienes dejamos de buscar, dejamos de escuchar o nos desconectamos por cansancio, culpa o distracción. Aun así, Dios sigue siendo cercano, paciente y fiel. La invitación de hoy es simple y poderosa: acércate. No tienes que dar un salto gigante. Puedes dar un paso pequeño. Una oración. Una lectura. Un momento de silencio. Una decisión. Dios no desprecia los comienzos pequeños. Restaurar la confianza toma tiempo. Si has sentido que fallaste muchas veces, tal vez te cueste creer que puedes volver a empezar. Pero el amor de Dios no se agota por tus intentos incompletos. Él sigue llamándote a una relación viva, no a una rutina mecánica. Hoy termina la primera semana. Mira hacia atrás y reconoce cada paso. Tal vez aún no sientas grandes cambios, pero algo importante ya comenzó: hiciste espacio para Dios. Y cuando haces espacio para Él, tu corazón empieza a recordar el camino de regreso.",
+            "verse": "Santiago 4:8",
+            "focus": "Cuando nos acercamos a Dios, Él responde con cercanía y gracia.",
+            "prayer": "Dios, gracias porque no te alejaste de mí. Hoy decido acercarme nuevamente a Tu presencia. Restaura mi confianza, sana la culpa que me detenía y ayúdame a seguir caminando contigo con constancia y amor. Quiero volver a buscarte, no por obligación, sino por relación. Amén.",
+            "journal": "¿Qué paso concreto puedo dar para acercarme más a Dios esta semana?",
+            "action": "Escribe una oración de regreso a Dios y guárdala como recordatorio.",
+            "declaration": "Cuando me acerco a Dios, Él me recibe con amor."
       },
       {
-        day: 8,
-        title: "Elegir una práctica posible",
-        reflection: "Una práctica simple puede ayudarte a permanecer. Elige algo concreto para vivir hoy con fe.",
-        verse: "La fe también se expresa en acciones pequeñas.",
-        focus: "Bajar la fe a la práctica.",
-        prayer: "Dios, ayúdame a vivir mi fe en lo simple.",
-        action: "Elige una acción concreta de amor o paciencia."
+            "day": 8,
+            "week": 2,
+            "title": "Haz de Dios tu primer refugio",
+            "objective": "Buscar a Dios antes que la ansiedad.",
+            "reflection": "La ansiedad suele empujarnos a correr primero hacia el control. Revisamos escenarios, imaginamos respuestas, buscamos soluciones inmediatas y cargamos mentalmente con situaciones que quizá todavía no ocurrieron. Pero Dios nos invita a un camino diferente: presentar delante de Él lo que pesa antes de permitir que la preocupación gobierne el corazón. Hacer de Dios tu primer refugio no significa negar los problemas. Significa decidir que la preocupación no tendrá la primera palabra. Antes de reaccionar, puedes orar. Antes de hundirte en pensamientos repetitivos, puedes entregar. Antes de cargar sola, puedes recordar que Dios está presente. La paz de Dios no siempre llega porque todo cambia afuera. Muchas veces llega porque algo se ordena dentro. Cuando oras con honestidad, tu corazón reconoce que no está solo frente a lo que teme. Hoy identifica una preocupación concreta. No la presentes de forma general. Ponle nombre. Háblalo con Dios. Pídele dirección, descanso y sabiduría. Tal vez aún tengas que tomar decisiones o actuar, pero podrás hacerlo desde un lugar más sereno.",
+            "verse": "Filipenses 4:6-7",
+            "focus": "Dios invita a presentar las preocupaciones en oración y recibir Su paz.",
+            "prayer": "Señor, hoy presento delante de Ti aquello que me preocupa. No quiero que la ansiedad dirija mis pensamientos ni mis decisiones. Ayúdame a buscarte primero, a confiar en Tu cuidado y a recibir la paz que solo Tú puedes dar. Guía mi mente y guarda mi corazón. Amén.",
+            "journal": "¿Qué preocupación necesito presentar hoy delante de Dios con nombre y detalle?",
+            "action": "Escribe una preocupación específica y ora por ella durante cinco minutos.",
+            "declaration": "Dios es mi primer refugio."
       },
       {
-        day: 9,
-        title: "Cuidar lo que escuchas",
-        reflection: "Las palabras que recibes influyen en tu interior. Hoy busca una palabra que afirme tu esperanza.",
-        verse: "Permite que una verdad buena acompañe tu día.",
-        focus: "Elegir palabras que edifiquen.",
-        prayer: "Dios, guía lo que escucho y guardo en mi corazón.",
-        action: "Lee una frase bíblica o devocional y repítela durante el día."
+            "day": 9,
+            "week": 2,
+            "title": "Una fe de todos los días",
+            "objective": "Dios en lo cotidiano.",
+            "reflection": "A veces imaginamos la fe como algo reservado para momentos especiales: una reunión, una oración intensa, una canción, un domingo. Sin embargo, Dios desea habitar también lo cotidiano. Tu fe se expresa en la forma en que respondes un mensaje, haces tu trabajo, cuidas tus palabras, descansas, decides y tratas a otros. Una vida cerca de Dios no se construye solamente en momentos emocionales. Se forma en lo pequeño y repetido. Cuando invitas a Dios a tu rutina, tu día común se convierte en un espacio de relación. No necesitas esperar a tener una hora perfecta para vivir tu fe. Puedes comenzar con una pausa, una oración breve, una decisión consciente. Hoy observa tu rutina con nuevos ojos. ¿Dónde puedes incluir a Dios? ¿En la manera de comenzar tu jornada? ¿Antes de una conversación difícil? ¿En tu forma de trabajar? La espiritualidad práctica transforma lo ordinario en oportunidad de comunión.",
+            "verse": "Colosenses 3:17",
+            "focus": "Todo puede vivirse con conciencia de Dios y gratitud.",
+            "prayer": "Jesús, quiero vivir mi fe en lo cotidiano. Ayúdame a recordarte en tareas simples, decisiones pequeñas y conversaciones comunes. Que mi día no esté dividido entre lo espiritual y lo práctico, sino que todo pueda ser vivido contigo y para Ti. Amén.",
+            "journal": "¿En qué parte de mi rutina diaria puedo integrar más conscientemente a Dios?",
+            "action": "Elige una actividad cotidiana y hazla hoy como un acto consciente de amor y gratitud a Dios.",
+            "declaration": "Mi fe se vive también en lo cotidiano."
       },
       {
-        day: 10,
-        title: "Pausar antes de responder",
-        reflection: "Una pausa puede abrir espacio para responder con más paz y menos impulso.",
-        verse: "La sabiduría puede comenzar con un silencio breve.",
-        focus: "Responder con calma.",
-        prayer: "Dios, ayúdame a pausar antes de actuar.",
-        action: "Antes de responder algo difícil, respira tres veces."
+            "day": 10,
+            "week": 2,
+            "title": "El Espíritu Santo como guía",
+            "objective": "Sensibilidad espiritual.",
+            "reflection": "La guía del Espíritu Santo no siempre se presenta como algo espectacular. Muchas veces llega como una convicción tranquila, una paz que acompaña la obediencia, una incomodidad ante lo que no edifica, una palabra bíblica que orienta o un llamado interno a actuar con amor. Aprender a ser guiada requiere humildad. No se trata de convertir cada emoción en una señal, sino de cultivar sensibilidad, oración y discernimiento. El Espíritu Santo nunca te guiará lejos del carácter de Cristo. Su dirección produce fruto, verdad, paz, amor y obediencia. Hoy piensa en una decisión o área donde necesitas guía. Antes de buscar todas las respuestas afuera, detente y ora. Pregunta con sencillez: “Espíritu Santo, ¿qué dirección honra a Dios en esto?”. Luego presta atención a la Palabra, al consejo sabio, a la paz interior y a los frutos que esa decisión produciría. La sensibilidad espiritual se fortalece con práctica diaria. Cada vez que eliges consultar a Dios antes de actuar, tu corazón aprende a depender más de Él.",
+            "verse": "Romanos 8:14",
+            "focus": "Quienes pertenecen a Dios aprenden a ser guiados por Su Espíritu.",
+            "prayer": "Espíritu Santo, guíame con sabiduría y humildad. Enséñame a reconocer Tu dirección sin confundirla con impulsos, miedo o presión. Ayúdame a buscar lo que honra a Jesús y produce fruto bueno en mi vida. Quiero caminar bajo Tu guía. Amén.",
+            "journal": "¿En qué decisión necesito pedir dirección al Espíritu Santo?",
+            "action": "Antes de tomar una decisión hoy, haz una oración breve pidiendo guía y sabiduría.",
+            "declaration": "El Espíritu Santo guía mis pasos con sabiduría."
       },
       {
-        day: 11,
-        title: "Entregar cargas pequeñas",
-        reflection: "No todas las cargas se sueltan de golpe. Hoy puedes entregar una preocupación concreta.",
-        verse: "Lo que entregas con honestidad también puede ser parte de tu oración.",
-        focus: "Entregar una preocupación.",
-        prayer: "Dios, pongo delante de ti esta carga específica.",
-        action: "Escribe una preocupación y una oración sobre ella."
+            "day": 11,
+            "week": 2,
+            "title": "Aprende a depender",
+            "objective": "Rendición y confianza.",
+            "reflection": "Depender de Dios puede sonar hermoso, pero muchas veces se siente difícil. Nos gusta tener respuestas, controlar resultados y saber exactamente cómo terminarán las cosas. Sin embargo, la confianza espiritual se forma cuando entregamos a Dios aquello que no podemos sostener solas. Rendir no significa abandonar responsabilidades. Significa dejar de cargar con el peso de ser quien controla todo. Dios no te pide pasividad, pero sí te invita a caminar con confianza. Hay áreas donde puedes actuar con sabiduría y otras donde necesitas soltar el resultado. Hoy identifica algo que estás intentando controlar: una relación, un tiempo, una respuesta, una preocupación, una expectativa. Llévalo delante de Dios. Dile con honestidad: “Señor, me cuesta soltar esto, pero quiero aprender a confiar”. La dependencia no se aprende en teoría. Se practica cada vez que eliges reconocer a Dios en tu camino, aunque no veas todo el mapa.",
+            "verse": "Proverbios 3:5-6",
+            "focus": "Confiar en Dios implica reconocerlo en el camino y no depender solo del propio entendimiento.",
+            "prayer": "Señor, hoy te entrego lo que he intentado controlar. Ayúdame a confiar en Ti más que en mi propio entendimiento. Dame sabiduría para actuar donde debo actuar y paz para soltar lo que no está en mis manos. Dirige mis pasos. Amén.",
+            "journal": "¿Qué área de mi vida me cuesta rendir verdaderamente a Dios?",
+            "action": "Escribe una frase de entrega concreta: “Dios, hoy te entrego...”.",
+            "declaration": "Puedo confiar en la dirección de Dios."
       },
       {
-        day: 12,
-        title: "Volver a la esperanza",
-        reflection: "La esperanza no niega la realidad. La atraviesa con una mirada acompañada por Dios.",
-        verse: "Hoy puedes sostener una pequeña esperanza.",
-        focus: "Sostener una esperanza posible.",
-        prayer: "Dios, renueva mi esperanza de forma sencilla.",
-        action: "Escribe una frase de esperanza para este día."
+            "day": 12,
+            "week": 2,
+            "title": "Cuando no sientes nada",
+            "objective": "Fe más allá de las emociones.",
+            "reflection": "Habrá días en los que orar se sentirá natural y otros en los que parecerá difícil. Habrá momentos donde leer la Biblia traerá emoción y otros donde sentirás sequedad. Eso no significa que tu fe sea falsa. Significa que estás aprendiendo a caminar más allá de tus emociones. Las emociones son valiosas, pero no pueden ser el único fundamento de tu relación con Dios. Si solo buscas a Dios cuando sientes motivación, tu hábito dependerá de estados cambiantes. La constancia nace cuando decides acercarte también en días simples, silenciosos o emocionalmente planos. Dios no está presente solo cuando sientes algo intenso. También está contigo en la oración breve, en la lectura sin lágrimas, en la decisión tranquila de permanecer. Esos días forman raíces. Hoy, si no sientes ganas, no te castigues. Hazlo pequeño. Ora cinco minutos. Lee una referencia. Escribe una frase. Ese acto de fidelidad sencilla también construye tu relación con Dios.",
+            "verse": "2 Corintios 5:7",
+            "focus": "La fe aprende a caminar por confianza, no solo por lo que siente.",
+            "prayer": "Dios, sostén mi fe cuando mis emociones cambian. Ayúdame a buscarte no solo cuando siento motivación, sino también cuando estoy cansada o distraída. Enséñame a valorar los pasos pequeños y a confiar en que Tú estás presente aun en el silencio. Amén.",
+            "journal": "¿Qué hago normalmente cuando no siento motivación espiritual?",
+            "action": "Ora cinco minutos aunque no tengas ganas, sin presión por sentir algo especial.",
+            "declaration": "Mi fe no depende solo de mis emociones."
       },
       {
-        day: 13,
-        title: "Escribir para ordenar el corazón",
-        reflection: "Escribir puede ayudarte a ver con más claridad lo que llevas dentro.",
-        verse: "Un pensamiento escrito puede convertirse en una oración.",
-        focus: "Ordenar lo que sientes y piensas.",
-        prayer: "Dios, acompáñame mientras escribo con honestidad.",
-        action: "Escribe durante tres minutos sin corregirte."
+            "day": 13,
+            "week": 2,
+            "title": "Constancia sin perfección",
+            "objective": "Crear hábito sin culpa.",
+            "reflection": "Crear un hábito con Dios no significa hacerlo perfectamente todos los días. Significa aprender a volver. Muchas personas abandonan porque fallaron un día y sienten que ya arruinaron todo. Pero la constancia real no se construye con perfección, sino con regreso. Dios no te está midiendo con una agenda rígida. Él está formando en ti un deseo sostenido de comunión. Si un día no puedes completar el devocional, no uses eso como excusa para rendirte ni como motivo para culparte. Simplemente vuelve. La clave es elegir un ritmo posible. Quizá 10 minutos por la mañana. Quizá antes de dormir. Quizá durante la pausa del almuerzo. Lo importante es que sea realista para tu vida actual. Un hábito pequeño y sostenible vale más que una meta enorme que abandonas en tres días. Hoy define tu horario. Escríbelo. Hazlo concreto. La gracia no elimina la disciplina, pero la disciplina sin gracia se vuelve carga. Camina con ambas.",
+            "verse": "Gálatas 6:9",
+            "focus": "La perseverancia produce fruto cuando no abandonamos el bien.",
+            "prayer": "Señor, ayúdame a construir constancia sin vivir bajo culpa. Enséñame a volver cuando falle, a comenzar de nuevo cuando me distraiga y a elegir pasos pequeños pero sostenibles. Quiero crear un hábito contigo desde el amor, no desde la presión. Amén.",
+            "journal": "¿Qué horario realista puedo dedicar a Dios durante los próximos siete días?",
+            "action": "Define un horario concreto para tu devocional y anótalo en tu calendario.",
+            "declaration": "Estoy construyendo un hábito con Dios paso a paso."
       },
       {
-        day: 14,
-        title: "Celebrar lo pequeño",
-        reflection: "Lo pequeño también cuenta. Un día leído, una oración breve, una gratitud sincera son avances reales.",
-        verse: "Celebra el paso que sí pudiste dar.",
-        focus: "Reconocer avances pequeños.",
-        prayer: "Dios, gracias por cada paso posible.",
-        action: "Celebra un avance de esta semana."
+            "day": 14,
+            "week": 2,
+            "title": "Revisa tu primera semana",
+            "objective": "Gratitud y evaluación.",
+            "reflection": "Detenerte a revisar también es parte del crecimiento. Muchas veces avanzamos sin reconocer lo que Dios ya está haciendo en nuestro interior. Tal vez esta semana no cambió todo, pero quizás diste pasos importantes: volviste a orar, abriste tu Biblia, escribiste con honestidad, hiciste silencio, entregaste una carga o reconociste una necesidad. La gratitud entrena el corazón para ver la obra de Dios en lo pequeño. No esperes grandes señales para agradecer. Agradece por el deseo de volver. Agradece por la oportunidad de empezar. Agradece por cada minuto en Su presencia. Hoy mira tu proceso con ternura. No te enfoques solo en lo que faltó. Observa lo que sí ocurrió. ¿Qué aprendiste sobre Dios? ¿Qué descubriste sobre ti? ¿Qué hábito empezó a tomar forma? Evaluar no es juzgarte. Es reconocer y ajustar. Esta revisión te prepara para continuar con más conciencia durante la segunda semana.",
+            "verse": "Salmo 103:2",
+            "focus": "Recordar lo que Dios ha hecho fortalece la gratitud y la fe.",
+            "prayer": "Dios, gracias por cada paso de estos días. Ayúdame a reconocer Tu obra en lo pequeño y a no despreciar los comienzos sencillos. Gracias porque me has acompañado incluso cuando mi avance fue imperfecto. Dame ánimo para continuar. Amén.",
+            "journal": "¿Qué tres cambios, aprendizajes o pequeños avances noto desde que empecé?",
+            "action": "Escribe tres motivos de gratitud relacionados con esta primera etapa.",
+            "declaration": "Reconozco la obra de Dios en mi proceso."
       },
       {
-        day: 15,
-        title: "Perseverar sin exigencia",
-        reflection: "La perseverancia no necesita dureza. Puede nacer de una decisión amable de seguir.",
-        verse: "Volver también es parte del camino.",
-        focus: "Seguir sin dureza.",
-        prayer: "Dios, ayúdame a perseverar con ternura.",
-        action: "Elige continuar con una acción sencilla."
+            "day": 15,
+            "week": 3,
+            "title": "Caminar con Jesús",
+            "objective": "Acompañamiento diario.",
+            "reflection": "Caminar con Jesús implica más que admirarlo. Significa aprender a escucharlo, seguirlo y permitir que Su manera de vivir forme la nuestra. No se trata solo de saber qué dice Jesús, sino de permitir que Su voz influya en nuestras decisiones diarias. La voz de Jesús no empuja hacia la confusión ni hacia el miedo. Él guía con verdad, amor, claridad y paciencia. A veces Su dirección llega como una invitación a perdonar, descansar, obedecer, esperar o hablar con ternura. Hoy pregúntale a Jesús qué quiere enseñarte. No necesitas recibir una respuesta espectacular. Presta atención a una frase, una convicción, un pasaje bíblico, una actitud que necesita cambiar o una oportunidad para amar mejor. Caminar con Jesús es una relación de todos los días. Cuanto más tiempo pasas con Él, más familiar se vuelve Su voz.",
+            "verse": "Juan 10:27",
+            "focus": "Las ovejas reconocen la voz del buen pastor y lo siguen.",
+            "prayer": "Jesús, quiero caminar contigo y aprender de Ti. Enséñame a reconocer Tu voz en medio de tantas voces. Guíame con tu verdad y ayúdame a responder con obediencia sencilla. Quiero seguirte no solo con palabras, sino con mi vida diaria. Amén.",
+            "journal": "¿Qué creo que Jesús quiere enseñarme hoy?",
+            "action": "Haz esta pregunta en oración: “Jesús, ¿qué quieres enseñarme hoy?” y anota lo que venga a tu corazón.",
+            "declaration": "Camino con Jesús y aprendo de Su voz."
       },
       {
-        day: 16,
-        title: "Hacer espacio para escuchar",
-        reflection: "Hoy puedes leer menos rápido y escuchar con más atención lo que se mueve en tu interior.",
-        verse: "La quietud puede abrir una respuesta.",
-        focus: "Escuchar con atención.",
-        prayer: "Dios, quiero escucharte con calma.",
-        action: "Lee la reflexión dos veces y subraya una idea."
+            "day": 16,
+            "week": 3,
+            "title": "Una vida sensible al Espíritu Santo",
+            "objective": "Discernimiento.",
+            "reflection": "La sensibilidad espiritual no aparece de un día para otro. Se cultiva prestando atención. ¿Qué pensamientos te acercan a Dios? ¿Qué hábitos endurecen tu corazón? ¿Qué decisiones producen paz y fruto? ¿Qué reacciones revelan heridas que necesitan ser sanadas? El Espíritu Santo trabaja en lo profundo. No solo guía decisiones grandes; también forma tu carácter en situaciones pequeñas. Puede mostrarte cuando necesitas guardar silencio, pedir perdón, descansar, soltar una comparación o responder con amor. Discernir no es vivir buscando señales en todo. Es aprender a evaluar tu vida a la luz de la Palabra, el carácter de Cristo y el fruto que una decisión produce. La guía del Espíritu no contradice el amor, la verdad ni la humildad. Hoy observa tus pensamientos y reacciones. No para condenarte, sino para reconocer qué está gobernando tu interior. Esa atención puede convertirse en una práctica espiritual poderosa.",
+            "verse": "Gálatas 5:16",
+            "focus": "Caminar en el Espíritu implica dejar que Él dirija deseos, decisiones y acciones.",
+            "prayer": "Espíritu Santo, haz mi corazón sensible a Tu dirección. Ayúdame a reconocer lo que me acerca a Dios y lo que me aleja. Forma en mí un carácter más parecido a Jesús y enséñame a responder con humildad, amor y sabiduría. Amén.",
+            "journal": "¿Qué pensamientos o hábitos me acercan a Dios? ¿Cuáles me alejan?",
+            "action": "Durante el día, observa tus pensamientos y anota al final qué patrones descubriste.",
+            "declaration": "Mi corazón aprende a responder al Espíritu Santo."
       },
       {
-        day: 17,
-        title: "Practicar la confianza",
-        reflection: "Confiar puede ser dar el siguiente paso sin tener todo resuelto.",
-        verse: "Un paso en confianza también es una forma de oración.",
-        focus: "Dar el siguiente paso.",
-        prayer: "Dios, ayúdame a confiar en el paso de hoy.",
-        action: "Haz una acción que venías postergando."
+            "day": 17,
+            "week": 3,
+            "title": "Paz en medio del ruido",
+            "objective": "Descanso espiritual.",
+            "reflection": "El ruido no siempre está afuera. A veces vive dentro: pensamientos repetidos, comparaciones, pendientes, temores, conversaciones imaginarias. La paz de Dios no consiste en que todo alrededor esté en silencio, sino en que el corazón encuentre un centro seguro en Él. Cuando tu mente vuelve una y otra vez a Dios, algo empieza a ordenarse. No desaparecen necesariamente todas las responsabilidades, pero cambia el lugar desde donde las enfrentas. La paz de Dios sostiene, guarda y reorienta. Hoy identifica una distracción que roba tu paz. Puede ser el exceso de redes sociales, una conversación pendiente, una preocupación que repites o la necesidad constante de controlar. Decide reducirla por 24 horas y usa ese espacio para volver a Dios. La paz también se protege con decisiones prácticas. No todo lo que ocupa tu atención merece acceso permanente a tu corazón.",
+            "verse": "Isaías 26:3",
+            "focus": "Dios guarda en paz a quien mantiene su confianza en Él.",
+            "prayer": "Señor, guarda mi mente y mi corazón en Tu paz. Ayúdame a reconocer qué ruido me está alejando de Ti y dame sabiduría para ordenar mi atención. Quiero descansar en Tu presencia y confiar en Ti aun cuando todo alrededor se sienta agitado. Amén.",
+            "journal": "¿Qué distracción o ruido interior me roba paz con más frecuencia?",
+            "action": "Reduce una distracción por 24 horas y reemplázala con una oración breve cada vez que la extrañes.",
+            "declaration": "Mi paz está sostenida en Dios."
       },
       {
-        day: 18,
-        title: "Agradecer en medio del proceso",
-        reflection: "La gratitud no espera a que todo esté perfecto. Puede aparecer en medio del camino.",
-        verse: "Encuentra una señal de cuidado en este día.",
-        focus: "Agradecer en proceso.",
-        prayer: "Dios, gracias por acompañarme incluso en lo incompleto.",
-        action: "Agradece por algo que aún está en proceso."
+            "day": 18,
+            "week": 3,
+            "title": "Obedecer en lo pequeño",
+            "objective": "Fe práctica.",
+            "reflection": "Muchas veces esperamos grandes momentos para obedecer a Dios, pero la vida espiritual se forma en decisiones pequeñas. Elegir responder con paciencia. Pedir perdón. Decir la verdad. Cumplir una responsabilidad. Soltar una actitud. Orar antes de reaccionar. La obediencia no siempre será visible para otros, pero sí forma tu interior. Cada pequeño acto de fidelidad fortalece tu capacidad de seguir a Dios en áreas mayores. Obedecer en lo pequeño también rompe la idea de que la fe solo se demuestra en grandes sacrificios. A veces el paso que Dios te pide hoy es muy sencillo, pero requiere humildad: enviar un mensaje, ordenar una prioridad, cerrar una puerta, descansar sin culpa o hablar con amor. Pregúntale a Dios cuál es tu paso de obediencia hoy. No busques algo impresionante. Busca algo verdadero.",
+            "verse": "Lucas 16:10",
+            "focus": "La fidelidad también se demuestra en las cosas pequeñas.",
+            "prayer": "Dios, ayúdame a obedecerte en lo cotidiano. Muéstrame el pequeño paso que puedo dar hoy y dame humildad para responder. Quiero honrarte no solo en grandes decisiones, sino también en mis palabras, actitudes y acciones simples. Amén.",
+            "journal": "¿Qué pequeño paso de obediencia siento que Dios me está mostrando hoy?",
+            "action": "Haz una acción concreta de obediencia antes de que termine el día.",
+            "declaration": "Honro a Dios en lo pequeño."
       },
       {
-        day: 19,
-        title: "Reconocer tu crecimiento",
-        reflection: "Mira con calma cuánto has avanzado desde el primer día. El progreso puede ser más silencioso de lo que imaginas.",
-        verse: "El crecimiento también ocurre en lo invisible.",
-        focus: "Reconocer transformación silenciosa.",
-        prayer: "Dios, ayúdame a ver el crecimiento que no siempre noto.",
-        action: "Compara tu día 1 con el día de hoy."
+            "day": 19,
+            "week": 3,
+            "title": "Dios también forma tu carácter",
+            "objective": "Transformación interior.",
+            "reflection": "Acercarte a Dios no solo cambia tu agenda. Cambia tu interior. Dios trabaja en tus pensamientos, reacciones, deseos, prioridades y formas de responder. A veces buscamos solo sentirnos mejor, pero Dios también desea formarnos más parecidas a Cristo. La transformación del carácter puede ser incómoda porque revela áreas que preferiríamos evitar: impaciencia, orgullo, miedo, comparación, necesidad de aprobación, enojo o autosuficiencia. Pero Dios no revela para avergonzar. Revela para sanar y renovar. Hoy identifica un hábito interior que necesita ser trabajado. No lo mires con condena. Preséntalo a Dios con honestidad. Él forma con paciencia. La renovación no ocurre solo por esfuerzo humano, sino por permanecer cerca de Dios, recibir Su verdad y practicar nuevas respuestas. Tu carácter es parte de tu adoración. Cada vez que permites que Dios transforme tu forma de pensar y actuar, tu vida se vuelve un testimonio silencioso de Su obra.",
+            "verse": "Romanos 12:2",
+            "focus": "Dios renueva la mente y transforma la manera de vivir.",
+            "prayer": "Señor, transforma mi mente y forma mi carácter. Muéstrame las áreas que necesitan ser renovadas y ayúdame a responder con humildad. No quiero esconder mis procesos delante de Ti. Quiero permitir que Tu amor trabaje en lo profundo de mi vida. Amén.",
+            "journal": "¿Qué hábito interior o reacción necesito pedirle a Dios que renueve?",
+            "action": "Identifica una reacción que quieres cambiar y escribe una respuesta alternativa guiada por Dios.",
+            "declaration": "Dios está formando mi carácter con amor."
       },
       {
-        day: 20,
-        title: "Preparar continuidad",
-        reflection: "Este recorrido puede convertirse en una forma de vida. Piensa qué hábito deseas sostener después.",
-        verse: "Lo que se practica con amor puede permanecer.",
-        focus: "Elegir continuidad.",
-        prayer: "Dios, muéstrame qué hábito puedo sostener.",
-        action: "Define una práctica para continuar después del día 21."
+            "day": 20,
+            "week": 3,
+            "title": "Tu relación con Dios continúa",
+            "objective": "Sostener el hábito.",
+            "reflection": "Estos 21 días no fueron pensados como un final, sino como un comienzo. Dios no trabaja solo en temporadas intensas. Él continúa formando, guiando y acompañando tu vida día a día. Lo importante ahora es sostener un ritmo realista. Quizá descubriste que te ayuda orar por la mañana. Tal vez prefieres escribir por la noche. Tal vez necesitas repetir algunos días o continuar con lecturas breves. No compares tu proceso. Diseña una rutina que puedas sostener en tu realidad actual. Un hábito espiritual duradero necesita gracia, estructura y flexibilidad. Gracia para volver cuando fallas. Estructura para no depender solo de la motivación. Flexibilidad para adaptarte sin abandonar. Hoy piensa en los próximos 30 días. ¿Qué horario elegirás? ¿Qué leerás? ¿Cómo orarás? ¿Qué herramienta usarás para llevar seguimiento? Preparar un plan sencillo puede ayudarte a continuar el camino que Dios empezó en ti.",
+            "verse": "Filipenses 1:6",
+            "focus": "Dios continúa la obra que comenzó en nosotros.",
+            "prayer": "Dios, gracias porque continúas trabajando en mí. Ayúdame a sostener este hábito con sabiduría, gracia y constancia. Muéstrame una rutina realista para seguir creciendo cerca de Ti. Quiero continuar este camino contigo más allá de estos 21 días. Amén.",
+            "journal": "¿Cómo quiero que sea mi rutina espiritual durante los próximos 30 días?",
+            "action": "Diseña una rutina simple de 30 días: horario, duración, lectura y espacio de oración.",
+            "declaration": "Mi relación con Dios continúa creciendo."
       },
       {
-        day: 21,
-        title: "Cerrar para continuar",
-        reflection: "Este final no es una despedida. Es una invitación a seguir caminando con Dios un día a la vez.",
-        verse: "Un hábito espiritual se renueva cada día con un sí pequeño.",
-        focus: "Cerrar con gratitud.",
-        prayer: "Dios, gracias por acompañarme en este recorrido.",
-        action: "Escribe una carta breve sobre lo que deseas continuar."
+            "day": 21,
+            "week": 3,
+            "title": "Una vida más cerca de Dios",
+            "objective": "Cierre y compromiso.",
+            "reflection": "Llegar al día 21 no significa que todo esté resuelto. Significa que comenzaste. Has apartado tiempo, has orado, has escrito, has reflexionado y has vuelto a poner tu atención en Dios. Eso importa. Una vida más cerca de Dios no se construye con un solo devocional, sino con decisiones diarias de volver. Habrá días fáciles y días difíciles. Días de claridad y días de silencio. Pero ahora tienes una estructura, una experiencia y un recordatorio: puedes acercarte a Dios de manera sencilla, honesta y constante. Hoy no cierres este proceso como quien termina una tarea. Ciérralo como quien abre un nuevo camino. Habla con Dios sobre lo que aprendiste. Agradece por los pasos dados. Reconoce lo que quieres seguir cultivando. Escribe una carta de compromiso, no desde la presión, sino desde el amor. Dile a Dios cómo deseas continuar. Recuerda: Él no está esperando perfección. Está invitándote a permanecer cerca.",
+            "verse": "Salmo 73:28",
+            "focus": "Estar cerca de Dios es presentado como un bien y un refugio.",
+            "prayer": "Señor, gracias por acompañarme durante estos 21 días. Gracias por cada oración, cada aprendizaje y cada paso pequeño. Quiero seguir caminando contigo. Ayúdame a permanecer cerca de Ti, a volver cuando me distraiga y a vivir una fe sencilla, profunda y constante. Amén.",
+            "journal": "¿Qué compromiso espiritual quiero hacer hoy delante de Dios?",
+            "action": "Escribe una carta a Dios agradeciendo este proceso y comprometiendo tu próximo paso.",
+            "declaration": "Mi mayor bien es estar cerca de Dios."
       }
-    ];
+];
 
     let currentUser = null;
     let currentDay = 1;
@@ -1486,6 +1580,8 @@
     const focusText = document.getElementById("focusText");
     const shortPrayerText = document.getElementById("shortPrayerText");
     const actionText = document.getElementById("actionText");
+    const journalPromptText = document.getElementById("journalPromptText");
+    const declarationText = document.getElementById("declarationText");
     const favoriteButton = document.getElementById("favoriteButton");
     const completeDayButton = document.getElementById("completeDayButton");
     const nextDayButton = document.getElementById("nextDayButton");
@@ -1776,6 +1872,8 @@
       focusText.textContent = devotional.focus;
       shortPrayerText.textContent = devotional.prayer;
       actionText.textContent = devotional.action;
+      journalPromptText.textContent = devotional.journal;
+      declarationText.textContent = devotional.declaration;
 
       favoriteButton.textContent = entry.favorite
         ? "★ Favorito guardado"
