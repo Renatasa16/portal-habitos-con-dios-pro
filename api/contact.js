@@ -133,7 +133,29 @@ function escapeHtml(value) {
 }
 
 function nl2br(value) {
-  return escapeHtml(value).replace(/\n/g, "<br />");
+  if (typeof value !== "string") return "";
+
+  const buttonRegex =
+    /\[SHOPIFY_BUTTON:(.*?)\|(.*?)\]/g;
+
+  let content = escapeHtml(value);
+
+  content = content.replace(
+    buttonRegex,
+    (_, label, url) => `
+      <div style="margin:18px 0;">
+        ${url}          "
+        >
+          📦 Kit ${label}
+        </a>
+      </div>
+    `
+  );
+
+  return content.replace(
+    /\n/g,
+    "<br />"
+  );
 }
 
 function getCategoryData(category) {
