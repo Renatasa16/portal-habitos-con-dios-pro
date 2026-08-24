@@ -1358,36 +1358,10 @@
             <div class="panel-head">
               <small>Momento guiado</small>
               <h2>Momento del día</h2>
-              <p>Filtra por edad o tema, o avanza por los 14 días de la experiencia familiar.</p>
+              <p>Avanza por los 14 días de la experiencia familiar y descubre el tema que acompaña cada momento.</p>
             </div>
 
             <div class="panel-body">
-              <div class="filter-grid">
-                <div class="field">
-                  <label for="ageFilter">Edad sugerida</label>
-                  <select id="ageFilter">
-                    <option value="todas">Todas las edades</option>
-                    <option value="3-5">3 a 5 años</option>
-                    <option value="6-8">6 a 8 años</option>
-                    <option value="9-12">9 a 12 años</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label for="themeFilter">Tema</label>
-                  <select id="themeFilter">
-                    <option value="todos">Todos los temas</option>
-                    <option value="amor">Amor de Dios</option>
-                    <option value="oracion">Oración</option>
-                    <option value="confianza">Confianza</option>
-                    <option value="gratitud">Gratitud</option>
-                    <option value="bondad">Bondad</option>
-                    <option value="perdon">Perdón</option>
-                    <option value="familia">Familia</option>
-                  </select>
-                </div>
-              </div>
-
               <div id="momentContainer"></div>
             </div>
           </section>
@@ -1768,8 +1742,6 @@
       momentTodayBtn: document.getElementById("momentTodayBtn"),
       goCalendarBtn: document.getElementById("goCalendarBtn"),
       kidModeBtn: document.getElementById("kidModeBtn"),
-      ageFilter: document.getElementById("ageFilter"),
-      themeFilter: document.getElementById("themeFilter"),
       momentContainer: document.getElementById("momentContainer"),
       calendarGrid: document.getElementById("calendarGrid"),
       kidCards: document.getElementById("kidCards"),
@@ -1864,9 +1836,6 @@
         });
       });
 
-      els.ageFilter.addEventListener("change", renderMoment);
-      els.themeFilter.addEventListener("change", renderMoment);
-
       els.momentTodayBtn.addEventListener("click", () => {
         selectedDay = getSuggestedDay();
         persistSelectedDay();
@@ -1930,20 +1899,7 @@
     }
 
     function renderMoment() {
-      const age = els.ageFilter.value;
-      const theme = els.themeFilter.value;
-
-      let filtered = momentos.filter((momento) => {
-        const ageMatches = age === "todas" || momento.age === age || momento.age === "todas";
-        const themeMatches = theme === "todos" || momento.theme === theme;
-        return ageMatches && themeMatches;
-      });
-
-      if (!filtered.length) {
-        filtered = momentos;
-      }
-
-      const selected = filtered.find((item) => item.day === selectedDay) || filtered[0];
+      const selected = momentos.find((item) => item.day === selectedDay) || momentos[0];
 
       if (selected) {
         selectedDay = selected.day;
@@ -1955,6 +1911,19 @@
       } else {
         renderFamilyMoment(selected);
       }
+    }
+
+    function getThemeLabel(theme) {
+      const labels = {
+        amor: "Amor de Dios",
+        oracion: "Oración",
+        confianza: "Confianza",
+        gratitud: "Gratitud",
+        bondad: "Bondad",
+        perdon: "Perdón",
+        familia: "Familia"
+      };
+      return labels[theme] || "Fe en familia";
     }
 
     function renderFamilyMoment(selected) {
@@ -1970,6 +1939,7 @@
 
           <h3>${escapeHTML(selected.title)}</h3>
           <div class="verse">${escapeHTML(selected.verse)}</div>
+          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
 
           <div class="moment-grid">
             <div class="mini-box green">
@@ -2046,6 +2016,7 @@
 
           <h3>${escapeHTML(selected.title)}</h3>
           <div class="verse">${escapeHTML(selected.verse)}</div>
+          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
 
           <div class="kid-grid">
             <div class="kid-box" style="background: var(--soft-gold);">
