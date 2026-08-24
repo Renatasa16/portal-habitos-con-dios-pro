@@ -28,11 +28,12 @@ function setSecurityHeaders(res) {
   );
 }
 
-function isValidUuid(value) {
-  if (typeof value !== "string") return false;
+function isValidCaseId(value) {
+  if (value === null || value === undefined) {
+    return false;
+  }
 
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-    .test(value.trim());
+  return /^\d+$/.test(String(value).trim());
 }
 
 function sanitizeMessage(value) {
@@ -156,7 +157,7 @@ module.exports = async function handler(req, res) {
           ? req.query.id.trim()
           : "";
 
-      if (!isValidUuid(id)) {
+      if (!isValidCaseId(id)) {
         return res.status(400).json({
           ok: false,
           message:
@@ -197,7 +198,7 @@ module.exports = async function handler(req, res) {
           body.escalation_message
         );
 
-      if (!isValidUuid(id)) {
+      if (!isValidCaseId(id)) {
         return res.status(400).json({
           ok: false,
           message:
