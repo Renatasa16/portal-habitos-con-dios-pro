@@ -71,10 +71,9 @@
       "sensitive_content": true,
 
       "navigation_route": [
-        "Inicio",
-      "Mis Colecciones",
-      "Explorar Colecciones",
-      "Cuando las Palabras Duelen",
-      "Entrar a la App/ Adquirir"
-      ]
-    }
+  "Inicio",
+  "Mi Espacio",
+  "Mis Colecciones",
+  "Cuando las Palabras Duelen",
+  "Entrar a la App"
+]
