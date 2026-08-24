@@ -29,7 +29,7 @@
       "question": "¿Cómo puedo comprar una colección?",
       "category": "purchase",
       "priority": "high",
-      "answer": "Si deseas comenzar una nueva experiencia, ingresa a Mis Colecciones, elige el Kit Devocional Premium que más se adapte a ti y selecciona Adquirir. La compra se realiza de forma segura a través de Shopify.",
+      "answer": "Si deseas comenzar una nueva experiencia, dirígete a Explorar Colecciones, selecciona la colección que más te interese y utiliza la opción Adquirir. La compra se realiza de forma segura a través de Shopify.",
       "route_intent": "comprar_kit",
       "knowledge_source": [
         "routes.json"
@@ -109,7 +109,7 @@
       "question": "¿Cómo ingreso al portal?",
       "category": "access",
       "priority": "high",
-      "answer": "Ingresa tu correo electrónico en la pantalla de acceso. Supabase enviará un enlace de ingreso a ese correo. Abre el mensaje recibido y utiliza el enlace para validar tu sesión.",
+      "answer": "Ingresa tu correo electrónico en la pantalla de acceso. Recibirás un enlace para iniciar sesión. Una vez validado el acceso, podrás ingresar a Mi Espacio, donde encontrarás tus colecciones, Apps, ebooks, bonos y recursos disponibles.",
       "route_intent": "iniciar_sesion",
       "knowledge_source": [
         "access.json",
@@ -156,7 +156,7 @@
       "question": "No veo mi colección",
       "category": "access",
       "priority": "high",
-      "answer": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego revisa la sección Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo de soporte podrá ayudarte a revisar el caso.",
+      "answer": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
       "route_intent": "no_veo_mi_kit",
       "knowledge_source": [
         "access.json",
@@ -173,7 +173,7 @@
       "question": "¿Dónde encuentro mi App?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes encontrar tu App Premium dentro de la colección que adquiriste. Ingresa a Mis Colecciones y selecciona tu experiencia para acceder a todos los recursos incluidos.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a la App incluida en tu experiencia.",
       "route_intent": "acceder_app",
       "knowledge_source": [
         "routes.json",
@@ -188,7 +188,7 @@
       "question": "¿Dónde encuentro mi ebook?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes encontrar tu ebook principal dentro de la colección que adquiriste. Ingresa a Mis Colecciones y selecciona tu experiencia para acceder al contenido completo incluido en tu Kit Devocional Premium.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder al ebook incluido en tu experiencia.",
       "route_intent": "descargar_ebook",
       "knowledge_source": [
         "routes.json"
@@ -202,7 +202,7 @@
       "question": "¿Dónde encuentro mis bonos?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes encontrar tus bonos complementarios dentro de la colección que adquiriste. Ingresa a Mis Colecciones y selecciona tu experiencia para acceder a todos los recursos adicionales incluidos.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los bonos complementarios incluidos en tu experiencia.",
       "route_intent": "descargar_bonos",
       "knowledge_source": [
         "routes.json"
@@ -216,7 +216,7 @@
       "question": "¿Dónde encuentro los imprimibles?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes encontrar los recursos imprimibles dentro de la colección que adquiriste. Ingresa a Mis Colecciones y selecciona tu experiencia para acceder a los materiales descargables incluidos.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los materiales imprimibles incluidos en tu experiencia.",
       "route_intent": "descargar_imprimibles",
       "knowledge_source": [
         "routes.json"
@@ -230,7 +230,7 @@
       "question": "¿Cómo continúo donde dejé mi experiencia?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes continuar desde Mi Experiencia con Dios, donde encontrarás acceso a tus experiencias activas y progreso guardado.",
+      "answer": "Puedes continuar desde Mi Espacio, donde encontrarás acceso a Mis Colecciones, tus experiencias activas y los recursos disponibles para continuar tu recorrido.",
       "route_intent": "continuar_experiencia",
       "knowledge_source": [
         "routes.json"
@@ -244,7 +244,7 @@
       "question": "¿Cómo contacto soporte?",
       "category": "support",
       "priority": "high",
-      "answer": "Puedes comunicarte con el equipo a través del formulario disponible en el Centro de Ayuda.",
+      "answer": "Si necesitas ayuda o tienes alguna consulta sobre tu colección, acceso, App, ebook o recursos disponibles, puedes comunicarte con nosotros a través del formulario disponible en el Centro de Ayuda.",
       "route_intent": "acceder_centro_ayuda",
       "knowledge_source": [
         "routes.json",
