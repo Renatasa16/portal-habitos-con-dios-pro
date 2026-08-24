@@ -542,7 +542,7 @@
   "Mis Colecciones"
 ],
 
-  "response": Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
+  "response": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
 
   "route_presentation": {
     "hero_title": "📚 No veo mi colección",
