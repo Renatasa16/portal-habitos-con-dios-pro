@@ -1157,7 +1157,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="../biblioteca.html" aria-label="Volver a Biblioteca">
+      <a class="brand" href="../dashboard.html" aria-label="Volver a Mi Espacio">
         <div class="brand-mark">✦</div>
         <div class="brand-text">
           <strong>Hábitos con Dios Pro</strong>
@@ -1167,7 +1167,7 @@
 
       <div class="top-actions">
         <span class="pill" id="userPill">Verificando acceso...</span>
-        <a class="btn-soft" href="../biblioteca.html">Biblioteca</a>
+        <a class="btn-soft" href="../dashboard.html">Mi Espacio</a>
         <button class="btn-danger" type="button" id="logoutBtn">Cerrar sesión</button>
       </div>
     </header>
@@ -1180,10 +1180,10 @@
 
     <section id="errorState" class="error-state hide">
       <strong>No pudimos cargar la app.</strong>
-      <p id="errorMessage">Intenta ingresar nuevamente desde la Biblioteca.</p>
+      <p id="errorMessage">Intenta ingresar nuevamente desde la Mi Espacio.</p>
       <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <a class="btn" href="../login.html">Ir a Login</a>
-        <a class="btn-soft" href="../biblioteca.html">Volver a Biblioteca</a>
+        <a class="btn-soft" href="../dashboard.html">Volver a Mi Espacio</a>
       </div>
     </section>
 
@@ -1972,7 +1972,7 @@
         showApp();
       } catch (error) {
         console.error(error);
-        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde la Biblioteca.");
+        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde la Mi Espacio.");
       }
     }
 
