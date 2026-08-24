@@ -33,16 +33,31 @@
   .then(data => {
 
     document.getElementById("caseContext").innerHTML = `
-      <div style="
-        margin-top:20px;
-        padding:20px;
-        border:1px solid #E8DECC;
-        border-radius:16px;
-        background:#FAF7F0;
-      ">
-        <p><strong>Caso:</strong> ${data.case.case_id}</p>
-      </div>
-    `;
+  <div style="
+    margin-top:20px;
+    padding:20px;
+    border:1px solid #E8DECC;
+    border-radius:16px;
+    background:#FAF7F0;
+  ">
+
+    <p>
+      <strong>Caso:</strong>
+      ${data.case.case_id}
+    </p>
+
+    <p>
+      <strong>Tu consulta:</strong><br>
+      ${data.case.question || "No disponible"}
+    </p>
+
+    <p>
+      <strong>Respuesta recibida:</strong><br>
+      ${data.case.response || "No disponible"}
+    </p>
+
+  </div>
+`;
 
   })
   .catch(error => {
