@@ -43,7 +43,7 @@
         "Shopify"
       ],
 
-      "response": "Si deseas comenzar una nueva experiencia, ingresa a Mis Colecciones, selecciona el Kit Devocional Premium que más te interese y utiliza el botón Adquirir. La compra se realiza de forma segura a través de Shopify.",
+      "response": "Si deseas comenzar una nueva experiencia, dirígete a Explorar Colecciones, selecciona la colección que más te interese y utiliza la opción Adquirir. La compra se realiza de forma segura a través de Shopify.",
 
       "route_presentation": {
   "hero_title": "🛍️ Cómo adquirir una nueva colección",
@@ -104,7 +104,7 @@
     "Explorar Colecciones"
   ],
 
-  "response": "Desde Explorar Colecciones puedes conocer las experiencias disponibles, descubrir qué incluye cada Kit Devocional Premium y revisar en detalle las Apps, ebooks, bonos y recursos incluidos en cada propuesta.",
+  "response": "Desde Explorar Colecciones puedes conocer las experiencias disponibles, descubrir qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos incluidos en cada propuesta.",
 
   "route_presentation": {
     "hero_title": "📚 Explorar Colecciones Disponibles",
@@ -139,10 +139,10 @@
     "Mi Espacio",
     "Mis Colecciones",
     "Seleccionar colección adquirida",
-    "Abrir App Premium"
+    "Entrar a la App"
   ],
 
-  "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu recorrido. Inicia sesión, accede a Mi Espacio, abre Mis Colecciones y selecciona tu colección para ingresar a la App correspondiente.",
+  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a la App incluida en tu experiencia.",
 
   "route_presentation": {
     "hero_title": "📱 Cómo acceder a tu App Premium",
@@ -178,7 +178,7 @@
     "Continuar experiencia"
   ],
 
-  "response": "Puedes retomar tu recorrido desde Mi Espacio. Allí encontrarás acceso rápido a Mis Colecciones, tus recursos disponibles y las experiencias que has comenzado.",
+  "response": "Puedes retomar tu recorrido desde Mi Espacio. Allí encontrarás acceso a Mis Colecciones, tus experiencias activas y los recursos disponibles para continuar donde lo dejaste.",
 
   "route_presentation": {
     "hero_title": "▶️ Continuar tu experiencia",
@@ -219,7 +219,7 @@
     "Descargar"
   ],
 
-  "response": "Dentro de la colección que adquiriste encontrarás el ebook principal de tu experiencia, disponible para descargar y consultar cuando lo necesites.",
+  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder al ebook incluido en tu experiencia.",
 
   "route_presentation": {
     "hero_title": "📘 Descargar tu Ebook Principal",
@@ -259,7 +259,7 @@
     "Descargar"
   ],
 
-  "response": "Dentro de la colección que adquiriste encontrarás todos los bonos complementarios incluidos en tu experiencia. Podrás acceder a ellos y descargarlos desde la sección correspondiente cuando lo necesites.",
+  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los bonos complementarios incluidos en tu experiencia.",
 
   "route_presentation": {
     "hero_title": "🎁 Acceder a tus Bonificaciones",
@@ -297,7 +297,7 @@
     "Descargar"
   ],
 
-  "response": "Dentro de tu colección encontrarás recursos imprimibles diseñados para complementar tu experiencia. Puedes descargarlos y utilizarlos cuando desees en formato físico. Además, han sido preparados con un diseño pensado para favorecer un consumo moderado de tinta durante la impresión.",
+  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los materiales imprimibles incluidos en tu experiencia.",
 
   "route_presentation": {
     "hero_title": "🖨️ Descargar Versiones Imprimibles",
@@ -424,14 +424,14 @@
   "abrir mis colecciones"
 ],
 
-  "route": [
-    "Inicio",
-    "Mis Colecciones",
-     "Seleccionar colección adquirida",
-     "Entrar a la App"
-  ],
+ "route": [
+  "Inicio",
+  "Iniciar Sesión",
+  "Mi Espacio",
+  "Mis Colecciones"
+],
 
-  "response": "Para acceder a tu experiencia, ingresa al portal y dirígete a Mis Colecciones. Desde allí podrás seleccionar tu colección y utilizar la opción Entrar a la App para continuar tu recorrido, acceder a tus recursos y retomar tu progreso.",
+  "response": "Ingresa tu correo electrónico en la pantalla de acceso. Una vez validado el ingreso, podrás acceder a Mi Espacio, donde encontrarás tus colecciones, Apps, ebooks, bonos y recursos disponibles.",
 
   "route_presentation": {
     "hero_title": "🔐 Acceder a tu experiencia",
@@ -500,15 +500,14 @@
 ],
 
   "route": [
-    "Inicio",
-    "Iniciar sesión",
-    "Ingresar correo utilizado en Shopify",
-    "Abrir correo de acceso",
-    "Ingresar al portal",
-    "Mis Colecciones"
-  ],
+  "Inicio",
+  "Iniciar Sesión",
+  "Ingresar correo utilizado en la compra",
+  "Mi Espacio",
+  "Mis Colecciones"
+],
 
-  "response": "Si no puedes acceder a tu experiencia, verifica primero que estás utilizando exactamente el mismo correo electrónico con el que realizaste tu compra. Ese correo es el que permite identificar correctamente tus colecciones, recursos y permisos de acceso dentro del portal.",
+  "response": "Si no puedes acceder a tu experiencia, verifica primero que hayas iniciado sesión utilizando el mismo correo electrónico con el que realizaste tu compra. Ese correo permite identificar tus colecciones, recursos y permisos de acceso dentro del portal.",
 
   "route_presentation": {
     "hero_title": "🔑 Compré y no puedo ingresar",
@@ -538,11 +537,12 @@
 ],
 
   "route": [
-    "Inicio",
-    "Mis Colecciones"
-  ],
+  "Inicio",
+  "Mi Espacio",
+  "Mis Colecciones"
+],
 
-  "response": "Si no encuentras tu colección, verifica primero que hayas iniciado sesión con el mismo correo electrónico que utilizaste durante la compra. El sistema utiliza ese correo para identificar tus permisos y mostrar correctamente las experiencias adquiridas. Si después de esta validación aún no ves tu colección, puedes contactarnos desde el Centro de Ayuda para que podamos revisar tu caso.",
+  "response": Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
 
   "route_presentation": {
     "hero_title": "📚 No veo mi colección",
@@ -608,11 +608,12 @@
 ],
 
   "route": [
-    "Inicio",
-    "Mis Colecciones"
-  ],
+  "Inicio",
+  "Mi Espacio",
+  "Mis Colecciones"
+],
 
-  "response": "En Mis Colecciones encontrarás todas las experiencias asociadas a tus permisos activos. Desde allí podrás acceder a tus Apps Premium, ebooks principales, bonificaciones, recursos imprimibles y cualquier contenido habilitado para tu cuenta.",
+  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí encontrarás todas las experiencias asociadas a tu cuenta, junto con sus Apps, ebooks, bonos y recursos disponibles.",
 
   "route_presentation": {
     "hero_title": "📚 Ver Mis Colecciones",
