@@ -9,13 +9,13 @@
       "description": "🔐 Acceder al portal es muy sencillo. Solo necesitas ingresar tu correo electrónico y recibirás un enlace seguro que te permitirá entrar de forma rápida, cómoda y sin necesidad de recordar contraseñas.",
 
       "steps": [
-        "Ingresar correo electrónico en el login.",
-        "Recibir correo enviado por Supabase.",
-        "Abrir el correo recibido.",
-        "Hacer clic en el enlace de acceso.",
-        "Validar sesión.",
-        "Ingresar al portal."
-      ]
+  "Ingresar correo electrónico en el login.",
+  "Recibir el correo de acceso.",
+  "Abrir el correo recibido.",
+  "Hacer clic en el enlace de acceso.",
+  "Validar sesión.",
+  "Acceder a Mi Espacio."
+]
     },
 
     "purchase_validation": {
@@ -74,7 +74,7 @@
         "category": "permissions",
         "priority": "high",
         "title": "No veo mi colección",
-        "response": "📚 Si no encuentras tu colección, verifica primero que hayas iniciado sesión con el mismo correo utilizado durante la compra. Una vez validado, el sistema debería mostrar automáticamente el contenido asociado a tu cuenta."
+        "response": "response": "📚 Si no encuentras tu colección, verifica primero que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Una vez validado el acceso, el sistema debería mostrar automáticamente el contenido asociado a tu cuenta."
       },
 
       {
