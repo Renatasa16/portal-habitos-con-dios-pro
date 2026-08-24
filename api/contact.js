@@ -807,9 +807,14 @@ try {
   });
 
   console.log(
-    "SUPPORT_CASE_CREATED",
-    supportCase.case_id
-  );
+  "SUPPORT_CASE_CREATED",
+  supportCase.case_id
+);
+
+console.log(
+  "SUPPORT_CASE_UUID",
+  supportCase.id
+);
 } catch (error) {
   console.error(
     "Error guardando caso en Supabase:",
