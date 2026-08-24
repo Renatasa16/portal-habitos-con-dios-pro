@@ -148,6 +148,20 @@
       </div>
     `;
   });
+    document
+  .getElementById("submitEscalation")
+  .addEventListener("click", () => {
+
+    const message =
+      document
+        .getElementById("escalationMessage")
+        .value
+        .trim();
+
+    document.getElementById("escalationStatus").textContent =
+      `Mensaje capturado: ${message}`;
+
+  });
   </script>
 
 </body>
