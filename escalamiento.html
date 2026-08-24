@@ -28,6 +28,10 @@
 
     console.log("ESCALATION_CASE_ID", caseId);
 
+    fetch(`/api/escalation?id=${caseId}`)
+  .then(response => response.json())
+  .then(data => {
+
     document.getElementById("caseContext").innerHTML = `
       <div style="
         margin-top:20px;
@@ -36,9 +40,20 @@
         border-radius:16px;
         background:#FAF7F0;
       ">
-        <p><strong>ID detectado:</strong> ${caseId}</p>
+        <p><strong>Caso:</strong> ${data.case.case_id}</p>
       </div>
     `;
+
+  })
+  .catch(error => {
+    console.error(error);
+
+    document.getElementById("caseContext").innerHTML = `
+      <div style="color:red;">
+        No pudimos cargar la información del caso.
+      </div>
+    `;
+  });
   </script>
 
 </body>
