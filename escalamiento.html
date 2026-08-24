@@ -150,7 +150,7 @@
   });
     document
   .getElementById("submitEscalation")
-  .addEventListener("click", () => {
+  .addEventListener("click", async () => {
 
     const message =
       document
@@ -158,8 +158,32 @@
         .value
         .trim();
 
+    if (!message) {
+      document.getElementById("escalationStatus").textContent =
+        "Por favor cuéntanos qué información adicional necesitas.";
+      return;
+    }
+
     document.getElementById("escalationStatus").textContent =
-      `✅ Hemos registrado tu mensaje: ${message}`;
+      "⏳ Enviando solicitud...";
+
+   const response = await fetch("/api/escalation", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    id: caseId,
+    escalation_message: message
+  })
+});
+
+const data = await response.json();
+
+document.getElementById("escalationStatus").textContent =
+  data.ok
+    ? "✅ Tu solicitud fue enviada correctamente."
+    : (data.message || "No pudimos enviar tu solicitud.");
 
   });
   </script>
