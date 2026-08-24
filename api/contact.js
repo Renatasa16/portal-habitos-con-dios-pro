@@ -15,6 +15,164 @@ const RESEND_API_URL = "https://api.resend.com/emails";
 const BRAND_NAME = "Hábitos con Dios";
 const FROM_EMAIL = "soporte@skoolrenovae.store";
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL;
+const SUPPORT_CASES_URL =
+  `${process.env.SUPABASE_URL}/rest/v1/support_cases`;
+
+function hasSupabaseServerConfig() {
+  return Boolean(
+    process.env.SUPABASE_URL &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
+
+function getSupabaseServerHeaders(extraHeaders = {}) {
+  const serviceRoleKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  return {
+    apikey: serviceRoleKey,
+    Authorization: `Bearer ${serviceRoleKey}`,
+    "Content-Type": "application/json",
+    ...extraHeaders
+  };
+}
+
+function buildCaseDate() {
+  const now = new Date();
+
+  const year =
+    String(now.getUTCFullYear());
+
+  const month =
+    String(now.getUTCMonth() + 1).padStart(2, "0");
+
+  const day =
+    String(now.getUTCDate()).padStart(2, "0");
+
+  return `${year}${month}${day}`;
+}
+
+function generateCaseId() {
+  const datePart = buildCaseDate();
+
+  const randomPart =
+    String(
+      Math.floor(1000 + Math.random() * 9000)
+    );
+
+  return `HCD-${datePart}-${randomPart}`;
+}
+
+async function caseIdAlreadyExists(caseId) {
+  const query =
+    `${SUPPORT_CASES_URL}` +
+    `?case_id=eq.${encodeURIComponent(caseId)}` +
+    `&select=id` +
+    `&limit=1`;
+
+  const response = await fetch(query, {
+    method: "GET",
+    headers: getSupabaseServerHeaders()
+  });
+
+  const data = await response
+    .json()
+    .catch(() => []);
+
+  if (!response.ok) {
+    const message =
+      data?.message ||
+      data?.error ||
+      "No pudimos verificar el identificador del caso.";
+
+    throw new Error(message);
+  }
+
+  return Array.isArray(data) && data.length > 0;
+}
+
+async function createAvailableCaseId() {
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const caseId = generateCaseId();
+
+    const exists =
+      await caseIdAlreadyExists(caseId);
+
+    if (!exists) {
+      return caseId;
+    }
+  }
+
+  throw new Error(
+    "No pudimos generar un identificador único para el caso."
+  );
+}
+
+async function createSupportCase({
+  name,
+  email,
+  product,
+  category,
+  question,
+  responseText
+}) {
+  if (!hasSupabaseServerConfig()) {
+    throw new Error(
+      "La configuración privada de Supabase está incompleta."
+    );
+  }
+
+  const caseId =
+    await createAvailableCaseId();
+
+  const response = await fetch(
+    SUPPORT_CASES_URL,
+    {
+      method: "POST",
+      headers: getSupabaseServerHeaders({
+        Prefer: "return=representation"
+      }),
+      body: JSON.stringify({
+        case_id: caseId,
+        name,
+        email,
+        product,
+        category,
+        question,
+        response: responseText,
+        escalated: false,
+        escalation_message: null,
+        escalated_at: null
+      })
+    }
+  );
+
+  const data = await response
+    .json()
+    .catch(() => []);
+
+  if (!response.ok) {
+    const message =
+      data?.message ||
+      data?.error ||
+      "No pudimos guardar el caso de soporte.";
+
+    throw new Error(message);
+  }
+
+  const supportCase =
+    Array.isArray(data) && data.length
+      ? data[0]
+      : null;
+
+  if (!supportCase?.id || !supportCase?.case_id) {
+    throw new Error(
+      "Supabase no devolvió el caso creado."
+    );
+  }
+
+  return supportCase;
+}
 
 const ALLOWED_CATEGORIES = {
   app: {
@@ -636,6 +794,28 @@ if (!categoryData) {
     const aiResponseText = aiResult?.text || "";
     const responseProvider = aiResult?.provider || null;
     const responseModel = aiResult?.model || null;
+    let supportCase = null;
+
+try {
+  supportCase = await createSupportCase({
+    name,
+    email,
+    product,
+    category,
+    question: message,
+    responseText: aiResponseText
+  });
+
+  console.log(
+    "SUPPORT_CASE_CREATED",
+    supportCase.case_id
+  );
+} catch (error) {
+  console.error(
+    "Error guardando caso en Supabase:",
+    error
+  );
+}
 
     console.log("AI_RESPONSE_START");
     console.log(aiResponseText);
