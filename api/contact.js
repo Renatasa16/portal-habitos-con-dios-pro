@@ -514,7 +514,9 @@ function buildUserEmailTemplate({
   name,
   categoryLabel,
   aiResponseText,
-  isSensitive
+  isSensitive,
+  supportCaseId,
+  supportCaseNumber
 }) {
   const greeting = `
     <p style="margin:0 0 16px; font-size:17px; line-height:1.7; color:#2f2a24;">
@@ -584,7 +586,65 @@ function buildUserEmailTemplate({
       </p>
     </div>
   `;
+const escalationSection =
+  supportCaseId && supportCaseNumber
+    ? `
+      <div style="
+        margin-top:24px;
+        padding:24px;
+        background:#fffdf8;
+        border:1px solid #eadfce;
+        border-radius:20px;
+      ">
 
+        <p style="
+          margin:0 0 12px;
+          color:#315c4b;
+          font-size:18px;
+          font-weight:700;
+        ">
+          💜 ¿Pudimos ayudarte?
+        </p>
+
+        <p style="
+          margin:0 0 18px;
+          color:#6f5a3b;
+          line-height:1.7;
+          font-size:14px;
+        ">
+          Número de caso:
+          <strong>${supportCaseNumber}</strong>
+        </p>
+
+        <div style="margin-top:16px;">
+
+          <a
+            href="https://portal.skoolrenovae.store"
+            style="
+              display:inline-block;
+              margin-right:10px;
+              margin-bottom:10px;
+              padding:12px 18px;
+              border-radius:999px;
+              background:#315c4b;
+              color:#ffffff;
+              text-decoration:none;
+              font-weight:700;
+            "
+          >
+            ✅ Sí, pude continuar
+          </a>
+
+          <a
+            href="https://portal.skoolrenovae.store"
+            🌿 Todavía necesito ayuda
+          </a>
+
+        </div>
+
+      </div>
+    `
+    : "";
   return buildEmailShell({
     title: aiResponseText && !isSensitive
       ? "Respuesta a tu consulta"
@@ -595,6 +655,7 @@ function buildUserEmailTemplate({
       ${baseIntro}
       ${isSensitive ? sensitiveNotice : aiBlock}
       ${accessReminder}
+${escalationSection}
     `
   });
 }
@@ -859,11 +920,13 @@ console.log(
         : `Recibimos tu consulta en ${BRAND_NAME}`;
 
     const userHtml = buildUserEmailTemplate({
-      name,
-      categoryLabel: categoryData.label,
-      aiResponseText: aiResponseText && !isSensitive ? aiResponseText : "",
-      isSensitive
-    });
+  name,
+  categoryLabel: categoryData.label,
+  aiResponseText: aiResponseText && !isSensitive ? aiResponseText : "",
+  isSensitive,
+  supportCaseId: supportCase?.id || null,
+  supportCaseNumber: supportCase?.case_id || null
+});
 
     await sendEmail({
       to: email,
