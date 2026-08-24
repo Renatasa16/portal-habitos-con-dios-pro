@@ -20,6 +20,64 @@
   </p>
 
   <div id="caseContext"></div>
+  <div
+  style="
+    margin-top:18px;
+    padding:18px;
+    background:#FFFDF8;
+    border:1px solid #E8DECC;
+    border-radius:16px;
+  "
+>
+  <p
+    style="
+      margin:0 0 10px;
+      color:#3F4A35;
+      font-weight:700;
+    "
+  >
+    💜 No es necesario repetir toda tu consulta.
+  </p>
+
+  <p
+    style="
+      margin:0;
+      color:#6B7280;
+      line-height:1.7;
+    "
+  >
+    Cuéntanos únicamente qué información adicional necesitas para que podamos ayudarte mejor.
+  </p>
+</div>
+  <div style="margin-top:20px;">
+
+  <label
+    for="escalationMessage"
+    style="
+      display:block;
+      margin-bottom:10px;
+      font-weight:700;
+      color:#3F4A35;
+    "
+  >
+    ¿Qué información sigues necesitando?
+  </label>
+
+  <textarea
+    id="escalationMessage"
+    rows="6"
+    style="
+      width:100%;
+      padding:14px;
+      border:1px solid #E8DECC;
+      border-radius:12px;
+      font-family:inherit;
+      resize:vertical;
+    "
+    placeholder="Cuéntanos qué información adicional necesitas..."
+  ></textarea>
+
+</div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
@@ -49,11 +107,6 @@
     <p>
       <strong>Tu consulta:</strong><br>
       ${data.case.question || "No disponible"}
-    </p>
-
-    <p>
-      <strong>Respuesta recibida:</strong><br>
-      ${data.case.response || "No disponible"}
     </p>
 
   </div>
