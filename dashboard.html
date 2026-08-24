@@ -834,14 +834,15 @@
 
   <div class="brand-copy">
     <span class="brand-name">Hábitos con Dios</span>
-    <strong class="brand-title">Mi Experiencia con Dios</strong>
+    <strong class="brand-title">Mi Espacio</strong>
   </div>
 </a>
 
       <nav class="header-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="dashboard.html" class="active">Mi Experiencia</a>
         <a href="biblioteca.html">Mis Colecciones</a>
+        <a href="dashboard.html" class="active" aria-current="page">Mi Espacio</a>
+        <a href="consultas.html">Centro de Ayuda</a>
       </nav>
 
       <button
@@ -859,8 +860,9 @@
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <div class="mobile-nav-panel">
         <a href="index.html">Inicio</a>
-        <a href="dashboard.html">Mi Experiencia</a>
         <a href="biblioteca.html">Mis Colecciones</a>
+        <a href="dashboard.html" aria-current="page">Mi Espacio</a>
+        <a href="consultas.html">Centro de Ayuda</a>
       </div>
     </div>
   </header>
@@ -879,8 +881,8 @@
           </h1>
 
           <p class="hero-subtitle">
-            Explora experiencias digitales diseñadas para ayudarte a cultivar fe, oración,
-            propósito y conexión espiritual en tu vida diaria.
+            Continúa tus recorridos activos y encuentra tus colecciones en un espacio
+            personal, claro y organizado.
           </p>
 
           <div class="hero-actions">
@@ -1057,8 +1059,9 @@
 
       <nav class="footer-links" aria-label="Enlaces del pie de página">
         <a href="index.html">Inicio</a>
-        <a href="dashboard.html">Mi Experiencia</a>
         <a href="biblioteca.html">Mis Colecciones</a>
+        <a href="dashboard.html">Mi Espacio</a>
+        <a href="consultas.html">Centro de Ayuda</a>
       </nav>
     </div>
   </footer>
@@ -1396,7 +1399,8 @@
         } = await supabaseClient.auth.getUser();
 
         if (userError || !user) {
-          renderActiveExperiences([]);
+          const next = encodeURIComponent("dashboard.html");
+          window.location.replace(`login.html?next=${next}`);
           return;
         }
 
