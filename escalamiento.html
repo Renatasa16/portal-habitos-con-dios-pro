@@ -18,6 +18,14 @@
   <p>
     Ya tenemos el contexto de tu caso. Cuéntanos qué información sigues necesitando para que nuestro equipo pueda ayudarte mejor.
   </p>
+  <div id="caseContext"></div>
+  <script>
+const params = new URLSearchParams(window.location.search);
+
+const caseId = params.get("id");
+
+console.log("ESCALATION_CASE_ID", caseId);
+</script>
 
 </body>
 </html>
