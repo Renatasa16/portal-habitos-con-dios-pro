@@ -37,7 +37,7 @@
 
       "route": [
         "Inicio",
-        "Mis Colecciones",
+        "Explorar Colecciones",
         "Seleccionar colección",
         "Botón Adquirir",
         "Shopify"
@@ -101,10 +101,10 @@
 
   "route": [
     "Inicio",
-    "Mis Colecciones"
+    "Explorar Colecciones"
   ],
 
-  "response": "Desde Mis Colecciones puedes descubrir las experiencias disponibles, conocer qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos diseñados para acompañar tu caminar de fe.",
+  "response": "Desde Explorar Colecciones puedes conocer las experiencias disponibles, descubrir qué incluye cada Kit Devocional Premium y revisar en detalle las Apps, ebooks, bonos y recursos incluidos en cada propuesta.",
 
   "route_presentation": {
     "hero_title": "📚 Explorar Colecciones Disponibles",
@@ -136,12 +136,13 @@
 
   "route": [
     "Inicio",
+    "Mi Espacio",
     "Mis Colecciones",
     "Seleccionar colección adquirida",
     "Abrir App Premium"
   ],
 
-  "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu experiencia. Ingresa a Mis Colecciones, selecciona tu colección y accede a la App correspondiente para continuar tu recorrido.",
+  "response": "Cada Kit Devocional Premium incluye una App diseñada para complementar tu recorrido. Inicia sesión, accede a Mi Espacio, abre Mis Colecciones y selecciona tu colección para ingresar a la App correspondiente.",
 
   "route_presentation": {
     "hero_title": "📱 Cómo acceder a tu App Premium",
@@ -172,16 +173,17 @@
 
   "route": [
     "Inicio",
-    "Mi Experiencia con Dios",
+    "Mi Espacio",
+    "Mis Colecciones",
     "Continuar experiencia"
   ],
 
-  "response": "Puedes retomar tu experiencia desde Mi Experiencia con Dios, donde encontrarás tu progreso guardado y acceso rápido a las experiencias que estás disfrutando actualmente.",
+  "response": "Puedes retomar tu recorrido desde Mi Espacio. Allí encontrarás acceso rápido a Mis Colecciones, tus recursos disponibles y las experiencias que has comenzado.",
 
   "route_presentation": {
     "hero_title": "▶️ Continuar tu experiencia",
 
-    "hero_subtitle": "Retoma tu recorrido exactamente donde lo dejaste y continúa avanzando en tu crecimiento espiritual con todos tus avances guardados.",
+    "hero_subtitle": "Retoma tu recorrido desde Mi Espacio y continúa avanzando con acceso rápido a tus colecciones, recursos y progreso disponible.",
 
     "steps_title": "📍 Ruta recomendada",
 
@@ -210,6 +212,7 @@
 
   "route": [
     "Inicio",
+    "Mi Espacio",
     "Mis Colecciones",
     "Seleccionar colección adquirida",
     "Ebook Principal",
@@ -249,6 +252,7 @@
 
   "route": [
     "Inicio",
+    "Mi Espacio",
     "Mis Colecciones",
     "Seleccionar colección adquirida",
     "Bonos Incluidos",
@@ -286,6 +290,7 @@
 ],
   "route": [
     "Inicio",
+    "Mi Espacio",
     "Mis Colecciones",
     "Seleccionar colección adquirida",
     "Versiones Imprimibles",
@@ -354,7 +359,7 @@
     "Enviar consulta"
   ],
 
-  "response": "Si necesitas ayuda adicional, puedes acceder desde Menú → Inicio → Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.",
+  "response": "Si necesitas ayuda adicional, puedes acceder al Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.",
 
   "route_presentation": {
     "hero_title": "🤝 Centro de Ayuda",
