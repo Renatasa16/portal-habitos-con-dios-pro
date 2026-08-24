@@ -649,11 +649,10 @@ const escalationSection =
       : "Recibimos tu consulta",
     subtitle: "Centro de Ayuda",
     contentHtml: `
-      ${greeting}
-      ${baseIntro}
-      ${isSensitive ? sensitiveNotice : aiBlock}
-      ${accessReminder}
-${escalationSection}
+  ${greeting}
+  ${baseIntro}
+  ${isSensitive ? sensitiveNotice : aiBlock}
+  ${escalationSection}
     `
   });
 }
