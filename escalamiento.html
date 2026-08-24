@@ -18,14 +18,28 @@
   <p>
     Ya tenemos el contexto de tu caso. Cuéntanos qué información sigues necesitando para que nuestro equipo pueda ayudarte mejor.
   </p>
+
   <div id="caseContext"></div>
+
   <script>
-const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
 
-const caseId = params.get("id");
+    const caseId = params.get("id");
 
-console.log("ESCALATION_CASE_ID", caseId);
-</script>
+    console.log("ESCALATION_CASE_ID", caseId);
+
+    document.getElementById("caseContext").innerHTML = `
+      <div style="
+        margin-top:20px;
+        padding:20px;
+        border:1px solid #E8DECC;
+        border-radius:16px;
+        background:#FAF7F0;
+      ">
+        <p><strong>ID detectado:</strong> ${caseId}</p>
+      </div>
+    `;
+  </script>
 
 </body>
 </html>
