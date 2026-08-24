@@ -563,26 +563,12 @@ function buildUserEmailTemplate({
         </div>
       </div>
 
-      <div style="padding:18px 22px; background:#faf6ee; border-top:1px solid #eadfce;">
-        <p style="margin:0; font-size:14px; line-height:1.7; color:#7a684f;">
-          ✨ Si necesitas orientación adicional, puedes completar nuevamente el formulario desde el Centro de Ayuda. Estaremos encantados de acompañarte.
-        </p>
-      </div>
-
     </div>
   `
   : `
     <div style="margin-top:22px; padding:22px 20px; background:#fffdf8; border-radius:18px; border:1px solid #eadfce;">
       <p style="margin:0; font-size:16px; line-height:1.8; color:#4a4035;">
         Recibimos tu consulta correctamente. Nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.
-      </p>
-    </div>
-  `;
-
-  const accessReminder = `
-    <div style="padding:18px 20px; background:#faf6ee; border-radius:16px; border:1px solid #eadfce; margin-top:18px;">
-      <p style="margin:0; font-size:15px; line-height:1.7; color:#6f5a3b;">
-        Si tu consulta está relacionada con el acceso a una App Premium, recuerda usar el mismo correo electrónico con el que realizaste tu compra.
       </p>
     </div>
   `;
@@ -632,13 +618,25 @@ const escalationSection =
               font-weight:700;
             "
           >
-            ✅ Sí, pude continuar
+            ✅ Sí, consulta resuelta
           </a>
 
-          <a
-            href="https://portal.skoolrenovae.store"
-            🌿 Todavía necesito ayuda
-          </a>
+         <a
+  href="https://portal.skoolrenovae.store/escalamiento.html?id=${supportCaseId}"
+  style="
+    display:inline-block;
+    margin-bottom:10px;
+    padding:12px 18px;
+    border-radius:999px;
+    background:#F5F0E7;
+    color:#3F4A35;
+    border:1px solid #C9A65A;
+    text-decoration:none;
+    font-weight:700;
+  "
+>
+  🌿 Todavía necesito ayuda
+</a>
 
         </div>
 
