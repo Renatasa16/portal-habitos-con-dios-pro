@@ -280,18 +280,11 @@
 
     </form>
 
-    <a
-      href="index.html"
-      class="portal-button"
-      aria-label="Volver al Portal de Hábitos con Dios"
-    >
-      <span class="portal-star">
-        ✨
-      </span>
-
-      <span>
-        Volver al Portal
-      </span>
+    <a href="index.html" class="portal-button" aria-label="Volver al inicio de Hábitos con Dios">
+      <span class="portal-star">←</span><span>Volver al inicio</span>
+    </a>
+    <a href="consultas.html" class="portal-button" aria-label="Abrir el Centro de Ayuda">
+      <span class="portal-star">💬</span><span>Centro de Ayuda</span>
     </a>
 
     <div class="success" id="successMessage">
@@ -349,14 +342,14 @@
         return;
       }
 
-      const { error } =
-        await supabaseClient.auth.signInWithOtp({
-          email,
-          options: {
-            emailRedirectTo:
-              "https://portal-habitos-con-dios-pro.vercel.app/dashboard.html"
-          }
-        });
+     const { error } =
+  await supabaseClient.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo:
+        "https://portal-habitos-con-dios-pro.vercel.app/dashboard.html"
+    }
+  });
 
       if (error) {
         errorMessage.style.display = "block";
