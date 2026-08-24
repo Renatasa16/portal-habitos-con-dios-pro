@@ -68,11 +68,10 @@
 
       "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
 
-      "navigation_route": [
-        "Inicio",
-      "Mis Colecciones",
-      "Explorar Colecciones",
-      "El Hombre que Edifica su Hogar",
-      "Entrar a la App/ Adquirir"
-      ]
-   }
+       "navigation_route": [
+  "Inicio",
+  "Mi Espacio",
+  "Mis Colecciones",
+  "El Hombre que Edifica su Hogar",
+  "Entrar a la App"
+]
