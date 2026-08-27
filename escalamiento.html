@@ -167,23 +167,34 @@
     document.getElementById("escalationStatus").textContent =
       "⏳ Enviando solicitud...";
 
-   const response = await fetch("/api/escalation", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    id: caseId,
-    escalation_message: message
-  })
-});
+   try {
 
-const data = await response.json();
+  const response = await fetch("/api/escalation", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: caseId,
+      escalation_message: message
+    })
+  });
 
-document.getElementById("escalationStatus").textContent =
-  data.ok
-    ? "💜 Gracias. Hemos recibido tu mensaje y nuestro equipo revisará tu caso para ayudarte de la mejor manera posible."
-    : (data.message || "No pudimos enviar tu solicitud.");
+  const data = await response.json();
+
+  document.getElementById("escalationStatus").textContent =
+    data.ok
+      ? "💜 Gracias. Hemos recibido tu mensaje y nuestro equipo revisará tu caso para ayudarte de la mejor manera posible."
+      : (data.message || "No pudimos enviar tu solicitud.");
+
+} catch (error) {
+
+  console.error(error);
+
+  document.getElementById("escalationStatus").textContent =
+    "No pudimos enviar tu solicitud. Inténtalo nuevamente.";
+
+}
 
   });
   </script>
