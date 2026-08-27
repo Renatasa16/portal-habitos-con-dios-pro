@@ -1,6 +1,17 @@
 const SUPABASE_REST_URL =
   `${process.env.SUPABASE_URL}/rest/v1/support_cases`;
 
+const RESEND_API_URL =
+  "https://api.resend.com/emails";
+
+const BRAND_NAME = "Hábitos con Dios";
+
+const FROM_EMAIL =
+  "soporte@skoolrenovae.store";
+
+const TO_EMAIL =
+  process.env.CONTACT_TO_EMAIL;
+
 function setSecurityHeaders(res) {
   res.setHeader(
     "Access-Control-Allow-Origin",
@@ -133,6 +144,45 @@ async function updateEscalation({
     : null;
 }
 
+async function sendEmail({
+  to,
+  subject,
+  html,
+  replyTo
+}) {
+  const response = await fetch(
+    RESEND_API_URL,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+        to,
+        subject,
+        html,
+        reply_to: replyTo
+      })
+    }
+  );
+
+  const data = await response
+    .json()
+    .catch(() => ({}));
+
+  if (!response.ok) {
+    const errorMessage =
+      data?.message ||
+      data?.error ||
+      "No se pudo enviar el correo desde Resend.";
+
+    throw new Error(errorMessage);
+  }
+
+  return data;
+}
 module.exports = async function handler(req, res) {
   setSecurityHeaders(res);
 
@@ -149,6 +199,22 @@ module.exports = async function handler(req, res) {
         "La configuración privada de Supabase está incompleta."
     });
   }
+
+  if (!process.env.RESEND_API_KEY) {
+  return res.status(500).json({
+    ok: false,
+    message:
+      "Falta RESEND_API_KEY."
+  });
+}
+
+if (!TO_EMAIL) {
+  return res.status(500).json({
+    ok: false,
+    message:
+      "Falta CONTACT_TO_EMAIL."
+  });
+}
 
   try {
     if (req.method === "GET") {
@@ -249,6 +315,42 @@ module.exports = async function handler(req, res) {
             "No pudimos confirmar la actualización del caso."
         });
       }
+      
+      const subject =
+  `💜 Escalamiento recibido | ${existingCase.case_id}`;
+
+const html = `
+  <h2>Nuevo escalamiento recibido</h2>
+
+  <p><strong>Caso:</strong> ${existingCase.case_id}</p>
+
+  <p><strong>Nombre:</strong> ${existingCase.name}</p>
+
+  <p><strong>Email:</strong> ${existingCase.email}</p>
+
+  <p><strong>Producto:</strong> ${existingCase.product}</p>
+
+  <p><strong>Categoría:</strong> ${existingCase.category}</p>
+
+  <hr>
+
+  <h3>Consulta original</h3>
+
+  <p>${existingCase.question}</p>
+
+  <hr>
+
+  <h3>Información adicional enviada por el usuario</h3>
+
+  <p>${escalationMessage}</p>
+`;
+
+await sendEmail({
+  to: TO_EMAIL,
+  subject,
+  html,
+  replyTo: existingCase.email
+});
 
       return res.status(200).json({
         ok: true,
