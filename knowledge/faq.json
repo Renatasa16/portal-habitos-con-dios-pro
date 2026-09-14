@@ -1,115 +1,179 @@
 {
   "faq_metadata": {
-    "version": "1.1",
+    "version": "2.0",
     "module": "faq",
-    "description": "Preguntas frecuentes globales para el portal Hábitos con Dios. Este archivo funciona como punto de entrada para consultas comunes y debe priorizar archivos específicos de conocimiento cuando existan.",
+    "description": "Preguntas frecuentes globales para el portal Hábitos con Dios. Este archivo funciona como punto de entrada para consultas comunes y prioriza los archivos específicos de conocimiento cuando contienen información más detallada o actualizada.",
     "prefer_specific_knowledge_files": true,
     "fallback_to_routes": true,
     "fallback_to_access": true,
     "fallback_to_disclaimers": true,
     "fallback_to_human_support": true
   },
-
   "faq": [
     {
       "id": "what_is_habitos_con_dios",
       "question": "¿Qué es Hábitos con Dios?",
       "category": "general",
       "priority": "high",
-      "answer": "Hábitos con Dios es un espacio creado para acompañar a personas y familias en su caminar de fe. A través de diferentes Kits Devocionales Premium encontrarás recursos prácticos, momentos de reflexión y herramientas que te inspirarán a acercarte más a Dios en la vida cotidiana.",
+      "answer": "🌿 Hábitos con Dios reúne Kits Devocionales Premium creados para inspirar a personas y familias a acercarse a Dios y a Su Palabra en la vida cotidiana. Cada experiencia integra una App Premium, un ebook principal, bonos complementarios y versiones imprimibles que promueven la oración, la reflexión, la gratitud y el crecimiento espiritual.",
       "knowledge_source": [
-        "brand.json"
+        "brand.json",
+        "products.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "how_to_buy",
       "question": "¿Cómo puedo comprar una colección?",
       "category": "purchase",
       "priority": "high",
-      "answer": "Si deseas comenzar una nueva experiencia, dirígete a Explorar Colecciones, selecciona la colección que más te interese y utiliza la opción Adquirir. La compra se realiza de forma segura a través de Shopify.",
+      "answer": "🌿 Para comenzar una nueva experiencia, dirígete a Explorar Colecciones, elige la colección que más se relacione con el recorrido que deseas iniciar y selecciona la opción Adquirir. La compra se realiza de forma segura a través de nuestra tienda oficial.",
       "route_intent": "comprar_kit",
       "knowledge_source": [
+        "products.json",
         "routes.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
+    {
+      "id": "launch_benefit",
+      "question": "¿Existe algún beneficio especial de lanzamiento?",
+      "category": "purchase",
+      "priority": "high",
+      "answer": "🌿 Sí. Actualmente, los cuatro Kits Devocionales Premium están disponibles con un beneficio especial de lanzamiento que incluye un 43% de descuento y la posibilidad de pagar en 3 cuotas sin interés. Las condiciones vigentes se muestran en la tienda al momento de realizar la compra.",
+      "knowledge_source": [
+        "products.json"
+      ],
+      "disclaimer": "none",
+      "escalate": false
+    },
+    {
+      "id": "payment_options",
+      "question": "¿Es un pago único o en cuotas?",
+      "category": "purchase",
+      "priority": "high",
+      "answer": "🌿 Puedes elegir la modalidad que te resulte más cómoda. El beneficio especial de lanzamiento incluye un 43% de descuento y permite realizar la compra en un único pago o en 3 cuotas sin interés. Las opciones vigentes se muestran en la tienda al momento de la compra.",
+      "knowledge_source": [
+        "products.json"
+      ],
+      "disclaimer": "none",
+      "escalate": false
+    },
     {
       "id": "what_includes_21dias",
       "question": "¿Qué incluye 21 Días Más Cerca de Dios?",
       "category": "product",
       "priority": "medium",
-      "answer": "21 Días Más Cerca de Dios reúne recursos especialmente pensados para ayudarte a fortalecer tus hábitos espirituales. Incluye la App Premium Mi Tiempo con Dios, el ebook principal y materiales complementarios como el Diario de Oración, Planner Espiritual, Guía Práctica para Escuchar al Espíritu Santo, Tarjetas de Fe y sus versiones imprimibles.",
+      "answer": "🌷 21 Días Más Cerca de Dios es un Kit Devocional Premium creado especialmente para mujeres que desean fortalecer su relación con Dios y cultivar hábitos espirituales en su vida diaria. Incluye la App Premium Mi Tiempo con Dios, el ebook principal, el Diario de Oración, el Planner Espiritual, la Guía Práctica para Escuchar al Espíritu Santo, las Tarjetas de Fe y las versiones imprimibles de los recursos incluidos.",
       "knowledge_source": [
-        "products/21_dias_mas_cerca_de_dios.json",
-        "apps/mi_tiempo_con_dios.json"
+        "products.json",
+        "apps.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "what_is_mi_tiempo_con_dios",
       "question": "¿Qué es Mi Tiempo con Dios?",
       "category": "app",
       "priority": "medium",
-      "answer": "🌷 Mi Tiempo con Dios es una aplicación creada para ayudarte a reservar un momento especial cada día para encontrarte con Dios. A través de reflexiones, oración, gratitud y herramientas prácticas, te acompaña en la construcción de hábitos de fe de una manera sencilla y significativa.",
+      "answer": "🌷 Mi Tiempo con Dios es la App Premium incluida en 21 Días Más Cerca de Dios. Fue creada especialmente para mujeres que desean reservar un momento para encontrarse con Dios cada día. Sus devocionales, espacios de oración y gratitud, favoritos, insignias y seguimiento de progreso inspiran hábitos espirituales sencillos y una relación más cercana con Dios y Su Palabra.",
       "knowledge_source": [
-        "apps/mi_tiempo_con_dios.json"
+        "apps.json",
+        "products.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "what_is_pequenos_momentos",
       "question": "¿Qué es Pequeños Momentos con Dios?",
       "category": "product",
       "priority": "medium",
-      "answer": "🏡 Pequeños Momentos con Dios fue creado para ayudar a las familias a compartir la fe de una manera cercana y natural. Incluye actividades, conversaciones guiadas, oración y espacios de gratitud que fortalecen los vínculos familiares mientras construyen recuerdos valiosos alrededor de Dios. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🏡 Pequeños Momentos con Dios es un Kit Devocional Premium para padres, madres, cuidadores y familias con niños que desean compartir la fe en casa de una forma cercana y natural. Incluye la App Premium Momentos con Dios en Familia, un ebook principal, bonos complementarios y versiones imprimibles con actividades, conversaciones, oraciones y momentos de gratitud que fortalecen la unión familiar y acercan a grandes y pequeños a Dios.",
       "knowledge_source": [
-        "products/pequenos_momentos_con_dios.json"
+        "products.json",
+        "apps.json"
       ],
-      "disclaimer": "light",
+      "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "what_is_palabras_duelen",
       "question": "¿Qué es Cuando las Palabras Duelen?",
       "category": "product",
       "priority": "medium",
-      "answer": "🕊️ Cuando las Palabras Duelen busca acompañar a adolescentes, jóvenes y familias que han atravesado situaciones de rechazo, palabras hirientes, bullying o cyberbullying. A través de reflexiones y recursos prácticos, promueve el fortalecimiento de la identidad, la confianza y la paz interior desde una perspectiva basada en la fe. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🕊️ Cuando las Palabras Duelen es un Kit Devocional Premium para adolescentes, jóvenes y jóvenes adultos que han vivido heridas emocionales causadas por críticas, rechazo, bullying o cyberbullying. Incluye la App Premium Diario de Paz Digital, un ebook principal, bonos complementarios y versiones imprimibles con reflexiones y actividades que invitan a fortalecer la identidad en Dios, renovar la esperanza y recordar el valor de cada persona a la luz de Su Palabra.",
       "knowledge_source": [
-        "products/cuando_las_palabras_duelen.json"
+        "products.json",
+        "apps.json",
+        "disclaimers.json"
       ],
       "disclaimer": "light",
       "escalate": false
     },
-
     {
       "id": "what_is_hombre_hogar",
       "question": "¿Qué es El Hombre que Edifica su Hogar?",
       "category": "product",
       "priority": "medium",
-      "answer": "🏡 El Hombre que Edifica su Hogar fue pensado para hombres que desean fortalecer su relación con Dios y liderar su hogar con sabiduría, carácter y propósito. A través de recursos prácticos y espacios de reflexión, impulsa el desarrollo de un liderazgo espiritual que impacte positivamente a la familia y a las generaciones futuras. La disponibilidad comercial puede variar y se recomienda verificar Shopify.",
+      "answer": "🏡 El Hombre que Edifica su Hogar es un Kit Devocional Premium para hombres de familia que desean fortalecer su relación con Dios y guiar su hogar con amor, sabiduría y propósito. Incluye la App Premium Mi Hogar con Propósito, un ebook principal, bonos complementarios y versiones imprimibles con devocionales y recursos basados en la Palabra de Dios para cultivar la oración, el discernimiento, el carácter y el liderazgo familiar.",
       "knowledge_source": [
-        "products/el_hombre_que_edifica_su_hogar.json"
+        "products.json",
+        "apps.json"
       ],
-      "disclaimer": "light",
+      "disclaimer": "none",
       "escalate": false
     },
-
+    {
+      "id": "app_lifetime_access",
+      "question": "¿Cuánto dura el acceso a la App?",
+      "category": "product",
+      "priority": "high",
+      "answer": "🌿 El acceso a la App es de por vida. Puedes regresar todas las veces que desees, volver a realizar las actividades disponibles, releer las reflexiones y recorrer nuevamente la experiencia a tu propio ritmo.",
+      "knowledge_source": [
+        "products.json",
+        "apps.json"
+      ],
+      "disclaimer": "none",
+      "escalate": false
+    },
+    {
+      "id": "need_bible_knowledge",
+      "question": "¿Necesito conocimientos previos de la Biblia?",
+      "category": "general",
+      "priority": "high",
+      "answer": "🌿 No necesitas conocimientos previos de la Biblia. Las Apps Premium, los ebooks, los bonos complementarios y las versiones imprimibles están organizados para guiarte paso a paso. Puedes comenzar si estás dando tus primeros pasos en la fe o si deseas profundizar tu relación con Dios y Su Palabra.",
+      "knowledge_source": [
+        "brand.json",
+        "products.json",
+        "apps.json"
+      ],
+      "disclaimer": "none",
+      "escalate": false
+    },
+    {
+      "id": "is_this_for_beginners",
+      "question": "¿Estas experiencias son adecuadas para quienes recién comienzan su camino de fe?",
+      "category": "general",
+      "priority": "high",
+      "answer": "🌿 Sí. Las experiencias de Hábitos con Dios están pensadas tanto para quienes desean acercarse a Dios por primera vez como para quienes buscan fortalecer su fe. Los contenidos siguen un recorrido claro y progresivo para que cada persona pueda avanzar a su propio ritmo.",
+      "knowledge_source": [
+        "brand.json",
+        "products.json",
+        "apps.json"
+      ],
+      "disclaimer": "none",
+      "escalate": false
+    },
     {
       "id": "how_to_login",
       "question": "¿Cómo ingreso al portal?",
       "category": "access",
       "priority": "high",
-      "answer": "Ingresa tu correo electrónico en la pantalla de acceso. Recibirás un enlace para iniciar sesión. Una vez validado el acceso, podrás ingresar a Mi Espacio, donde encontrarás tus colecciones, Apps, ebooks, bonos y recursos disponibles.",
+      "answer": "Ingresa tu correo electrónico en la pantalla de acceso. Recibirás un enlace para iniciar sesión. Una vez validado el acceso, podrás entrar a Mi Espacio, donde encontrarás tus colecciones, Apps Premium, ebooks, bonos y versiones imprimibles disponibles.",
       "route_intent": "iniciar_sesion",
       "knowledge_source": [
         "access.json",
@@ -118,13 +182,12 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "no_email_received",
       "question": "No recibí el correo de acceso",
       "category": "access",
       "priority": "high",
-      "answer": "Si no encuentras el correo de acceso, revisa tu bandeja principal, spam, promociones o correo no deseado. Si aún no aparece, puedes solicitar un nuevo enlace desde la pantalla de inicio de sesión.",
+      "answer": "Si no encuentras el correo de acceso, revisa la bandeja principal y las carpetas de spam, promociones o correo no deseado. Si todavía no aparece, solicita un nuevo enlace desde la pantalla de inicio de sesión.",
       "route_intent": "no_recibi_email",
       "knowledge_source": [
         "access.json",
@@ -133,13 +196,12 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "cannot_login",
       "question": "Compré y no puedo entrar",
       "category": "access",
       "priority": "high",
-      "answer": "Si no puedes acceder a tu experiencia, primero verifica que estás utilizando el mismo correo electrónico con el que realizaste tu compra en Shopify. Ese correo es el que permite identificar tus permisos y mostrar tus recursos correctamente.",
+      "answer": "Verifica primero que estés utilizando el mismo correo electrónico con el que realizaste la compra en nuestra tienda. Ese correo permite validar tus permisos y mostrar correctamente los recursos incluidos en tu colección. Si el problema continúa después de esta validación, sigue la ruta indicada para solicitar ayuda.",
       "route_intent": "problema_acceso",
       "knowledge_source": [
         "access.json",
@@ -150,13 +212,12 @@
       "escalate": false,
       "requires_validation": true
     },
-
     {
       "id": "cannot_find_collection",
       "question": "No veo mi colección",
       "category": "access",
       "priority": "high",
-      "answer": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
+      "answer": "Verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas comprobaciones la colección sigue sin aparecer, utiliza el Centro de Ayuda para que el equipo pueda revisar tu caso.",
       "route_intent": "no_veo_mi_kit",
       "knowledge_source": [
         "access.json",
@@ -167,13 +228,12 @@
       "escalate": true,
       "requires_validation": true
     },
-
     {
       "id": "where_is_my_app",
       "question": "¿Dónde encuentro mi App?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a la App incluida en tu experiencia.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Selecciona la colección que adquiriste y allí encontrarás la App Premium incluida en tu Kit Devocional Premium.",
       "route_intent": "acceder_app",
       "knowledge_source": [
         "routes.json",
@@ -182,13 +242,12 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "where_is_my_ebook",
       "question": "¿Dónde encuentro mi ebook?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder al ebook incluido en tu experiencia.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Selecciona la colección que adquiriste y accede al ebook principal incluido en tu Kit Devocional Premium.",
       "route_intent": "descargar_ebook",
       "knowledge_source": [
         "routes.json"
@@ -196,13 +255,12 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "where_are_bonus_resources",
       "question": "¿Dónde encuentro mis bonos?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los bonos complementarios incluidos en tu experiencia.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Selecciona la colección que adquiriste y accede a los bonos complementarios incluidos en tu Kit Devocional Premium.",
       "route_intent": "descargar_bonos",
       "knowledge_source": [
         "routes.json"
@@ -210,41 +268,40 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "where_are_printables",
-      "question": "¿Dónde encuentro los imprimibles?",
+      "question": "¿Dónde encuentro las versiones imprimibles?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los materiales imprimibles incluidos en tu experiencia.",
+      "answer": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Selecciona la colección que adquiriste y accede a las versiones imprimibles de los recursos incluidos en tu Kit Devocional Premium.",
       "route_intent": "descargar_imprimibles",
       "knowledge_source": [
+        "brand.json",
         "routes.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "continue_experience",
       "question": "¿Cómo continúo donde dejé mi experiencia?",
       "category": "navigation",
       "priority": "medium",
-      "answer": "Puedes continuar desde Mi Espacio, donde encontrarás acceso a Mis Colecciones, tus experiencias activas y los recursos disponibles para continuar tu recorrido.",
+      "answer": "Ingresa a Mi Espacio y abre Mis Colecciones. Allí podrás volver a la experiencia que adquiriste y continuar tu recorrido a tu propio ritmo.",
       "route_intent": "continuar_experiencia",
       "knowledge_source": [
-        "routes.json"
+        "routes.json",
+        "apps.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "contact_support",
-      "question": "¿Cómo contacto soporte?",
+      "question": "¿Cómo contacto a soporte?",
       "category": "support",
       "priority": "high",
-      "answer": "Si necesitas ayuda o tienes alguna consulta sobre tu colección, acceso, App, ebook o recursos disponibles, puedes comunicarte con nosotros a través del formulario disponible en el Centro de Ayuda.",
+      "answer": "Si tienes una consulta sobre tu colección, acceso, App Premium, ebook, bonos o versiones imprimibles, completa el formulario disponible en el Centro de Ayuda. Comparte únicamente los datos solicitados para que el equipo pueda revisar tu caso.",
       "route_intent": "acceder_centro_ayuda",
       "knowledge_source": [
         "routes.json",
@@ -253,26 +310,24 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "same_email",
       "question": "¿Debo usar el mismo correo de compra?",
       "category": "access",
       "priority": "high",
-      "answer": "Sí. El acceso a Apps, ebooks, bonos e imprimibles se valida mediante el mismo correo electrónico utilizado durante la compra en Shopify.",
+      "answer": "Sí. El acceso a la App Premium, el ebook, los bonos complementarios y las versiones imprimibles se valida mediante el mismo correo electrónico utilizado durante la compra en nuestra tienda.",
       "knowledge_source": [
         "access.json"
       ],
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "is_app_separate",
       "question": "¿La App se compra por separado?",
       "category": "product",
       "priority": "medium",
-      "answer": "No. La App Premium forma parte de la experiencia completa del Kit Devocional Premium.",
+      "answer": "No. La App Premium está incluida dentro de cada Kit Devocional Premium junto con el ebook principal, los bonos complementarios y las versiones imprimibles correspondientes.",
       "knowledge_source": [
         "products.json",
         "apps.json"
@@ -280,14 +335,14 @@
       "disclaimer": "none",
       "escalate": false
     },
-
     {
       "id": "need_personal_advice",
       "question": "Necesito consejo personal",
       "category": "sensitive",
       "priority": "high",
-      "answer": "Podemos compartir orientación devocional y recursos para reflexionar, pero este espacio no reemplaza apoyo profesional especializado.",
+      "answer": "🌿 En Hábitos con Dios encontrarás recursos devocionales para la reflexión, la oración y el crecimiento espiritual. Estos contenidos no reemplazan la orientación de un profesional ni la consejería pastoral profesional. Si atraviesas una situación sensible, busca el apoyo adecuado según tu necesidad.",
       "knowledge_source": [
+        "brand.json",
         "disclaimers.json",
         "escalation.json"
       ],
@@ -295,7 +350,6 @@
       "escalate": true
     }
   ],
-
   "faq_rules": {
     "prefer_specific_knowledge_files": true,
     "avoid_duplicate_long_answers": true,
@@ -305,6 +359,9 @@
     "fallback_to_disclaimers": true,
     "fallback_to_human_support": true,
     "escalate_sensitive_cases": true,
-    "do_not_load_full_knowledge_base_by_default": true
+    "do_not_load_full_knowledge_base_by_default": true,
+    "use_product_availability_from_products_json": true,
+    "use_launch_benefits_from_products_json": true,
+    "never_describe_active_products_as_prelaunch": true
   }
 }
