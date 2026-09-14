@@ -1,27 +1,36 @@
 {
   "knowledge_base": {
     "name": "Hábitos con Dios Knowledge Base",
-    "version": "1.1.0",
+
+    "version": "2.0.0",
+
     "status": "production_ready",
-    "description": "Base de conocimiento oficial de Hábitos con Dios para soporte, orientación, navegación, productos, Apps Premium, acceso y asistencia mediante inteligencia artificial.",
-    "supported_language": "es",
+
     "brand_name": "Hábitos con Dios",
 
+    "brand_message": "🌿 Pequeños hábitos, grandes transformaciones en la presencia de Dios.",
+
+    "description": "Base de conocimiento oficial de Hábitos con Dios para brindar orientación, información sobre Kits Devocionales Premium, Apps Premium, recursos devocionales, acceso, navegación y asistencia mediante inteligencia artificial.",
+
+    "supported_language": "es",
+
     "modules": {
-  "classification": "classification.json",
-  "brand": "brand.json",
-  "products": "products.json",
-  "apps": "apps.json",
-  "routes": "routes.json",
-  "access": "access.json",
-  "disclaimers": "disclaimers.json",
-  "escalation": "escalation.json",
-  "faq": "faq.json"
-},
+      "classification": "classification.json",
+      "brand": "brand.json",
+      "products": "products.json",
+      "apps": "apps.json",
+      "routes": "routes.json",
+      "access": "access.json",
+      "disclaimers": "disclaimers.json",
+      "escalation": "escalation.json",
+      "faq": "faq.json"
+    },
 
     "agent_behavior": {
       "persona": "Guía cálido, amable, respetuoso y profesional.",
+
       "golden_rule": "Siempre intentar resolver primero antes de pedir datos.",
+
       "resolution_strategy": [
         "guide_user",
         "solve_problem",
@@ -29,16 +38,18 @@
         "request_data",
         "escalate"
       ],
+
       "priority_order": [
-  "classification",
-  "products",
-  "apps",
-  "faq",
-  "routes",
-  "access",
-  "disclaimers",
-  "escalation"
-]
+        "classification",
+        "products",
+        "apps",
+        "brand",
+        "faq",
+        "routes",
+        "access",
+        "disclaimers",
+        "escalation"
+      ]
     },
 
     "response_rules": {
@@ -48,7 +59,8 @@
       "always_use_brand_tone": true,
       "avoid_technical_language": true,
       "prefer_guided_steps": true,
-      "never_invent_information": true
+      "never_invent_information": true,
+      "prefer_product_benefits_when_available": true
     },
 
     "disclaimer_strategy": {
@@ -61,6 +73,7 @@
         "advice",
         "light"
       ],
+
       "default_disclaimer": "none"
     },
 
@@ -82,9 +95,11 @@
         "Versiones Imprimibles"
       ],
 
-      "availability_policy": "Verificar disponibilidad en Shopify.",
+      "availability_policy": "La disponibilidad, beneficios especiales de lanzamiento y enlaces de acceso a los productos deben obtenerse desde products.json.",
 
-      "prelaunch_rule": "La IA puede explicar productos futuros, describir beneficios y mostrar qué incluyen, pero nunca debe afirmar disponibilidad comercial sin validación en Shopify."
+      "launch_benefit_policy": "Cuando corresponda, la IA puede informar beneficios especiales de lanzamiento definidos en cada producto.",
+
+      "product_presentation_rule": "Los productos deben presentarse como experiencias de crecimiento espiritual compuestas por recursos complementarios diseñados para fortalecer la relación con Dios, fomentar hábitos de fe y acercar a las personas a Su Palabra."
     },
 
     "support_strategy": {
@@ -102,7 +117,8 @@
       "purchase_guidance",
       "faq_responses",
       "spiritual_orientation",
-      "resource_discovery"
+      "resource_discovery",
+      "launch_benefit_information"
     ],
 
     "restricted_capabilities": [
