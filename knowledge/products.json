@@ -6,11 +6,17 @@
 
       "availability": {
   "status": "active",
-  "message": "Disponible actualmente.",
+  "message": "🌿 Disponible actualmente con un beneficio especial de lanzamiento para quienes desean comenzar este recorrido.",
   "shopify_label": "21 Días Más Cerca de Dios",
   "shopify_url": "https://skoolrenovae.store/products/21diasmascercadedios"
 },
-
+      
+"launch_benefit": {
+  "active": true,
+  "discount": "43%",
+  "installments": "3 cuotas sin interés",
+  "message": "🌿 Actualmente disponible con un beneficio especial de lanzamiento que incluye un 43% de descuento y 3 cuotas sin interés para quienes desean comenzar este recorrido de fe y crecimiento espiritual."
+},
       "commercial_stage": "active",
 
       "sales_description": "Kit Devocional Premium diseñado para ayudar a las personas a desarrollar una rutina espiritual diaria y fortalecer su relación con Dios mediante oración, reflexión, gratitud y práctica constante.",
@@ -64,13 +70,19 @@
       "name": "Pequeños Momentos con Dios",
 
       "availability": {
-  "status": "prelaunch",
-  "message": "Próximamente disponible.",
+  "status": "active",
+  "message": "🌿 Disponible actualmente con un beneficio especial de lanzamiento para quienes desean comenzar este recorrido.",
   "shopify_label": "Pequeños Momentos con Dios",
   "shopify_url": "https://skoolrenovae.store/products/pequenos-momentos-con-dios"
 },
-
-      "commercial_stage": "featured_prelaunch",
+      
+"launch_benefit": {
+  "active": true,
+  "discount": "43%",
+  "installments": "3 cuotas sin interés",
+  "message": "🌿 Actualmente disponible con un beneficio especial de lanzamiento que incluye un 43% de descuento y 3 cuotas sin interés para quienes desean comenzar este recorrido de fe y crecimiento espiritual."
+},
+       "commercial_stage": "active"
 
       "sales_description": "Kit Devocional Premium para familias que desean compartir la fe en casa mediante actividades sencillas, conversaciones significativas, oración y momentos de gratitud.",
 
@@ -116,7 +128,7 @@
       "printables": true,
       "requires_login": true,
 
-      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+      "prelaunch_message": null
     },
 
     {
@@ -124,13 +136,19 @@
       "name": "Cuando las Palabras Duelen",
 
      "availability": {
-  "status": "prelaunch",
-  "message": "Próximamente disponible.",
+  "status": "active",
+  "message": "🌿 Disponible actualmente con un beneficio especial de lanzamiento para quienes desean comenzar este recorrido.",
   "shopify_label": "Cuando las Palabras Duelen",
   "shopify_url": "https://skoolrenovae.store/products/cuando-las-palabras-duelen"
 },
-
-      "commercial_stage": "featured_prelaunch",
+      
+"launch_benefit": {
+  "active": true,
+  "discount": "43%",
+  "installments": "3 cuotas sin interés",
+  "message": "🌿 Actualmente disponible con un beneficio especial de lanzamiento que incluye un 43% de descuento y 3 cuotas sin interés para quienes desean comenzar este recorrido de fe y crecimiento espiritual."
+},
+      "commercial_stage": "active"
 
       "sales_description": "Kit Devocional Premium diseñado para acompañar a adolescentes, jóvenes y familias que enfrentan palabras hirientes, rechazo, bullying o cyberbullying.",
 
@@ -174,7 +192,7 @@
       "printables": true,
       "requires_login": true,
 
-      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+      "prelaunch_message": null
     },
 
     {
@@ -182,13 +200,19 @@
       "name": "El Hombre que Edifica su Hogar",
 
       "availability": {
-  "status": "prelaunch",
-  "message": "Próximamente disponible.",
+  "status": "active",
+  "message": "🌿 Disponible actualmente con un beneficio especial de lanzamiento para quienes desean comenzar este recorrido.",
   "shopify_label": "El Hombre que Edifica su Hogar",
   "shopify_url": "https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar"
 },
-
-      "commercial_stage": "featured_prelaunch",
+      
+"launch_benefit": {
+  "active": true,
+  "discount": "43%",
+  "installments": "3 cuotas sin interés",
+  "message": "🌿 Actualmente disponible con un beneficio especial de lanzamiento que incluye un 43% de descuento y 3 cuotas sin interés para quienes desean comenzar este recorrido de fe y crecimiento espiritual."
+},
+       "commercial_stage": "active"
 
       "sales_description": "Kit Devocional Premium creado para hombres cristianos que desean fortalecer su relación con Dios y liderar su hogar con humildad, carácter y propósito.",
 
@@ -232,7 +256,7 @@
       "printables": true,
       "requires_login": true,
 
-      "prelaunch_message": "Actualmente esta experiencia puede encontrarse en etapa de lanzamiento o disponibilidad limitada. Te recomendamos verificar Shopify para conocer las colecciones activas."
+      "prelaunch_message": null
     }
   ]
 }
