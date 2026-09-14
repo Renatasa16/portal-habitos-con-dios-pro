@@ -23,7 +23,7 @@
         "devocionales",
         "habitos"
       ],
-      "text": "🌷 Nos alegra poder acompañarte a través de estos recursos. Cada camino de fe es único y personal, por lo que los contenidos de Hábitos con Dios tienen un propósito devocional, educativo y de acompañamiento espiritual, respetando siempre el proceso y la realidad de cada persona."
+      "text": "🌷 Nos alegra que formes parte de este recorrido. Los contenidos de Hábitos con Dios tienen un propósito devocional y educativo, pensado para inspirar la reflexión, la oración y el crecimiento espiritual, respetando siempre la realidad y el camino de cada persona."
     },
 
     "advice": {
@@ -32,7 +32,7 @@
         "toma_de_decisiones",
         "orientacion_personal"
       ],
-      "text": "💛 Con cariño podemos compartir recursos para reflexionar, principios inspirados en la fe y orientación de carácter devocional. Sin embargo, cada situación personal tiene circunstancias únicas, por lo que este espacio no sustituye el acompañamiento profesional ni la orientación especializada necesaria para decisiones importantes."
+      "text": "💛 Podemos compartir recursos para reflexionar, principios inspirados en la fe y contenidos de carácter devocional. Sin embargo, cada situación personal es única y puede requerir orientación especializada. Este espacio no sustituye apoyo profesional ni asesoramiento específico para la toma de decisiones importantes."
     },
 
     "family": {
@@ -76,6 +76,7 @@
         "riesgo",
         "autolesion",
         "pensamientos_de_autolesion",
+        "pensamientos_suicidas",
         "emergencia"
       ],
       "text": "🚨 Gracias por confiar en nosotros y compartir esta situación. Lo que describes parece requerir atención inmediata por parte de una persona capacitada. Aunque podemos ofrecer acompañamiento espiritual y palabras de ánimo, este espacio no reemplaza servicios de emergencia ni intervención profesional. Si existe peligro, violencia, abuso, amenazas o cualquier riesgo para tu seguridad o la de otra persona, busca ayuda inmediata de una autoridad local, servicio de emergencia o profesional calificado."
@@ -86,6 +87,8 @@
         "asesoria_legal",
         "asesoria_financiera",
         "problemas_economicos",
+        "problemas_financieros",
+        "deudas",
         "problemas_juridicos"
       ],
       "text": "📘 Podemos compartir principios generales de reflexión y orientación inspirada en la fe. Sin embargo, este espacio no sustituye asesoría legal, financiera, contable ni acompañamiento profesional especializado. Para situaciones específicas, te recomendamos consultar con un profesional calificado que pueda orientarte de acuerdo con tus circunstancias particulares."
@@ -97,7 +100,7 @@
         "consultas_complejas",
         "casos_especiales"
       ],
-      "text": "💜 Gracias por abrir tu corazón y permitirnos acompañarte en este momento. Desde Hábitos con Dios podemos compartir recursos devocionales, palabras de ánimo y contenidos orientados a la reflexión, pero no sustituimos atención médica, apoyo psicológico, terapia, intervención escolar, consejería pastoral profesional ni asesoría legal o financiera. Si estás atravesando una situación que afecte tu seguridad, bienestar o integridad, te recomendamos buscar ayuda inmediata de una persona de confianza, un profesional capacitado o la autoridad correspondiente. Nuestro deseo es acompañarte con cuidado, responsabilidad y respeto, orientándote siempre hacia el apoyo más adecuado para tu situación."
+      "text": "💜 Gracias por confiar y compartir lo que estás viviendo. Podemos ofrecer recursos devocionales, reflexiones y palabras de ánimo inspiradas en la fe. Si esta situación requiere atención especializada o está afectando significativamente tu bienestar, te recomendamos buscar el apoyo de un profesional capacitado o de una persona de confianza."
     }
   },
 
