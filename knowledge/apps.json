@@ -6,14 +6,32 @@
       "product_id": "21dias",
       "status": "active",
 
-      "description": "App Premium diseñada para acompañar el desarrollo de hábitos espirituales diarios mediante reflexión, oración, gratitud y seguimiento de progreso.",
+      "description": "Un espacio creado especialmente para mujeres que desean hacer una pausa en medio de la rutina, encontrar paz en la presencia de Dios y desarrollar hábitos espirituales que fortalezcan su fe, su propósito y su relación con Él cada día.",
 
-      "purpose": "Ayudar al usuario a mantener una relación más cercana y constante con Dios mediante prácticas simples y sostenibles.",
+      "purpose": "Inspirar a cada mujer a reservar un momento para Dios, cultivando una vida de oración, gratitud y reflexión que transforme su día a día y la acerque cada vez más a Su amor y Su Palabra.",
 
       "target_audience": [
+        "mujeres",
         "mujeres cristianas",
-        "adultos cristianos",
-        "personas que desean fortalecer sus hábitos espirituales"
+        "mujeres que desean acercarse a Dios",
+        "mujeres que buscan desarrollar hábitos espirituales",
+        "mujeres que desean fortalecer su fe",
+        "mujeres que buscan vivir con propósito"
+      ],
+
+      "keywords": [
+        "devocional para mujeres",
+        "tiempo con Dios",
+        "hábitos espirituales",
+        "crecimiento espiritual femenino",
+        "oración diaria",
+        "gratitud",
+        "mujeres de fe",
+        "acercarse a Dios",
+        "reflexión cristiana",
+        "fortalecer la fe",
+        "propósito de vida",
+        "vida cristiana"
       ],
 
       "features": [
@@ -28,11 +46,12 @@
       ],
 
       "what_users_will_find": [
-        "Reflexiones guiadas",
-        "Espacios para registrar aprendizajes",
-        "Motivación diaria",
-        "Seguimiento de crecimiento espiritual",
-        "Herramientas para desarrollar constancia"
+        "Reflexiones inspiradas en la Palabra de Dios",
+        "Espacios personales para oración y gratitud",
+        "Herramientas para fortalecer hábitos espirituales",
+        "Motivación para vivir cada día con propósito",
+        "Acompañamiento para crecer en la fe",
+        "Momentos de paz y encuentro con Dios"
       ],
 
       "requires_login": true,
@@ -50,18 +69,36 @@
       "id": "momentos_con_dios_en_familia",
       "name": "Momentos con Dios en Familia",
       "product_id": "familia",
-      "status": "prelaunch",
+      "status": "active",
 
-      "description": "App Premium diseñada para compartir momentos de fe en familia mediante actividades, conversaciones guiadas y experiencias sencillas para niños y adultos.",
+      "description": "Un espacio diseñado para ayudar a padres, madres y cuidadores a crear momentos significativos junto a sus hijos, fortaleciendo los vínculos familiares y acercando a cada integrante del hogar a Dios a través de conversaciones, actividades y experiencias llenas de amor, fe y propósito.",
 
-      "purpose": "Facilitar experiencias espirituales cotidianas que fortalezcan la conexión familiar y la fe compartida.",
+      "purpose": "Inspirar a las familias a descubrir la presencia de Dios en los pequeños momentos de la vida cotidiana, construyendo recuerdos, conversaciones y hábitos que fortalezcan la unión familiar y permanezcan en el corazón de grandes y pequeños.",
 
       "target_audience": [
         "familias",
         "padres",
         "madres",
+        "cuidadores",
         "abuelos",
-        "niños"
+        "familias con niños",
+        "personas que desean acercar a sus hijos a Dios",
+        "familias que buscan fortalecer sus valores"
+      ],
+
+      "keywords": [
+        "momentos con Dios en familia",
+        "devocionales familiares",
+        "fe en familia",
+        "actividades cristianas para niños",
+        "educación espiritual en el hogar",
+        "oración en familia",
+        "valores familiares",
+        "crianza con propósito",
+        "familias con niños",
+        "acercar a los hijos a Dios",
+        "unión familiar",
+        "tiempo de calidad en familia"
       ],
 
       "features": [
@@ -74,16 +111,15 @@
       ],
 
       "what_users_will_find": [
-        "Ideas para compartir en familia",
-        "Dinámicas para niños",
-        "Espacios de conversación",
-        "Momentos de gratitud",
-        "Experiencias devocionales familiares"
+        "Ideas para compartir momentos significativos en familia",
+        "Actividades para fortalecer vínculos",
+        "Conversaciones llenas de propósito",
+        "Momentos para agradecer y orar juntos",
+        "Recursos para acercar a los niños a Dios",
+        "Experiencias que fortalecen la fe familiar"
       ],
 
       "requires_login": true,
-
-      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
 
       "navigation_route": [
         "Inicio",
@@ -98,16 +134,37 @@
       "id": "diario_de_paz_digital",
       "name": "Diario de Paz Digital",
       "product_id": "palabras_duelen",
-      "status": "prelaunch",
+      "status": "active",
 
-      "description": "App Premium orientada a la reflexión personal, journaling guiado y fortalecimiento de la identidad en Dios.",
+      "description": "Un refugio de esperanza para adolescentes, jóvenes y jóvenes adultos que han experimentado críticas, rechazo, bullying o cyberbullying, y desean fortalecer su identidad, sanar heridas emocionales y descubrir el valor que tienen a los ojos de Dios.",
 
-      "purpose": "Acompañar procesos de crecimiento personal y construcción de hábitos de paz desde una perspectiva cristiana.",
+      "purpose": "Acompañar a cada joven en un proceso de reflexión, sanidad emocional y crecimiento personal, recordándole que su identidad no está definida por las palabras de otros, sino por el amor, la verdad y las promesas que Dios tiene para su vida.",
 
       "target_audience": [
         "adolescentes",
         "jóvenes",
-        "familias"
+        "jóvenes adultos",
+        "personas que han sufrido bullying",
+        "personas que han sufrido cyberbullying",
+        "personas que desean fortalecer su autoestima",
+        "personas que buscan sanar heridas emocionales",
+        "personas que desean fortalecer su identidad en Dios"
+      ],
+
+      "keywords": [
+        "identidad en Dios",
+        "sanidad emocional",
+        "bullying",
+        "cyberbullying",
+        "rechazo",
+        "autoestima cristiana",
+        "jóvenes cristianos",
+        "valor personal",
+        "heridas emocionales",
+        "paz interior",
+        "esperanza",
+        "amor de Dios",
+        "fortalecer la identidad"
       ],
 
       "features": [
@@ -120,16 +177,15 @@
       ],
 
       "what_users_will_find": [
-        "Ejercicios de reflexión",
-        "Registro de pensamientos",
-        "Seguimiento de crecimiento personal",
-        "Recordatorios sobre identidad en Dios",
-        "Prácticas de paz y autocuidado"
+        "Ejercicios de reflexión guiada",
+        "Espacios seguros para expresar pensamientos y emociones",
+        "Recordatorios sobre identidad y propósito",
+        "Mensajes de esperanza basados en la Palabra de Dios",
+        "Herramientas para fortalecer la autoestima",
+        "Recursos para sanar y avanzar con confianza"
       ],
 
       "requires_login": true,
-
-      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
 
       "sensitive_content": true,
 
@@ -146,17 +202,36 @@
       "id": "mi_hogar_con_proposito",
       "name": "Mi Hogar con Propósito",
       "product_id": "hombre_hogar",
-      "status": "prelaunch",
+      "status": "active",
 
-      "description": "App Premium diseñada para acompañar a hombres cristianos en hábitos de oración, discernimiento, crecimiento espiritual y liderazgo familiar responsable.",
+      "description": "Un espacio diseñado para hombres de familia que desean crecer espiritualmente, fortalecer su liderazgo dentro del hogar y construir una vida fundamentada en los principios y valores de la Palabra de Dios.",
 
-      "purpose": "Ayudar a desarrollar hábitos espirituales prácticos que fortalezcan la relación con Dios y el servicio dentro del hogar.",
+      "purpose": "Inspirar a los hombres a desarrollar hábitos que fortalezcan su relación con Dios y los ayuden a liderar a sus familias con amor, sabiduría, integridad y propósito en cada etapa de la vida.",
 
       "target_audience": [
-        "hombres cristianos",
+        "hombres",
         "esposos",
         "padres",
-        "futuros padres"
+        "futuros padres",
+        "hombres de familia",
+        "hombres que desean liderar su hogar",
+        "hombres que desean crecer espiritualmente",
+        "hombres que buscan vivir conforme a la Palabra de Dios"
+      ],
+
+      "keywords": [
+        "liderazgo espiritual",
+        "hombres de fe",
+        "padres cristianos",
+        "liderazgo familiar",
+        "hombre con propósito",
+        "esposo y padre",
+        "familia cristiana",
+        "valores bíblicos",
+        "crecimiento espiritual masculino",
+        "liderar el hogar",
+        "paternidad con propósito",
+        "hombre de Dios"
       ],
 
       "features": [
@@ -169,16 +244,15 @@
       ],
 
       "what_users_will_find": [
-        "Reflexiones para liderazgo espiritual",
-        "Espacios para oración",
-        "Herramientas de organización",
-        "Seguimiento de hábitos",
-        "Recursos para crecimiento personal"
+        "Reflexiones basadas en principios bíblicos",
+        "Espacios de oración personal",
+        "Herramientas para fortalecer el liderazgo familiar",
+        "Hábitos para crecer espiritualmente",
+        "Inspiración para vivir con integridad y propósito",
+        "Recursos para construir un hogar guiado por Dios"
       ],
 
       "requires_login": true,
-
-      "availability_message": "La disponibilidad comercial puede variar. Te recomendamos verificar en Shopify las colecciones activas actualmente.",
 
       "navigation_route": [
         "Inicio",
