@@ -58,10 +58,17 @@
         "action": "answer"
       },
       {
-        "intent": "availability_question",
-        "action": "answer"
-      }
-    ],
+  "intent": "availability_question",
+  "action": "answer"
+},
+{
+  "intent": "brand_information",
+  "action": "answer"
+},
+{
+  "intent": "faq_information",
+  "action": "answer"
+},
 
     "needs_additional_validation": [
       {
@@ -175,7 +182,7 @@
 
       "payment_review": "Gracias por contactarnos. Queremos ayudarte a revisar lo ocurrido con tu compra. Para ello, necesitaremos algunos datos que nos permitan identificar la operación y brindarte una respuesta más precisa.",
 
-      "sensitive_case": "Gracias por confiar en nosotros y compartir lo que estás viviendo. Queremos acompañarte con respeto y cuidado. Aunque nuestros recursos pueden ofrecer orientación y reflexión, algunas situaciones requieren apoyo especializado. Por eso, te animamos a buscar la ayuda adecuada según tus necesidades y circunstancias."
+      "sensitive_case": "💜 Gracias por confiar en nosotros y compartir lo que estás viviendo. Nuestros recursos pueden ofrecer reflexión y orientación de carácter devocional. Sin embargo, algunas situaciones requieren apoyo especializado, por lo que te animamos a buscar la ayuda adecuada de acuerdo con tus necesidades y circunstancias."
     },
 
     "agent_rules": {
@@ -183,6 +190,7 @@
       "always_show_routes_before_escalation": true,
       "always_validate_purchase_email": true,
       "always_use_disclaimers_when_required": true,
+      "always_use_brand_tone": true,
 
       "fallback_to_human_review": true,
 
