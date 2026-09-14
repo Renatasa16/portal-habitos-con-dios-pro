@@ -68,8 +68,8 @@
 {
   "intent": "faq_information",
   "action": "answer"
-},
-
+}
+],
     "needs_additional_validation": [
       {
         "intent": "cannot_login",
