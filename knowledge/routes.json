@@ -2,631 +2,561 @@
   "navigation_routes": [
     {
       "intent": "comprar_kit",
-
       "title": "Quiero comprar una colección",
       "aliases": [
-  "comprar",
-  "comprar kit",
-  "comprar colección",
-  "comprar una colección",
-  "quiero comprar",
-  "quiero adquirir",
-  "adquirir colección",
-  "adquirir kit",
-  "comprar producto",
-  "cómo comprar",
-  "como comprar",
-  "dónde comprar",
-  "donde comprar",
-  "quiero comenzar una experiencia",
-  "quiero empezar una experiencia",
-  "quiero adquirir una experiencia",
-  "colecciones disponibles para comprar",
-  "quiero ver las colecciones",
-  "quiero una colección",
-  "quiero comprar un devocional",
-  "quiero comprar un kit devocional",
-  "cómo adquiero una colección",
-  "como adquiero una colección",
-  "cómo puedo comprar",
-  "como puedo comprar",
-  "shopify",
-  "hacer una compra",
-  "realizar una compra"
-],
-
+        "comprar",
+        "comprar kit",
+        "comprar colección",
+        "comprar una colección",
+        "quiero comprar",
+        "quiero adquirir",
+        "adquirir colección",
+        "adquirir kit",
+        "comprar producto",
+        "cómo comprar",
+        "como comprar",
+        "dónde comprar",
+        "donde comprar",
+        "quiero comprar una nueva experiencia",
+        "quiero adquirir una nueva experiencia",
+        "quiero comenzar con una nueva colección",
+        "colecciones disponibles para comprar",
+        "quiero una colección",
+        "quiero comprar un devocional",
+        "quiero comprar un kit devocional",
+        "cómo adquiero una colección",
+        "como adquiero una colección",
+        "cómo puedo comprar",
+        "como puedo comprar",
+        "shopify",
+        "hacer una compra",
+        "realizar una compra"
+      ],
       "route": [
         "Inicio",
         "Explorar Colecciones",
         "Seleccionar colección",
-        "Botón Adquirir",
+        "Adquirir",
         "Shopify"
       ],
-
-      "response": "Si deseas comenzar una nueva experiencia, dirígete a Explorar Colecciones, selecciona la colección que más te interese y utiliza la opción Adquirir. La compra se realiza de forma segura a través de Shopify.",
-
+      "response": "Para comenzar una nueva experiencia, dirígete a Explorar Colecciones, selecciona la colección que más te interese y utiliza la opción Adquirir. La compra se realiza de forma segura a través de Shopify y no necesitas iniciar sesión en el portal para conocer las colecciones disponibles.",
       "route_presentation": {
-  "hero_title": "🛍️ Cómo adquirir una nueva colección",
-
-  "hero_subtitle": "Te acompañamos paso a paso para que puedas acceder a la experiencia devocional que mejor se adapte a tu momento de vida.",
-
-  "steps_title": "📍 Ruta recomendada",
-
-  "closing_text": "✨ Cada colección fue diseñada para acompañarte en tu crecimiento espiritual a través de recursos prácticos, herramientas digitales y experiencias significativas."
-},
-
+        "hero_title": "🛍️ Cómo adquirir una nueva colección",
+        "hero_subtitle": "Te guiamos paso a paso para que puedas conocer y adquirir la experiencia devocional que mejor se adapte a tu momento de vida.",
+        "steps_title": "📍 Ruta pública recomendada",
+        "closing_text": "✨ Cada colección fue diseñada para acompañarte en tu crecimiento espiritual mediante una App exclusiva, un ebook y bonos digitales que podrás disfrutar a tu propio ritmo."
+      },
       "availability_note": "La disponibilidad comercial puede variar según las colecciones activas en Shopify."
     },
-
     {
-  "intent": "explorar_colecciones",
-
-  "title": "Quiero conocer las colecciones disponibles",  
+      "intent": "explorar_colecciones",
+      "title": "Quiero conocer las colecciones disponibles",
       "aliases": [
-  "colecciones",
-  "colecciones disponibles",
-  "conocer colecciones",
-  "ver colecciones",
-  "explorar colecciones",
-  "qué colecciones hay",
-  "que colecciones hay",
-  "qué experiencias hay",
-  "que experiencias hay",
-  "qué puedo comprar",
-  "que puedo comprar",
-  "qué productos tienen",
-  "que productos tienen",
-  "ver productos",
-  "ver experiencias",
-  "colecciones activas",
-  "experiencias disponibles",
-  "kits disponibles",
-  "kits devocionales",
-  "qué kits tienen",
-  "que kits tienen",
-  "quiero conocer las colecciones",
-  "quiero ver las colecciones",
-  "quiero explorar las colecciones",
-  "quiero conocer los productos",
-  "qué opciones hay",
-  "que opciones hay",
-  "qué experiencias ofrecen",
-  "que experiencias ofrecen",
-  "productos disponibles",
-  "catálogo",
-  "catalogo",
-  "ver catálogo",
-  "ver catalogo"
-],
-
-  "route": [
-    "Inicio",
-    "Explorar Colecciones"
-  ],
-
-  "response": "Desde Explorar Colecciones puedes conocer las experiencias disponibles, descubrir qué incluye cada Kit Devocional Premium y explorar en detalle las Apps, ebooks, bonos y recursos incluidos en cada propuesta.",
-
-  "route_presentation": {
-    "hero_title": "📚 Explorar Colecciones Disponibles",
-
-    "hero_subtitle": "Descubre las experiencias devocionales disponibles y encuentra la colección que mejor se adapte a tu etapa de vida, tus necesidades y tu crecimiento espiritual.",
-
-    "steps_title": "📍 Dónde encontrarlas",
-
-    "closing_text": "✨ Cada colección fue creada para ayudarte a crecer en tu fe mediante recursos prácticos, herramientas digitales y experiencias diseñadas para acompañarte día a día."
-  }
-},
-
+        "colecciones",
+        "colecciones disponibles",
+        "conocer colecciones",
+        "ver colecciones",
+        "explorar colecciones",
+        "qué colecciones hay",
+        "que colecciones hay",
+        "qué experiencias hay",
+        "que experiencias hay",
+        "qué puedo comprar",
+        "que puedo comprar",
+        "qué productos tienen",
+        "que productos tienen",
+        "ver productos",
+        "ver experiencias",
+        "colecciones activas",
+        "experiencias disponibles",
+        "kits disponibles",
+        "kits devocionales",
+        "qué kits tienen",
+        "que kits tienen",
+        "quiero conocer las colecciones",
+        "quiero ver las colecciones",
+        "quiero explorar las colecciones",
+        "quiero conocer los productos",
+        "qué opciones hay",
+        "que opciones hay",
+        "qué experiencias ofrecen",
+        "que experiencias ofrecen",
+        "productos disponibles",
+        "catálogo",
+        "catalogo",
+        "ver catálogo",
+        "ver catalogo"
+      ],
+      "route": [
+        "Inicio",
+        "Explorar Colecciones"
+      ],
+      "response": "Puedes ingresar libremente a Explorar Colecciones para conocer las experiencias disponibles, descubrir qué incluye cada colección y explorar sus Apps, ebooks, bonos y recursos. No necesitas iniciar sesión para consultar el catálogo.",
+      "route_presentation": {
+        "hero_title": "📚 Explorar Colecciones Disponibles",
+        "hero_subtitle": "Descubre las experiencias devocionales disponibles y encuentra la colección que mejor se adapte a tu etapa de vida, tus necesidades y tu crecimiento espiritual.",
+        "steps_title": "📍 Ruta pública",
+        "closing_text": "✨ Cada colección fue creada para ayudarte a crecer en tu fe mediante recursos prácticos, herramientas digitales y experiencias diseñadas para acompañarte día a día."
+      }
+    },
     {
-  "intent": "acceder_app",
-
-  "title": "Quiero acceder a mi App",
+      "intent": "acceder_app",
+      "title": "Quiero acceder a mi App",
       "aliases": [
-  "app",
-  "mi app",
-  "abrir app",
-  "entrar a la app",
-  "acceder a la app",
-  "como entrar a la app",
-  "cómo entrar a la app",
-  "abrir aplicación",
-  "ingresar a mi aplicación",
-  "app premium"
-],
-
-  "route": [
-    "Inicio",
-    "Mi Espacio",
-    "Mis Colecciones",
-    "Seleccionar colección adquirida",
-    "Entrar a la App"
-  ],
-
-  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a la App incluida en tu experiencia.",
-
-  "route_presentation": {
-    "hero_title": "📱 Cómo acceder a tu App Premium",
-
-    "hero_subtitle": "Te guiamos paso a paso para que puedas ingresar a tu aplicación y aprovechar todos los recursos incluidos en tu experiencia devocional.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Tu App Premium fue diseñada para acompañarte cada día con herramientas prácticas, recursos exclusivos y experiencias que fortalecerán tu crecimiento espiritual."
-  }
-},
-
+        "app",
+        "mi app",
+        "abrir app",
+        "abrir la app",
+        "quiero abrir mi app",
+        "entrar a la app",
+        "quiero entrar a la app",
+        "acceder a la app",
+        "quiero acceder a mi app",
+        "como entrar a la app",
+        "cómo entrar a la app",
+        "abrir aplicación",
+        "abrir la aplicación",
+        "acceder a la aplicación",
+        "ingresar a la app",
+        "ingresar a mi aplicación",
+        "ingresar a la aplicación",
+        "app exclusiva",
+        "abrir mi aplicación",
+        "abrir la aplicación",
+        "entrar a mi aplicación",
+        "app premium"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Entrar a la App"
+      ],
+      "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará automáticamente a la pantalla de acceso. Después de iniciar sesión, abre Mis Colecciones, identifica la colección que adquiriste y selecciona Entrar a la App.",
+      "route_presentation": {
+        "hero_title": "📱 Cómo acceder a tu App",
+        "hero_subtitle": "Sigue esta ruta para ingresar a la App incluida en tu colección y continuar disfrutando de tu experiencia devocional.",
+        "steps_title": "🔐 Ruta con inicio de sesión",
+        "closing_text": "✨ Tu App fue diseñada para acompañarte con herramientas prácticas y recursos que te ayudarán a cultivar la constancia y crecer en tu caminar con Dios."
+      }
+    },
     {
-  "intent": "continuar_experiencia",
-
-  "title": "Quiero continuar donde dejé mi experiencia",
+      "intent": "continuar_experiencia",
+      "title": "Quiero continuar donde dejé mi experiencia",
       "aliases": [
-  "continuar experiencia",
-  "seguir experiencia",
-  "retomar experiencia",
-  "continuar donde quedé",
-  "continuar donde deje",
-  "retomar donde quedé",
-  "retomar donde deje",
-  "seguir devocional",
-  "ver progreso"
-],
-
-  "route": [
-    "Inicio",
-    "Mi Espacio",
-    "Mis Colecciones",
-    "Continuar experiencia"
-  ],
-
-  "response": "Puedes retomar tu recorrido desde Mi Espacio. Allí encontrarás acceso a Mis Colecciones, tus experiencias activas y los recursos disponibles para continuar donde lo dejaste.",
-
-  "route_presentation": {
-    "hero_title": "▶️ Continuar tu experiencia",
-
-    "hero_subtitle": "Retoma tu recorrido desde Mi Espacio y continúa avanzando con acceso rápido a tus colecciones, recursos y progreso disponible.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Tu progreso se guarda para que puedas continuar cada experiencia a tu propio ritmo, manteniendo la constancia y disfrutando cada paso de tu proceso de crecimiento."
-  }
-},
-
+        "continuar experiencia",
+        "seguir experiencia",
+        "retomar experiencia",
+        "continuar donde quedé",
+        "continuar donde quede",
+        "continuar donde dejé",
+        "continuar donde deje",
+        "retomar donde quedé",
+        "retomar donde quede",
+        "retomar donde dejé",
+        "retomar donde deje",
+        "seguir devocional",
+        "continuar mi recorrido",
+        "retomar mi recorrido",
+        "continuar mi experiencia",
+        "regar mi hábito",
+        "regar mi habito",
+        "ver progreso",
+        "continuar progreso"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Regar mi hábito",
+        "Continuar"
+      ],
+      "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará primero a la pantalla de acceso. Luego dirígete a Regar mi hábito, donde encontrarás tus experiencias activas y podrás seleccionar Continuar para retomar tu recorrido.",
+      "route_presentation": {
+        "hero_title": "▶️ Continuar tu experiencia",
+        "hero_subtitle": "Retoma tu recorrido desde Mi Espacio y continúa avanzando desde el punto guardado en tu experiencia.",
+        "steps_title": "🔐 Ruta con inicio de sesión",
+        "closing_text": "✨ Tu progreso se guarda para que puedas continuar a tu propio ritmo, cultivar la constancia y disfrutar cada paso de tu camino con Dios."
+      }
+    },
     {
-  "intent": "descargar_ebook",
-
-  "title": "Quiero descargar mi ebook",
+      "intent": "descargar_ebook",
+      "title": "Quiero descargar mi ebook",
       "aliases": [
-  "ebook",
-  "mi ebook",
-  "descargar",
-  "descargar ebook",
-  "descargar mi ebook",
-  "donde esta mi ebook",
-  "dónde está mi ebook",
-  "no encuentro mi ebook",
-  "como descargo mi ebook",
-  "cómo descargo mi ebook",
-  "libro principal",
-  "ebook principal"
-  ],
-
-  "route": [
-    "Inicio",
-    "Mi Espacio",
-    "Mis Colecciones",
-    "Seleccionar colección adquirida",
-    "Ebook Principal",
-    "Descargar"
-  ],
-
-  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder al ebook incluido en tu experiencia.",
-
-  "route_presentation": {
-    "hero_title": "📘 Descargar tu Ebook Principal",
-
-    "hero_subtitle": "Accede al ebook principal incluido en tu experiencia y disfruta de su contenido cuando lo necesites, desde cualquier dispositivo compatible.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Tu ebook fue diseñado para acompañarte durante todo el proceso de aprendizaje, reflexión y crecimiento espiritual que forma parte de tu experiencia."
-  }
-},
-
+        "ebook",
+        "mi ebook",
+        "descargar ebook",
+        "descargar mi ebook",
+        "donde esta mi ebook",
+        "dónde está mi ebook",
+        "no encuentro mi ebook",
+        "como descargo mi ebook",
+        "cómo descargo mi ebook",
+        "libro principal",
+        "ebook principal",
+        "acceder a mi ebook",
+        "abrir mi ebook",
+        "descargar libro"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Ebook principal",
+        "Descargar PDF"
+      ],
+      "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará a la pantalla de acceso. Luego abre Mis Colecciones, selecciona la colección que adquiriste, busca la sección Ebook principal y utiliza la opción Descargar PDF.",
+      "route_presentation": {
+        "hero_title": "📘 Descargar tu Ebook Principal",
+        "hero_subtitle": "Accede al ebook incluido en tu colección y disfruta de su contenido cuando lo necesites desde un dispositivo compatible.",
+        "steps_title": "🔐 Ruta con inicio de sesión",
+        "closing_text": "✨ Tu ebook fue diseñado para acompañar tus momentos de aprendizaje, reflexión y crecimiento espiritual durante toda la experiencia."
+      }
+    },
     {
-  "intent": "descargar_bonos",
-
-  "title": "Quiero descargar mis bonos",
+      "intent": "descargar_bonos",
+      "title": "Quiero descargar mis bonos",
       "aliases": [
-  "bonos",
-  "mis bonos",
-  "bonificaciones",
-  "bonos incluidos",
-  "donde estan los bonos",
-  "dónde están los bonos",
-  "descargar bonos",
-  "descargar mis bonos",
-  "no encuentro los bonos",
-  "acceder a los bonos",
-  "bonos complementarios"
-],
-
-  "route": [
-    "Inicio",
-    "Mi Espacio",
-    "Mis Colecciones",
-    "Seleccionar colección adquirida",
-    "Bonos Incluidos",
-    "Descargar"
-  ],
-
-  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los bonos complementarios incluidos en tu experiencia.",
-
-  "route_presentation": {
-    "hero_title": "🎁 Acceder a tus Bonificaciones",
-
-    "hero_subtitle": "Descubre y descarga todos los recursos complementarios incluidos en tu experiencia para potenciar tu aprendizaje, reflexión y crecimiento espiritual.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Cada bonificación fue creada para enriquecer tu experiencia, ayudarte a poner en práctica lo aprendido y acompañarte en tu crecimiento espiritual de manera integral."
-  }
-},
-
+        "bonos",
+        "mis bonos",
+        "bonificaciones",
+        "bonos incluidos",
+        "donde estan los bonos",
+        "dónde están los bonos",
+        "descargar bonos",
+        "descargar mis bonos",
+        "no encuentro los bonos",
+        "acceder a los bonos",
+        "abrir mis bonos",
+        "bonos complementarios",
+        "recursos complementarios"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Bonos incluidos",
+        "Descargar PDF"
+      ],
+      "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará a la pantalla de acceso. Luego abre Mis Colecciones, selecciona la colección que adquiriste, busca la sección Bonos incluidos y utiliza la opción Descargar PDF en el recurso que desees.",
+      "route_presentation": {
+        "hero_title": "🎁 Acceder a tus Bonos",
+        "hero_subtitle": "Descubre y descarga los recursos complementarios incluidos en tu colección para enriquecer tu experiencia.",
+        "steps_title": "🔐 Ruta con inicio de sesión",
+        "closing_text": "✨ Cada bono fue creado para ayudarte a profundizar lo aprendido y acompañar tu crecimiento espiritual de una manera práctica."
+      }
+    },
     {
-  "intent": "descargar_imprimibles",
-
-  "title": "Quiero descargar los imprimibles",
-      
-"aliases": [
-  "imprimibles",
-  "versiones imprimibles",
-  "descargar imprimibles",
-  "descargar versiones imprimibles",
-  "material para imprimir",
-  "documentos para imprimir",
-  "recursos imprimibles",
-  "donde estan los imprimibles",
-  "dónde están los imprimibles"
-],
-  "route": [
-    "Inicio",
-    "Mi Espacio",
-    "Mis Colecciones",
-    "Seleccionar colección adquirida",
-    "Versiones Imprimibles",
-    "Descargar"
-  ],
-
-  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí podrás seleccionar la colección que adquiriste y acceder a los materiales imprimibles incluidos en tu experiencia.",
-
-  "route_presentation": {
-    "hero_title": "🖨️ Descargar Versiones Imprimibles",
-
-    "hero_subtitle": "Accede a todos los materiales imprimibles incluidos en tu experiencia para complementar tu aprendizaje, reflexión y crecimiento espiritual también fuera de la pantalla.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Cada recurso imprimible fue diseñado para ayudarte a poner en práctica lo aprendido, acompañar tus momentos de reflexión y enriquecer tu experiencia de manera sencilla y accesible."
-  }
-},
-
-    {
-  "intent": "acceder_centro_ayuda",
-
-  "title": "Quiero contactar soporte",
+      "intent": "descargar_imprimibles",
+      "title": "Quiero descargar los imprimibles",
       "aliases": [
-  "soporte",
-  "contactar soporte",
-  "necesito ayuda",
-  "necesito soporte",
-  "ayuda",
-  "centro de ayuda",
-  "quiero ayuda",
-  "contactar ayuda",
-  "hablar con soporte",
-  "hablar con alguien",
-  "quiero contactar soporte",
-  "quiero contactar ayuda",
-  "abrir ticket",
-  "enviar consulta",
-  "hacer una consulta",
-  "necesito asistencia",
-  "asistencia",
-  "soporte técnico",
-  "soporte tecnico",
-  "resolver un problema",
-  "tengo un problema",
-  "tengo una consulta",
-  "cómo contacto soporte",
-  "como contacto soporte",
-  "cómo contacto ayuda",
-  "como contacto ayuda",
-  "dónde está el centro de ayuda",
-  "donde esta el centro de ayuda",
-  "cómo enviar una consulta",
-  "como enviar una consulta",
-  "quiero reportar un problema",
-  "necesito comunicarme con ustedes",
-  "necesito contactarlos",
-  "contacto",
-  "formulario de contacto"
-],
-
-  "route": [
-    "Inicio",
-    "Centro de Ayuda",
-    "Completar formulario",
-    "Enviar consulta"
-  ],
-
-  "response": "Si necesitas ayuda adicional, puedes acceder al Centro de Ayuda y completar el formulario de contacto. Una vez recibida tu consulta, nuestro equipo podrá revisarla y acompañarte con la orientación adecuada según tu situación.",
-
-  "route_presentation": {
-    "hero_title": "🤝 Centro de Ayuda",
-
-    "hero_subtitle": "Estamos aquí para acompañarte. Si necesitas asistencia, orientación o resolver alguna situación relacionada con tu experiencia, puedes contactarnos desde el Centro de Ayuda.",
-
-    "steps_title": "📍 Cómo enviar tu consulta",
-
-    "closing_text": "✨ Cada consulta es importante para nosotros. Compartiendo la mayor cantidad de detalles posible, podremos orientarte de manera más rápida y precisa."
-  }
-},
-
+        "imprimibles",
+        "versiones imprimibles",
+        "descargar imprimibles",
+        "descargar versiones imprimibles",
+        "material para imprimir",
+        "documentos para imprimir",
+        "recursos imprimibles",
+        "donde estan los imprimibles",
+        "dónde están los imprimibles",
+        "no encuentro los imprimibles",
+        "acceder a los imprimibles"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Mis Colecciones",
+        "Seleccionar colección adquirida",
+        "Versiones imprimibles",
+        "Descargar PDF"
+      ],
+      "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará a la pantalla de acceso. Luego abre Mis Colecciones, selecciona la colección que adquiriste, busca la sección Versiones imprimibles y utiliza la opción Descargar PDF.",
+      "route_presentation": {
+        "hero_title": "🖨️ Descargar Versiones Imprimibles",
+        "hero_subtitle": "Accede a los materiales imprimibles incluidos en tu colección para complementar tu experiencia también fuera de la pantalla.",
+        "steps_title": "🔐 Ruta con inicio de sesión",
+        "closing_text": "✨ Cada recurso imprimible fue diseñado para acompañar tus momentos de reflexión y ayudarte a poner en práctica lo aprendido."
+      }
+    },
     {
-  "intent": "iniciar_sesion",
-
-  "title": "Quiero iniciar sesión",
+      "intent": "acceder_centro_ayuda",
+      "title": "Quiero contactar al Centro de Ayuda",
       "aliases": [
-  "iniciar sesión",
-  "iniciar sesion",
-  "acceder",
-  "acceder al portal",
-  "ingresar",
-  "ingresar al portal",
-  "entrar",
-  "entrar al portal",
-  "acceder a mi experiencia",
-  "entrar a mi experiencia",
-  "quiero ingresar",
-  "quiero entrar",
-  "quiero iniciar sesión",
-  "quiero iniciar sesion",
-  "cómo ingreso",
-  "como ingreso",
-  "cómo entrar",
-  "como entrar",
-  "cómo accedo",
-  "como accedo",
-  "cómo acceder",
-  "como acceder",
-  "abrir mi cuenta",
-  "ingresar a mis colecciones",
-  "entrar a la app",
-  "ingresar a la app",
-  "abrir la app",
-  "acceder a la app",
-  "entrar a mi colección",
-  "entrar a mi coleccion",
-  "acceder a mis colecciones",
-  "abrir mi experiencia",
-  "entrar a mi experiencia",
-  "acceder a mi experiencia",
-  "continuar mi experiencia",
-  "quiero acceder a mis recursos",
-  "quiero acceder a mi colección",
-  "quiero acceder a mi coleccion",
-  "no sé cómo entrar",
-  "no se como entrar",
-  "cómo ingreso a mis compras",
-  "como ingreso a mis compras",
-  "ya compré y quiero entrar",
-  "ya compre y quiero entrar",
-  "abrir mis colecciones"
-],
-
- "route": [
-  "Inicio",
-  "Iniciar Sesión",
-  "Mi Espacio",
-  "Mis Colecciones"
-],
-
-  "response": "Ingresa tu correo electrónico en la pantalla de acceso. Una vez validado el ingreso, podrás acceder a Mi Espacio, donde encontrarás tus colecciones, Apps, ebooks, bonos y recursos disponibles.",
-
-  "route_presentation": {
-    "hero_title": "🔐 Acceder a tu experiencia",
-
-    "hero_subtitle": "Ingresa fácilmente a tu colección y continúa disfrutando de todos los recursos incluidos en tu experiencia devocional.",
-
-    "steps_title": "📍 Ruta recomendada",
-
-    "closing_text": "✨ Desde tu App podrás acceder a contenidos exclusivos, registrar tu progreso, consultar tus recursos y continuar creciendo en tu caminar de fe a tu propio ritmo."
-  }
-},
-
+        "soporte",
+        "contactar soporte",
+        "necesito ayuda",
+        "necesito soporte",
+        "ayuda",
+        "centro de ayuda",
+        "quiero ayuda",
+        "contactar ayuda",
+        "hablar con soporte",
+        "hablar con alguien",
+        "quiero contactar soporte",
+        "quiero contactar ayuda",
+        "abrir ticket",
+        "enviar consulta",
+        "hacer una consulta",
+        "necesito asistencia",
+        "asistencia",
+        "soporte técnico",
+        "soporte tecnico",
+        "resolver un problema",
+        "tengo un problema",
+        "tengo una consulta",
+        "cómo contacto soporte",
+        "como contacto soporte",
+        "cómo contacto ayuda",
+        "como contacto ayuda",
+        "dónde está el centro de ayuda",
+        "donde esta el centro de ayuda",
+        "cómo enviar una consulta",
+        "como enviar una consulta",
+        "quiero reportar un problema",
+        "necesito comunicarme con ustedes",
+        "necesito contactarlos",
+        "contacto",
+        "formulario de contacto"
+      ],
+      "route": [
+        "Inicio",
+        "Centro de Ayuda",
+        "Completar formulario",
+        "Enviar consulta"
+      ],
+      "response": "Puedes acceder libremente al Centro de Ayuda y completar el formulario de contacto con los detalles de tu consulta. No necesitas iniciar sesión para enviar el formulario. Una vez recibida la información, nuestro equipo podrá revisarla y brindarte una orientación relacionada con el acceso o el uso de los recursos disponibles.",
+      "route_presentation": {
+        "hero_title": "🤝 Centro de Ayuda",
+        "hero_subtitle": "Si necesitas resolver una situación relacionada con tu experiencia, puedes enviarnos tu consulta mediante el formulario del Centro de Ayuda.",
+        "steps_title": "📍 Ruta pública para enviar tu consulta",
+        "closing_text": "✨ Compartir los detalles relevantes de la situación nos permitirá revisar tu consulta con mayor claridad y brindarte una orientación más precisa."
+      }
+    },
     {
-  "intent": "no_recibi_email",
-
-  "title": "No recibí el correo de acceso",
+      "intent": "iniciar_sesion",
+      "title": "Quiero iniciar sesión",
       "aliases": [
-  "no recibi el correo",
-  "no recibí el correo",
-  "no llega el correo",
-  "correo de acceso",
-  "no me llega el email",
-  "no me llega el correo",
-  "no recibo el enlace",
-  "no encuentro el correo",
-  "correo de ingreso"
-],
-
-  "route": [
-    "Inicio",
-    "Iniciar sesión",
-    "Verificar correo electrónico ingresado",
-    "Revisar bandeja principal",
-    "Revisar spam",
-    "Revisar promociones",
-    "Solicitar nuevo enlace"
-  ],
-
-  "response": "Si no encuentras el correo de acceso, verifica primero que hayas ingresado correctamente tu dirección de correo electrónico. Luego revisa tu bandeja principal, correo no deseado, spam y promociones. Si el mensaje aún no aparece, puedes solicitar un nuevo enlace de acceso.",
-
-  "route_presentation": {
-    "hero_title": "📩 No recibí el correo de acceso",
-
-    "hero_subtitle": "No te preocupes. En la mayoría de los casos el correo puede encontrarse en otra bandeja o resolverse con un nuevo envío del enlace de acceso.",
-
-    "steps_title": "✅ Revisa estos pasos",
-
-    "closing_text": "✨ Si después de revisar todas las carpetas el correo sigue sin aparecer, puedes solicitar un nuevo enlace o contactarnos desde el Centro de Ayuda para que podamos orientarte."
-  }
-},
-
+        "iniciar sesión",
+        "iniciar sesion",
+        "login",
+        "acceder al portal",
+        "ingresar",
+        "ingresar al portal",
+        "entrar",
+        "entrar al portal",
+        "quiero ingresar",
+        "quiero entrar",
+        "quiero iniciar sesión",
+        "quiero iniciar sesion",
+        "cómo ingreso",
+        "como ingreso",
+        "cómo entrar",
+        "como entrar",
+        "cómo accedo al portal",
+        "como accedo al portal",
+        "cómo acceder al portal",
+        "como acceder al portal",
+        "abrir mi cuenta",
+        "ingresar a mis colecciones",
+        "entrar a mi colección",
+        "entrar a mi coleccion",
+        "acceder a mis colecciones",
+        "abrir mi experiencia",
+        "entrar a mi experiencia",
+        "acceder a mi experiencia",
+        "quiero acceder a mis recursos",
+        "quiero acceder a mi colección",
+        "quiero acceder a mi coleccion",
+        "no sé cómo entrar",
+        "no se como entrar",
+        "cómo ingreso a mis compras",
+        "como ingreso a mis compras",
+        "ya compré y quiero entrar",
+        "ya compre y quiero entrar",
+        "abrir mis colecciones"
+      ],
+      "route": [
+        "Ingresar o Mi Espacio",
+        "Ingresar correo electrónico",
+        "Validar el acceso",
+        "Mi Espacio"
+      ],
+      "response": "Selecciona Ingresar o accede a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará a la pantalla de acceso. Ingresa tu correo electrónico y, una vez validado el ingreso, podrás acceder a Mi Espacio y consultar tus experiencias activas.",
+      "route_presentation": {
+        "hero_title": "🔐 Acceder a tu experiencia",
+        "hero_subtitle": "Inicia sesión con tu correo electrónico para ingresar a Mi Espacio y consultar las experiencias asociadas a tu cuenta.",
+        "steps_title": "📍 Ruta de acceso",
+        "closing_text": "✨ Una vez dentro de Mi Espacio, podrás continuar tus recorridos activos o abrir Mis Colecciones para acceder a tus Apps, ebooks, bonos y recursos."
+      }
+    },
     {
-  "intent": "problema_acceso",
-
-  "title": "Compré y no puedo entrar",
+      "intent": "no_recibi_email",
+      "title": "No recibí el correo de acceso",
       "aliases": [
-  "no puedo entrar",
-  "no puedo ingresar",
-  "compré y no puedo entrar",
-  "compre y no puedo entrar",
-  "no tengo acceso",
-  "problema de acceso",
-  "no puedo acceder",
-  "compré pero no veo nada",
-  "no puedo abrir mi cuenta"
-],
-
-  "route": [
-  "Inicio",
-  "Iniciar Sesión",
-  "Ingresar correo utilizado en la compra",
-  "Mi Espacio",
-  "Mis Colecciones"
-],
-
-  "response": "Si no puedes acceder a tu experiencia, verifica primero que hayas iniciado sesión utilizando el mismo correo electrónico con el que realizaste tu compra. Ese correo permite identificar tus colecciones, recursos y permisos de acceso dentro del portal.",
-
-  "route_presentation": {
-    "hero_title": "🔑 Compré y no puedo ingresar",
-
-    "hero_subtitle": "La mayoría de los problemas de acceso se resuelven verificando que el correo utilizado para iniciar sesión sea el mismo que se utilizó durante la compra.",
-
-    "steps_title": "✅ Revisa estos pasos",
-
-    "closing_text": "✨ Una vez que ingreses con el correo correcto, podrás acceder a tus colecciones, aplicaciones, ebooks, bonificaciones y recursos incluidos en tu experiencia."
-  }
-},
-
+        "no recibi el correo",
+        "no recibí el correo",
+        "no llega el correo",
+        "correo de acceso",
+        "no me llega el email",
+        "no me llega el correo",
+        "no recibo el enlace",
+        "no encuentro el correo",
+        "correo de ingreso",
+        "no recibí el enlace de acceso",
+        "no recibi el enlace de acceso",
+        "reenviar enlace",
+        "solicitar nuevo enlace"
+      ],
+      "route": [
+        "Ingresar o Mi Espacio",
+        "Verificar correo electrónico ingresado",
+        "Revisar bandeja principal",
+        "Revisar correo no deseado o spam",
+        "Revisar promociones",
+        "Solicitar nuevo enlace"
+      ],
+      "response": "Si no encuentras el correo de acceso, verifica primero que hayas ingresado correctamente tu dirección de correo electrónico. Luego revisa la bandeja principal, el correo no deseado, spam y promociones. Si el mensaje todavía no aparece, solicita un nuevo enlace de acceso.",
+      "route_presentation": {
+        "hero_title": "📩 No recibí el correo de acceso",
+        "hero_subtitle": "No te preocupes. En algunos casos el mensaje puede llegar a otra bandeja o puede ser necesario solicitar un nuevo enlace.",
+        "steps_title": "✅ Revisa estos pasos",
+        "closing_text": "✨ Si después de revisar las carpetas y solicitar un nuevo enlace el correo sigue sin aparecer, puedes enviarnos la situación desde el Centro de Ayuda."
+      }
+    },
     {
-  "intent": "no_veo_mi_kit",
-
-  "title": "Entré al portal pero no veo mi colección",
+      "intent": "problema_acceso",
+      "title": "Compré y no puedo entrar",
       "aliases": [
-  "no veo mi colección",
-  "no veo mi kit",
-  "no aparecen mis productos",
-  "no aparecen mis compras",
-  "mis colecciones están vacías",
-  "mis colecciones estan vacias",
-  "no encuentro mi colección",
-  "no encuentro mi kit",
-  "no veo mis recursos"
-],
-
-  "route": [
-  "Inicio",
-  "Mi Espacio",
-  "Mis Colecciones"
-],
-
-  "response": "Si no encuentras tu colección, primero verifica que hayas iniciado sesión con el mismo correo utilizado durante la compra. Luego dirígete a Mi Espacio y abre Mis Colecciones. Si después de estas validaciones sigues sin verla, nuestro equipo podrá ayudarte a revisar tu caso.",
-
-  "route_presentation": {
-    "hero_title": "📚 No veo mi colección",
-
-    "hero_subtitle": "No te preocupes. En la mayoría de los casos esto ocurre cuando se inicia sesión con un correo electrónico diferente al utilizado durante la compra.",
-
-    "steps_title": "✅ Verifica lo siguiente",
-
-    "closing_text": "✨ Si después de iniciar sesión con el correo correcto tu colección sigue sin aparecer, nuestro equipo podrá ayudarte a revisar la situación y orientarte sobre los siguientes pasos."
-  }
-},
-
+        "no puedo entrar",
+        "no puedo ingresar",
+        "compré y no puedo entrar",
+        "compre y no puedo entrar",
+        "no tengo acceso",
+        "problema de acceso",
+        "no puedo acceder",
+        "compré pero no veo nada",
+        "compre pero no veo nada",
+        "no puedo abrir mi cuenta",
+        "mi acceso no funciona",
+        "no reconoce mi compra"
+      ],
+      "route": [
+        "Ingresar o Mi Espacio",
+        "Ingresar el correo utilizado en la compra",
+        "Validar el acceso",
+        "Mi Espacio",
+        "Mis Colecciones"
+      ],
+      "response": "Si compraste una colección y no puedes acceder, verifica que estés iniciando sesión con el mismo correo electrónico utilizado durante la compra. Ese correo permite identificar las colecciones y permisos asociados a tu cuenta. Después de validar el acceso, ingresa a Mi Espacio y abre Mis Colecciones.",
+      "route_presentation": {
+        "hero_title": "🔑 Compré y no puedo ingresar",
+        "hero_subtitle": "En muchos casos, el inconveniente se resuelve al confirmar que el correo utilizado para iniciar sesión sea el mismo que se utilizó durante la compra.",
+        "steps_title": "✅ Revisa estos pasos",
+        "closing_text": "✨ Si ingresas con el correo correcto y el acceso continúa sin funcionar, envía los detalles de la situación desde el Centro de Ayuda para que nuestro equipo pueda revisarlos."
+      }
+    },
     {
+      "intent": "no_veo_mi_kit",
+      "title": "Entré al portal pero no veo mi colección",
+      "aliases": [
+        "no veo mi colección",
+        "no veo mi coleccion",
+        "no veo mi kit",
+        "no aparecen mis productos",
+        "no aparecen mis compras",
+        "mis colecciones están vacías",
+        "mis colecciones estan vacias",
+        "no encuentro mi colección",
+        "no encuentro mi coleccion",
+        "no encuentro mi kit",
+        "no veo mis recursos",
+        "mi colección no aparece",
+        "mi coleccion no aparece",
+        "compré pero no aparece mi colección",
+        "compre pero no aparece mi coleccion"
+      ],
+      "route": [
+        "Mi Espacio",
+        "Iniciar sesión (si corresponde)",
+        "Mis Colecciones",
+        "Verificar la colección adquirida"
+      ],
+      "response": "Ingresa a Mi Espacio y abre Mis Colecciones. Si todavía no tienes una sesión activa, el portal te llevará primero a la pantalla de acceso. Verifica que hayas iniciado sesión con el mismo correo electrónico utilizado durante la compra. Si después de estas validaciones la colección sigue sin aparecer, envía los detalles desde el Centro de Ayuda.",
+      "route_presentation": {
+        "hero_title": "📚 No veo mi colección",
+"hero_subtitle": "En muchos casos, esto ocurre cuando se inicia sesión con un correo electrónico diferente al utilizado durante la compra.",
+"steps_title": "✅ Verifica lo siguiente",
+"closing_text": "✨ Si ingresaste con el correo correcto y la colección sigue sin aparecer, puedes enviarnos la información desde el Centro de Ayuda para que nuestro equipo revise el caso."
+}
+},
+{
   "intent": "conocer_apps",
-
   "title": "Quiero conocer las Apps disponibles",
-      "aliases": [
-  "apps",
-  "aplicaciones",
-  "apps disponibles",
-  "conocer apps",
-  "que apps hay",
-  "qué apps hay",
-  "ver aplicaciones",
-  "apps premium"
-],
-
+  "aliases": [
+    "apps disponibles",
+    "aplicaciones disponibles",
+    "conocer apps",
+    "conocer aplicaciones",
+    "que apps hay",
+    "qué apps hay",
+    "ver aplicaciones",
+    "qué aplicaciones ofrecen",
+    "que aplicaciones ofrecen",
+    "apps de las colecciones",
+    "aplicaciones de las colecciones",
+    "conocer app incluida",
+    "qué app incluye cada colección",
+    "que app incluye cada coleccion"
+  ],
   "route": [
     "Inicio",
-    "Mis Colecciones",
+    "Explorar Colecciones",
     "Seleccionar colección",
-    "Ver App Premium"
+    "Conocer la App incluida"
   ],
-
-  "response": "Cada colección incluye una App Premium diseñada para acompañar la experiencia principal del kit. Dentro de cada colección podrás conocer las funcionalidades disponibles y acceder a herramientas diseñadas para fortalecer tu aprendizaje, reflexión y crecimiento espiritual.",
-
+  "response": "Puedes ingresar libremente a Explorar Colecciones para conocer las experiencias disponibles y la App incluida en cada propuesta. No necesitas iniciar sesión para explorar el catálogo. Para abrir y utilizar una App adquirida, deberás ingresar con el correo asociado a tu compra.",
   "route_presentation": {
-    "hero_title": "📱 Conoce las Apps Premium",
-
-    "hero_subtitle": "Cada experiencia incluye una aplicación exclusiva creada para acompañarte durante tu recorrido espiritual con herramientas prácticas, seguimiento de progreso y recursos personalizados.",
-
-    "steps_title": "📍 Dónde encontrarlas",
-
-    "closing_text": "✨ Las Apps Premium fueron diseñadas para ayudarte a vivir una experiencia más completa, integrando reflexión, crecimiento espiritual y herramientas que facilitan la constancia en tu día a día."
+    "hero_title": "📱 Conoce las Apps incluidas",
+    "hero_subtitle": "Cada colección incluye una App exclusiva creada para acompañar su recorrido principal con herramientas prácticas y una experiencia guiada.",
+    "steps_title": "📍 Ruta pública para conocerlas",
+    "closing_text": "✨ Las Apps fueron diseñadas para ayudarte a cultivar la constancia, profundizar tus reflexiones y avanzar paso a paso en tu camino con Dios."
   }
 },
-
-   {
+{
   "intent": "ver_productos_adquiridos",
-
   "title": "Quiero ver todo lo que compré",
-     "aliases": [
-  "ver mis compras",
-  "mis compras",
-  "que compre",
-  "qué compré",
-  "productos adquiridos",
-  "ver productos adquiridos",
-  "mis colecciones",
-  "mis productos",
-  "todo lo que compré",
-  "todo lo que compre"
-],
-
+  "aliases": [
+    "ver mis compras",
+    "mis compras",
+    "que compre",
+    "qué compré",
+    "productos adquiridos",
+    "ver productos adquiridos",
+    "mis colecciones",
+    "mis productos",
+    "todo lo que compré",
+    "todo lo que compre",
+    "colecciones adquiridas",
+    "ver mis colecciones",
+    "qué colecciones compré",
+    "que colecciones compre"
+  ],
   "route": [
-  "Inicio",
-  "Mi Espacio",
-  "Mis Colecciones"
-],
-
-  "response": "Una vez que hayas iniciado sesión, dirígete a Mi Espacio y abre Mis Colecciones. Allí encontrarás todas las experiencias asociadas a tu cuenta, junto con sus Apps, ebooks, bonos y recursos disponibles.",
-
+    "Mi Espacio",
+    "Iniciar sesión (si corresponde)",
+    "Mis Colecciones"
+  ],
+  "response": "Ingresa a Mi Espacio. Si todavía no tienes una sesión activa, el portal te llevará a la pantalla de acceso. Después de ingresar con el correo asociado a tu compra, abre Mis Colecciones para consultar las experiencias activas en tu cuenta y acceder a sus Apps, ebooks, bonos y recursos.",
   "route_presentation": {
     "hero_title": "📚 Ver Mis Colecciones",
-
-    "hero_subtitle": "Accede a todas las experiencias vinculadas a tu cuenta desde un único lugar, organizadas para que puedas encontrar fácilmente cada recurso adquirido.",
-
-    "steps_title": "📍 Dónde encontrarlas",
-
-    "closing_text": "✨ Desde Mis Colecciones podrás gestionar todas tus experiencias, retomar tu progreso, acceder a tus aplicaciones y disfrutar de cada recurso incluido en tus compras."
+    "hero_subtitle": "Accede a las experiencias activas vinculadas a tu cuenta desde un único lugar y encuentra fácilmente los recursos incluidos.",
+    "steps_title": "🔐 Ruta con inicio de sesión",
+    "closing_text": "✨ Desde Mis Colecciones podrás entrar a tus Apps y acceder a los ebooks, bonos y versiones imprimibles habilitados para tu cuenta."
   }
 }
 ],
-
 "routing_rules": {
   "fallback_route": "acceder_centro_ayuda",
   "escalate_on_access_failure": true,
