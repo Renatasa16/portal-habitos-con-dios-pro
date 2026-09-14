@@ -174,12 +174,74 @@
         "experiencia disponible"
       ],
       "knowledge_sources": [
-        "faq.json",
-        "routes.json"
-      ],
+      "products.json",
+      "faq.json",
+      "routes.json"
+     ],
       "escalate": false,
       "disclaimer": "none"
     },
+    {
+  "intent": "faq_information",
+  "category": "faq",
+
+  "keywords": [
+  "acceso de por vida",
+  "para siempre",
+  "cuánto dura",
+  "cuanto dura",
+  "necesito conocimientos",
+  "necesito saber biblia",
+  "conocimientos previos",
+  "primeros pasos en la fe",
+  "beneficio de lanzamiento",
+  "beneficio especial",
+  "descuento",
+  "43%",
+  "cuotas",
+  "3 cuotas",
+  "pago único",
+  "pago unico",
+  "formas de pago",
+  "acceso vitalicio"
+],
+
+  "knowledge_sources": [
+    "faq.json"
+  ],
+
+  "escalate": false,
+  "disclaimer": "none"
+},
+    {
+  "intent": "brand_information",
+  "category": "brand",
+
+  "keywords": [
+    "hábitos con dios",
+    "qué es hábitos con dios",
+    "que es hábitos con dios",
+    "quiénes son",
+    "quienes son",
+    "misión",
+    "mision",
+    "visión",
+    "vision",
+    "valores",
+    "propósito",
+    "proposito",
+    "camino de fe",
+    "pequeños hábitos",
+    "presencia de dios"
+  ],
+
+  "knowledge_sources": [
+    "brand.json"
+  ],
+
+  "escalate": false,
+  "disclaimer": "none"
+},
     {
       "intent": "personal_advice",
       "category": "sensitive",
@@ -200,11 +262,14 @@
       "intent": "family_issue",
       "category": "sensitive",
       "keywords": [
-        "familia",
-        "matrimonio",
-        "crianza",
-        "problemas familiares"
-      ],
+  "problemas familiares",
+  "conflicto familiar",
+  "crisis familiar",
+  "problemas de matrimonio",
+  "problemas con mis hijos",
+  "discusión familiar",
+  "dificultades familiares"
+],
       "knowledge_sources": [
         "disclaimers.json",
         "escalation.json"
