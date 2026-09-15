@@ -351,7 +351,7 @@
     .hero-actions {
       margin-top: 26px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
@@ -1152,20 +1152,12 @@
       }
     }
 
-    .history-filters, .library-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
-    .filter-btn, .library-tab { border:1px solid var(--line); background:white; color:var(--green); border-radius:999px; padding:10px 14px; font-weight:900; }
-    .filter-btn.active, .library-tab.active { background:var(--green); color:white; border-color:var(--green); }
-    .favorite-day-btn.active { background:var(--soft-gold); border-color:rgba(201,166,90,.55); }
-    .library-list { display:grid; gap:12px; }
-    .library-item { background:white; border:1px solid var(--line); border-radius:22px; padding:17px; box-shadow:0 10px 28px rgba(63,74,53,.08); }
-    .library-item-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
-    .library-item strong { display:block; color:var(--green); margin-bottom:5px; }
-    .library-item small { color:var(--muted); font-weight:800; }
-    .library-item p { color:var(--ink); line-height:1.58; margin-top:10px; white-space:pre-wrap; }
-    .empty-library { padding:18px; border:1px dashed var(--line); border-radius:18px; background:var(--soft-gold); color:var(--olive); }
-    @media (max-width:640px) { .library-item-head { display:block; } .library-item-head button { width:100%; margin-top:10px; } }
+    .entry-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .entry-actions button { min-height:38px; padding:8px 13px; }
+    .privacy-note { margin-top:14px; border-radius:20px; padding:15px; background:var(--soft-blue); border:1px solid var(--line); color:var(--olive); line-height:1.55; font-size:13px; }
+    .edit-banner { margin-bottom:14px; padding:14px; border-radius:18px; background:var(--soft-gold); color:var(--green); font-weight:850; }
 
-  </style>
+  .history-filters,.library-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.filter-btn,.library-tab{border:1px solid var(--line);background:white;color:var(--green);border-radius:999px;padding:10px 14px;font-weight:900}.filter-btn.active,.library-tab.active{background:var(--green);color:white;border-color:var(--green)}.favorite-day-btn.active{background:var(--soft-gold);border-color:rgba(201,166,90,.55)}.library-list{display:grid;gap:12px}.library-item{background:white;border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:0 10px 28px rgba(63,74,53,.08)}.library-item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.library-item strong{display:block;color:var(--green);margin-bottom:5px}.library-item small{color:var(--muted);font-weight:800}.library-item p{color:var(--ink);line-height:1.58;margin-top:10px;white-space:pre-wrap}.empty-library{padding:18px;border:1px dashed var(--line);border-radius:18px;background:var(--soft-gold);color:var(--olive)}@media(max-width:640px){.library-item-head{display:block}.library-item-head button{width:100%;margin-top:10px}}</style>
 </head>
 
 <body>
@@ -1194,7 +1186,7 @@
 
     <section id="errorState" class="error-state hide">
       <strong>No pudimos cargar la app.</strong>
-      <p id="errorMessage">Intenta ingresar nuevamente desde la Mi Espacio.</p>
+      <p id="errorMessage">Intenta ingresar nuevamente desde Mi Espacio.</p>
       <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <a class="btn" href="../login.html">Ir a Login</a>
         <a class="btn-soft" href="../dashboard.html">Volver a Mi Espacio</a>
@@ -1239,7 +1231,7 @@
               <button class="hero-action-card primary" type="button" id="startDayBtn">
                 <span>🌿</span>
                 Continuar mi día
-                <small>Abre el día actual del camino de paz.</small>
+                <small>Abre el próximo día pendiente de tu camino de paz.</small>
               </button>
 
               <button class="hero-action-card" type="button" id="goTrackerBtn">
@@ -1252,6 +1244,12 @@
                 <span>🛟</span>
                 Necesito ayuda segura
                 <small>Accede a recordatorios de cuidado inmediato.</small>
+              </button>
+
+              <button class="hero-action-card" type="button" id="goToolsBtn">
+                <span>☰</span>
+                Ver todas las herramientas
+                <small>Explora límites, pausas, identidad e historial privado.</small>
               </button>
             </div>
           </div>
@@ -1449,7 +1447,7 @@
 
                 <div class="field">
                   <label for="noteInput">Lo que necesito decir con honestidad</label>
-                  <textarea id="noteInput" placeholder="Escribe con calma. Este registro queda guardado solo en este navegador."></textarea>
+                  <textarea id="noteInput" placeholder="Escribe con calma. Este registro queda guardado en este dispositivo y separado por tu usuario."></textarea>
                 </div>
 
                 <label class="check-card" style="margin-bottom:14px;">
@@ -1545,44 +1543,22 @@
             <div class="panel-head">
               <small>Historial privado</small>
               <h2>Mis registros seguros</h2>
-              <p>Este historial se guarda solo en este navegador. Puedes borrarlo cuando quieras.</p>
+              <p>Tus registros personales aparecen aquí. Puedes revisarlos, editarlos o eliminarlos cuando quieras.</p>
             </div>
 
             <div class="panel-body">
-              <div class="history-filters" aria-label="Filtrar historial">
-                <button class="filter-btn active" type="button" data-history-filter="all">Todos</button>
-                <button class="filter-btn" type="button" data-history-filter="entry">Registros emocionales</button>
-                <button class="filter-btn" type="button" data-history-filter="pause">Pausas digitales</button>
-                <button class="filter-btn" type="button" data-history-filter="risk">Situaciones de riesgo</button>
-              </div>
+              <div class="history-filters" aria-label="Filtrar historial"><button class="filter-btn active" type="button" data-history-filter="all">Todos</button><button class="filter-btn" type="button" data-history-filter="entry">Registros emocionales</button><button class="filter-btn" type="button" data-history-filter="pause">Pausas digitales</button><button class="filter-btn" type="button" data-history-filter="risk">Situaciones de riesgo</button></div>
               <div class="action-row" style="margin-top:0;">
                 <button class="btn-soft" type="button" id="refreshHistoryBtn">Actualizar historial</button>
                 <button class="btn-danger" type="button" id="clearHistoryBtn">Borrar historial</button>
               </div>
 
+              <div class="privacy-note">Los registros actuales se conservan en este dispositivo y separados por tu usuario. La sincronización entre dispositivos se incorporará en la fase común de Supabase.</div>
               <div id="historyList" class="entry-list"></div>
             </div>
           </section>
 
-
-          <section id="viewBiblioteca" class="panel hide">
-            <div class="panel-head">
-              <small>Tu espacio personal</small>
-              <h2>Mi biblioteca personal</h2>
-              <p>Reúne los días favoritos, registros emocionales, pausas digitales, límites y verdades que acompañan tu camino.</p>
-            </div>
-            <div class="panel-body">
-              <div class="library-tabs" aria-label="Secciones de la biblioteca">
-                <button class="library-tab active" type="button" data-library-tab="favorites">Días favoritos</button>
-                <button class="library-tab" type="button" data-library-tab="entries">Registros</button>
-                <button class="library-tab" type="button" data-library-tab="pauses">Pausas</button>
-                <button class="library-tab" type="button" data-library-tab="limits">Límites</button>
-                <button class="library-tab" type="button" data-library-tab="truths">Verdades</button>
-              </div>
-              <div id="personalLibraryList" class="library-list"></div>
-            </div>
-          </section>
-
+          <section id="viewBiblioteca" class="panel hide"><div class="panel-head"><small>Tu espacio personal</small><h2>Mi biblioteca personal</h2><p>Reúne los días favoritos, registros emocionales, pausas digitales, límites y verdades que acompañan tu camino.</p></div><div class="panel-body"><div class="library-tabs" aria-label="Secciones de la biblioteca"><button class="library-tab active" type="button" data-library-tab="favorites">Días favoritos</button><button class="library-tab" type="button" data-library-tab="entries">Registros</button><button class="library-tab" type="button" data-library-tab="pauses">Pausas</button><button class="library-tab" type="button" data-library-tab="limits">Límites</button><button class="library-tab" type="button" data-library-tab="truths">Verdades</button></div><div id="personalLibraryList" class="library-list"></div></div></section>
           <section id="viewAyuda" class="panel hide">
             <div class="panel-head">
               <small>Ayuda segura</small>
@@ -1936,6 +1912,7 @@
       startDayBtn: document.getElementById("startDayBtn"),
       goTrackerBtn: document.getElementById("goTrackerBtn"),
       goHelpBtn: document.getElementById("goHelpBtn"),
+      goToolsBtn: document.getElementById("goToolsBtn"),
       guidedDay: document.getElementById("guidedDay"),
       dayGrid: document.getElementById("dayGrid"),
       registroForm: document.getElementById("registroForm"),
@@ -1971,10 +1948,15 @@
 
     let currentUser = null;
     let selectedDay = 1;
+    let editingEntryId = null;
+    let editingPauseId = null;
     let completedDays = [];
     let entries = [];
     let pauses = [];
     let limits = [];
+    let favoriteDays = [];
+    let historyFilter = "all";
+    let activeLibraryTab = "favorites";
 
     init();
 
@@ -2007,13 +1989,14 @@
         }
 
         loadLocalState();
-        selectedDay = getCurrentSuggestedDay();
+        selectedDay = Number(localStorage.getItem(storageKey("selected_day"))) || getCurrentSuggestedDay();
+        if (selectedDay < 1 || selectedDay > days.length) selectedDay = getCurrentSuggestedDay();
         bindEvents();
         renderAll();
         showApp();
       } catch (error) {
         console.error(error);
-        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde la Mi Espacio.");
+        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde Mi Espacio.");
       }
     }
 
@@ -2055,6 +2038,7 @@
 
       els.startDayBtn.addEventListener("click", () => {
         selectedDay = getCurrentSuggestedDay();
+        persistSelectedDay();
         setView("camino");
         renderAll();
         document.getElementById("viewCamino").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -2068,6 +2052,10 @@
       els.goHelpBtn.addEventListener("click", () => {
         setView("ayuda");
         document.getElementById("viewAyuda").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      els.goToolsBtn.addEventListener("click", () => {
+        document.querySelector(".sidebar").scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast("Elige una herramienta del menú.");
       });
 
       els.intensityBefore.addEventListener("input", () => {
@@ -2094,21 +2082,8 @@
       els.refreshHistoryBtn.addEventListener("click", renderHistory);
       els.clearHistoryBtn.addEventListener("click", clearHistory);
 
-
-      document.querySelectorAll("[data-history-filter]").forEach((button) => {
-        button.addEventListener("click", () => {
-          historyFilter = button.dataset.historyFilter;
-          document.querySelectorAll("[data-history-filter]").forEach((item) => item.classList.toggle("active", item === button));
-          renderHistory();
-        });
-      });
-      document.querySelectorAll("[data-library-tab]").forEach((button) => {
-        button.addEventListener("click", () => {
-          activeLibraryTab = button.dataset.libraryTab;
-          document.querySelectorAll("[data-library-tab]").forEach((item) => item.classList.toggle("active", item === button));
-          renderPersonalLibrary();
-        });
-      });
+      document.querySelectorAll("[data-history-filter]").forEach((button) => button.addEventListener("click", () => { historyFilter=button.dataset.historyFilter; document.querySelectorAll("[data-history-filter]").forEach((x)=>x.classList.toggle("active",x===button)); renderHistory(); }));
+      document.querySelectorAll("[data-library-tab]").forEach((button) => button.addEventListener("click", () => { activeLibraryTab=button.dataset.libraryTab; document.querySelectorAll("[data-library-tab]").forEach((x)=>x.classList.toggle("active",x===button)); renderPersonalLibrary(); }));
       els.logoutBtn.addEventListener("click", async () => {
         await supabaseClient.auth.signOut();
         window.location.href = "../login.html";
@@ -2191,12 +2166,7 @@
           </div>
 
           <div class="action-row">
-            <button class="btn" type="button" id="completeDayBtn">
-              ${isDone ? "Marcar como pendiente" : "Completar este día"}
-            </button>
-            <button class="btn-gold favorite-day-btn ${favoriteDays.includes(day.day) ? "active" : ""}" type="button" id="favoriteDayBtn">
-              ${favoriteDays.includes(day.day) ? "★ Favorito guardado" : "☆ Guardar favorito"}
-            </button>
+            <button class="btn" type="button" id="completeDayBtn">${isDone ? "Marcar como pendiente" : "Completar este día"}</button><button class="btn-gold favorite-day-btn ${favoriteDays.includes(day.day)?"active":""}" type="button" id="favoriteDayBtn">${favoriteDays.includes(day.day)?"★ Favorito guardado":"☆ Guardar favorito"}</button>
 
             <button class="btn-soft" type="button" id="previousDayBtn">Día anterior</button>
             <button class="btn-gold" type="button" id="nextDayBtn">Siguiente día</button>
@@ -2209,11 +2179,13 @@
 
       document.getElementById("previousDayBtn").addEventListener("click", () => {
         selectedDay = selectedDay > 1 ? selectedDay - 1 : 1;
+        persistSelectedDay();
         renderAll();
       });
 
       document.getElementById("nextDayBtn").addEventListener("click", () => {
         selectedDay = selectedDay < 21 ? selectedDay + 1 : 21;
+        persistSelectedDay();
         renderAll();
       });
     }
@@ -2241,6 +2213,7 @@
 
         card.addEventListener("click", () => {
           selectedDay = day.day;
+          persistSelectedDay();
           renderAll();
           document.getElementById("viewCamino").scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -2263,20 +2236,7 @@
       renderAll();
     }
 
-
-    function toggleFavoriteDay() {
-      if (favoriteDays.includes(selectedDay)) {
-        favoriteDays = favoriteDays.filter((day) => day !== selectedDay);
-        showToast("Día quitado de favoritos.");
-      } else {
-        favoriteDays.push(selectedDay);
-        favoriteDays = uniqueNumbers(favoriteDays);
-        showToast("Día guardado en tu biblioteca personal.");
-      }
-      saveLocalState();
-      renderAll();
-    }
-
+    function toggleFavoriteDay(){if(favoriteDays.includes(selectedDay)){favoriteDays=favoriteDays.filter((d)=>d!==selectedDay);showToast("Día quitado de favoritos.");}else{favoriteDays.push(selectedDay);favoriteDays=uniqueNumbers(favoriteDays);showToast("Día guardado en tu biblioteca personal.");}saveLocalState();renderAll();}
     function saveEntry() {
       const afterIntensity = Number(els.intensityAfter.value);
       const hasRisk = els.riskInput.checked;
@@ -2301,7 +2261,13 @@
         risk: hasRisk
       };
 
-      entries.push(entry);
+      if (editingEntryId) {
+        const index = entries.findIndex((item) => item.id === editingEntryId);
+        if (index >= 0) entry.id = editingEntryId, entries[index] = entry;
+        editingEntryId = null;
+      } else {
+        entries.push(entry);
+      }
       saveLocalState();
       renderAll();
       clearRegisterForm();
@@ -2380,7 +2346,13 @@
         reason: els.pauseReason.value.trim()
       };
 
-      pauses.push(pause);
+      if (editingPauseId) {
+        const index = pauses.findIndex((item) => item.id === editingPauseId);
+        if (index >= 0) pause.id = editingPauseId, pauses[index] = pause;
+        editingPauseId = null;
+      } else {
+        pauses.push(pause);
+      }
       els.pauseReason.value = "";
       saveLocalState();
       renderAll();
@@ -2432,14 +2404,7 @@
     function renderHistory() {
       els.historyList.innerHTML = "";
 
-      let allItems = [
-        ...entries.map((item) => ({ itemType: "entry", type: "Registro emocional", ...item })),
-        ...pauses.map((item) => ({ itemType: "pause", type: "Pausa digital", ...item }))
-      ];
-      if (historyFilter === "entry") allItems = allItems.filter((item) => item.itemType === "entry");
-      if (historyFilter === "pause") allItems = allItems.filter((item) => item.itemType === "pause");
-      if (historyFilter === "risk") allItems = allItems.filter((item) => item.itemType === "entry" && item.risk);
-      allItems.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      let allItems=[...entries.map((item)=>({itemType:"entry",type:"Registro emocional",...item})),...pauses.map((item)=>({itemType:"pause",type:"Pausa digital",...item}))];if(historyFilter==="entry")allItems=allItems.filter((x)=>x.itemType==="entry");if(historyFilter==="pause")allItems=allItems.filter((x)=>x.itemType==="pause");if(historyFilter==="risk")allItems=allItems.filter((x)=>x.itemType==="entry"&&x.risk);allItems.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 
       if (!allItems.length) {
         els.historyList.innerHTML = `
@@ -2462,21 +2427,71 @@
             <p><b>Antes:</b> ${escapeHTML(item.before)} (${item.intensityBefore}/5) · <b>Después:</b> ${escapeHTML(item.after)} (${item.intensityAfter}/5)</p>
             <p>${escapeHTML(item.note || "Sin nota adicional.")}</p>
             ${item.risk ? "<p><b>Marcado como situación de riesgo. Buscar ayuda segura es importante.</b></p>" : ""}
+            <div class="entry-actions"><button class="btn-soft history-edit" type="button" data-id="${item.id}" data-type="entry">Editar</button><button class="btn-danger history-delete" type="button" data-id="${item.id}" data-type="entry">Eliminar</button></div>
           `;
         } else {
           card.innerHTML = `
             <strong>${escapeHTML(item.type)} · ${escapeHTML(item.date)}</strong>
             <p><b>Día:</b> ${item.day || "-"} · <b>Duración:</b> ${escapeHTML(item.time)} · <b>Acción:</b> ${escapeHTML(item.action)}</p>
             <p>${escapeHTML(item.reason || "Sin motivo escrito.")}</p>
+            <div class="entry-actions"><button class="btn-soft history-edit" type="button" data-id="${item.id}" data-type="pause">Editar</button><button class="btn-danger history-delete" type="button" data-id="${item.id}" data-type="pause">Eliminar</button></div>
           `;
         }
 
         els.historyList.appendChild(card);
       });
+
+      els.historyList.querySelectorAll(".history-edit").forEach((button) => {
+        button.addEventListener("click", () => editHistoryItem(button.dataset.type, button.dataset.id));
+      });
+      els.historyList.querySelectorAll(".history-delete").forEach((button) => {
+        button.addEventListener("click", () => deleteHistoryItem(button.dataset.type, button.dataset.id));
+      });
+    }
+
+    function editHistoryItem(type, id) {
+      if (type === "entry") {
+        const item = entries.find((row) => row.id === id);
+        if (!item) return;
+        editingEntryId = id;
+        els.platformInput.value = item.platform;
+        els.triggerInput.value = item.trigger;
+        els.beforeInput.value = item.before;
+        els.afterInput.value = item.after;
+        els.intensityBefore.value = item.intensityBefore;
+        els.intensityAfter.value = item.intensityAfter;
+        els.beforeValue.textContent = item.intensityBefore;
+        els.afterValue.textContent = item.intensityAfter;
+        els.noteInput.value = item.note || "";
+        els.riskInput.checked = Boolean(item.risk);
+        updateRiskVisibility();
+        setView("registro");
+        document.getElementById("viewRegistro").scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast("Edita el registro y vuelve a guardarlo.");
+      } else {
+        const item = pauses.find((row) => row.id === id);
+        if (!item) return;
+        editingPauseId = id;
+        els.pauseTime.value = item.time;
+        els.pauseAction.value = item.action;
+        els.pauseReason.value = item.reason || "";
+        setView("pausa");
+        document.getElementById("viewPausa").scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast("Edita la pausa y vuelve a guardarla.");
+      }
+    }
+
+    function deleteHistoryItem(type, id) {
+      if (!window.confirm("¿Deseas eliminar este registro? Esta acción no se puede deshacer.")) return;
+      if (type === "entry") entries = entries.filter((row) => row.id !== id);
+      else pauses = pauses.filter((row) => row.id !== id);
+      saveLocalState();
+      renderAll();
+      showToast("Registro eliminado.");
     }
 
     function clearHistory() {
-      const confirmClear = window.confirm("¿Quieres borrar todos los registros guardados en este navegador?");
+      const confirmClear = window.confirm("¿Quieres borrar todos tus registros emocionales y pausas guardadas?");
 
       if (!confirmClear) {
         return;
@@ -2489,48 +2504,7 @@
       showToast("Historial privado borrado.");
     }
 
-
-    function renderPersonalLibrary() {
-      if (!els.personalLibraryList) return;
-      let items = [];
-      if (activeLibraryTab === "favorites") {
-        items = favoriteDays.map((dayNumber) => {
-          const day = days.find((item) => item.day === dayNumber);
-          return day ? { title:`Día ${day.day} · ${day.title}`, label:day.stage, text:day.identity, day:day.day } : null;
-        }).filter(Boolean);
-      } else if (activeLibraryTab === "entries") {
-        items = entries.slice().reverse().map((item) => ({ title:`Registro emocional · Día ${item.day || "-"}`, label:item.date, text:item.note || `${item.before} → ${item.after}` }));
-      } else if (activeLibraryTab === "pauses") {
-        items = pauses.slice().reverse().map((item) => ({ title:`Pausa digital · Día ${item.day || "-"}`, label:item.date, text:`${item.time} · ${item.action}${item.reason ? "\n" + item.reason : ""}` }));
-      } else if (activeLibraryTab === "limits") {
-        items = limits.map((index) => ({ title:"Límite activo", label:"Cuidado digital", text:limitOptions[index] })).filter((item) => item.text);
-      } else if (activeLibraryTab === "truths") {
-        items = days.map((day) => ({ title:`Día ${day.day} · ${day.title}`, label:"Verdad de identidad", text:day.identity, day:day.day }));
-      }
-      if (!items.length) {
-        els.personalLibraryList.innerHTML = '<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';
-        return;
-      }
-      els.personalLibraryList.innerHTML = items.map((item) => `
-        <article class="library-item">
-          <div class="library-item-head">
-            <div><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.label || "")}</small></div>
-            ${item.day ? `<button type="button" class="btn-soft open-library-day" data-day="${item.day}">Abrir día</button>` : ""}
-          </div>
-          <p>${escapeHTML(item.text || "")}</p>
-        </article>
-      `).join("");
-      els.personalLibraryList.querySelectorAll(".open-library-day").forEach((button) => {
-        button.addEventListener("click", () => {
-          selectedDay = Number(button.dataset.day);
-          persistSelectedDay();
-          setView("camino");
-          renderAll();
-          document.getElementById("viewCamino").scrollIntoView({ behavior:"smooth", block:"start" });
-        });
-      });
-    }
-
+    function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=entries.slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=pauses.slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();}));}
     function renderStats() {
       completedDays = uniqueNumbers(completedDays);
       limits = uniqueNumbers(limits);
@@ -2609,6 +2583,9 @@
       return firstPending ? firstPending.day : 21;
     }
 
+    function persistSelectedDay() {
+      localStorage.setItem(storageKey("selected_day"), String(selectedDay));
+    }
     function storageKey(name) {
       const userPart = currentUser && currentUser.id
         ? currentUser.id
@@ -2642,6 +2619,7 @@
       localStorage.setItem(storageKey("pausas"), JSON.stringify(pauses));
       localStorage.setItem(storageKey("limites"), JSON.stringify(limits));
       localStorage.setItem(storageKey("favorite_days"), JSON.stringify(favoriteDays));
+      persistSelectedDay();
     }
 
     function saveProgressSnapshot(snapshot) {
