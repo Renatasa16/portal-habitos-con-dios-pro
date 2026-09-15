@@ -1043,6 +1043,51 @@
         width: 100%;
       }
     }
+
+
+    /* V6: navegación, historial y favoritos */
+    .quick-tools {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(232, 222, 204, 0.96);
+      box-shadow: var(--shadow);
+    }
+    .quick-tools-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-end; margin-bottom:14px; }
+    .quick-tools h2 { color:var(--green); font-size:28px; letter-spacing:-.04em; }
+    .quick-tools p { color:var(--muted); line-height:1.55; }
+    .tool-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+    .tool-btn {
+      min-height:86px; padding:14px; border:1px solid var(--line); border-radius:20px;
+      background:rgba(255,255,255,.94); color:var(--green); text-align:left; font-weight:950;
+      box-shadow:0 8px 20px rgba(63,74,53,.07); transition:.2s ease;
+    }
+    .tool-btn:hover { transform:translateY(-2px); border-color:rgba(201,166,90,.65); }
+    .tool-btn span { display:block; margin-top:6px; color:var(--muted); font-size:12px; line-height:1.4; font-weight:700; }
+    .collection-panel { padding:22px; }
+    .collection-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 18px; }
+    .collection-tab { border:1px solid var(--line); background:var(--white); color:var(--green); border-radius:999px; padding:10px 14px; font-weight:900; }
+    .collection-tab.active { background:var(--green); color:var(--white); }
+    .collection-list { display:grid; gap:12px; }
+    .collection-item { border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:20px; padding:16px; }
+    .collection-item-top { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .collection-item strong { color:var(--green); display:block; margin-bottom:5px; }
+    .collection-item small { color:var(--muted); font-weight:750; }
+    .collection-item p { color:var(--ink); line-height:1.6; margin-top:10px; white-space:pre-wrap; }
+    .empty-state { padding:18px; border:1px dashed var(--line); border-radius:18px; color:var(--muted); background:var(--soft-cream); }
+    .continue-card { margin-top:14px; padding:18px; border-radius:22px; background:linear-gradient(135deg,var(--soft-green),var(--soft-gold)); border:1px solid var(--line); }
+    .continue-card h3 { color:var(--green); margin-bottom:7px; }
+    .continue-card p { color:var(--olive); line-height:1.6; margin-bottom:12px; }
+    @media (max-width:980px){ .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:640px){
+      .quick-tools,.collection-panel{padding:20px;border-radius:26px;}
+      .quick-tools-head{display:block;}
+      .tool-grid{grid-template-columns:1fr;}
+      .collection-item-top{display:block;}
+      .collection-item-top .btn{margin-top:10px;width:100%;}
+    }
+
   </style>
 </head>
 
@@ -1177,6 +1222,23 @@
         </div>
       </section>
 
+
+      <section class="quick-tools" id="herramientas" aria-labelledby="toolsTitle">
+        <div class="quick-tools-head">
+          <div>
+            <h2 id="toolsTitle">Explora tu experiencia</h2>
+            <p>Accede rápidamente a tu recorrido, diario, favoritos, avances y recursos.</p>
+          </div>
+        </div>
+        <div class="tool-grid">
+          <button class="tool-btn" type="button" data-scroll-target="hoy">🌿 Camino de 21 días<span>Continúa el próximo día pendiente.</span></button>
+          <button class="tool-btn" type="button" data-collection="diario">📖 Mi diario espiritual<span>Revisa oraciones, gratitudes y notas.</span></button>
+          <button class="tool-btn" type="button" data-collection="favoritos">⭐ Mis favoritos<span>Vuelve a los días que deseas recordar.</span></button>
+          <button class="tool-btn" type="button" data-scroll-target="badges-title">🏆 Mis avances<span>Consulta niveles, insignias y progreso.</span></button>
+          <button class="tool-btn" type="button" data-scroll-target="libraryTitle">📚 Biblioteca espiritual<span>Explora recursos y próximas experiencias.</span></button>
+        </div>
+      </section>
+
       <section class="layout" id="hoy">
         <aside class="sidebar" id="dias">
           <h2>Días del recorrido</h2>
@@ -1295,6 +1357,19 @@
             </div>
           </section>
 
+
+          <section class="library-panel collection-panel" id="miColeccion" aria-labelledby="collectionTitle">
+            <h2 id="collectionTitle">Mi biblioteca personal</h2>
+            <p class="reflection">Reúne en un solo lugar lo que has guardado durante tu recorrido.</p>
+            <div class="collection-tabs" role="tablist" aria-label="Contenido personal">
+              <button class="collection-tab active" type="button" data-tab="favoritos">Favoritos</button>
+              <button class="collection-tab" type="button" data-tab="oraciones">Oraciones</button>
+              <button class="collection-tab" type="button" data-tab="gratitudes">Gratitudes</button>
+              <button class="collection-tab" type="button" data-tab="notas">Notas</button>
+            </div>
+            <div class="collection-list" id="collectionList"></div>
+          </section>
+
           <section class="badges-panel" aria-labelledby="badges-title">
             <h2 id="badges-title">Mis insignias</h2>
             <div class="badges-grid" id="badgesGrid"></div>
@@ -1306,9 +1381,14 @@
               Completaste los 21 días de Mi Tiempo con Dios. Este cierre no es una despedida, es una invitación a seguir cultivando una rutina espiritual posible, un día a la vez.
             </p>
 
-            <a class="btn btn-primary" href="../dashboard.html">
-              Explorar más recursos
-            </a>
+            <div class="continue-card">
+              <h3>Continúa cultivando tu camino</h3>
+              <p>Vuelve a tus favoritos, revisa tu diario o explora nuevas experiencias desde Mi Espacio. La futura Comunidad Hábitos con Dios se integrará aquí cuando esté disponible.</p>
+              <div class="actions-row">
+                <button class="btn btn-secondary" type="button" data-collection="favoritos">Ver mis favoritos</button>
+                <a class="btn btn-primary" href="../dashboard.html">Explorar Mi Espacio</a>
+              </div>
+            </div>
           </section>
 
           <section class="library-panel" aria-labelledby="libraryTitle">
@@ -1682,6 +1762,8 @@
     const favoriteCountMetric = document.getElementById("favoriteCountMetric");
     const badgesGrid = document.getElementById("badgesGrid");
     const toast = document.getElementById("toast");
+    const collectionList = document.getElementById("collectionList");
+    let activeCollectionTab = "favoritos";
 
     function getFriendlyNameFromEmail(email) {
       if (!email || typeof email !== "string") return "Usuario";
@@ -2025,6 +2107,57 @@ reflectionText.innerHTML =
       notesInput.value = entry.notes || "";
     }
 
+
+    function getCollectionItems(type) {
+      return devotionals.flatMap((item) => {
+        const entry = state[item.day] || getDefaultEntry();
+        if (type === "favoritos" && entry.favorite) return [{ day:item.day, title:item.title, text:item.focus, kind:"Favorito" }];
+        if (type === "oraciones" && entry.prayer) return [{ day:item.day, title:item.title, text:entry.prayer, kind:"Oración" }];
+        if (type === "gratitudes" && entry.gratitude) return [{ day:item.day, title:item.title, text:entry.gratitude, kind:"Gratitud" }];
+        if (type === "notas" && entry.notes) return [{ day:item.day, title:item.title, text:entry.notes, kind:"Nota" }];
+        if (type === "diario") {
+          const values = [
+            ["Oración", entry.prayer], ["Gratitud", entry.gratitude], ["Nota", entry.notes]
+          ].filter(([,value]) => value);
+          return values.map(([kind,text]) => ({ day:item.day, title:item.title, text, kind }));
+        }
+        return [];
+      });
+    }
+
+    function renderCollection(type = activeCollectionTab) {
+      activeCollectionTab = type === "diario" ? "oraciones" : type;
+      const sourceType = type;
+      document.querySelectorAll(".collection-tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === activeCollectionTab);
+      });
+      const items = getCollectionItems(sourceType);
+      if (!items.length) {
+        collectionList.innerHTML = '<div class="empty-state">Aún no hay contenido guardado en esta sección. Puedes volver a un día y guardar una oración, gratitud, nota o favorito.</div>';
+        return;
+      }
+      collectionList.innerHTML = items.map((item) => `
+        <article class="collection-item">
+          <div class="collection-item-top">
+            <div><strong>Día ${item.day} · ${item.title}</strong><small>${item.kind}</small></div>
+            <button class="btn btn-secondary open-saved-day" type="button" data-day="${item.day}">Abrir día</button>
+          </div>
+          <p>${escapeHTML(item.text)}</p>
+        </article>
+      `).join("");
+      collectionList.querySelectorAll(".open-saved-day").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentDay = Number(button.dataset.day);
+          saveState(); renderApp();
+          document.getElementById("hoy").scrollIntoView({ behavior:"smooth", block:"start" });
+        });
+      });
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+
     function renderPersonalHeader(name) {
       const now = new Date();
 
@@ -2042,6 +2175,7 @@ reflectionText.innerHTML =
       renderDayGrid();
       renderCurrentDay();
       renderProgress();
+      renderCollection(activeCollectionTab);
     }
 
     function syncCurrentEntryFromFields() {
@@ -2126,6 +2260,24 @@ reflectionText.innerHTML =
     }
 
     function bindEvents() {
+      document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.dataset.scrollTarget === "hoy") {
+            currentDay = getNextRecommendedDay();
+            saveState(); renderApp();
+          }
+          document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior:"smooth", block:"start" });
+        });
+      });
+      document.querySelectorAll("[data-collection]").forEach((button) => {
+        button.addEventListener("click", () => {
+          renderCollection(button.dataset.collection);
+          document.getElementById("miColeccion")?.scrollIntoView({ behavior:"smooth", block:"start" });
+        });
+      });
+      document.querySelectorAll(".collection-tab").forEach((button) => {
+        button.addEventListener("click", () => renderCollection(button.dataset.tab));
+      });
       document.querySelectorAll("[data-check]").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
           syncCurrentEntryFromFields();
