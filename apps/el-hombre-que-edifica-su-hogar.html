@@ -2885,6 +2885,17 @@
         buildMobileDrawer();
         document.getElementById("mobileDrawer").classList.toggle("open");
       });
+      const openToolsBtn = document.getElementById("openToolsBtn");
+
+if (openToolsBtn) {
+  openToolsBtn.addEventListener("click", () => {
+    buildMobileDrawer();
+
+    document
+      .getElementById("mobileDrawer")
+      .classList.add("open");
+  });
+}
 
       document.getElementById("saveDayBtn").addEventListener("click", saveCurrentDay);
       document.getElementById("markDoneBtn").addEventListener("click", markCurrentDayDone);
