@@ -1152,6 +1152,15 @@
       }
     }
 
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+    .healing-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .healing-card { background:white; border:1px solid var(--line); border-radius:20px; padding:16px; box-shadow:0 8px 22px rgba(63,74,53,.07); }
+    .healing-card strong { color:var(--green); display:block; font-size:25px; }
+    .healing-card span { color:var(--muted); font-size:12px; font-weight:850; }
+    .final-celebration { background:linear-gradient(145deg,var(--green),var(--green-dark)); color:white; border-radius:26px; padding:25px; margin-bottom:18px; }
+    .final-celebration h3 { color:var(--gold); font-size:30px; margin-bottom:10px; }
+    .final-celebration p { color:#EFE7D8; line-height:1.7; }
+    @media(max-width:640px){.healing-summary{grid-template-columns:repeat(2,1fr)}}
     .entry-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
     .entry-actions button { min-height:38px; padding:8px 13px; }
     .privacy-note { margin-top:14px; border-radius:20px; padding:15px; background:var(--soft-blue); border:1px solid var(--line); color:var(--olive); line-height:1.55; font-size:13px; }
@@ -1334,6 +1343,7 @@
             <button class="nav-button" type="button" data-view="limites">Límites digitales <span>🛡️</span></button>
             <button class="nav-button" type="button" data-view="pausa">Plan de pausa <span>🌬️</span></button>
             <button class="nav-button" type="button" data-view="verdades">Muro de identidad <span>💛</span></button>
+            <button class="nav-button" type="button" data-view="sanidad">Mi camino de sanidad <span>🌱</span></button>
             <button class="nav-button" type="button" data-view="historial">Historial privado <span>📒</span></button>
             <button class="nav-button" type="button" data-view="biblioteca">Mi biblioteca personal <span>⭐</span></button>
             <button class="nav-button" type="button" data-view="ayuda">Ayuda segura <span>🛟</span></button>
@@ -1539,6 +1549,7 @@
             </div>
           </section>
 
+          <section id="viewSanidad" class="panel hide"><div class="panel-head"><small>Lo que estás construyendo</small><h2>Mi camino de sanidad</h2><p>Un resumen cuidadoso de los pasos, límites, pausas y verdades que has practicado.</p></div><div class="panel-body"><div id="healingCelebration"></div><div class="healing-summary"><div class="healing-card"><strong id="healingDays">0</strong><span>Días recorridos</span></div><div class="healing-card"><strong id="healingEntries">0</strong><span>Registros conscientes</span></div><div class="healing-card"><strong id="healingPauses">0</strong><span>Pausas realizadas</span></div><div class="healing-card"><strong id="healingLimits">0</strong><span>Límites activos</span></div></div><div class="notice">Este resumen acompaña tu proceso, pero no es una evaluación clínica. Si existe riesgo o dolor intenso, busca apoyo profesional o de una persona adulta responsable.</div></div></section>
           <section id="viewHistorial" class="panel hide">
             <div class="panel-head">
               <small>Historial privado</small>
@@ -1940,6 +1951,8 @@
       truthWall: document.getElementById("truthWall"),
       resourceGrid: document.getElementById("resourceGrid"),
       historyList: document.getElementById("historyList"),
+      healingCelebration: document.getElementById("healingCelebration"),
+      healingDays: document.getElementById("healingDays"), healingEntries: document.getElementById("healingEntries"), healingPauses: document.getElementById("healingPauses"), healingLimits: document.getElementById("healingLimits"),
       personalLibraryList: document.getElementById("personalLibraryList"),
       refreshHistoryBtn: document.getElementById("refreshHistoryBtn"),
       clearHistoryBtn: document.getElementById("clearHistoryBtn"),
@@ -2085,8 +2098,7 @@
       document.querySelectorAll("[data-history-filter]").forEach((button) => button.addEventListener("click", () => { historyFilter=button.dataset.historyFilter; document.querySelectorAll("[data-history-filter]").forEach((x)=>x.classList.toggle("active",x===button)); renderHistory(); }));
       document.querySelectorAll("[data-library-tab]").forEach((button) => button.addEventListener("click", () => { activeLibraryTab=button.dataset.libraryTab; document.querySelectorAll("[data-library-tab]").forEach((x)=>x.classList.toggle("active",x===button)); renderPersonalLibrary(); }));
       els.logoutBtn.addEventListener("click", async () => {
-        await supabaseClient.auth.signOut();
-        window.location.href = "../login.html";
+        els.logoutBtn.disabled=true; const { error }=await supabaseClient.auth.signOut(); if(error){els.logoutBtn.disabled=false;showToast("No pudimos cerrar la sesión. Intenta nuevamente.",true);return;} window.location.href="../login.html";
       });
     }
 
@@ -2097,6 +2109,7 @@
         limites: document.getElementById("viewLimites"),
         pausa: document.getElementById("viewPausa"),
         verdades: document.getElementById("viewVerdades"),
+        sanidad: document.getElementById("viewSanidad"),
         historial: document.getElementById("viewHistorial"),
         biblioteca: document.getElementById("viewBiblioteca"),
         ayuda: document.getElementById("viewAyuda"),
@@ -2108,7 +2121,7 @@
       });
 
       document.querySelectorAll("[data-view]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.view === viewName);
+        const active=button.dataset.view === viewName; button.classList.toggle("active",active); if(active) button.setAttribute("aria-current","page"); else button.removeAttribute("aria-current");
       });
     }
 
@@ -2119,6 +2132,7 @@
       renderTruthWall();
       renderResources();
       renderHistory();
+      renderHealingPath();
       renderPersonalLibrary();
       renderStats();
       updateRiskVisibility();
@@ -2194,8 +2208,8 @@
       els.dayGrid.innerHTML = "";
 
       days.forEach((day) => {
-        const card = document.createElement("article");
-        card.className = "day-card";
+        const card = document.createElement("button");
+        card.type = "button"; card.className = "day-card"; card.style.textAlign = "left";
 
         if (day.day === selectedDay) {
           card.classList.add("active");
@@ -2205,6 +2219,7 @@
           card.classList.add("done");
         }
 
+        card.setAttribute("aria-label", `Día ${day.day}: ${day.title}${completedDays.includes(day.day) ? ", completado" : ", pendiente"}${favoriteDays.includes(day.day) ? ", favorito" : ""}`);
         card.innerHTML = `
           <small>Día ${day.day} · ${escapeHTML(day.stage)}</small>
           <strong>${escapeHTML(day.title)}</strong>
@@ -2243,6 +2258,7 @@
 
       const entry = {
         id: createId(),
+        createdAt: new Date().toISOString(),
         date: new Date().toLocaleString("es-AR", {
           year: "numeric",
           month: "long",
@@ -2333,6 +2349,7 @@
     function savePause() {
       const pause = {
         id: createId(),
+        createdAt: new Date().toISOString(),
         date: new Date().toLocaleString("es-AR", {
           year: "numeric",
           month: "long",
@@ -2505,6 +2522,19 @@
     }
 
     function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=entries.slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=pauses.slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();}));}
+    function renderHealingPath() {
+      if (!els.healingCelebration) return;
+      els.healingDays.textContent=completedDays.length; els.healingEntries.textContent=entries.length; els.healingPauses.textContent=pauses.length; els.healingLimits.textContent=limits.length;
+      if (completedDays.length >= days.length) {
+        els.healingCelebration.innerHTML=`<div class="final-celebration"><h3>Tu camino continúa 🌿</h3><p>Completaste los 21 días y construiste pasos de cuidado, límites y pausas conscientes. Este recorrido puede comenzar nuevamente sin borrar tu historial personal.</p><div class="action-row"><button class="btn-gold" type="button" id="restartPeaceJourney">Iniciar un nuevo recorrido</button><button class="btn-soft" type="button" id="openPeaceHistory">Revisar mi historial</button></div></div>`;
+        document.getElementById("restartPeaceJourney").addEventListener("click", restartPeaceJourney);
+        document.getElementById("openPeaceHistory").addEventListener("click",()=>setView("historial"));
+      } else { els.healingCelebration.innerHTML=`<div class="notice">Cada paso de cuidado cuenta. Cuando completes los 21 días encontrarás aquí un cierre especial y la opción de iniciar nuevamente.</div>`; }
+    }
+    function restartPeaceJourney() {
+      if (!window.confirm("¿Quieres iniciar nuevamente el camino de 21 días? Se reiniciará el progreso, pero se conservarán tus registros, pausas, límites, favoritos e historial.")) return;
+      completedDays=[]; selectedDay=1; saveLocalState(); renderAll(); setView("camino"); document.getElementById("viewCamino").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu camino anterior permanece en tu historial.");
+    }
     function renderStats() {
       completedDays = uniqueNumbers(completedDays);
       limits = uniqueNumbers(limits);
@@ -2525,7 +2555,7 @@
       els.metricStage.textContent = currentStage;
 
       els.progressPercent.textContent = `${percentage}%`;
-      els.progressFill.style.width = `${percentage}%`;
+      els.progressFill.style.width = `${percentage}%`; const pw=els.progressFill.parentElement; pw.setAttribute("role","progressbar"); pw.setAttribute("aria-valuemin","0"); pw.setAttribute("aria-valuemax",String(total)); pw.setAttribute("aria-valuenow",String(completedTotal));
       els.progressCircle.style.background =
         `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.15) ${degrees}deg)`;
 
