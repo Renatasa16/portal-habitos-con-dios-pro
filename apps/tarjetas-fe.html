@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tarjetas de Fe | Hábitos con Dios</title>
-  <meta name="description" content="Tarjetas de fe cristianas con reflexiones, declaraciones, acciones y pausas de oración para recordar, reflexionar y compartir.">
+  <meta name="description" content="Tarjetas de fe cristianas para recordar, reflexionar, orar y compartir.">
   <meta name="author" content="Hábitos con Dios">
   <meta name="robots" content="noindex, nofollow">
   <meta property="og:title" content="Tarjetas de Fe | Hábitos con Dios">
@@ -14,164 +14,128 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
-      --green: #3F4A35;
-      --dark: #2E3829;
-      --olive: #556544;
-      --gold: #C9A65A;
-      --beige: #F5F0E7;
-      --cream: #FAF7F0;
-      --white: #FFFFFF;
-      --ink: #1F2937;
-      --muted: #667085;
-      --line: #E8DECC;
-      --danger: #9F3A38;
-      --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
-      --soft-shadow: 0 10px 28px rgba(63, 74, 53, 0.09);
-      --max: 1180px;
+      --green:#3F4A35; --dark:#2E3829; --olive:#556544; --gold:#C9A65A;
+      --beige:#F5F0E7; --cream:#FAF7F0; --white:#FFFFFF; --ink:#1F2937;
+      --muted:#667085; --line:#E8DECC; --danger:#9F3A38;
+      --shadow:0 22px 60px rgba(63,74,53,.14); --soft:0 10px 28px rgba(63,74,53,.09);
+      --max:1180px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { min-height: 100vh; overflow-x: hidden; color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; background: radial-gradient(circle at 4% 0, rgba(201,166,90,.22), transparent 30%), radial-gradient(circle at 96% 0, rgba(85,101,68,.16), transparent 28%), linear-gradient(145deg, var(--cream), var(--beige)); }
-    a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-    .hidden { display: none !important; }
-    .shell { width: min(var(--max), calc(100% - 28px)); margin: auto; padding: 18px 0 44px; }
-    .topbar, .row, .card-actions, .preview-switch { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .topbar { justify-content: space-between; margin-bottom: 22px; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-mark { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; background: linear-gradient(135deg, var(--green), var(--olive)); color: var(--gold); font-weight: 950; box-shadow: var(--soft-shadow); }
-    .brand small { display: block; color: var(--muted); font-weight: 800; }
-    .brand strong { color: var(--green); }
-    .btn, .pill, .chip, .tab { min-height: 44px; border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; background: var(--white); color: var(--green); font-weight: 900; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
-    .btn.primary { border: 0; color: var(--white); background: linear-gradient(135deg, var(--green), var(--olive)); }
-    .btn.gold { background: #F7EAC7; }
-    .btn.danger { background: #F7E4E1; color: var(--danger); }
-    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
-    .panel, .status-card { background: rgba(255,255,255,.93); border: 1px solid var(--line); border-radius: 32px; box-shadow: var(--shadow); }
-    .status { min-height: 72vh; display: grid; place-items: center; }
-    .status-card { width: min(650px, 100%); padding: 36px; text-align: center; }
-    .status-card h1 { color: var(--green); font-size: clamp(34px, 6vw, 56px); margin-bottom: 12px; }
-    .status-card p { color: var(--muted); line-height: 1.7; }
-    .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; margin-bottom: 22px; }
-    .hero-main { padding: clamp(28px, 5vw, 54px); overflow: hidden; position: relative; }
-    .hero-main::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: rgba(201,166,90,.13); right: -95px; top: -95px; }
-    .eyebrow { display: inline-flex; border-radius: 999px; padding: 8px 12px; background: #F7EAC7; color: var(--green); font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .06em; position: relative; z-index: 1; }
-    .hero h1 { font-size: clamp(44px, 7vw, 78px); line-height: .92; letter-spacing: -.065em; color: var(--green); margin: 16px 0; position: relative; z-index: 1; }
-    .hero h1 span { display: block; color: var(--gold); }
-    .hero p { color: var(--muted); font-size: 17px; line-height: 1.7; position: relative; z-index: 1; }
-    .hero-side { padding: 28px; background: linear-gradient(145deg, var(--green), var(--dark)); color: var(--white); display: grid; align-content: center; gap: 15px; }
-    .hero-side h2 { color: var(--gold); font-size: 32px; }
-    .hero-side p { color: #EFE7D8; }
-    .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .metric { padding: 14px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.1); border-radius: 18px; }
-    .metric strong { display: block; color: var(--gold); font-size: 25px; }
-    .metric span { color: #EFE7D8; font-size: 12px; }
-    .toolbar { padding: 20px; margin-bottom: 22px; }
-    .search-grid { display: grid; grid-template-columns: 1fr 220px 220px; gap: 10px; }
-    .field label { display: block; color: var(--green); font-weight: 900; font-size: 12px; margin-bottom: 7px; }
-    .field input, .field select, .modal input { width: 100%; border: 1px solid var(--line); border-radius: 16px; padding: 13px 14px; background: var(--white); color: var(--ink); }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .chip { padding: 8px 12px; }
-    .chip.active, .tab.active { background: var(--green); color: var(--white); }
-    .layout { display: grid; grid-template-columns: 1fr 330px; gap: 22px; }
-    .content { display: grid; gap: 18px; }
-    .featured { padding: 28px; }
-    .featured-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
-    .featured h2 { font-size: clamp(30px, 5vw, 48px); color: var(--green); margin: 12px 0 8px; }
-    .reference { color: var(--gold); font-weight: 950; margin-bottom: 14px; }
-    .preview-wrap { display: grid; place-items: center; padding: 20px 0; }
-    .faith-card { width: min(100%, 560px); aspect-ratio: 1 / 1; border-radius: 32px; padding: clamp(26px, 6vw, 50px); display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,.7); position: relative; overflow: hidden; }
-    .faith-card.vertical { width: min(100%, 390px); aspect-ratio: 4 / 5; }
-    .faith-card::after { content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%; right: -70px; top: -70px; background: rgba(255,255,255,.23); }
-    .style-Luz { background: linear-gradient(145deg, #FFFDF8, #F5E8C8); }
-    .style-Raíces { background: linear-gradient(145deg, #EEF3EA, #DDE5D4); }
-    .style-Paz { background: linear-gradient(145deg, #F8FBFC, #DDEBF0); }
-    .style-Gracia { background: linear-gradient(145deg, #FFF9F7, #F0DCD8); }
-    .style-Esperanza { background: linear-gradient(145deg, #F9FCF5, #E0EDD7); }
-    .card-kicker, .card-footer { color: var(--olive); font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .06em; position: relative; z-index: 1; }
-    .card-title { font-family: Georgia, serif; color: var(--green); font-size: clamp(28px, 5vw, 46px); line-height: 1.05; margin: 14px 0; position: relative; z-index: 1; }
-    .card-text { color: var(--ink); font-size: clamp(16px, 2vw, 20px); line-height: 1.65; position: relative; z-index: 1; }
-    .card-cta { margin-top: 18px; color: var(--olive); font-weight: 850; position: relative; z-index: 1; }
-    .notice { padding: 14px 16px; border-radius: 18px; background: #F7EAC7; color: #544621; line-height: 1.55; font-size: 13px; }
-    .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .mini-card { padding: 18px; background: var(--white); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--soft-shadow); }
-    .mini-card h3 { color: var(--green); margin: 10px 0 6px; }
-    .mini-card p { color: var(--muted); line-height: 1.55; font-size: 14px; }
-    .sidebar { display: grid; gap: 18px; align-content: start; }
-    .side-panel { padding: 20px; position: sticky; top: 14px; }
-    .tabs { display: flex; gap: 7px; flex-wrap: wrap; margin: 12px 0; }
-    .saved-list { display: grid; gap: 9px; }
-    .saved-item, .collection-item { border: 1px solid var(--line); background: var(--white); border-radius: 17px; padding: 12px; }
-    .saved-item strong, .collection-item strong { display: block; color: var(--green); }
-    .saved-item small, .collection-item small { color: var(--muted); }
-    .empty { border: 1px dashed var(--line); border-radius: 17px; padding: 14px; color: var(--muted); background: var(--cream); }
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(31,41,55,.55); display: grid; place-items: center; padding: 18px; z-index: 60; }
-    .modal { width: min(560px, 100%); max-height: 90vh; overflow: auto; background: var(--white); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }
-    .modal h2 { color: var(--green); margin-bottom: 14px; }
-    .check-row { display: flex; gap: 10px; align-items: center; padding: 11px; border: 1px solid var(--line); border-radius: 14px; margin-top: 8px; }
-    .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(18px); opacity: 0; background: var(--green); color: var(--white); border-radius: 999px; padding: 12px 18px; font-weight: 850; box-shadow: var(--shadow); transition: .2s; z-index: 90; pointer-events: none; }
-    .toast.show { opacity: 1; transform: translateX(-50%); }
-    .toast.error { background: var(--danger); }
-    footer { text-align: center; color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 34px; }
-    @media (max-width: 930px) { .hero, .layout { grid-template-columns: 1fr; } .side-panel { position: static; } .search-grid { grid-template-columns: 1fr 1fr; } .search-grid .wide { grid-column: 1 / -1; } }
-    @media (max-width: 640px) { .topbar { align-items: flex-start; flex-direction: column; } .search-grid, .results { grid-template-columns: 1fr; } .featured-head { display: block; } .btn { flex: 1; } .faith-card, .panel { border-radius: 25px; } }
-    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { min-height:100vh; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; background:radial-gradient(circle at 4% 0,rgba(201,166,90,.22),transparent 30%),radial-gradient(circle at 96% 0,rgba(85,101,68,.16),transparent 28%),linear-gradient(145deg,var(--cream),var(--beige)); }
+    a { color:inherit; text-decoration:none; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .hidden { display:none !important; }
+    .shell { width:min(var(--max),calc(100% - 28px)); margin:auto; padding:18px 0 44px; }
+    .row,.topbar,.actions,.tabs,.chips,.format-switch { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .topbar { justify-content:space-between; margin-bottom:22px; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .mark { width:52px; height:52px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,var(--green),var(--olive)); color:var(--gold); font-weight:950; box-shadow:var(--soft); }
+    .brand strong { color:var(--green); display:block; }
+    .brand small { color:var(--muted); font-weight:800; }
+    .btn,.pill,.chip,.tab { min-height:44px; border:1px solid var(--line); border-radius:999px; padding:10px 16px; background:var(--white); color:var(--green); font-weight:900; display:inline-flex; align-items:center; justify-content:center; }
+    .btn.primary,.chip.active,.tab.active { color:var(--white); background:linear-gradient(135deg,var(--green),var(--olive)); }
+    .btn.gold { background:#F7EAC7; }
+    .btn.danger { color:var(--danger); background:#F7E4E1; }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+    .panel,.status-card { background:rgba(255,255,255,.93); border:1px solid var(--line); border-radius:32px; box-shadow:var(--shadow); }
+    .status { min-height:72vh; display:grid; place-items:center; }
+    .status-card { width:min(650px,100%); padding:36px; text-align:center; }
+    .status-card h1 { color:var(--green); font-size:clamp(34px,6vw,56px); margin-bottom:12px; }
+    .status-card p { color:var(--muted); line-height:1.7; }
+    .hero { display:grid; grid-template-columns:1.15fr .85fr; gap:22px; margin-bottom:22px; }
+    .hero-main { padding:clamp(28px,5vw,54px); position:relative; overflow:hidden; }
+    .hero-main::after { content:""; position:absolute; width:260px; height:260px; border-radius:50%; right:-95px; top:-95px; background:rgba(201,166,90,.13); }
+    .eyebrow { display:inline-flex; padding:8px 12px; border-radius:999px; color:var(--green); background:#F7EAC7; font-size:12px; font-weight:950; text-transform:uppercase; letter-spacing:.06em; position:relative; z-index:1; }
+    .hero h1 { color:var(--green); font-size:clamp(44px,7vw,78px); line-height:.92; letter-spacing:-.065em; margin:16px 0; position:relative; z-index:1; }
+    .hero h1 span { display:block; color:var(--gold); }
+    .hero p { color:var(--muted); font-size:17px; line-height:1.7; position:relative; z-index:1; }
+    .hero-side { padding:28px; color:var(--white); background:linear-gradient(145deg,var(--green),var(--dark)); display:grid; align-content:center; gap:15px; }
+    .hero-side h2 { color:var(--gold); font-size:32px; }
+    .hero-side p { color:#EFE7D8; }
+    .metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .metric { padding:14px; border:1px solid rgba(255,255,255,.14); border-radius:18px; background:rgba(255,255,255,.1); }
+    .metric strong { display:block; color:var(--gold); font-size:25px; }
+    .metric span { color:#EFE7D8; font-size:12px; }
+    .toolbar { padding:20px; margin-bottom:22px; }
+    .search-grid { display:grid; grid-template-columns:1fr 220px 220px; gap:10px; }
+    .field label { display:block; color:var(--green); font-size:12px; font-weight:900; margin-bottom:7px; }
+    .field input,.field select,.modal input { width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:16px; background:var(--white); }
+    .chips { margin-top:14px; }
+    .layout { display:grid; grid-template-columns:1fr 330px; gap:22px; }
+    .content { display:grid; gap:18px; }
+    .featured { padding:28px; }
+    .featured-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-start; }
+    .featured h2 { color:var(--green); font-size:clamp(30px,5vw,48px); margin:12px 0 8px; }
+    .reference { color:var(--gold); font-weight:950; margin-bottom:14px; }
+    .preview { display:grid; place-items:center; padding:20px 0; }
+    .faith-card { width:min(100%,560px); aspect-ratio:1/1; padding:clamp(26px,6vw,50px); border-radius:32px; border:1px solid rgba(255,255,255,.7); box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+    .faith-card.vertical { width:min(100%,390px); aspect-ratio:4/5; }
+    .faith-card::after { content:""; position:absolute; width:190px; height:190px; border-radius:50%; right:-70px; top:-70px; background:rgba(255,255,255,.23); }
+    .style-Luz { background:linear-gradient(145deg,#FFFDF8,#F5E8C8); }
+    .style-Raíces { background:linear-gradient(145deg,#EEF3EA,#DDE5D4); }
+    .style-Paz { background:linear-gradient(145deg,#F8FBFC,#DDEBF0); }
+    .style-Gracia { background:linear-gradient(145deg,#FFF9F7,#F0DCD8); }
+    .style-Esperanza { background:linear-gradient(145deg,#F9FCF5,#E0EDD7); }
+    .card-kicker,.card-footer { color:var(--olive); font-size:12px; font-weight:950; text-transform:uppercase; letter-spacing:.06em; position:relative; z-index:1; }
+    .card-title { color:var(--green); font-family:Georgia,serif; font-size:clamp(28px,5vw,46px); line-height:1.05; margin:14px 0; position:relative; z-index:1; }
+    .card-text { font-size:clamp(16px,2vw,20px); line-height:1.65; position:relative; z-index:1; }
+    .card-cta { margin-top:18px; color:var(--olive); font-weight:850; position:relative; z-index:1; }
+    .notice { padding:14px 16px; border-radius:18px; color:#544621; background:#F7EAC7; font-size:13px; line-height:1.55; }
+    .results { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+    .mini { padding:18px; border:1px solid var(--line); border-radius:24px; background:var(--white); box-shadow:var(--soft); }
+    .mini h3 { color:var(--green); margin:10px 0 6px; }
+    .mini p { color:var(--muted); font-size:14px; line-height:1.55; }
+    .side { padding:20px; position:sticky; top:14px; }
+    .tabs { margin:12px 0; }
+    .saved-list { display:grid; gap:9px; }
+    .saved-item,.collection-item { width:100%; padding:12px; border:1px solid var(--line); border-radius:17px; background:var(--white); text-align:left; }
+    .saved-item strong,.collection-item strong { display:block; color:var(--green); }
+    .saved-item small,.collection-item small { color:var(--muted); }
+    .empty { padding:14px; border:1px dashed var(--line); border-radius:17px; color:var(--muted); background:var(--cream); }
+    .modal-backdrop { position:fixed; inset:0; z-index:60; padding:18px; background:rgba(31,41,55,.55); display:grid; place-items:center; }
+    .modal { width:min(560px,100%); max-height:90vh; overflow:auto; padding:24px; border-radius:28px; background:var(--white); box-shadow:var(--shadow); }
+    .modal h2 { color:var(--green); margin-bottom:14px; }
+    .check-row { display:flex; align-items:center; gap:10px; padding:11px; margin-top:8px; border:1px solid var(--line); border-radius:14px; }
+    .toast { position:fixed; left:50%; bottom:22px; z-index:90; padding:12px 18px; border-radius:999px; color:var(--white); background:var(--green); box-shadow:var(--shadow); transform:translateX(-50%) translateY(18px); opacity:0; pointer-events:none; transition:.2s; }
+    .toast.show { opacity:1; transform:translateX(-50%); }
+    .toast.error { background:var(--danger); }
+    .ecosystem-footer { margin-top:40px; padding:32px 24px; text-align:center; color:var(--muted); font-size:13px; line-height:1.7; }
+    .ecosystem-footer strong { display:block; margin-bottom:8px; color:var(--green); font-size:18px; }
+    .ecosystem-footer p { max-width:620px; margin:0 auto 16px; }
+    .footer-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; margin-bottom:20px; padding:11px 18px; border:1px solid var(--line); border-radius:999px; color:var(--green); background:var(--white); font-weight:900; }
+    .footer-disclaimer { max-width:720px !important; margin-bottom:0 !important; font-size:12px; }
+    @media(max-width:930px) { .hero,.layout { grid-template-columns:1fr; } .side { position:static; } .search-grid { grid-template-columns:1fr 1fr; } .wide { grid-column:1/-1; } }
+    @media(max-width:640px) { .topbar { align-items:flex-start; flex-direction:column; } .search-grid,.results { grid-template-columns:1fr; } .featured-head { display:block; } .btn { flex:1; } .panel,.faith-card { border-radius:25px; } }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; } }
   </style>
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <a class="brand" href="../dashboard.html" aria-label="Volver a Mi Espacio">
-        <span class="brand-mark">✦</span>
-        <span><strong>Hábitos con Dios</strong><small>Tarjetas de Fe</small></span>
-      </a>
-      <div class="row">
-        <span id="userPill" class="pill">Validando sesión...</span>
-        <a class="btn" href="../dashboard.html">Mi Espacio</a>
-        <button id="logoutBtn" class="btn danger" type="button">Cerrar sesión</button>
-      </div>
+      <a class="brand" href="../dashboard.html" aria-label="Volver a Mi Espacio"><span class="mark">✦</span><span><strong>Hábitos con Dios</strong><small>Tarjetas de Fe</small></span></a>
+      <div class="row"><span id="userPill" class="pill">Validando sesión...</span><a class="btn" href="../dashboard.html">Mi Espacio</a><button id="logoutBtn" class="btn danger" type="button">Cerrar sesión</button></div>
     </header>
-
-    <section id="loading" class="status">
-      <div class="status-card"><h1>Preparando tus tarjetas</h1><p>Estamos validando tu sesión para abrir esta experiencia.</p></div>
-    </section>
-
-    <section id="locked" class="status hidden">
-      <div class="status-card">
-        <h1>Inicia sesión</h1>
-        <p>Tarjetas de Fe necesita una sesión activa del portal.</p>
-        <div class="row" style="justify-content:center;margin-top:18px"><a class="btn primary" href="../login.html">Iniciar sesión</a><a class="btn" href="../dashboard.html">Volver a Mi Espacio</a></div>
-      </div>
-    </section>
-
+    <section id="loading" class="status"><div class="status-card"><h1>Preparando tus tarjetas</h1><p>Estamos validando tu sesión para abrir esta experiencia.</p></div></section>
+    <section id="locked" class="status hidden"><div class="status-card"><h1>Inicia sesión</h1><p>Tarjetas de Fe necesita una sesión activa del portal.</p><div class="row" style="justify-content:center;margin-top:18px"><a class="btn primary" href="../login.html">Iniciar sesión</a><a class="btn" href="../dashboard.html">Volver a Mi Espacio</a></div></div></section>
     <section id="app" class="hidden">
       <section class="hero">
         <div class="panel hero-main"><span class="eyebrow">Comunidad Hábitos con Dios</span><h1>Tarjetas <span>de Fe</span></h1><p>Pausas breves para recordar, reflexionar y compartir. Encuentra una tarjeta que responda con calidez y verdad: ¿qué necesita hoy mi corazón?</p><div class="row" style="margin-top:22px"><button id="discoverBtn" class="btn primary" type="button">Descubrir otra tarjeta</button><button id="searchFocusBtn" class="btn gold" type="button">Buscar por necesidad</button></div></div>
         <aside class="panel hero-side"><span class="eyebrow">Tu biblioteca personal</span><h2>Una pausa puede cambiar el ritmo</h2><p>Explora, guarda, organiza y comparte contenido breve sin convertir la experiencia en otro recorrido.</p><div class="metrics"><div class="metric"><strong id="favoriteCount">0</strong><span>Favoritos</span></div><div class="metric"><strong id="collectionCount">0</strong><span>Colecciones</span></div><div class="metric"><strong id="resultCount">90</strong><span>Resultados</span></div><div class="metric"><strong id="viewCount">0</strong><span>Tarjetas abiertas</span></div></div></aside>
       </section>
-
-      <section class="panel toolbar">
-        <div class="search-grid"><div class="field wide"><label for="searchInput">Buscar por palabra o necesidad</label><input id="searchInput" type="search" placeholder="Ejemplo: paz, familia, miedo o comenzar de nuevo"></div><div class="field"><label for="typeFilter">Tipo</label><select id="typeFilter"><option value="">Todos los tipos</option></select></div><div class="field"><label for="themeFilter">Tema</label><select id="themeFilter"><option value="">Todos los temas</option></select></div></div>
-        <div class="row" style="margin-top:13px"><button id="clearBtn" class="btn" type="button">Limpiar</button><button id="favoritesOnlyBtn" class="btn" type="button" aria-pressed="false">Solo favoritos</button></div>
-        <div id="themeChips" class="chips" aria-label="Temas destacados"></div>
-      </section>
-
-      <div class="layout">
-        <div class="content"><section id="featured" class="panel featured" aria-live="polite"></section><div class="notice">Las referencias se presentan para profundizar. Los textos son redacción editorial, no citas bíblicas literales. Lee cada pasaje completo y considera su contexto.</div><section><div class="row" style="justify-content:space-between;margin-bottom:12px"><div><h2 style="color:var(--green)">Explorar tarjetas</h2><p id="resultsLabel" style="color:var(--muted)">90 tarjetas disponibles</p></div></div><div id="results" class="results"></div></section></div>
-        <aside class="sidebar"><section class="panel side-panel"><h2>Mi biblioteca</h2><div class="tabs"><button class="tab active" data-tab="favorites" type="button">Favoritos</button><button class="tab" data-tab="collections" type="button">Colecciones</button><button class="tab" data-tab="recent" type="button">Recientes</button></div><div id="savedContent"></div></section></aside>
-      </div>
-
-      <footer><strong>Hábitos con Dios</strong><br>Contenido breve para recordar, reflexionar y compartir.<br>Este recurso acompaña la vida espiritual y no reemplaza ayuda médica, psicológica, pastoral responsable, profesional ni de emergencia.</footer>
+      <section class="panel toolbar"><div class="search-grid"><div class="field wide"><label for="searchInput">Buscar por palabra o necesidad</label><input id="searchInput" type="search" placeholder="Ejemplo: paz, familia, miedo o comenzar de nuevo"></div><div class="field"><label for="typeFilter">Tipo</label><select id="typeFilter"><option value="">Todos los tipos</option></select></div><div class="field"><label for="themeFilter">Tema</label><select id="themeFilter"><option value="">Todos los temas</option></select></div></div><div class="row" style="margin-top:13px"><button id="clearBtn" class="btn" type="button">Limpiar</button><button id="favoritesOnlyBtn" class="btn" type="button" aria-pressed="false">Solo favoritos</button></div><div id="themeChips" class="chips" aria-label="Temas destacados"></div></section>
+      <div class="layout"><div class="content"><section id="featured" class="panel featured" aria-live="polite"></section><div class="notice">Las referencias se presentan para profundizar. Los textos son redacción editorial, no citas bíblicas literales. Lee cada pasaje completo y considera su contexto.</div><section><h2 style="color:var(--green)">Explorar tarjetas</h2><p id="resultsLabel" style="color:var(--muted);margin-bottom:12px">90 tarjetas disponibles</p><div id="results" class="results"></div></section></div><aside><section class="panel side"><h2>Mi biblioteca</h2><div class="tabs"><button class="tab active" data-tab="favorites" type="button">Favoritos</button><button class="tab" data-tab="collections" type="button">Colecciones</button><button class="tab" data-tab="recent" type="button">Recientes</button></div><div id="savedContent"></div></section></aside></div>
+      <footer class="ecosystem-footer"><strong>Hábitos con Dios</strong><p>Continúa tu experiencia en Mi Espacio y descubre herramientas para recordar, reflexionar, orar y crecer en tu fe un día a la vez.</p><a class="footer-link" href="../dashboard.html">Explorar Mi Espacio</a><p class="footer-disclaimer">Este recurso acompaña tu vida espiritual y no reemplaza ayuda médica, psicológica, profesional, pastoral responsable ni servicios de emergencia.</p></footer>
     </section>
   </main>
-
-  <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h2 id="modalTitle">Agregar a una colección</h2><div id="modalBody"></div><div class="row" style="margin-top:14px"><button id="closeModal" class="btn" type="button">Cerrar</button></div></section></div>
+  <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h2 id="modalTitle">Agregar a una colección</h2><div id="modalBody"></div><button id="closeModal" class="btn" type="button" style="margin-top:14px">Cerrar</button></section></div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
   <script>
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
     const SUPABASE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+    const SOCIAL_HANDLE = "@habitoscondios.oficial";
+    const SHARE_SIGNATURE = "Hábitos con Dios | Tarjetas de Fe";
     const cards = [
   {
     "id": "TF001",
@@ -185,12 +149,11 @@
     "text": "No necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Confiar sin verlo todo\n\nNo necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Confiar sin verlo todo\n\nNo necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "fe",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -208,12 +171,11 @@
     "text": "La esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Esperanza para hoy\n\nLa esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperanza para hoy\n\nLa esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "esperanza",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -231,12 +193,11 @@
     "text": "La paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Volver a la paz\n\nLa paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Volver a la paz\n\nLa paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "paz",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -254,12 +215,11 @@
     "text": "Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Recordar quién eres\n\nTu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Recordar quién eres\n\nTu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "identidad",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -277,12 +237,11 @@
     "text": "La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Notar el bien\n\nLa gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Notar el bien\n\nLa gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "gratitud",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -300,12 +259,11 @@
     "text": "El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Propósito en lo pequeño\n\nEl propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Propósito en lo pequeño\n\nEl propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "propósito",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -323,12 +281,11 @@
     "text": "Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Cuidar los vínculos\n\nUn hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Cuidar los vínculos\n\nUn hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "familia",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -346,12 +303,11 @@
     "text": "Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Hablar con sencillez\n\nOrar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Hablar con sencillez\n\nOrar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "oración",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -369,12 +325,11 @@
     "text": "El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Descansar también importa\n\nEl descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Descansar también importa\n\nEl descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "descanso",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -392,12 +347,11 @@
     "text": "La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Dar un paso con miedo\n\nLa valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Dar un paso con miedo\n\nLa valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "miedo",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -415,12 +369,11 @@
     "text": "No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Una preocupación a la vez\n\nNo necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Una preocupación a la vez\n\nNo necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "ansiedad",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -438,12 +391,11 @@
     "text": "La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Fuerza para continuar\n\nLa fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Fuerza para continuar\n\nLa fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "fortaleza",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -461,12 +413,11 @@
     "text": "El perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Perdonar con verdad\n\nEl perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Perdonar con verdad\n\nEl perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "perdón",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -484,12 +435,11 @@
     "text": "Esperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Esperar con intención\n\nEsperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperar con intención\n\nEsperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "espera",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -507,12 +457,11 @@
     "text": "El amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "reference": "",
     "cta": "Detente y responde con honestidad.",
-    "copy": "Amor que se demuestra\n\nEl amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Amor que se demuestra\n\nEl amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. ¿Qué parte de esta verdad necesita hoy más espacio en tu corazón?",
     "tags": [
       "amor",
       "reflexión",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -530,12 +479,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.",
     "reference": "Santiago 1:5",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Decidir con sabiduría\n\nHoy elijo recibir esta verdad con humildad: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.\n\nReferencia para profundizar: Santiago 1:5.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Decidir con sabiduría\n\nHoy elijo recibir esta verdad con humildad: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.\n\nReferencia para profundizar: Santiago 1:5.",
     "tags": [
       "decisiones",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -553,12 +501,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.",
     "reference": "Gálatas 6:9",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Ánimo para este paso\n\nHoy elijo recibir esta verdad con humildad: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.\n\nReferencia para profundizar: Gálatas 6:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Ánimo para este paso\n\nHoy elijo recibir esta verdad con humildad: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.\n\nReferencia para profundizar: Gálatas 6:9.",
     "tags": [
       "ánimo",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -576,12 +523,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.",
     "reference": "Lamentaciones 3:22-23",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Comenzar desde la gracia\n\nHoy elijo recibir esta verdad con humildad: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.\n\nReferencia para profundizar: Lamentaciones 3:22-23.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Comenzar desde la gracia\n\nHoy elijo recibir esta verdad con humildad: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.\n\nReferencia para profundizar: Lamentaciones 3:22-23.",
     "tags": [
       "comenzar de nuevo",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -599,12 +545,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: No necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad.",
     "reference": "Hebreos 11:1",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Confiar sin verlo todo\n\nHoy elijo recibir esta verdad con humildad: No necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad.\n\nReferencia para profundizar: Hebreos 11:1.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Confiar sin verlo todo\n\nHoy elijo recibir esta verdad con humildad: No necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad.\n\nReferencia para profundizar: Hebreos 11:1.",
     "tags": [
       "fe",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -622,12 +567,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: La esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza.",
     "reference": "Romanos 15:13",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Esperanza para hoy\n\nHoy elijo recibir esta verdad con humildad: La esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza.\n\nReferencia para profundizar: Romanos 15:13.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperanza para hoy\n\nHoy elijo recibir esta verdad con humildad: La esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza.\n\nReferencia para profundizar: Romanos 15:13.",
     "tags": [
       "esperanza",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -645,12 +589,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: La paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables.",
     "reference": "Filipenses 4:6-7",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Volver a la paz\n\nHoy elijo recibir esta verdad con humildad: La paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables.\n\nReferencia para profundizar: Filipenses 4:6-7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Volver a la paz\n\nHoy elijo recibir esta verdad con humildad: La paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables.\n\nReferencia para profundizar: Filipenses 4:6-7.",
     "tags": [
       "paz",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -668,12 +611,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.",
     "reference": "Efesios 2:10",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Recordar quién eres\n\nHoy elijo recibir esta verdad con humildad: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.\n\nReferencia para profundizar: Efesios 2:10.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Recordar quién eres\n\nHoy elijo recibir esta verdad con humildad: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.\n\nReferencia para profundizar: Efesios 2:10.",
     "tags": [
       "identidad",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -691,12 +633,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.",
     "reference": "1 Tesalonicenses 5:18",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Notar el bien\n\nHoy elijo recibir esta verdad con humildad: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.\n\nReferencia para profundizar: 1 Tesalonicenses 5:18.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Notar el bien\n\nHoy elijo recibir esta verdad con humildad: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.\n\nReferencia para profundizar: 1 Tesalonicenses 5:18.",
     "tags": [
       "gratitud",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -714,12 +655,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.",
     "reference": "1 Pedro 4:10",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Propósito en lo pequeño\n\nHoy elijo recibir esta verdad con humildad: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.\n\nReferencia para profundizar: 1 Pedro 4:10.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Propósito en lo pequeño\n\nHoy elijo recibir esta verdad con humildad: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.\n\nReferencia para profundizar: 1 Pedro 4:10.",
     "tags": [
       "propósito",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -737,12 +677,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.",
     "reference": "Colosenses 3:12-14",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Cuidar los vínculos\n\nHoy elijo recibir esta verdad con humildad: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.\n\nReferencia para profundizar: Colosenses 3:12-14.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Cuidar los vínculos\n\nHoy elijo recibir esta verdad con humildad: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.\n\nReferencia para profundizar: Colosenses 3:12-14.",
     "tags": [
       "familia",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -760,12 +699,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.",
     "reference": "Salmo 62:8",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Hablar con sencillez\n\nHoy elijo recibir esta verdad con humildad: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.\n\nReferencia para profundizar: Salmo 62:8.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Hablar con sencillez\n\nHoy elijo recibir esta verdad con humildad: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.\n\nReferencia para profundizar: Salmo 62:8.",
     "tags": [
       "oración",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -783,12 +721,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.",
     "reference": "Marcos 6:31",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Descansar también importa\n\nHoy elijo recibir esta verdad con humildad: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.\n\nReferencia para profundizar: Marcos 6:31.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Descansar también importa\n\nHoy elijo recibir esta verdad con humildad: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.\n\nReferencia para profundizar: Marcos 6:31.",
     "tags": [
       "descanso",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -806,12 +743,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.",
     "reference": "Salmo 56:3-4",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Dar un paso con miedo\n\nHoy elijo recibir esta verdad con humildad: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.\n\nReferencia para profundizar: Salmo 56:3-4.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Dar un paso con miedo\n\nHoy elijo recibir esta verdad con humildad: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.\n\nReferencia para profundizar: Salmo 56:3-4.",
     "tags": [
       "miedo",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -829,12 +765,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.",
     "reference": "1 Pedro 5:7",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Una preocupación a la vez\n\nHoy elijo recibir esta verdad con humildad: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.\n\nReferencia para profundizar: 1 Pedro 5:7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Una preocupación a la vez\n\nHoy elijo recibir esta verdad con humildad: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.\n\nReferencia para profundizar: 1 Pedro 5:7.",
     "tags": [
       "ansiedad",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -852,12 +787,11 @@
     "text": "Hoy elijo recibir esta verdad con humildad: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.",
     "reference": "2 Corintios 12:9",
     "cta": "Léela despacio, sin convertirla en fórmula.",
-    "copy": "Fuerza para continuar\n\nHoy elijo recibir esta verdad con humildad: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.\n\nReferencia para profundizar: 2 Corintios 12:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Fuerza para continuar\n\nHoy elijo recibir esta verdad con humildad: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.\n\nReferencia para profundizar: 2 Corintios 12:9.",
     "tags": [
       "fortaleza",
       "declaración de fe",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -875,12 +809,11 @@
     "text": "Haz espacio para una práctica sencilla. Avanza sin apresurar una reconciliación. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Avanza sin apresurar una reconciliación.",
-    "copy": "Perdonar con verdad\n\nHaz espacio para una práctica sencilla. Avanza sin apresurar una reconciliación. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Perdonar con verdad\n\nHaz espacio para una práctica sencilla. Avanza sin apresurar una reconciliación. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "perdón",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -898,12 +831,11 @@
     "text": "Haz espacio para una práctica sencilla. Elige una acción fiel mientras esperas. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Elige una acción fiel mientras esperas.",
-    "copy": "Esperar con intención\n\nHaz espacio para una práctica sencilla. Elige una acción fiel mientras esperas. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperar con intención\n\nHaz espacio para una práctica sencilla. Elige una acción fiel mientras esperas. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "espera",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -921,12 +853,11 @@
     "text": "Haz espacio para una práctica sencilla. Realiza un gesto de cuidado sin buscar reconocimiento. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Realiza un gesto de cuidado sin buscar reconocimiento.",
-    "copy": "Amor que se demuestra\n\nHaz espacio para una práctica sencilla. Realiza un gesto de cuidado sin buscar reconocimiento. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Amor que se demuestra\n\nHaz espacio para una práctica sencilla. Realiza un gesto de cuidado sin buscar reconocimiento. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "amor",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -944,12 +875,11 @@
     "text": "Haz espacio para una práctica sencilla. Escribe qué opción refleja verdad, amor y responsabilidad. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Escribe qué opción refleja verdad, amor y responsabilidad.",
-    "copy": "Decidir con sabiduría\n\nHaz espacio para una práctica sencilla. Escribe qué opción refleja verdad, amor y responsabilidad. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Decidir con sabiduría\n\nHaz espacio para una práctica sencilla. Escribe qué opción refleja verdad, amor y responsabilidad. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "decisiones",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -967,12 +897,11 @@
     "text": "Haz espacio para una práctica sencilla. Reconoce un progreso que normalmente pasarías por alto. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Reconoce un progreso que normalmente pasarías por alto.",
-    "copy": "Ánimo para este paso\n\nHaz espacio para una práctica sencilla. Reconoce un progreso que normalmente pasarías por alto. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Ánimo para este paso\n\nHaz espacio para una práctica sencilla. Reconoce un progreso que normalmente pasarías por alto. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "ánimo",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -990,12 +919,11 @@
     "text": "Haz espacio para una práctica sencilla. Define un comienzo pequeño y realista para hoy. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Define un comienzo pequeño y realista para hoy.",
-    "copy": "Comenzar desde la gracia\n\nHaz espacio para una práctica sencilla. Define un comienzo pequeño y realista para hoy. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Comenzar desde la gracia\n\nHaz espacio para una práctica sencilla. Define un comienzo pequeño y realista para hoy. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "comenzar de nuevo",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -1013,12 +941,11 @@
     "text": "Haz espacio para una práctica sencilla. Entrega a Dios una pregunta que hoy no puedes resolver. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Entrega a Dios una pregunta que hoy no puedes resolver.",
-    "copy": "Confiar sin verlo todo\n\nHaz espacio para una práctica sencilla. Entrega a Dios una pregunta que hoy no puedes resolver. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Confiar sin verlo todo\n\nHaz espacio para una práctica sencilla. Entrega a Dios una pregunta que hoy no puedes resolver. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "fe",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -1036,12 +963,11 @@
     "text": "Haz espacio para una práctica sencilla. Escribe una razón honesta para seguir esperando. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Escribe una razón honesta para seguir esperando.",
-    "copy": "Esperanza para hoy\n\nHaz espacio para una práctica sencilla. Escribe una razón honesta para seguir esperando. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperanza para hoy\n\nHaz espacio para una práctica sencilla. Escribe una razón honesta para seguir esperando. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "esperanza",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -1059,12 +985,11 @@
     "text": "Haz espacio para una práctica sencilla. Presenta una preocupación concreta a Dios. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Presenta una preocupación concreta a Dios.",
-    "copy": "Volver a la paz\n\nHaz espacio para una práctica sencilla. Presenta una preocupación concreta a Dios. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Volver a la paz\n\nHaz espacio para una práctica sencilla. Presenta una preocupación concreta a Dios. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "paz",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -1082,12 +1007,11 @@
     "text": "Haz espacio para una práctica sencilla. Nombra una etiqueta que necesitas dejar de cargar. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Nombra una etiqueta que necesitas dejar de cargar.",
-    "copy": "Recordar quién eres\n\nHaz espacio para una práctica sencilla. Nombra una etiqueta que necesitas dejar de cargar. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Recordar quién eres\n\nHaz espacio para una práctica sencilla. Nombra una etiqueta que necesitas dejar de cargar. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "identidad",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -1105,12 +1029,11 @@
     "text": "Haz espacio para una práctica sencilla. Anota tres regalos pequeños de este día. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Anota tres regalos pequeños de este día.",
-    "copy": "Notar el bien\n\nHaz espacio para una práctica sencilla. Anota tres regalos pequeños de este día. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Notar el bien\n\nHaz espacio para una práctica sencilla. Anota tres regalos pequeños de este día. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "gratitud",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -1128,12 +1051,11 @@
     "text": "Haz espacio para una práctica sencilla. Usa una capacidad para servir de manera sencilla. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Usa una capacidad para servir de manera sencilla.",
-    "copy": "Propósito en lo pequeño\n\nHaz espacio para una práctica sencilla. Usa una capacidad para servir de manera sencilla. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Propósito en lo pequeño\n\nHaz espacio para una práctica sencilla. Usa una capacidad para servir de manera sencilla. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "propósito",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -1151,12 +1073,11 @@
     "text": "Haz espacio para una práctica sencilla. Inicia una conversación con más escucha que respuestas. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Inicia una conversación con más escucha que respuestas.",
-    "copy": "Cuidar los vínculos\n\nHaz espacio para una práctica sencilla. Inicia una conversación con más escucha que respuestas. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Cuidar los vínculos\n\nHaz espacio para una práctica sencilla. Inicia una conversación con más escucha que respuestas. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "familia",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -1174,12 +1095,11 @@
     "text": "Haz espacio para una práctica sencilla. Habla con Dios usando tus propias palabras. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Habla con Dios usando tus propias palabras.",
-    "copy": "Hablar con sencillez\n\nHaz espacio para una práctica sencilla. Habla con Dios usando tus propias palabras. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Hablar con sencillez\n\nHaz espacio para una práctica sencilla. Habla con Dios usando tus propias palabras. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "oración",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -1197,12 +1117,11 @@
     "text": "Haz espacio para una práctica sencilla. Protege hoy una pausa breve sin culpa. No busques perfección; busca un paso posible y consciente.",
     "reference": "",
     "cta": "Protege hoy una pausa breve sin culpa.",
-    "copy": "Descansar también importa\n\nHaz espacio para una práctica sencilla. Protege hoy una pausa breve sin culpa. No busques perfección; busca un paso posible y consciente.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Descansar también importa\n\nHaz espacio para una práctica sencilla. Protege hoy una pausa breve sin culpa. No busques perfección; busca un paso posible y consciente.",
     "tags": [
       "descanso",
       "acción del día",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -1220,12 +1139,11 @@
     "text": "Dios, acompáñame en este tema de miedo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Dar un paso con miedo\n\nDios, acompáñame en este tema de miedo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Dar un paso con miedo\n\nDios, acompáñame en este tema de miedo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "miedo",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -1243,12 +1161,11 @@
     "text": "Dios, acompáñame en este tema de ansiedad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Una preocupación a la vez\n\nDios, acompáñame en este tema de ansiedad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Una preocupación a la vez\n\nDios, acompáñame en este tema de ansiedad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "ansiedad",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -1266,12 +1183,11 @@
     "text": "Dios, acompáñame en este tema de fortaleza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Fuerza para continuar\n\nDios, acompáñame en este tema de fortaleza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Fuerza para continuar\n\nDios, acompáñame en este tema de fortaleza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "fortaleza",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -1289,12 +1205,11 @@
     "text": "Dios, acompáñame en este tema de perdón. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Perdonar con verdad\n\nDios, acompáñame en este tema de perdón. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Perdonar con verdad\n\nDios, acompáñame en este tema de perdón. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "perdón",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -1312,12 +1227,11 @@
     "text": "Dios, acompáñame en este tema de espera. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Esperar con intención\n\nDios, acompáñame en este tema de espera. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperar con intención\n\nDios, acompáñame en este tema de espera. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "espera",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -1335,12 +1249,11 @@
     "text": "Dios, acompáñame en este tema de amor. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Amor que se demuestra\n\nDios, acompáñame en este tema de amor. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Amor que se demuestra\n\nDios, acompáñame en este tema de amor. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "amor",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -1358,12 +1271,11 @@
     "text": "Dios, acompáñame en este tema de decisiones. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Decidir con sabiduría\n\nDios, acompáñame en este tema de decisiones. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Decidir con sabiduría\n\nDios, acompáñame en este tema de decisiones. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "decisiones",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -1381,12 +1293,11 @@
     "text": "Dios, acompáñame en este tema de ánimo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Ánimo para este paso\n\nDios, acompáñame en este tema de ánimo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Ánimo para este paso\n\nDios, acompáñame en este tema de ánimo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "ánimo",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -1404,12 +1315,11 @@
     "text": "Dios, acompáñame en este tema de comenzar de nuevo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Comenzar desde la gracia\n\nDios, acompáñame en este tema de comenzar de nuevo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Comenzar desde la gracia\n\nDios, acompáñame en este tema de comenzar de nuevo. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "comenzar de nuevo",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -1427,12 +1337,11 @@
     "text": "Dios, acompáñame en este tema de fe. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Confiar sin verlo todo\n\nDios, acompáñame en este tema de fe. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Confiar sin verlo todo\n\nDios, acompáñame en este tema de fe. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "fe",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -1450,12 +1359,11 @@
     "text": "Dios, acompáñame en este tema de esperanza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Esperanza para hoy\n\nDios, acompáñame en este tema de esperanza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperanza para hoy\n\nDios, acompáñame en este tema de esperanza. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "esperanza",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -1473,12 +1381,11 @@
     "text": "Dios, acompáñame en este tema de paz. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Volver a la paz\n\nDios, acompáñame en este tema de paz. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Volver a la paz\n\nDios, acompáñame en este tema de paz. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "paz",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -1496,12 +1403,11 @@
     "text": "Dios, acompáñame en este tema de identidad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Recordar quién eres\n\nDios, acompáñame en este tema de identidad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Recordar quién eres\n\nDios, acompáñame en este tema de identidad. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "identidad",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -1519,12 +1425,11 @@
     "text": "Dios, acompáñame en este tema de gratitud. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Notar el bien\n\nDios, acompáñame en este tema de gratitud. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Notar el bien\n\nDios, acompáñame en este tema de gratitud. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "gratitud",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -1542,12 +1447,11 @@
     "text": "Dios, acompáñame en este tema de propósito. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "reference": "",
     "cta": "Haz silencio unos segundos al terminar.",
-    "copy": "Propósito en lo pequeño\n\nDios, acompáñame en este tema de propósito. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.\n\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Propósito en lo pequeño\n\nDios, acompáñame en este tema de propósito. Dame verdad para comprender, sabiduría para actuar y humildad para pedir ayuda cuando la necesite. Amén.",
     "tags": [
       "propósito",
       "pausa de oración",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -1565,12 +1469,11 @@
     "text": "Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. Esta es una paráfrasis editorial relacionada con Colosenses 3:12-14; te animamos a leer el pasaje completo.",
     "reference": "Colosenses 3:12-14",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Cuidar los vínculos\n\nUn hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. Esta es una paráfrasis editorial relacionada con Colosenses 3:12-14; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Colosenses 3:12-14.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Cuidar los vínculos\n\nUn hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes. Esta es una paráfrasis editorial relacionada con Colosenses 3:12-14; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Colosenses 3:12-14.",
     "tags": [
       "familia",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -1588,12 +1491,11 @@
     "text": "Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. Esta es una paráfrasis editorial relacionada con Salmo 62:8; te animamos a leer el pasaje completo.",
     "reference": "Salmo 62:8",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Hablar con sencillez\n\nOrar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. Esta es una paráfrasis editorial relacionada con Salmo 62:8; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 62:8.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Hablar con sencillez\n\nOrar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera. Esta es una paráfrasis editorial relacionada con Salmo 62:8; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 62:8.",
     "tags": [
       "oración",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -1611,12 +1513,11 @@
     "text": "El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. Esta es una paráfrasis editorial relacionada con Marcos 6:31; te animamos a leer el pasaje completo.",
     "reference": "Marcos 6:31",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Descansar también importa\n\nEl descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. Esta es una paráfrasis editorial relacionada con Marcos 6:31; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Marcos 6:31.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Descansar también importa\n\nEl descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso. Esta es una paráfrasis editorial relacionada con Marcos 6:31; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Marcos 6:31.",
     "tags": [
       "descanso",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -1634,12 +1535,11 @@
     "text": "La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. Esta es una paráfrasis editorial relacionada con Salmo 56:3-4; te animamos a leer el pasaje completo.",
     "reference": "Salmo 56:3-4",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Dar un paso con miedo\n\nLa valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. Esta es una paráfrasis editorial relacionada con Salmo 56:3-4; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 56:3-4.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Dar un paso con miedo\n\nLa valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios. Esta es una paráfrasis editorial relacionada con Salmo 56:3-4; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 56:3-4.",
     "tags": [
       "miedo",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -1657,12 +1557,11 @@
     "text": "No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. Esta es una paráfrasis editorial relacionada con 1 Pedro 5:7; te animamos a leer el pasaje completo.",
     "reference": "1 Pedro 5:7",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Una preocupación a la vez\n\nNo necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. Esta es una paráfrasis editorial relacionada con 1 Pedro 5:7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 1 Pedro 5:7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Una preocupación a la vez\n\nNo necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario. Esta es una paráfrasis editorial relacionada con 1 Pedro 5:7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 1 Pedro 5:7.",
     "tags": [
       "ansiedad",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -1680,12 +1579,11 @@
     "text": "La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. Esta es una paráfrasis editorial relacionada con 2 Corintios 12:9; te animamos a leer el pasaje completo.",
     "reference": "2 Corintios 12:9",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Fuerza para continuar\n\nLa fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. Esta es una paráfrasis editorial relacionada con 2 Corintios 12:9; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 2 Corintios 12:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Fuerza para continuar\n\nLa fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar. Esta es una paráfrasis editorial relacionada con 2 Corintios 12:9; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 2 Corintios 12:9.",
     "tags": [
       "fortaleza",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -1703,12 +1601,11 @@
     "text": "El perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. Esta es una paráfrasis editorial relacionada con Efesios 4:32; te animamos a leer el pasaje completo.",
     "reference": "Efesios 4:32",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Perdonar con verdad\n\nEl perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. Esta es una paráfrasis editorial relacionada con Efesios 4:32; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Efesios 4:32.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Perdonar con verdad\n\nEl perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura. Esta es una paráfrasis editorial relacionada con Efesios 4:32; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Efesios 4:32.",
     "tags": [
       "perdón",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -1726,12 +1623,11 @@
     "text": "Esperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. Esta es una paráfrasis editorial relacionada con Salmo 130:5; te animamos a leer el pasaje completo.",
     "reference": "Salmo 130:5",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Esperar con intención\n\nEsperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. Esta es una paráfrasis editorial relacionada con Salmo 130:5; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 130:5.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperar con intención\n\nEsperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo. Esta es una paráfrasis editorial relacionada con Salmo 130:5; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Salmo 130:5.",
     "tags": [
       "espera",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -1749,12 +1645,11 @@
     "text": "El amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. Esta es una paráfrasis editorial relacionada con 1 Corintios 13:4-7; te animamos a leer el pasaje completo.",
     "reference": "1 Corintios 13:4-7",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Amor que se demuestra\n\nEl amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. Esta es una paráfrasis editorial relacionada con 1 Corintios 13:4-7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 1 Corintios 13:4-7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Amor que se demuestra\n\nEl amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye. Esta es una paráfrasis editorial relacionada con 1 Corintios 13:4-7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: 1 Corintios 13:4-7.",
     "tags": [
       "amor",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -1772,12 +1667,11 @@
     "text": "Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar. Esta es una paráfrasis editorial relacionada con Santiago 1:5; te animamos a leer el pasaje completo.",
     "reference": "Santiago 1:5",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Decidir con sabiduría\n\nUna decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar. Esta es una paráfrasis editorial relacionada con Santiago 1:5; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Santiago 1:5.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Decidir con sabiduría\n\nUna decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar. Esta es una paráfrasis editorial relacionada con Santiago 1:5; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Santiago 1:5.",
     "tags": [
       "decisiones",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -1795,12 +1689,11 @@
     "text": "No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar. Esta es una paráfrasis editorial relacionada con Gálatas 6:9; te animamos a leer el pasaje completo.",
     "reference": "Gálatas 6:9",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Ánimo para este paso\n\nNo desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar. Esta es una paráfrasis editorial relacionada con Gálatas 6:9; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Gálatas 6:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Ánimo para este paso\n\nNo desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar. Esta es una paráfrasis editorial relacionada con Gálatas 6:9; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Gálatas 6:9.",
     "tags": [
       "ánimo",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -1818,12 +1711,11 @@
     "text": "Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa. Esta es una paráfrasis editorial relacionada con Lamentaciones 3:22-23; te animamos a leer el pasaje completo.",
     "reference": "Lamentaciones 3:22-23",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Comenzar desde la gracia\n\nEmpezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa. Esta es una paráfrasis editorial relacionada con Lamentaciones 3:22-23; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Lamentaciones 3:22-23.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Comenzar desde la gracia\n\nEmpezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa. Esta es una paráfrasis editorial relacionada con Lamentaciones 3:22-23; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Lamentaciones 3:22-23.",
     "tags": [
       "comenzar de nuevo",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -1841,12 +1733,11 @@
     "text": "No necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. Esta es una paráfrasis editorial relacionada con Hebreos 11:1; te animamos a leer el pasaje completo.",
     "reference": "Hebreos 11:1",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Confiar sin verlo todo\n\nNo necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. Esta es una paráfrasis editorial relacionada con Hebreos 11:1; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Hebreos 11:1.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Confiar sin verlo todo\n\nNo necesitas comprender cada detalle para dar un paso de confianza. La fe bíblica reconoce límites, busca sabiduría y continúa caminando con humildad. Esta es una paráfrasis editorial relacionada con Hebreos 11:1; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Hebreos 11:1.",
     "tags": [
       "fe",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -1864,12 +1755,11 @@
     "text": "La esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. Esta es una paráfrasis editorial relacionada con Romanos 15:13; te animamos a leer el pasaje completo.",
     "reference": "Romanos 15:13",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Esperanza para hoy\n\nLa esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. Esta es una paráfrasis editorial relacionada con Romanos 15:13; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Romanos 15:13.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperanza para hoy\n\nLa esperanza cristiana no niega lo difícil. Recuerda que la historia sigue en manos de Dios y permite avanzar con paciencia, verdad y confianza. Esta es una paráfrasis editorial relacionada con Romanos 15:13; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Romanos 15:13.",
     "tags": [
       "esperanza",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -1887,12 +1777,11 @@
     "text": "La paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. Esta es una paráfrasis editorial relacionada con Filipenses 4:6-7; te animamos a leer el pasaje completo.",
     "reference": "Filipenses 4:6-7",
     "cta": "Lee el pasaje en su contexto.",
-    "copy": "Volver a la paz\n\nLa paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. Esta es una paráfrasis editorial relacionada con Filipenses 4:6-7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Filipenses 4:6-7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Volver a la paz\n\nLa paz no siempre cambia las circunstancias de inmediato, pero puede ordenar el corazón para responder con claridad, oración y pasos responsables. Esta es una paráfrasis editorial relacionada con Filipenses 4:6-7; te animamos a leer el pasaje completo.\n\nReferencia para profundizar: Filipenses 4:6-7.",
     "tags": [
       "paz",
       "inspiración bíblica",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -1910,12 +1799,11 @@
     "text": "Para recordar hoy: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.",
     "reference": "Efesios 2:10",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Recordar quién eres\n\nPara recordar hoy: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.\n\nReferencia para profundizar: Efesios 2:10.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Recordar quién eres\n\nPara recordar hoy: Tu valor no depende del rendimiento, la aprobación o un día perfecto. En Cristo recibes dignidad, pertenencia y una nueva manera de vivir.\n\nReferencia para profundizar: Efesios 2:10.",
     "tags": [
       "identidad",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -1933,12 +1821,11 @@
     "text": "Para recordar hoy: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.",
     "reference": "1 Tesalonicenses 5:18",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Notar el bien\n\nPara recordar hoy: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.\n\nReferencia para profundizar: 1 Tesalonicenses 5:18.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Notar el bien\n\nPara recordar hoy: La gratitud honesta no esconde el dolor. Ayuda a reconocer un regalo presente, incluso cuando todavía existen asuntos por resolver.\n\nReferencia para profundizar: 1 Tesalonicenses 5:18.",
     "tags": [
       "gratitud",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -1956,12 +1843,11 @@
     "text": "Para recordar hoy: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.",
     "reference": "1 Pedro 4:10",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Propósito en lo pequeño\n\nPara recordar hoy: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.\n\nReferencia para profundizar: 1 Pedro 4:10.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Propósito en lo pequeño\n\nPara recordar hoy: El propósito no siempre aparece como una gran misión. También se expresa al servir con fidelidad, cuidar a alguien y usar bien lo recibido.\n\nReferencia para profundizar: 1 Pedro 4:10.",
     "tags": [
       "propósito",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -1979,12 +1865,11 @@
     "text": "Para recordar hoy: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.",
     "reference": "Colosenses 3:12-14",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Cuidar los vínculos\n\nPara recordar hoy: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.\n\nReferencia para profundizar: Colosenses 3:12-14.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Cuidar los vínculos\n\nPara recordar hoy: Un hogar se fortalece con escucha, verdad, paciencia y límites sanos. La fe familiar se vuelve visible en decisiones pequeñas y coherentes.\n\nReferencia para profundizar: Colosenses 3:12-14.",
     "tags": [
       "familia",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -2002,12 +1887,11 @@
     "text": "Para recordar hoy: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.",
     "reference": "Salmo 62:8",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Hablar con sencillez\n\nPara recordar hoy: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.\n\nReferencia para profundizar: Salmo 62:8.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Hablar con sencillez\n\nPara recordar hoy: Orar no exige palabras perfectas. Puedes acercarte con gratitud, preguntas, silencio o cansancio, confiando en que Dios recibe una oración sincera.\n\nReferencia para profundizar: Salmo 62:8.",
     "tags": [
       "oración",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
@@ -2025,12 +1909,11 @@
     "text": "Para recordar hoy: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.",
     "reference": "Marcos 6:31",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Descansar también importa\n\nPara recordar hoy: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.\n\nReferencia para profundizar: Marcos 6:31.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Descansar también importa\n\nPara recordar hoy: El descanso responsable reconoce que tienes límites. Detenerte puede expresar confianza, cuidado y gratitud, no falta de compromiso.\n\nReferencia para profundizar: Marcos 6:31.",
     "tags": [
       "descanso",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 1 · Luz",
@@ -2048,12 +1931,11 @@
     "text": "Para recordar hoy: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.",
     "reference": "Salmo 56:3-4",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Dar un paso con miedo\n\nPara recordar hoy: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.\n\nReferencia para profundizar: Salmo 56:3-4.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Dar un paso con miedo\n\nPara recordar hoy: La valentía no exige ausencia de temor. Puedes reconocer lo que sucede, buscar ayuda y avanzar con prudencia sostenido por la fidelidad de Dios.\n\nReferencia para profundizar: Salmo 56:3-4.",
     "tags": [
       "miedo",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 2 · Raíces",
@@ -2071,12 +1953,11 @@
     "text": "Para recordar hoy: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.",
     "reference": "1 Pedro 5:7",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Una preocupación a la vez\n\nPara recordar hoy: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.\n\nReferencia para profundizar: 1 Pedro 5:7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Una preocupación a la vez\n\nPara recordar hoy: No necesitas resolver mentalmente todo el futuro. Lleva una preocupación concreta a Dios, distingue lo que puedes hacer y pide apoyo cuando sea necesario.\n\nReferencia para profundizar: 1 Pedro 5:7.",
     "tags": [
       "ansiedad",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 3 · Paz",
@@ -2094,12 +1975,11 @@
     "text": "Para recordar hoy: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.",
     "reference": "2 Corintios 12:9",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Fuerza para continuar\n\nPara recordar hoy: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.\n\nReferencia para profundizar: 2 Corintios 12:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Fuerza para continuar\n\nPara recordar hoy: La fortaleza espiritual no consiste en fingir que nada pesa. También incluye reconocer límites, recibir gracia y aceptar ayuda para continuar.\n\nReferencia para profundizar: 2 Corintios 12:9.",
     "tags": [
       "fortaleza",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 4 · Gracia",
@@ -2117,12 +1997,11 @@
     "text": "Para recordar hoy: El perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura.",
     "reference": "Efesios 4:32",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Perdonar con verdad\n\nPara recordar hoy: El perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura.\n\nReferencia para profundizar: Efesios 4:32.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Perdonar con verdad\n\nPara recordar hoy: El perdón puede ser un proceso. No exige negar el daño, evitar consecuencias ni restaurar una confianza que todavía no es segura.\n\nReferencia para profundizar: Efesios 4:32.",
     "tags": [
       "perdón",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 5 · Esperanza",
@@ -2140,12 +2019,11 @@
     "text": "Para recordar hoy: Esperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo.",
     "reference": "Salmo 130:5",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Esperar con intención\n\nPara recordar hoy: Esperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo.\n\nReferencia para profundizar: Salmo 130:5.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Esperar con intención\n\nPara recordar hoy: Esperar en Dios no significa quedar inmóvil. Puedes sostener la esperanza mientras cuidas tu vida, haces lo responsable y aceptas que algunos procesos toman tiempo.\n\nReferencia para profundizar: Salmo 130:5.",
     "tags": [
       "espera",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Luz",
     "visualPrompt": "Plantilla 6 · Luz",
@@ -2163,12 +2041,11 @@
     "text": "Para recordar hoy: El amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye.",
     "reference": "1 Corintios 13:4-7",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Amor que se demuestra\n\nPara recordar hoy: El amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye.\n\nReferencia para profundizar: 1 Corintios 13:4-7.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Amor que se demuestra\n\nPara recordar hoy: El amor cristiano busca el bien con paciencia, verdad y respeto. No controla, no humilla y no pide tolerar aquello que destruye.\n\nReferencia para profundizar: 1 Corintios 13:4-7.",
     "tags": [
       "amor",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Raíces",
     "visualPrompt": "Plantilla 7 · Raíces",
@@ -2186,12 +2063,11 @@
     "text": "Para recordar hoy: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.",
     "reference": "Santiago 1:5",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Decidir con sabiduría\n\nPara recordar hoy: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.\n\nReferencia para profundizar: Santiago 1:5.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Decidir con sabiduría\n\nPara recordar hoy: Una decisión sabia puede reunir oración, Escritura, consejo responsable y evaluación de consecuencias. Confiar en Dios no elimina la necesidad de pensar.\n\nReferencia para profundizar: Santiago 1:5.",
     "tags": [
       "decisiones",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Paz",
     "visualPrompt": "Plantilla 8 · Paz",
@@ -2209,12 +2085,11 @@
     "text": "Para recordar hoy: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.",
     "reference": "Gálatas 6:9",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Ánimo para este paso\n\nPara recordar hoy: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.\n\nReferencia para profundizar: Gálatas 6:9.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Ánimo para este paso\n\nPara recordar hoy: No desprecies el avance pequeño. Volver a intentarlo con humildad también es crecimiento y puede abrir una nueva manera de caminar.\n\nReferencia para profundizar: Gálatas 6:9.",
     "tags": [
       "ánimo",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Gracia",
     "visualPrompt": "Plantilla 9 · Gracia",
@@ -2232,167 +2107,100 @@
     "text": "Para recordar hoy: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.",
     "reference": "Lamentaciones 3:22-23",
     "cta": "Compártela con alguien que pueda recibirla con libertad.",
-    "copy": "Comenzar desde la gracia\n\nPara recordar hoy: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.\n\nReferencia para profundizar: Lamentaciones 3:22-23.\nHábitos con Dios | Tarjetas de Fe",
+    "copy": "Comenzar desde la gracia\n\nPara recordar hoy: Empezar de nuevo no borra lo aprendido. Puedes regresar con honestidad, ajustar el camino y recibir la misericordia de Dios sin quedar atrapado en culpa.\n\nReferencia para profundizar: Lamentaciones 3:22-23.",
     "tags": [
       "comenzar de nuevo",
       "para compartir",
-      "fe práctica",
-      "Hábitos con Dios"
+      "fe práctica"
     ],
     "visualStyle": "Esperanza",
     "visualPrompt": "Plantilla 10 · Esperanza",
     "editorialStatus": "revisado"
   }
 ];
-
     const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
-    const $ = (id) => document.getElementById(id);
-    const types = [...new Set(cards.map((card) => card.type))].sort();
-    const themes = [...new Set(cards.map((card) => card.theme))].sort();
-    let currentUser = null;
-    let storageKeys = null;
-    let state = { favorites: [], collections: [], recent: [], opened: [], typeViews: {}, lastOpened: null, createdAt: null, updatedAt: null };
-    let filteredCards = [...cards];
-    let featuredId = cards[0].id;
-    let favoritesOnly = false;
-    let activeTab = "favorites";
-    let verticalPreview = false;
-    let previousRandomId = null;
-
-    function escapeHTML(value) { return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
-    function normalize(value) { return String(value || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
-    function makeStorageKeys(userId) { const root = `hcd_tarjetas_fe_${userId}`; return { state: `${root}_state`, snapshot: `${root}_snapshot` }; }
-    function showToast(message, error = false) { $("toast").textContent = message; $("toast").classList.toggle("error", error); $("toast").classList.add("show"); clearTimeout(showToast.timer); showToast.timer = setTimeout(() => $("toast").classList.remove("show"), 2600); }
-    function mostViewedType() { return Object.entries(state.typeViews || {}).sort((a, b) => b[1] - a[1])[0]?.[0] || null; }
-
-    function saveState(notify = false) {
-      try {
-        state.updatedAt = new Date().toISOString();
-        localStorage.setItem(storageKeys.state, JSON.stringify(state));
-        localStorage.setItem(storageKeys.snapshot, JSON.stringify({ favorites: [...state.favorites], collections: state.collections.map(({ id, name, itemIds, createdAt, updatedAt }) => ({ id, name, itemIds: [...itemIds], createdAt, updatedAt })), mostViewedType: mostViewedType(), lastOpened: state.lastOpened, updatedAt: state.updatedAt }));
-        renderMetrics();
-        renderSaved();
-        return true;
-      } catch (error) {
-        console.error("Error guardando Tarjetas de Fe:", error);
-        if (notify) showToast("No pudimos guardar este cambio en el dispositivo.", true);
-        return false;
-      }
+    const $ = id => document.getElementById(id);
+    const types = [...new Set(cards.map(card => card.type))].sort();
+    const themes = [...new Set(cards.map(card => card.theme))].sort();
+    let user = null, keys = null, filtered = [...cards], featuredId = cards[0].id, favoritesOnly = false, tab = "favorites", vertical = false, previousRandom = null;
+    let state = { favorites:[], collections:[], recent:[], opened:[], typeViews:{}, lastOpened:null, createdAt:null, updatedAt:null };
+    function esc(v) { return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
+    function norm(v) { return String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(); }
+    function makeKeys(id) { const root=`hcd_tarjetas_fe_${id}`; return {state:`${root}_state`,snapshot:`${root}_snapshot`}; }
+    function toast(message,error=false) { $("toast").textContent=message; $("toast").classList.toggle("error",error); $("toast").classList.add("show"); clearTimeout(toast.timer); toast.timer=setTimeout(()=>$("toast").classList.remove("show"),2500); }
+    function mostViewedType() { return Object.entries(state.typeViews||{}).sort((a,b)=>b[1]-a[1])[0]?.[0]||null; }
+    function save(notify=false) { try { state.updatedAt=new Date().toISOString(); localStorage.setItem(keys.state,JSON.stringify(state)); localStorage.setItem(keys.snapshot,JSON.stringify({favorites:[...state.favorites],collections:state.collections.map(c=>({id:c.id,name:c.name,itemIds:[...c.itemIds],createdAt:c.createdAt,updatedAt:c.updatedAt})),mostViewedType:mostViewedType(),lastOpened:state.lastOpened,updatedAt:state.updatedAt})); renderMetrics(); renderSaved(); return true; } catch(error) { console.error(error); if(notify) toast("No pudimos guardar este cambio.",true); return false; } }
+    function load() { try { const saved=JSON.parse(localStorage.getItem(keys.state)||"null"); if(saved&&typeof saved==="object") state={...state,...saved}; } catch(error) { console.error(error); toast("Detectamos datos dañados y abrimos una biblioteca limpia.",true); } state.favorites=[...new Set((state.favorites||[]).filter(id=>cards.some(c=>c.id===id)))]; state.collections=Array.isArray(state.collections)?state.collections.map(c=>({...c,itemIds:[...new Set((c.itemIds||[]).filter(id=>cards.some(x=>x.id===id)))],createdAt:c.createdAt||new Date().toISOString(),updatedAt:c.updatedAt||new Date().toISOString()})):[]; state.recent=(state.recent||[]).filter(id=>cards.some(c=>c.id===id)).slice(0,15); state.opened=[...new Set((state.opened||[]).filter(id=>cards.some(c=>c.id===id)))]; state.typeViews=state.typeViews&&typeof state.typeViews==="object"?state.typeViews:{}; state.createdAt=state.createdAt||new Date().toISOString(); }
+    function fillFilters() { types.forEach(v=>$("typeFilter").insertAdjacentHTML("beforeend",`<option>${esc(v)}</option>`)); themes.forEach(v=>$("themeFilter").insertAdjacentHTML("beforeend",`<option>${esc(v)}</option>`)); ["paz","esperanza","familia","oración","miedo","comenzar de nuevo"].forEach(v=>$("themeChips").insertAdjacentHTML("beforeend",`<button class="chip" type="button" data-theme="${esc(v)}">${esc(v)}</button>`)); }
+    function preview(card) { return `<article class="faith-card style-${esc(card.visualStyle)} ${vertical?"vertical":""}" aria-label="${esc(card.type)} sobre ${esc(card.theme)}: ${esc(card.title)}"><div><div class="card-kicker">${esc(card.type)} · ${esc(card.theme)}</div><h3 class="card-title">${esc(card.title)}</h3><p class="card-text">${esc(card.text)}</p>${card.cta?`<p class="card-cta">${esc(card.cta)}</p>`:""}</div><div class="card-footer">${card.reference?esc(card.reference)+" · ":""}Hábitos con Dios</div></article>`; }
+    function renderFeatured(track=false) { const card=cards.find(c=>c.id===featuredId)||cards[0], favorite=state.favorites.includes(card.id); $("featured").innerHTML=`<div class="featured-head"><div><span class="eyebrow">${esc(card.type)} · ${esc(card.theme)}</span><h2>${esc(card.title)}</h2>${card.reference?`<div class="reference">${esc(card.reference)}</div>`:""}</div><button class="btn gold" data-favorite="${card.id}" type="button" aria-pressed="${favorite}">${favorite?"★ Favorita":"☆ Guardar"}</button></div><div class="format-switch" style="margin-top:12px"><button class="btn ${!vertical?"primary":""}" data-format="square" type="button" aria-pressed="${!vertical}">Vista cuadrada</button><button class="btn ${vertical?"primary":""}" data-format="vertical" type="button" aria-pressed="${vertical}">Vista vertical</button></div><div class="preview">${preview(card)}</div><div class="actions"><button class="btn primary" data-share="${card.id}" type="button">Compartir</button><button class="btn" data-copy="${card.id}" type="button">Copiar texto</button><button class="btn gold" data-collect="${card.id}" type="button">Agregar a colección</button></div>`; bindDynamic(); if(track) remember(card); }
+    function remember(card) { state.lastOpened=card.id; state.recent=[card.id,...state.recent.filter(id=>id!==card.id)].slice(0,15); state.opened=[...new Set([...state.opened,card.id])]; state.typeViews[card.type]=(state.typeViews[card.type]||0)+1; save(); }
+    function mini(card) { const favorite=state.favorites.includes(card.id); return `<article class="mini"><span class="eyebrow">${esc(card.type)}</span><h3>${esc(card.title)}</h3><p>${esc(card.text)}</p><div class="row" style="margin-top:12px"><button class="btn" data-open="${card.id}" type="button">Abrir</button><button class="btn gold" data-favorite="${card.id}" type="button" aria-label="${favorite?"Quitar de favoritos":"Guardar en favoritos"}" aria-pressed="${favorite}">${favorite?"★":"☆"}</button></div></article>`; }
+    function renderResults() { $("results").innerHTML=filtered.length?filtered.map(mini).join(""):'<div class="empty">No encontramos tarjetas con esos criterios. Prueba otra palabra o limpia los filtros.</div>'; bindDynamic(); }
+    function applyFilters() { const q=norm($("searchInput").value),type=$("typeFilter").value,theme=$("themeFilter").value; filtered=cards.filter(c=>(!type||c.type===type)&&(!theme||c.theme===theme)&&(!favoritesOnly||state.favorites.includes(c.id))&&(!q||norm([c.title,c.text,c.type,c.theme,c.reference,c.cta,...c.tags,...c.secondary].join(" ")).includes(q))); $("resultCount").textContent=filtered.length; $("resultsLabel").textContent=`${filtered.length} tarjeta${filtered.length===1?"":"s"} encontrada${filtered.length===1?"":"s"}`; document.querySelectorAll(".chip").forEach(b=>b.classList.toggle("active",b.dataset.theme===theme)); renderResults(); }
+    function discover() { const pool=filtered.length?filtered:cards, available=pool.filter(c=>c.id!==featuredId&&c.id!==previousRandom), next=available[Math.floor(Math.random()*available.length)]||pool[0]; previousRandom=featuredId; featuredId=next.id; renderFeatured(true); $("featured").scrollIntoView({behavior:"smooth",block:"start"}); }
+    function toggleFavorite(id) { state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id]; save(true); renderFeatured(); renderResults(); toast(state.favorites.includes(id)?"Tarjeta guardada en favoritos.":"Tarjeta quitada de favoritos."); }
+    function renderMetrics() { $("favoriteCount").textContent=state.favorites.length; $("collectionCount").textContent=state.collections.length; $("viewCount").textContent=state.opened.length; }
+    function createCollection(name) { const clean=String(name||"").trim(); if(!clean)return null; const now=new Date().toISOString(), c={id:crypto.randomUUID?.()||`c_${Date.now()}`,name:clean,itemIds:[],createdAt:now,updatedAt:now}; state.collections.push(c); save(true); return c; }
+    function openCollectionModal(cardId) { const suggestions=["Para días difíciles","Para compartir","Para volver a la paz","Para mi familia","Mis declaraciones","Mis pausas favoritas"]; $("modalBody").innerHTML=`<div class="field"><label for="newCollection">Nueva colección</label><input id="newCollection" maxlength="60" placeholder="Ejemplo: Para volver a la paz" list="suggestions"><datalist id="suggestions">${suggestions.map(v=>`<option value="${v}">`).join("")}</datalist></div><button id="createAndAdd" class="btn primary" type="button" style="margin-top:10px">Crear y agregar</button><div style="margin-top:12px">${state.collections.map(c=>`<label class="check-row"><input type="checkbox" data-check-collection="${c.id}" ${c.itemIds.includes(cardId)?"checked":""}><span>${esc(c.name)}</span></label>`).join("")||'<div class="empty">Aún no hay colecciones.</div>'}</div>`; $("modalBackdrop").classList.remove("hidden"); $("modalBackdrop").setAttribute("aria-hidden","false"); document.querySelectorAll("[data-check-collection]").forEach(ch=>ch.onchange=()=>{const c=state.collections.find(x=>x.id===ch.dataset.checkCollection); c.itemIds=ch.checked?[...new Set([...c.itemIds,cardId])]:c.itemIds.filter(id=>id!==cardId); c.updatedAt=new Date().toISOString(); save(true); toast("Colección actualizada.");}); $("createAndAdd").onclick=()=>{const c=createCollection($("newCollection").value); if(c){c.itemIds.push(cardId);save(true);openCollectionModal(cardId);toast("Colección creada.");}}; }
+    function renderSaved() { if(!keys)return; let list=[]; if(tab==="favorites")list=state.favorites.map(id=>cards.find(c=>c.id===id)).filter(Boolean); if(tab==="recent")list=state.recent.map(id=>cards.find(c=>c.id===id)).filter(Boolean); if(tab==="collections"){ $("savedContent").innerHTML=state.collections.length?state.collections.map(c=>`<div class="collection-item"><strong>${esc(c.name)}</strong><small>${c.itemIds.length} tarjetas</small><div class="row" style="margin-top:8px"><button class="btn" data-open-collection="${c.id}" type="button">Abrir</button><button class="btn" data-rename="${c.id}" type="button">Renombrar</button><button class="btn danger" data-delete="${c.id}" type="button">Eliminar</button></div></div>`).join("")+'<button id="newCollectionButton" class="btn primary" type="button" style="margin-top:10px">Nueva colección</button>':'<div class="empty">Todavía no creaste colecciones.</div><button id="newCollectionButton" class="btn primary" type="button" style="margin-top:10px">Crear colección</button>'; bindSaved(); return; } $("savedContent").innerHTML=list.length?`<div class="saved-list">${list.map(c=>`<button class="saved-item" data-open="${c.id}" type="button"><strong>${esc(c.title)}</strong><small>${esc(c.type)} · ${esc(c.theme)}</small></button>`).join("")}</div>`:'<div class="empty">Todavía no hay tarjetas en esta sección.</div>'; bindDynamic(); }
+    function bindSaved() { $("newCollectionButton")?.addEventListener("click",()=>{const n=prompt("Nombre de la colección");if(createCollection(n))toast("Colección creada.");}); document.querySelectorAll("[data-open-collection]").forEach(b=>b.onclick=()=>{const c=state.collections.find(x=>x.id===b.dataset.openCollection); filtered=c.itemIds.map(id=>cards.find(x=>x.id===id)).filter(Boolean); $("resultsLabel").textContent=`Colección: ${c.name}`; renderResults(); document.querySelector(".layout").scrollIntoView({behavior:"smooth"});}); document.querySelectorAll("[data-rename]").forEach(b=>b.onclick=()=>{const c=state.collections.find(x=>x.id===b.dataset.rename),n=prompt("Nuevo nombre",c.name);if(n?.trim()){c.name=n.trim();c.updatedAt=new Date().toISOString();save(true);}}); document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{if(confirm("¿Eliminar esta colección? Las tarjetas no se eliminarán de favoritos.")){state.collections=state.collections.filter(x=>x.id!==b.dataset.delete);save(true);}}); }
+    // Construye la atribución solo al copiar o compartir.
+    // Así, las tarjetas permanecen visualmente limpias y la marca viaja con el contenido.
+    function getShareText(card) {
+      return [
+        card.copy,
+        "",
+        SHARE_SIGNATURE,
+        `Instagram: ${SOCIAL_HANDLE}`
+      ].join("\n");
     }
-
-    function loadState() {
-      try { const parsed = JSON.parse(localStorage.getItem(storageKeys.state) || "null"); if (parsed && typeof parsed === "object") state = { ...state, ...parsed }; }
-      catch (error) { console.error("Estado local dañado:", error); showToast("Detectamos datos dañados y abrimos una biblioteca limpia.", true); }
-      state.favorites = [...new Set((state.favorites || []).filter((id) => cards.some((card) => card.id === id)))];
-      state.collections = Array.isArray(state.collections) ? state.collections.map((collection) => ({ ...collection, itemIds: [...new Set((collection.itemIds || []).filter((id) => cards.some((card) => card.id === id)))], createdAt: collection.createdAt || new Date().toISOString(), updatedAt: collection.updatedAt || new Date().toISOString() })) : [];
-      state.recent = (state.recent || []).filter((id) => cards.some((card) => card.id === id)).slice(0, 15);
-      state.opened = [...new Set((state.opened || []).filter((id) => cards.some((card) => card.id === id)))];
-      state.typeViews = state.typeViews && typeof state.typeViews === "object" ? state.typeViews : {};
-      state.createdAt = state.createdAt || new Date().toISOString();
-    }
-
-    function fillFilters() {
-      types.forEach((value) => $("typeFilter").insertAdjacentHTML("beforeend", `<option>${escapeHTML(value)}</option>`));
-      themes.forEach((value) => $("themeFilter").insertAdjacentHTML("beforeend", `<option>${escapeHTML(value)}</option>`));
-      ["paz", "esperanza", "familia", "oración", "miedo", "comenzar de nuevo"].forEach((value) => $("themeChips").insertAdjacentHTML("beforeend", `<button class="chip" type="button" data-theme="${escapeHTML(value)}">${escapeHTML(value)}</button>`));
-    }
-
-    function cardPreview(card) {
-      return `<article class="faith-card style-${escapeHTML(card.visualStyle)} ${verticalPreview ? "vertical" : ""}" aria-label="${escapeHTML(card.type)} sobre ${escapeHTML(card.theme)}: ${escapeHTML(card.title)}"><div><div class="card-kicker">${escapeHTML(card.type)} · ${escapeHTML(card.theme)}</div><h3 class="card-title">${escapeHTML(card.title)}</h3><p class="card-text">${escapeHTML(card.text)}</p>${card.cta ? `<p class="card-cta">${escapeHTML(card.cta)}</p>` : ""}</div><div class="card-footer">${card.reference ? `${escapeHTML(card.reference)} · ` : ""}Hábitos con Dios</div></article>`;
-    }
-
-    function renderFeatured(track = false) {
-      const card = cards.find((item) => item.id === featuredId) || cards[0];
-      const favorite = state.favorites.includes(card.id);
-      $("featured").innerHTML = `<div class="featured-head"><div><span class="eyebrow">${escapeHTML(card.type)} · ${escapeHTML(card.theme)}</span><h2>${escapeHTML(card.title)}</h2>${card.reference ? `<div class="reference">${escapeHTML(card.reference)}</div>` : ""}</div><button class="btn gold" data-favorite="${card.id}" type="button" aria-pressed="${favorite}">${favorite ? "★ Favorita" : "☆ Guardar"}</button></div><div class="preview-switch" style="margin-top:12px"><button class="btn ${!verticalPreview ? "primary" : ""}" data-format="square" type="button" aria-pressed="${!verticalPreview}">Vista cuadrada</button><button class="btn ${verticalPreview ? "primary" : ""}" data-format="vertical" type="button" aria-pressed="${verticalPreview}">Vista vertical</button></div><div class="preview-wrap">${cardPreview(card)}</div><div class="card-actions"><button class="btn primary" data-share="${card.id}" type="button">Compartir</button><button class="btn" data-copy="${card.id}" type="button">Copiar texto</button><button class="btn gold" data-collection="${card.id}" type="button">Agregar a colección</button></div>`;
-      bindDynamicEvents();
-      if (track) rememberCard(card);
-    }
-
-    function rememberCard(card) { state.lastOpened = card.id; state.recent = [card.id, ...state.recent.filter((id) => id !== card.id)].slice(0, 15); state.opened = [...new Set([...state.opened, card.id])]; state.typeViews[card.type] = (state.typeViews[card.type] || 0) + 1; saveState(); }
-    function miniCard(card) { const favorite = state.favorites.includes(card.id); return `<article class="mini-card"><span class="eyebrow">${escapeHTML(card.type)}</span><h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.text)}</p><div class="row" style="margin-top:12px"><button class="btn" data-open="${card.id}" type="button">Abrir</button><button class="btn gold" data-favorite="${card.id}" type="button" aria-label="${favorite ? "Quitar de favoritos" : "Guardar en favoritos"}" aria-pressed="${favorite}">${favorite ? "★" : "☆"}</button></div></article>`; }
-    function renderResults() { $("results").innerHTML = filteredCards.length ? filteredCards.map(miniCard).join("") : '<div class="empty">No encontramos tarjetas con esos criterios. Prueba otra palabra o limpia los filtros.</div>'; bindDynamicEvents(); }
-
-    function applyFilters() {
-      const query = normalize($("searchInput").value);
-      const type = $("typeFilter").value;
-      const theme = $("themeFilter").value;
-      filteredCards = cards.filter((card) => (!type || card.type === type) && (!theme || card.theme === theme) && (!favoritesOnly || state.favorites.includes(card.id)) && (!query || normalize([card.title, card.text, card.type, card.theme, card.reference, card.cta, ...card.tags, ...card.secondary].join(" ")).includes(query)));
-      $("resultCount").textContent = filteredCards.length;
-      $("resultsLabel").textContent = `${filteredCards.length} tarjeta${filteredCards.length === 1 ? "" : "s"} encontrada${filteredCards.length === 1 ? "" : "s"}`;
-      document.querySelectorAll(".chip").forEach((button) => button.classList.toggle("active", button.dataset.theme === theme));
-      renderResults();
-    }
-
-    function discoverCard() { const pool = filteredCards.length ? filteredCards : cards; const available = pool.filter((card) => card.id !== featuredId && card.id !== previousRandomId); const next = available[Math.floor(Math.random() * available.length)] || pool[0]; previousRandomId = featuredId; featuredId = next.id; renderFeatured(true); $("featured").scrollIntoView({ behavior: "smooth", block: "start" }); }
-    function toggleFavorite(id) { state.favorites = state.favorites.includes(id) ? state.favorites.filter((item) => item !== id) : [...state.favorites, id]; saveState(true); renderFeatured(); renderResults(); showToast(state.favorites.includes(id) ? "Tarjeta guardada en favoritos." : "Tarjeta quitada de favoritos."); }
-    function renderMetrics() { $("favoriteCount").textContent = state.favorites.length; $("collectionCount").textContent = state.collections.length; $("viewCount").textContent = state.opened.length; }
-
-    function createCollection(name) { const cleanName = String(name || "").trim(); if (!cleanName) return null; const now = new Date().toISOString(); const collection = { id: crypto.randomUUID?.() || `collection_${Date.now()}`, name: cleanName, itemIds: [], createdAt: now, updatedAt: now }; state.collections.push(collection); saveState(true); return collection; }
-
-    function openCollectionModal(cardId) {
-      const suggestions = ["Para días difíciles", "Para compartir", "Para volver a la paz", "Para mi familia", "Mis declaraciones", "Mis pausas favoritas"];
-      $("modalBody").innerHTML = `<div class="field"><label for="newCollection">Nueva colección</label><input id="newCollection" maxlength="60" placeholder="Ejemplo: Para volver a la paz" list="collectionSuggestions"><datalist id="collectionSuggestions">${suggestions.map((value) => `<option value="${value}">`).join("")}</datalist></div><button id="createAndAdd" class="btn primary" type="button" style="margin-top:10px">Crear y agregar</button><div style="margin-top:12px">${state.collections.map((collection) => `<label class="check-row"><input type="checkbox" data-collection-check="${collection.id}" ${collection.itemIds.includes(cardId) ? "checked" : ""}><span>${escapeHTML(collection.name)}</span></label>`).join("") || '<div class="empty">Aún no hay colecciones.</div>'}</div>`;
-      $("modalBackdrop").classList.remove("hidden"); $("modalBackdrop").setAttribute("aria-hidden", "false"); setTimeout(() => $("newCollection")?.focus(), 20);
-      document.querySelectorAll("[data-collection-check]").forEach((checkbox) => { checkbox.onchange = () => { const collection = state.collections.find((item) => item.id === checkbox.dataset.collectionCheck); if (!collection) return; collection.itemIds = checkbox.checked ? [...new Set([...collection.itemIds, cardId])] : collection.itemIds.filter((id) => id !== cardId); collection.updatedAt = new Date().toISOString(); saveState(true); showToast("Colección actualizada."); }; });
-      $("createAndAdd").onclick = () => { const collection = createCollection($("newCollection").value); if (collection) { collection.itemIds.push(cardId); saveState(true); openCollectionModal(cardId); showToast("Colección creada."); } };
-    }
-
-    function renderSaved() {
-      if (!storageKeys) return;
-      let list = [];
-      if (activeTab === "favorites") list = state.favorites.map((id) => cards.find((card) => card.id === id)).filter(Boolean);
-      if (activeTab === "recent") list = state.recent.map((id) => cards.find((card) => card.id === id)).filter(Boolean);
-      if (activeTab === "collections") { $("savedContent").innerHTML = state.collections.length ? state.collections.map((collection) => `<div class="collection-item"><strong>${escapeHTML(collection.name)}</strong><small>${collection.itemIds.length} tarjetas</small><div class="row" style="margin-top:8px"><button class="btn" data-open-collection="${collection.id}" type="button">Abrir</button><button class="btn" data-rename="${collection.id}" type="button">Renombrar</button><button class="btn danger" data-delete="${collection.id}" type="button">Eliminar</button></div></div>`).join("") + '<button id="newCollectionButton" class="btn primary" type="button" style="margin-top:10px">Nueva colección</button>' : '<div class="empty">Todavía no creaste colecciones.</div><button id="newCollectionButton" class="btn primary" type="button" style="margin-top:10px">Crear colección</button>'; bindSavedEvents(); return; }
-      $("savedContent").innerHTML = list.length ? `<div class="saved-list">${list.map((card) => `<button class="saved-item" data-open="${card.id}" type="button" style="text-align:left"><strong>${escapeHTML(card.title)}</strong><small>${escapeHTML(card.type)} · ${escapeHTML(card.theme)}</small></button>`).join("")}</div>` : '<div class="empty">Todavía no hay tarjetas en esta sección.</div>';
-      bindDynamicEvents();
-    }
-
-    function bindSavedEvents() {
-      $("newCollectionButton")?.addEventListener("click", () => { const name = prompt("Nombre de la colección"); if (createCollection(name)) showToast("Colección creada."); });
-      document.querySelectorAll("[data-open-collection]").forEach((button) => button.onclick = () => { const collection = state.collections.find((item) => item.id === button.dataset.openCollection); if (!collection) return; filteredCards = collection.itemIds.map((id) => cards.find((card) => card.id === id)).filter(Boolean); $("resultsLabel").textContent = `Colección: ${collection.name}`; renderResults(); document.querySelector(".layout").scrollIntoView({ behavior: "smooth" }); });
-      document.querySelectorAll("[data-rename]").forEach((button) => button.onclick = () => { const collection = state.collections.find((item) => item.id === button.dataset.rename); if (!collection) return; const name = prompt("Nuevo nombre", collection.name); if (name?.trim()) { collection.name = name.trim(); collection.updatedAt = new Date().toISOString(); saveState(true); showToast("Colección renombrada."); } });
-      document.querySelectorAll("[data-delete]").forEach((button) => button.onclick = () => { if (confirm("¿Eliminar esta colección? Las tarjetas no se eliminarán de favoritos.")) { state.collections = state.collections.filter((item) => item.id !== button.dataset.delete); saveState(true); showToast("Colección eliminada."); } });
-    }
-
-    async function copyCard(card) { if (!card) return; try { await navigator.clipboard.writeText(card.copy); showToast("Texto copiado con la firma Hábitos con Dios."); } catch { try { const textarea = document.createElement("textarea"); textarea.value = card.copy; document.body.appendChild(textarea); textarea.select(); document.execCommand("copy"); textarea.remove(); showToast("Texto copiado con la firma Hábitos con Dios."); } catch { showToast("No pudimos copiar el texto.", true); } } }
-    async function shareCard(card) { if (!card) return; if (navigator.share) { try { await navigator.share({ title: `${card.title} | Hábitos con Dios`, text: card.copy }); showToast("Contenido compartido."); return; } catch (error) { if (error.name === "AbortError") return; } } await copyCard(card); showToast("Compartir no está disponible. Copiamos el texto."); }
-
-    function bindDynamicEvents() {
-      document.querySelectorAll("[data-open]").forEach((button) => button.onclick = () => { featuredId = button.dataset.open; renderFeatured(true); $("featured").scrollIntoView({ behavior: "smooth" }); });
-      document.querySelectorAll("[data-favorite]").forEach((button) => button.onclick = () => toggleFavorite(button.dataset.favorite));
-      document.querySelectorAll("[data-collection]").forEach((button) => button.onclick = () => openCollectionModal(button.dataset.collection));
-      document.querySelectorAll("[data-copy]").forEach((button) => button.onclick = () => copyCard(cards.find((card) => card.id === button.dataset.copy)));
-      document.querySelectorAll("[data-share]").forEach((button) => button.onclick = () => shareCard(cards.find((card) => card.id === button.dataset.share)));
-      document.querySelectorAll("[data-format]").forEach((button) => button.onclick = () => { verticalPreview = button.dataset.format === "vertical"; renderFeatured(); });
-    }
-
-    function closeModal() { $("modalBackdrop").classList.add("hidden"); $("modalBackdrop").setAttribute("aria-hidden", "true"); }
-    function bindStaticEvents() {
-      $("searchInput").oninput = applyFilters; $("typeFilter").onchange = applyFilters; $("themeFilter").onchange = applyFilters;
-      $("clearBtn").onclick = () => { $("searchInput").value = ""; $("typeFilter").value = ""; $("themeFilter").value = ""; favoritesOnly = false; $("favoritesOnlyBtn").setAttribute("aria-pressed", "false"); applyFilters(); };
-      $("favoritesOnlyBtn").onclick = () => { favoritesOnly = !favoritesOnly; $("favoritesOnlyBtn").setAttribute("aria-pressed", String(favoritesOnly)); applyFilters(); };
-      $("discoverBtn").onclick = discoverCard; $("searchFocusBtn").onclick = () => { $("searchInput").focus(); $("searchInput").scrollIntoView({ behavior: "smooth", block: "center" }); };
-      document.querySelectorAll(".chip").forEach((button) => button.onclick = () => { $("themeFilter").value = button.dataset.theme; applyFilters(); });
-      document.querySelectorAll("[data-tab]").forEach((button) => button.onclick = () => { activeTab = button.dataset.tab; document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("active", item === button)); renderSaved(); });
-      $("closeModal").onclick = closeModal; $("modalBackdrop").onclick = (event) => { if (event.target === $("modalBackdrop")) closeModal(); }; document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeModal(); });
-      $("logoutBtn").onclick = async () => { if (!confirm("¿Deseas cerrar sesión?")) return; await supabaseClient?.auth.signOut(); location.href = "../login.html"; };
-    }
-
-    async function initializeApp() {
-      fillFilters(); bindStaticEvents();
-      if (!supabaseClient) { $("loading").classList.add("hidden"); $("locked").classList.remove("hidden"); return; }
-      try {
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
-        if (error || !session?.user) { $("loading").classList.add("hidden"); $("locked").classList.remove("hidden"); return; }
-        currentUser = session.user; $("userPill").textContent = currentUser.email || "Sesión activa"; storageKeys = makeStorageKeys(currentUser.id); loadState(); applyFilters(); renderFeatured(true); renderMetrics(); renderSaved(); $("loading").classList.add("hidden"); $("app").classList.remove("hidden");
-      } catch (error) { console.error("Error inicializando Tarjetas de Fe:", error); $("loading").classList.add("hidden"); $("locked").classList.remove("hidden"); }
-    }
-
-    window.addEventListener("load", initializeApp);
+    async function copyCard(card) { if(!card)return; const text=getShareText(card); try{await navigator.clipboard.writeText(text);toast("Texto copiado con la firma Hábitos con Dios.");}catch{try{const ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();if(!ok)throw new Error("copy failed");toast("Texto copiado con la firma Hábitos con Dios.");}catch(error){console.error(error);toast("No pudimos copiar el texto.",true);}} }
+    async function shareCard(card) { if(!card)return; const text=getShareText(card); if(navigator.share){try{await navigator.share({title:`${card.title} | Hábitos con Dios`,text});toast("Contenido compartido.");return;}catch(error){if(error.name==="AbortError")return;console.error(error);}} await copyCard(card); }
+    function bindDynamic() { document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{featuredId=b.dataset.open;renderFeatured(true);$("featured").scrollIntoView({behavior:"smooth"});}); document.querySelectorAll("[data-favorite]").forEach(b=>b.onclick=()=>toggleFavorite(b.dataset.favorite)); document.querySelectorAll("[data-collect]").forEach(b=>b.onclick=()=>openCollectionModal(b.dataset.collect)); document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>copyCard(cards.find(c=>c.id===b.dataset.copy))); document.querySelectorAll("[data-share]").forEach(b=>b.onclick=()=>shareCard(cards.find(c=>c.id===b.dataset.share))); document.querySelectorAll("[data-format]").forEach(b=>b.onclick=()=>{vertical=b.dataset.format==="vertical";renderFeatured();}); }
+    function closeModal(){$("modalBackdrop").classList.add("hidden");$("modalBackdrop").setAttribute("aria-hidden","true");}
+    function bindStatic(){$("searchInput").oninput=applyFilters;$("typeFilter").onchange=applyFilters;$("themeFilter").onchange=applyFilters;$("clearBtn").onclick=()=>{$("searchInput").value="";$("typeFilter").value="";$("themeFilter").value="";favoritesOnly=false;$("favoritesOnlyBtn").setAttribute("aria-pressed","false");applyFilters();};$("favoritesOnlyBtn").onclick=()=>{favoritesOnly=!favoritesOnly;$("favoritesOnlyBtn").setAttribute("aria-pressed",String(favoritesOnly));applyFilters();};$("discoverBtn").onclick=discover;$("searchFocusBtn").onclick=()=>{$("searchInput").focus();$("searchInput").scrollIntoView({behavior:"smooth",block:"center"});};document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{$("themeFilter").value=b.dataset.theme;applyFilters();});document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));renderSaved();});$("closeModal").onclick=closeModal;$("modalBackdrop").onclick=e=>{if(e.target===$("modalBackdrop"))closeModal();};document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});$("logoutBtn").onclick=async()=>{if(!confirm("¿Deseas cerrar sesión?"))return;await supabaseClient?.auth.signOut();location.href="../login.html";};}
+    async function init(){fillFilters();bindStatic();if(!supabaseClient){$("loading").classList.add("hidden");$("locked").classList.remove("hidden");return;}try{const{data:{session},error}=await supabaseClient.auth.getSession();if(error||!session?.user){$("loading").classList.add("hidden");$("locked").classList.remove("hidden");return;}user=session.user;$("userPill").textContent=user.email||"Sesión activa";keys=makeKeys(user.id);load();applyFilters();renderFeatured(true);renderMetrics();renderSaved();$("loading").classList.add("hidden");$("app").classList.remove("hidden");}catch(error){console.error(error);$("loading").classList.add("hidden");$("locked").classList.remove("hidden");}}
+    window.addEventListener("load",init);
   </script>
+  <!--
+  PROMPTS VISUALES REUTILIZABLES
+  1. Luz serena: ventana y luz de amanecer sobre superficie clara.
+  2. Rama y luz: rama de olivo y sombras delicadas.
+  3. Raíces orgánicas: formas botánicas y textura de papel natural.
+  4. Camino tranquilo: sendero natural con luz suave al fondo.
+  5. Agua en calma: agua serena con reflejos delicados.
+  6. Cielo suave: cielo luminoso con nubes sutiles.
+  7. Gracia floral: pétalos discretos y tela natural.
+  8. Mesa de pausa: taza neutra, cuaderno cerrado y luz cálida.
+  9. Horizonte de esperanza: horizonte luminoso y vegetación delicada.
+  10. Brote nuevo: brote verde y luz lateral sobre fondo claro.
 
-  <!-- PROMPTS VISUALES REUTILIZABLES: Luz serena; rama y luz; raíces orgánicas; camino tranquilo; agua en calma; cielo suave; gracia floral; mesa de pausa; horizonte de esperanza; brote nuevo. No incrustar texto en imágenes. -->
-  <!-- INVENTARIO SUPABASE FUTURO: contenido editorial (id,type,theme,secondary,title,text,reference,cta,copy,tags,visualStyle,visualPrompt,editorialStatus); estado por usuario (user_id,favorites,collections,recent,opened,typeViews,lastOpened,createdAt,updatedAt); snapshot (favorites,collections,mostViewedType,lastOpened,updatedAt). No se crearon tablas, permisos, entitlements ni SKU. -->
+  Prompt base:
+  Imagen editorial premium para Hábitos con Dios, tema [tema], composición [descripción],
+  paleta verde oliva, beige cálido, dorado suave y [color secundario], iluminación suave,
+  estética espiritual, minimalista, femenina, elegante y contemporánea, sin texto,
+  sin letras, sin números, sin símbolos religiosos excesivos, sin composición saturada.
+
+  INVENTARIO PARA FUTURA MIGRACIÓN A SUPABASE
+  Contenido editorial:
+  id, type, theme, secondary, title, text, reference, cta, copy, tags,
+  visualStyle, visualPrompt, editorialStatus.
+
+  Estado por usuario:
+  user_id, favorites, collections[{id,name,itemIds,createdAt,updatedAt}], recent,
+  opened, typeViews, lastOpened, createdAt, updatedAt.
+
+  Snapshot:
+  favorites, collections, mostViewedType, lastOpened, updatedAt.
+
+  MEJORAS INTEGRADAS SOBRE LA VERSIÓN 5
+  - Footer del ecosistema con acceso a ../dashboard.html.
+  - Firma social centralizada mediante getShareText().
+  - Instagram: @habitoscondios.oficial al copiar o compartir.
+  - La marca no se duplica manualmente dentro de las 90 tarjetas.
+
+  No se crearon tablas, permisos, entitlements ni SKU nuevos.
+  -->
 </body>
 </html>
