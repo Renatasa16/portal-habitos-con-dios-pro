@@ -1045,6 +1045,13 @@
     }
 
 
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+    .history-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:14px 0 18px; }
+    .history-summary-card { background:var(--soft-cream); border:1px solid var(--line); border-radius:18px; padding:15px; }
+    .history-summary-card strong { color:var(--green); display:block; font-size:24px; }
+    .history-summary-card span { color:var(--muted); font-size:12px; font-weight:800; }
+    .restart-note { margin-top:16px; padding:16px; border-radius:18px; background:var(--soft-gold); color:var(--olive); line-height:1.6; }
+    @media(max-width:640px){.history-summary{grid-template-columns:repeat(2,1fr)}}
     /* V6: navegación, historial y favoritos */
     .quick-tools {
       margin-top: 22px;
@@ -1211,12 +1218,12 @@
           </div>
 
           <div class="dashboard-card">
-            <span>Insignias</span>
+            <span>Oraciones guardadas</span>
             <strong id="badgeCountMetric">0</strong>
           </div>
 
           <div class="dashboard-card">
-            <span>Favoritos</span>
+            <span>Gratitudes guardadas</span>
             <strong id="favoriteCountMetric">0</strong>
           </div>
         </div>
@@ -1359,8 +1366,9 @@
 
 
           <section class="library-panel collection-panel" id="miColeccion" aria-labelledby="collectionTitle">
-            <h2 id="collectionTitle">Mi biblioteca personal</h2>
-            <p class="reflection">Reúne en un solo lugar lo que has guardado durante tu recorrido.</p>
+            <h2 id="collectionTitle">Mi Historia con Dios</h2>
+            <p class="reflection">Conserva oraciones, gratitudes, aprendizajes y días significativos de cada vez que recorres estos 21 días.</p>
+            <div class="history-summary" aria-label="Resumen de mi historia"><div class="history-summary-card"><strong id="historyPrayerCount">0</strong><span>Oraciones guardadas</span></div><div class="history-summary-card"><strong id="historyGratitudeCount">0</strong><span>Gratitudes guardadas</span></div><div class="history-summary-card"><strong id="historyNoteCount">0</strong><span>Aprendizajes y notas</span></div><div class="history-summary-card"><strong id="historyCycleCount">1</strong><span>Recorridos iniciados</span></div></div>
             <div class="collection-tabs" role="tablist" aria-label="Contenido personal">
               <button class="collection-tab active" type="button" data-tab="favoritos">Favoritos</button>
               <button class="collection-tab" type="button" data-tab="oraciones">Oraciones</button>
@@ -1386,7 +1394,8 @@
               <p>Vuelve a tus favoritos, revisa tu diario o explora nuevas experiencias desde Mi Espacio. La futura Comunidad Hábitos con Dios se integrará aquí cuando esté disponible.</p>
               <div class="actions-row">
                 <button class="btn btn-secondary" type="button" data-collection="favoritos">Ver mis favoritos</button>
-                <a class="btn btn-primary" href="../dashboard.html">Explorar Mi Espacio</a>
+                <button class="btn btn-primary" type="button" id="restartJourneyButton">Volver a recorrer los 21 días</button>
+                <a class="btn btn-secondary" href="../dashboard.html">Explorar Mi Espacio</a>
               </div>
             </div>
           </section>
@@ -1763,6 +1772,10 @@
     const badgesGrid = document.getElementById("badgesGrid");
     const toast = document.getElementById("toast");
     const collectionList = document.getElementById("collectionList");
+    const historyPrayerCount = document.getElementById("historyPrayerCount");
+    const historyGratitudeCount = document.getElementById("historyGratitudeCount");
+    const historyNoteCount = document.getElementById("historyNoteCount");
+    const historyCycleCount = document.getElementById("historyCycleCount");
     let activeCollectionTab = "favoritos";
 
     function getFriendlyNameFromEmail(email) {
@@ -1803,10 +1816,11 @@
         }
       }
 
+      if (!Array.isArray(state._history)) state._history = [];
+      if (!Number.isInteger(state._cycle) || state._cycle < 1) state._cycle = 1;
       devotionals.forEach((item) => {
-        if (!state[item.day]) {
-          state[item.day] = getDefaultEntry();
-        }
+        if (!state[item.day] || Array.isArray(state[item.day])) state[item.day] = getDefaultEntry();
+        state[item.day].checks = { ...getDefaultEntry().checks, ...(state[item.day].checks || {}) };
       });
 
       const savedDay = Number(localStorage.getItem(storageKey + "_currentDay"));
@@ -1834,19 +1848,19 @@
     }
 
     function getCompletedCount() {
-      return Object.values(state).filter((entry) => entry.completed).length;
+      return devotionals.filter((item) => state[item.day]?.completed).length;
     }
 
     function getFavoriteCount() {
-      return Object.values(state).filter((entry) => entry.favorite).length;
+      return devotionals.filter((item) => state[item.day]?.favorite).length;
     }
 
     function getPrayerCount() {
-      return Object.values(state).filter((entry) => entry.prayer && entry.prayer.length > 0).length;
+      return (state._history || []).filter((x) => x.kind === "Oración").length + devotionals.filter((item) => state[item.day]?.prayer).length;
     }
 
     function getGratitudeCount() {
-      return Object.values(state).filter((entry) => entry.gratitude && entry.gratitude.length > 0).length;
+      return (state._history || []).filter((x) => x.kind === "Gratitud").length + devotionals.filter((item) => state[item.day]?.gratitude).length;
     }
 
     function getStreakCount() {
@@ -1915,11 +1929,6 @@
           `${baseKey}_${currentUser.id}`,
           JSON.stringify(snapshot)
         );
-
-        localStorage.setItem(
-          `${baseKey}_local`,
-          JSON.stringify(snapshot)
-        );
       });
     }
 
@@ -1940,7 +1949,7 @@
       const badges = getBadges(completed, streak, favorites, prayers, gratitudes);
       const unlockedCount = badges.filter((badge) => badge.unlocked).length;
 
-      badgeCountMetric.textContent = unlockedCount;
+      /* Las insignias siguen visibles en su panel; el tablero muestra oraciones. */
 
       badgesGrid.innerHTML = badges
         .map((badge) => {
@@ -1975,7 +1984,7 @@
 
       completedDays.textContent = completed;
       streakDays.textContent = streak;
-      progressBar.style.width = percentage + "%";
+      progressBar.style.width = percentage + "%"; const pw=progressBar.parentElement; pw.setAttribute("role","progressbar"); pw.setAttribute("aria-valuemin","0"); pw.setAttribute("aria-valuemax","21"); pw.setAttribute("aria-valuenow",String(completed));
       progressPercent.textContent = percentage + "%";
 
       progressCircle.style.background =
@@ -1984,7 +1993,8 @@
       levelPill.textContent = `${level.icon} Nivel ${level.name}`;
       currentLevelMetric.textContent = level.name;
       currentDayMetric.textContent = `${currentDay} de 21`;
-      favoriteCountMetric.textContent = favorites;
+      badgeCountMetric.textContent = prayers;
+      favoriteCountMetric.textContent = gratitudes;
 
       renderAchievements(completed, streak);
       renderBadges(completed, streak, favorites, prayers, gratitudes);
@@ -2003,7 +2013,7 @@
 
         button.type = "button";
         button.className = "day-button";
-        button.textContent = item.day;
+        button.textContent = item.day; button.setAttribute("aria-label", `Día ${item.day}: ${item.title}${entry.completed ? ", completado" : ", pendiente"}${entry.favorite ? ", favorito" : ""}`);
 
         if (item.day === currentDay) button.classList.add("active");
         if (entry.completed) button.classList.add("completed");
@@ -2095,7 +2105,7 @@ reflectionText.innerHTML =
         ? "★ Favorito guardado"
         : "☆ Guardar favorito";
 
-      favoriteButton.classList.toggle("active", Boolean(entry.favorite));
+      favoriteButton.classList.toggle("active", Boolean(entry.favorite)); favoriteButton.setAttribute("aria-pressed", String(Boolean(entry.favorite)));
 
       document.querySelectorAll("[data-check]").forEach((checkbox) => {
         const key = checkbox.getAttribute("data-check");
@@ -2109,22 +2119,30 @@ reflectionText.innerHTML =
 
 
     function getCollectionItems(type) {
-      return devotionals.flatMap((item) => {
+      const history = (state._history || []).filter((item) => {
+        if (type === "oraciones") return item.kind === "Oración";
+        if (type === "gratitudes") return item.kind === "Gratitud";
+        if (type === "notas") return item.kind === "Nota";
+        if (type === "diario") return true;
+        return false;
+      });
+      const current = devotionals.flatMap((item) => {
         const entry = state[item.day] || getDefaultEntry();
-        if (type === "favoritos" && entry.favorite) return [{ day:item.day, title:item.title, text:item.focus, kind:"Favorito" }];
-        if (type === "oraciones" && entry.prayer) return [{ day:item.day, title:item.title, text:entry.prayer, kind:"Oración" }];
-        if (type === "gratitudes" && entry.gratitude) return [{ day:item.day, title:item.title, text:entry.gratitude, kind:"Gratitud" }];
-        if (type === "notas" && entry.notes) return [{ day:item.day, title:item.title, text:entry.notes, kind:"Nota" }];
-        if (type === "diario") {
-          const values = [
-            ["Oración", entry.prayer], ["Gratitud", entry.gratitude], ["Nota", entry.notes]
-          ].filter(([,value]) => value);
-          return values.map(([kind,text]) => ({ day:item.day, title:item.title, text, kind }));
-        }
+        if (type === "favoritos" && entry.favorite) return [{ day:item.day, title:item.title, text:item.focus, kind:"Favorito", date:"Recorrido actual" }];
+        const map = { oraciones:["Oración",entry.prayer], gratitudes:["Gratitud",entry.gratitude], notas:["Nota",entry.notes] };
+        if (map[type] && map[type][1]) return [{day:item.day,title:item.title,text:map[type][1],kind:map[type][0],date:"Recorrido actual"}];
+        if (type === "diario") return [["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].filter(([,v])=>v).map(([kind,text])=>({day:item.day,title:item.title,text,kind,date:"Recorrido actual"}));
         return [];
       });
+      return [...history, ...current];
     }
-
+    function renderHistoryIndicators() {
+      const all = state._history || [];
+      historyPrayerCount.textContent = all.filter(x=>x.kind==="Oración").length + devotionals.filter(d=>state[d.day]?.prayer).length;
+      historyGratitudeCount.textContent = all.filter(x=>x.kind==="Gratitud").length + devotionals.filter(d=>state[d.day]?.gratitude).length;
+      historyNoteCount.textContent = all.filter(x=>x.kind==="Nota").length + devotionals.filter(d=>state[d.day]?.notes).length;
+      historyCycleCount.textContent = state._cycle || 1;
+    }
     function renderCollection(type = activeCollectionTab) {
       activeCollectionTab = type === "diario" ? "oraciones" : type;
       const sourceType = type;
@@ -2139,7 +2157,7 @@ reflectionText.innerHTML =
       collectionList.innerHTML = items.map((item) => `
         <article class="collection-item">
           <div class="collection-item-top">
-            <div><strong>Día ${item.day} · ${item.title}</strong><small>${item.kind}</small></div>
+            <div><strong>Día ${item.day} · ${item.title}</strong><small>${item.kind}${item.date ? " · " + escapeHTML(item.date) : ""}</small></div>
             <button class="btn btn-secondary open-saved-day" type="button" data-day="${item.day}">Abrir día</button>
           </div>
           <p>${escapeHTML(item.text)}</p>
@@ -2176,6 +2194,7 @@ reflectionText.innerHTML =
       renderCurrentDay();
       renderProgress();
       renderCollection(activeCollectionTab);
+      renderHistoryIndicators();
     }
 
     function syncCurrentEntryFromFields() {
@@ -2193,6 +2212,22 @@ reflectionText.innerHTML =
       state[currentDay] = entry;
     }
 
+    function archiveCurrentJourney() {
+      const date = new Date().toISOString();
+      devotionals.forEach((item) => {
+        const entry = state[item.day] || getDefaultEntry();
+        [["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].forEach(([kind,text]) => {
+          if (text && String(text).trim()) state._history.push({ id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random()), cycle:state._cycle||1, day:item.day, title:item.title, kind, text:String(text).trim(), date });
+        });
+      });
+    }
+    function restartJourney() {
+      if (!confirm("¿Quieres volver a recorrer los 21 días? Tu historia, oraciones, gratitudes, notas y favoritos se conservarán.")) return;
+      archiveCurrentJourney();
+      devotionals.forEach((item) => { const favorite=Boolean(state[item.day]?.favorite); state[item.day]={...getDefaultEntry(),favorite}; });
+      state._cycle=(state._cycle||1)+1; currentDay=1; saveState(); renderApp();
+      document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu historia fue conservada.");
+    }
     async function validateAccess() {
       try {
         const {
@@ -2243,7 +2278,10 @@ reflectionText.innerHTML =
         const friendlyName = getFriendlyNameFromEmail(normalizedEmail);
 
         userPill.textContent = currentUser.email || "Sesión activa";
-        storageKey = "hcd_mi_tiempo_con_dios_" + normalizedEmail;
+        const legacyStorageKey = "hcd_mi_tiempo_con_dios_" + normalizedEmail;
+        storageKey = "hcd_mi_tiempo_con_dios_" + currentUser.id;
+        if (localStorage.getItem(storageKey) === null && localStorage.getItem(legacyStorageKey) !== null) localStorage.setItem(storageKey, localStorage.getItem(legacyStorageKey));
+        if (localStorage.getItem(storageKey + "_currentDay") === null && localStorage.getItem(legacyStorageKey + "_currentDay") !== null) localStorage.setItem(storageKey + "_currentDay", localStorage.getItem(legacyStorageKey + "_currentDay"));
 
         loadState();
         renderPersonalHeader(friendlyName);
@@ -2333,6 +2371,8 @@ reflectionText.innerHTML =
         }
       });
 
+      const restartJourneyButton = document.getElementById("restartJourneyButton");
+      if (restartJourneyButton) restartJourneyButton.addEventListener("click", restartJourney);
       const logoutButton = document.getElementById("logoutButton");
 
       if (logoutButton) {
