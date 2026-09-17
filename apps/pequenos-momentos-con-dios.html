@@ -1071,9 +1071,25 @@
       color: var(--green);
     }
 
-    .hide {
-      display: none !important;
+    .hide { display: none !important; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
     }
+    .step-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:16px 0; }
+    .step-chip { padding:10px 8px; border-radius:16px; border:1px solid var(--line); background:white; color:var(--green); font-size:12px; font-weight:900; text-align:center; }
+    .age-guide { display:inline-flex; margin-left:8px; background:var(--soft-blue); color:var(--green); border-radius:999px; padding:8px 12px; font-size:12px; font-weight:850; }
+    .day-navigation { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
+    .memory-toolbar { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .memory-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .memory-meta { color:var(--muted); font-size:12px; margin-top:6px; }
+    .memory-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .btn-mini { border:1px solid var(--line); background:white; color:var(--green); border-radius:999px; padding:8px 12px; font-weight:850; }
+    .completion-card { background:linear-gradient(145deg,var(--green),var(--olive)); color:white; border-radius:28px; padding:26px; margin-bottom:18px; box-shadow:var(--shadow-soft); }
+    .completion-card h3 { color:var(--gold); font-size:30px; margin-bottom:10px; }
+    .completion-card p { line-height:1.7; color:rgba(255,255,255,.9); }
+    .adult-note { margin-top:12px; color:var(--muted); font-size:12px; line-height:1.55; }
+    @media (max-width:640px) { .step-strip { grid-template-columns:1fr; } .memory-toolbar { grid-template-columns:1fr; } .day-navigation { flex-direction:column; } .day-navigation button { width:100%; } }
+
 
     @media (max-width: 960px) {
       .hero-inner,
@@ -1338,14 +1354,14 @@
 
       <section class="app-content">
         <aside class="sidebar">
-          <h2>Navegación</h2>
+          <h2>Nuestro camino en familia</h2>
 
           <div class="nav-list">
-            <button class="nav-button active" type="button" data-view="momento">Momento del día <span>🌿</span></button>
+            <button class="nav-button active" type="button" data-view="momento">Momento para compartir <span>🌿</span></button>
             <button class="nav-button" type="button" data-view="calendario">Camino de 14 días <span>📅</span></button>
-            <button class="nav-button" type="button" data-view="tarjetas">Tarjetas para niños <span>🎨</span></button>
-            <button class="nav-button" type="button" data-view="cofre">Cofre familiar <span>💛</span></button>
-            <button class="nav-button" type="button" data-view="legal">Aviso importante <span>🛡️</span></button>
+            <button class="nav-button" type="button" data-view="tarjetas">Tarjetas para conversar <span>🎨</span></button>
+            <button class="nav-button" type="button" data-view="cofre">Cofre de recuerdos <span>💛</span></button>
+            <button class="nav-button" type="button" data-view="legal">Cuidado y acompañamiento <span>🛡️</span></button>
           </div>
 
           <div class="notice">
@@ -1357,7 +1373,7 @@
           <section id="viewMomento" class="panel">
             <div class="panel-head">
               <small>Momento guiado</small>
-              <h2>Momento del día</h2>
+              <h2>Momento para compartir</h2>
               <p>Avanza por los 14 días de la experiencia familiar y descubre el tema que acompaña cada momento.</p>
             </div>
 
@@ -1381,7 +1397,7 @@
           <section id="viewTarjetas" class="panel hide">
             <div class="panel-head">
               <small>Para conversar y crear</small>
-              <h2>Tarjetas para niños</h2>
+              <h2>Tarjetas para conversar</h2>
               <p>Pequeñas frases y preguntas para usar como disparadores de conversación familiar.</p>
             </div>
 
@@ -1393,15 +1409,17 @@
           <section id="viewCofre" class="panel hide">
             <div class="panel-head">
               <small>Recuerdos de fe</small>
-              <h2>Cofre familiar</h2>
+              <h2>Cofre de recuerdos</h2>
               <p>Guarda frases, gratitudes, oraciones o pequeños recuerdos de lo vivido en familia.</p>
             </div>
 
             <div class="panel-body">
-              <div class="field">
-                <label for="memoryInput">Nuevo recuerdo</label>
-                <textarea id="memoryInput" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea>
+              <div class="memory-toolbar">
+                <div class="field"><label for="memoryType">Tipo de recuerdo</label><select id="memoryType"><option value="gratitud">Gratitud</option><option value="oracion">Oración</option><option value="aprendizaje">Aprendizaje</option><option value="frase">Frase especial</option><option value="momento">Momento en familia</option></select></div>
+                <div class="field"><label for="memoryFilter">Mostrar</label><select id="memoryFilter"><option value="todos">Todos los recuerdos</option><option value="gratitud">Gratitudes</option><option value="oracion">Oraciones</option><option value="aprendizaje">Aprendizajes</option><option value="frase">Frases especiales</option><option value="momento">Momentos en familia</option></select></div>
               </div>
+              <div class="field"><label for="memoryInput">Nuevo recuerdo</label><textarea id="memoryInput" maxlength="1200" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea></div>
+              <p class="adult-note">Este cofre se guarda por ahora en este navegador y queda asociado a la cuenta que inició sesión. La sincronización entre dispositivos se incorporará en la fase de Supabase.</p>
 
               <div class="action-row">
                 <button class="btn" type="button" id="saveMemoryBtn">Guardar recuerdo</button>
@@ -1449,12 +1467,11 @@
     const SHOPIFY_URL = "https://skoolrenovae.store/products/pequenos-momentos-con-dios";
 
     const STORAGE_PREFIX = "hcd_momentos_familia";
-    const STORAGE_COMPLETED = `${STORAGE_PREFIX}_completed`;
-    const STORAGE_FAVORITES = `${STORAGE_PREFIX}_favorites`;
-    const STORAGE_MEMORIES = `${STORAGE_PREFIX}_memories`;
-    const STORAGE_SELECTED_DAY = `${STORAGE_PREFIX}_selected_day`;
-    const STORAGE_KID_MODE = `${STORAGE_PREFIX}_kid_mode`;
-    const STORAGE_PROGRESS_SNAPSHOT = `${STORAGE_PREFIX}_progress_snapshot`;
+    const LEGACY_STORAGE = {
+      completed: `${STORAGE_PREFIX}_completed`, favorites: `${STORAGE_PREFIX}_favorites`, memories: `${STORAGE_PREFIX}_memories`,
+      selectedDay: `${STORAGE_PREFIX}_selected_day`, kidMode: `${STORAGE_PREFIX}_kid_mode`, snapshot: `${STORAGE_PREFIX}_progress_snapshot`
+    };
+    let storageKeys = null;
 
     const momentos = [
       {
@@ -1746,6 +1763,8 @@
       calendarGrid: document.getElementById("calendarGrid"),
       kidCards: document.getElementById("kidCards"),
       memoryInput: document.getElementById("memoryInput"),
+      memoryType: document.getElementById("memoryType"),
+      memoryFilter: document.getElementById("memoryFilter"),
       saveMemoryBtn: document.getElementById("saveMemoryBtn"),
       clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"),
       memoryList: document.getElementById("memoryList"),
@@ -1756,8 +1775,9 @@
     let completed = [];
     let favorites = [];
     let memories = [];
-    let kidMode = localStorage.getItem(STORAGE_KID_MODE) === "true";
-    let selectedDay = Number(localStorage.getItem(STORAGE_SELECTED_DAY)) || getSuggestedDay();
+    let kidMode = false;
+    let selectedDay = 1;
+    let editingMemoryId = null;
 
     init();
 
@@ -1780,6 +1800,8 @@
         }
 
         currentUser = session.user;
+        storageKeys = createUserStorageKeys(currentUser.id);
+        migrateLegacyStorage();
         els.userPill.textContent = currentUser.email || "Sesión activa";
 
         const hasAccess = await validateAccess();
@@ -1837,7 +1859,7 @@
       });
 
       els.momentTodayBtn.addEventListener("click", () => {
-        selectedDay = getSuggestedDay();
+        selectedDay = getNextRecommendedDay();
         persistSelectedDay();
         setView("momento");
         renderAll();
@@ -1854,20 +1876,20 @@
 
       els.kidModeBtn.addEventListener("click", () => {
         kidMode = !kidMode;
-        localStorage.setItem(STORAGE_KID_MODE, String(kidMode));
+        safeSetItem(storageKeys.kidMode, String(kidMode));
         applyKidMode();
         renderMoment();
-        showToast(kidMode ? "Modo niño activado." : "Modo familiar activado.");
+        showToast(kidMode ? "Vista para compartir activada." : "Guía familiar activada.");
       });
 
       els.saveMemoryBtn.addEventListener("click", saveMemory);
-
-      els.clearMemoryInputBtn.addEventListener("click", () => {
-        els.memoryInput.value = "";
-      });
+      els.memoryFilter.addEventListener("change", renderMemories);
+      els.clearMemoryInputBtn.addEventListener("click", resetMemoryForm);
 
       els.logoutBtn.addEventListener("click", async () => {
-        await supabaseClient.auth.signOut();
+        els.logoutBtn.disabled = true;
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) { els.logoutBtn.disabled = false; showToast("No pudimos cerrar la sesión. Intenta nuevamente.", true); return; }
         window.location.href = "../login.html";
       });
     }
@@ -1886,7 +1908,9 @@
       });
 
       document.querySelectorAll("[data-view]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.view === viewName);
+        const active = button.dataset.view === viewName;
+        button.classList.toggle("active", active);
+        if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
       });
     }
 
@@ -1931,6 +1955,7 @@
       const isFavorite = favorites.includes(selected.day);
 
       els.momentContainer.innerHTML = `
+        ${completed.length >= momentos.length ? renderCompletionCelebration() : ""}
         <article class="moment-card">
           <div class="moment-top">
             <span class="moment-day">Día ${selected.day}</span>
@@ -1939,7 +1964,8 @@
 
           <h3>${escapeHTML(selected.title)}</h3>
           <div class="verse">${escapeHTML(selected.verse)}</div>
-          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
+          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span><span class="age-guide">Orientación flexible: ${escapeHTML(formatAge(selected.age))}</span>
+          <div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div>
 
           <div class="moment-grid">
             <div class="mini-box green">
@@ -1996,7 +2022,7 @@
             <button class="btn-soft" type="button" id="randomActivityBtn">
               Actividad extra
             </button>
-          </div>
+          </div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day === 1 ? "disabled" : ""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day === momentos.length ? "disabled" : ""}>Día siguiente →</button></div>
         </article>
       `;
 
@@ -2008,6 +2034,7 @@
       const isFavorite = favorites.includes(selected.day);
 
       els.momentContainer.innerHTML = `
+        ${completed.length >= momentos.length ? renderCompletionCelebration() : ""}
         <article class="kid-moment-card">
           <div class="moment-top">
             <span class="moment-day">Día ${selected.day}</span>
@@ -2016,7 +2043,8 @@
 
           <h3>${escapeHTML(selected.title)}</h3>
           <div class="verse">${escapeHTML(selected.verse)}</div>
-          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
+          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span><span class="age-guide">Orientación flexible: ${escapeHTML(formatAge(selected.age))}</span>
+          <div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div>
 
           <div class="kid-grid">
             <div class="kid-box" style="background: var(--soft-gold);">
@@ -2058,7 +2086,7 @@
             <button class="btn-soft" type="button" id="randomActivityBtn">
               Sorpresa familiar ✨
             </button>
-          </div>
+          </div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day === 1 ? "disabled" : ""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day === momentos.length ? "disabled" : ""}>Día siguiente →</button></div><p class="adult-note">Esta vista está pensada para compartir acompañados por una persona adulta.</p>
         </article>
       `;
 
@@ -2074,10 +2102,15 @@
         toggleFavorite(selected.day);
       });
 
+      const completeButton = document.getElementById("completeMomentBtn");
+      const favoriteButton = document.getElementById("favoriteMomentBtn");
+      completeButton.setAttribute("aria-pressed", String(completed.includes(selected.day)));
+      favoriteButton.setAttribute("aria-pressed", String(favorites.includes(selected.day)));
       document.getElementById("randomActivityBtn").addEventListener("click", () => {
-        const activity = extraActivities[Math.floor(Math.random() * extraActivities.length)];
-        showToast(activity);
+        const activity = extraActivities[Math.floor(Math.random() * extraActivities.length)]; showToast(activity);
       });
+      document.getElementById("previousDayBtn")?.addEventListener("click", () => changeDay(selected.day - 1));
+      document.getElementById("nextDayBtn")?.addEventListener("click", () => changeDay(selected.day + 1));
     }
 
     function renderRewardBox() {
@@ -2099,6 +2132,7 @@
         button.className = "day-chip";
         button.type = "button";
         button.textContent = momento.day;
+        button.setAttribute("aria-label", `Día ${momento.day}: ${momento.title}${completed.includes(momento.day) ? ", completado" : ", pendiente"}${favorites.includes(momento.day) ? ", favorito" : ""}`);
 
         if (completed.includes(momento.day)) {
           button.classList.add("done");
@@ -2139,30 +2173,17 @@
 
     function renderMemories() {
       els.memoryList.innerHTML = "";
-
-      if (!memories.length) {
-        els.memoryList.innerHTML = `
-          <div class="memory-item">
-            Todavía no guardaste recuerdos familiares. Puedes escribir una oración, una gratitud o una frase especial.
-          </div>
-        `;
-        return;
-      }
-
-      memories
-        .slice()
-        .reverse()
-        .forEach((memory) => {
-          const div = document.createElement("div");
-          div.className = "memory-item";
-          div.innerHTML = `
-            <strong>${escapeHTML(memory.date)}</strong><br />
-            ${escapeHTML(memory.text)}
-          `;
-          els.memoryList.appendChild(div);
-        });
+      const filter = els.memoryFilter?.value || "todos";
+      const visible = memories.filter(m => filter === "todos" || m.type === filter).slice().reverse();
+      if (!visible.length) { els.memoryList.innerHTML = `<div class="memory-item">${filter === "todos" ? "Todavía no guardaste recuerdos familiares. Puedes comenzar con una gratitud, oración o frase especial." : "No hay recuerdos en esta categoría todavía."}</div>`; return; }
+      visible.forEach(memory => {
+        const div = document.createElement("article"); div.className = "memory-item";
+        div.innerHTML = `<div class="memory-head"><div><strong>${escapeHTML(memoryTypeLabel(memory.type))}</strong><div class="memory-meta">${escapeHTML(formatMemoryDate(memory.createdAt || memory.date))}${memory.day ? ` · Día ${Number(memory.day)}` : ""}</div></div></div><p>${escapeHTML(memory.text)}</p><div class="memory-actions"><button class="btn-mini" type="button" data-edit-memory="${escapeHTML(memory.id)}">Editar</button><button class="btn-mini" type="button" data-delete-memory="${escapeHTML(memory.id)}">Eliminar</button></div>`;
+        els.memoryList.appendChild(div);
+      });
+      document.querySelectorAll("[data-edit-memory]").forEach(b => b.addEventListener("click", () => editMemory(b.dataset.editMemory)));
+      document.querySelectorAll("[data-delete-memory]").forEach(b => b.addEventListener("click", () => deleteMemory(b.dataset.deleteMemory)));
     }
-
     function renderStats() {
       completed = uniqueNumbers(completed);
       favorites = uniqueNumbers(favorites);
@@ -2185,6 +2206,8 @@
 
       els.progressPercent.textContent = `${percentage}%`;
       els.progressBar.style.width = `${percentage}%`;
+      const progressWrap = els.progressBar.parentElement;
+      progressWrap.setAttribute("role", "progressbar"); progressWrap.setAttribute("aria-valuemin", "0"); progressWrap.setAttribute("aria-valuemax", String(total)); progressWrap.setAttribute("aria-valuenow", String(completedTotal));
       els.progressCircle.style.background =
         `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.15) ${degrees}deg)`;
 
@@ -2297,78 +2320,45 @@
 
     function saveMemory() {
       const text = els.memoryInput.value.trim();
-
-      if (!text) {
-        showToast("Escribe un pequeño recuerdo antes de guardar.", true);
-        return;
+      if (!text) { showToast("Escribe un pequeño recuerdo antes de guardar.", true); return; }
+      const now = new Date().toISOString();
+      if (editingMemoryId) {
+        const memory = memories.find(item => item.id === editingMemoryId);
+        if (memory) { memory.text = text; memory.type = els.memoryType.value; memory.updatedAt = now; }
+        showToast("Recuerdo actualizado.");
+      } else {
+        memories.push({ id: createId(), text, type: els.memoryType.value, day: selectedDay, createdAt: now, updatedAt: now });
+        showToast("Recuerdo familiar guardado.");
       }
-
-      memories.push({
-        text,
-        date: new Date().toLocaleDateString("es-AR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        })
-      });
-
-      els.memoryInput.value = "";
-      saveLocalState();
-      renderAll();
-      showToast("Recuerdo familiar guardado.");
+      resetMemoryForm(); saveLocalState(); renderAll();
     }
-
-    function getSuggestedDay() {
-      const day = new Date().getDate();
-      return ((day - 1) % 14) + 1;
-    }
-
-    function persistSelectedDay() {
-      localStorage.setItem(STORAGE_SELECTED_DAY, String(selectedDay));
-    }
-
-    function loadLocalState() {
-      completed = readStorageArray(STORAGE_COMPLETED);
-      favorites = readStorageArray(STORAGE_FAVORITES);
-      memories = readStorageArray(STORAGE_MEMORIES);
-    }
-
-    function saveLocalState() {
-      completed = uniqueNumbers(completed);
-      favorites = uniqueNumbers(favorites);
-
-      localStorage.setItem(STORAGE_COMPLETED, JSON.stringify(completed));
-      localStorage.setItem(STORAGE_FAVORITES, JSON.stringify(favorites));
-      localStorage.setItem(STORAGE_MEMORIES, JSON.stringify(memories));
-      localStorage.setItem(STORAGE_SELECTED_DAY, String(selectedDay));
-    }
-
-    function saveProgressSnapshot(snapshot) {
-      localStorage.setItem(STORAGE_PROGRESS_SNAPSHOT, JSON.stringify(snapshot));
-    }
-
-    function readStorageArray(key) {
-      try {
-        const value = JSON.parse(localStorage.getItem(key) || "[]");
-        return Array.isArray(value) ? value : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function uniqueNumbers(values) {
-      return [...new Set(values.map(Number))]
-        .filter(Boolean)
-        .sort((a, b) => a - b);
-    }
-
+    function editMemory(id) { const m = memories.find(x => x.id === id); if (!m) return; editingMemoryId=id; els.memoryInput.value=m.text; els.memoryType.value=m.type || "momento"; els.saveMemoryBtn.textContent="Actualizar recuerdo"; els.memoryInput.focus(); }
+    function deleteMemory(id) { if (!window.confirm("¿Quieres eliminar este recuerdo? Esta acción no se puede deshacer.")) return; memories=memories.filter(x => x.id !== id); saveLocalState(); renderAll(); showToast("Recuerdo eliminado."); }
+    function resetMemoryForm() { editingMemoryId=null; els.memoryInput.value=""; els.memoryType.value="gratitud"; els.saveMemoryBtn.textContent="Guardar recuerdo"; }
+    function memoryTypeLabel(type) { return ({gratitud:"Gratitud",oracion:"Oración",aprendizaje:"Aprendizaje",frase:"Frase especial",momento:"Momento en familia"})[type] || "Recuerdo familiar"; }
+    function formatMemoryDate(value) { const d=new Date(value); return Number.isNaN(d.getTime()) ? String(value || "Sin fecha") : d.toLocaleDateString("es-AR",{year:"numeric",month:"long",day:"numeric"}); }
+    function createId() { return globalThis.crypto?.randomUUID?.() || `memory_${Date.now()}_${Math.random().toString(16).slice(2)}`; }
+    function getSuggestedDay() { return getNextRecommendedDay(); }
+    function createUserStorageKeys(userId) { const root=`${STORAGE_PREFIX}_${userId}`; return {completed:`${root}_completed`,favorites:`${root}_favorites`,memories:`${root}_memories`,selectedDay:`${root}_selected_day`,kidMode:`${root}_kid_mode`,snapshot:`${root}_progress_snapshot`,migration:`${root}_migration_v1`}; }
+    function migrateLegacyStorage() { if (!storageKeys || localStorage.getItem(storageKeys.migration)==="done") return; const map=[[LEGACY_STORAGE.completed,storageKeys.completed],[LEGACY_STORAGE.favorites,storageKeys.favorites],[LEGACY_STORAGE.memories,storageKeys.memories],[LEGACY_STORAGE.selectedDay,storageKeys.selectedDay],[LEGACY_STORAGE.kidMode,storageKeys.kidMode],[LEGACY_STORAGE.snapshot,storageKeys.snapshot]]; map.forEach(([oldKey,newKey])=>{ if(localStorage.getItem(newKey)===null && localStorage.getItem(oldKey)!==null) safeSetItem(newKey,localStorage.getItem(oldKey),false); }); safeSetItem(storageKeys.migration,"done",false); }
+    function persistSelectedDay() { safeSetItem(storageKeys.selectedDay,String(selectedDay)); }
+    function normalizeMemories(items) { return items.map((m,i)=>({id:m.id||`legacy_${i}_${Date.now()}`,text:String(m.text||""),type:m.type||"momento",day:Number(m.day)||null,createdAt:m.createdAt||m.updatedAt||m.date||new Date().toISOString(),updatedAt:m.updatedAt||m.createdAt||new Date().toISOString()})).filter(m=>m.text); }
+    function loadLocalState() { completed=readStorageArray(storageKeys.completed); favorites=readStorageArray(storageKeys.favorites); memories=normalizeMemories(readStorageArray(storageKeys.memories)); kidMode=localStorage.getItem(storageKeys.kidMode)==="true"; selectedDay=Number(localStorage.getItem(storageKeys.selectedDay))||getNextRecommendedDay(); }
+    function saveLocalState() { completed=uniqueNumbers(completed); favorites=uniqueNumbers(favorites); safeSetItem(storageKeys.completed,JSON.stringify(completed)); safeSetItem(storageKeys.favorites,JSON.stringify(favorites)); safeSetItem(storageKeys.memories,JSON.stringify(memories)); safeSetItem(storageKeys.selectedDay,String(selectedDay)); }
+    function saveProgressSnapshot(snapshot) { safeSetItem(storageKeys.snapshot,JSON.stringify(snapshot),false); }
+    function safeSetItem(key,value,notify=true) { try { localStorage.setItem(key,value); return true; } catch(error) { console.error("Storage error",error); if(notify) showToast("No pudimos guardar este cambio en el dispositivo.",true); return false; } }
+    function readStorageArray(key) { try { const value=JSON.parse(localStorage.getItem(key)||"[]"); return Array.isArray(value)?value:[]; } catch { return []; } }
+    function uniqueNumbers(values) { return [...new Set(values.map(Number))].filter(n=>Number.isInteger(n)&&n>=1&&n<=momentos.length).sort((a,b)=>a-b); }
+    function changeDay(day) { if(day<1||day>momentos.length)return; selectedDay=day; persistSelectedDay(); setView("momento"); renderAll(); document.getElementById("viewMomento").scrollIntoView({behavior:"smooth",block:"start"}); }
+    function formatAge(age) { return age==="todas" ? "para compartir en distintas edades" : `sugerido para ${age} años, adaptable a cada familia`; }
+    function renderCompletionCelebration() { return `<section class="completion-card" aria-label="Camino familiar completado"><h3>Este camino continúa en su hogar ✨</h3><p>Compartieron los 14 momentos familiares. Pueden volver a sus días favoritos, releer los recuerdos del cofre y elegir un momento semanal para seguir cultivando la fe juntos.</p></section>`; }
     function applyKidMode() {
       document.body.classList.toggle("kid-mode", kidMode);
 
       if (els.kidModeBtn) {
         els.kidModeBtn.innerHTML = kidMode
-          ? "<span>🌿</span> Modo familiar <small>Ver guía completa para adultos.</small>"
-          : "<span>🎨</span> Activar modo niño <small>Tarjetas simples y visuales para niños.</small>";
+          ? "<span>🌿</span> Volver a la guía familiar <small>Ver acompañamiento completo para adultos.</small>"
+          : "<span>🎨</span> Vista para compartir <small>Tarjetas simples para usar con acompañamiento adulto.</small>";
       }
     }
 
