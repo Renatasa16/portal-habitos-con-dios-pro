@@ -1,74 +1,1857 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Mi Espacio de Oración | Hábitos con Dios
+  </title>
+  <meta content="Un lugar para presentar tu corazón delante de Dios." name="description"/>
+  <meta content="#3F4A35" name="theme-color"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+  </script>
+  <style>
+   
+:root {
+  --g:#3F4A35;
+  --o:#556544;
+  --gold:#C9A65A;
+  --b:#F5F0E7;
+  --c:#FAF7F0;
+  --w:#fff;
+  --ink:#1F2937;
+  --m:#667085;
+  --line:#E8DECC;
+  --sg:#EEF3EA;
+  --sp:#F8E7E2;
+  --sb:#EAF2F5;
+  --danger:#9F3A38;
+  --shadow:0 20px 55px rgba(63,74,53,.13);
+  --r:28px;
+  --max:1180px}
+  * {
+    box-sizing:border-box}
+    html {
+      scroll-behavior:smooth}
+      body {
+        margin:0;
+        font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+        color:var(--ink);
+        background:radial-gradient(circle at 5% 0,rgba(201,166,90,.2),transparent 30%),radial-gradient(circle at 95% 0,rgba(85,101,68,.15),transparent 28%),linear-gradient(145deg,var(--c),var(--b));
+        min-height:100vh}
+        button,input,select,textarea {
+          font:inherit}
+          button {
+            cursor:pointer}
+            a {
+              color:inherit;
+              text-decoration:none}
+              .hide {
+                display:none!important}
+                .shell {
+                  width:min(var(--max),calc(100% - 28px));
+                  margin:auto;
+                  padding:18px 0 46px}
+                  .top {
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:12px;
+                    margin-bottom:20px}
+                    .brand,.row {
+                      display:flex;
+                      align-items:center;
+                      gap:10px;
+                      flex-wrap:wrap}
+                      .mark {
+                        width:52px;
+                        height:52px;
+                        border-radius:18px;
+                        background:linear-gradient(135deg,var(--g),var(--o));
+                        color:var(--gold);
+                        display:grid;
+                        place-items:center;
+                        font-weight:950}
+                        .brand strong {
+                          color:var(--g);
+                          display:block}
+                          .brand small {
+                            color:var(--m)}
+                            .btn,.pill {
+                              border:1px solid var(--line);
+                              border-radius:999px;
+                              min-height:44px;
+                              padding:11px 16px;
+                              font-weight:850;
+                              background:var(--w);
+                              color:var(--g);
+                              display:inline-flex;
+                              align-items:center;
+                              justify-content:center;
+                              gap:7px}
+                              .btn.primary {
+                                background:linear-gradient(135deg,var(--g),var(--o));
+                                color:white;
+                                border:0}
+                                .btn.gold {
+                                  background:#F7EAC7}
+                                  .btn.danger {
+                                    background:#F7E4E1;
+                                    color:var(--danger)}
+                                    .pill {
+                                      max-width:280px;
+                                      overflow:hidden;
+                                      text-overflow:ellipsis}
+                                      .status {
+                                        min-height:72vh;
+                                        display:grid;
+                                        place-items:center}
+                                        .panel,.status-card {
+                                          background:rgba(255,255,255,.93);
+                                          border:1px solid var(--line);
+                                          border-radius:var(--r);
+                                          box-shadow:var(--shadow)}
+                                          .status-card {
+                                            max-width:650px;
+                                            padding:36px;
+                                            text-align:center}
+                                            .hero {
+                                              display:grid;
+                                              grid-template-columns:1.18fr .82fr;
+                                              gap:20px}
+                                              .hero-main,.hero-side {
+                                                padding:clamp(27px,5vw,52px)}
+                                                .eyebrow {
+                                                  display:inline-flex;
+                                                  border-radius:999px;
+                                                  padding:8px 12px;
+                                                  background:#F7EAC7;
+                                                  color:var(--g);
+                                                  font-size:12px;
+                                                  font-weight:900;
+                                                  text-transform:uppercase;
+                                                  letter-spacing:.05em}
+                                                  .hero h1 {
+                                                    font-size:clamp(42px,7vw,74px);
+                                                    line-height:.92;
+                                                    letter-spacing:-.06em;
+                                                    color:var(--g);
+                                                    margin:16px 0}
+                                                    .hero h1 span {
+                                                      color:var(--gold);
+                                                      display:block}
+                                                      .hero p {
+                                                        color:var(--m);
+                                                        line-height:1.72}
+                                                        .hero-side {
+                                                          background:linear-gradient(145deg,var(--g),#2E3829);
+                                                          color:white}
+                                                          .hero-side h2 {
+                                                            color:var(--gold);
+                                                            font-size:30px}
+                                                            .hero-side p {
+                                                              color:#EEE7D9}
+                                                              .metrics {
+                                                                display:grid;
+                                                                grid-template-columns:repeat(2,1fr);
+                                                                gap:10px}
+                                                                .metric {
+                                                                  padding:14px;
+                                                                  border-radius:18px;
+                                                                  background:rgba(255,255,255,.1);
+                                                                  border:1px solid rgba(255,255,255,.14)}
+                                                                  .metric strong {
+                                                                    display:block;
+                                                                    color:var(--gold);
+                                                                    font-size:25px}
+                                                                    .metric span {
+                                                                      font-size:12px}
+                                                                      .nav {
+                                                                        margin:20px 0;
+                                                                        padding:14px;
+                                                                        display:flex;
+                                                                        gap:8px;
+                                                                        flex-wrap:wrap}
+                                                                        .nav button.active {
+                                                                          background:var(--g);
+                                                                          color:white}
+                                                                          .view {
+                                                                            display:grid;
+                                                                            gap:18px}
+                                                                            .tools {
+                                                                              padding:20px}
+                                                                              .searchgrid {
+                                                                                display:grid;
+                                                                                grid-template-columns:1fr 230px;
+                                                                                gap:10px}
+                                                                                .field label {
+                                                                                  display:block;
+                                                                                  color:var(--g);
+                                                                                  font-size:12px;
+                                                                                  font-weight:900;
+                                                                                  margin-bottom:7px}
+                                                                                  .field input,.field select,.field textarea {
+                                                                                    width:100%;
+                                                                                    border:1px solid var(--line);
+                                                                                    border-radius:16px;
+                                                                                    padding:13px;
+                                                                                    background:white;
+                                                                                    color:var(--ink)}
+                                                                                    .field textarea {
+                                                                                      min-height:110px;
+                                                                                      resize:vertical}
+                                                                                      .chips {
+                                                                                        display:flex;
+                                                                                        gap:8px;
+                                                                                        flex-wrap:wrap;
+                                                                                        margin-top:12px}
+                                                                                        .chip {
+                                                                                          border:1px solid var(--line);
+                                                                                          background:white;
+                                                                                          color:var(--g);
+                                                                                          border-radius:999px;
+                                                                                          padding:8px 12px;
+                                                                                          font-weight:800}
+                                                                                          .chip.active {
+                                                                                            background:var(--g);
+                                                                                            color:white}
+                                                                                            .layout {
+                                                                                              display:grid;
+                                                                                              grid-template-columns:1fr 330px;
+                                                                                              gap:20px}
+                                                                                              .feature,.side,.formpanel {
+                                                                                                padding:22px}
+                                                                                                .feature h2 {
+                                                                                                  font-size:clamp(28px,4vw,42px);
+                                                                                                  color:var(--g);
+                                                                                                  margin:12px 0 4px}
+                                                                                                  .ref {
+                                                                                                    color:var(--gold);
+                                                                                                    font-weight:900}
+                                                                                                    .prayer {
+                                                                                                      white-space:pre-wrap;
+                                                                                                      line-height:1.8;
+                                                                                                      font-size:16px;
+                                                                                                      margin:18px 0}
+                                                                                                      .boxes {
+                                                                                                        display:grid;
+                                                                                                        grid-template-columns:1fr 1fr;
+                                                                                                        gap:10px}
+                                                                                                        .box {
+                                                                                                          padding:15px;
+                                                                                                          border:1px solid var(--line);
+                                                                                                          border-radius:18px;
+                                                                                                          background:var(--sg)}
+                                                                                                          .box:nth-child(2) {
+                                                                                                            background:var(--sb)}
+                                                                                                            .box small {
+                                                                                                              display:block;
+                                                                                                              color:var(--g);
+                                                                                                              font-weight:900;
+                                                                                                              text-transform:uppercase;
+                                                                                                              margin-bottom:7px}
+                                                                                                              .cards,.records {
+                                                                                                                display:grid;
+                                                                                                                grid-template-columns:repeat(2,1fr);
+                                                                                                                gap:12px}
+                                                                                                                .card,.record {
+                                                                                                                  background:white;
+                                                                                                                  border:1px solid var(--line);
+                                                                                                                  border-radius:22px;
+                                                                                                                  padding:17px;
+                                                                                                                  box-shadow:0 9px 24px rgba(63,74,53,.07)}
+                                                                                                                  .card h3,.record h3 {
+                                                                                                                    color:var(--g);
+                                                                                                                    margin:8px 0 4px}
+                                                                                                                    .muted {
+                                                                                                                      color:var(--m);
+                                                                                                                      line-height:1.55}
+                                                                                                                      .badge {
+                                                                                                                        display:inline-flex;
+                                                                                                                        border-radius:999px;
+                                                                                                                        padding:6px 9px;
+                                                                                                                        background:var(--sg);
+                                                                                                                        color:var(--g);
+                                                                                                                        font-size:11px;
+                                                                                                                        font-weight:900}
+                                                                                                                        .side {
+                                                                                                                          align-self:start;
+                                                                                                                          position:sticky;
+                                                                                                                          top:12px}
+                                                                                                                          .side h2,.formpanel h2 {
+                                                                                                                            color:var(--g)}
+                                                                                                                            .empty {
+                                                                                                                              border:1px dashed var(--line);
+                                                                                                                              background:var(--c);
+                                                                                                                              border-radius:17px;
+                                                                                                                              padding:15px;
+                                                                                                                              color:var(--m)}
+                                                                                                                              .notice {
+                                                                                                                                padding:15px;
+                                                                                                                                background:#F7EAC7;
+                                                                                                                                border-radius:17px;
+                                                                                                                                color:#514221;
+                                                                                                                                line-height:1.55}
+                                                                                                                                .formgrid {
+                                                                                                                                  display:grid;
+                                                                                                                                  grid-template-columns:repeat(2,1fr);
+                                                                                                                                  gap:12px}
+                                                                                                                                  .span2 {
+                                                                                                                                    grid-column:1/-1}
+                                                                                                                                    .record .meta {
+                                                                                                                                      font-size:12px;
+                                                                                                                                      color:var(--m);
+                                                                                                                                      margin:5px 0 10px}
+                                                                                                                                      .record p {
+                                                                                                                                        white-space:pre-wrap;
+                                                                                                                                        line-height:1.6}
+                                                                                                                                        .history {
+                                                                                                                                          font-size:12px;
+                                                                                                                                          color:var(--m);
+                                                                                                                                          border-top:1px solid var(--line);
+                                                                                                                                          margin-top:10px;
+                                                                                                                                          padding-top:10px}
+                                                                                                                                          .modalback {
+                                                                                                                                            position:fixed;
+                                                                                                                                            inset:0;
+                                                                                                                                            background:rgba(31,41,55,.5);
+                                                                                                                                            display:grid;
+                                                                                                                                            place-items:center;
+                                                                                                                                            padding:18px;
+                                                                                                                                            z-index:50}
+                                                                                                                                            .modal {
+                                                                                                                                              width:min(640px,100%);
+                                                                                                                                              max-height:90vh;
+                                                                                                                                              overflow:auto;
+                                                                                                                                              background:white;
+                                                                                                                                              border-radius:26px;
+                                                                                                                                              padding:22px}
+                                                                                                                                              .toast {
+                                                                                                                                                position:fixed;
+                                                                                                                                                left:50%;
+                                                                                                                                                bottom:20px;
+                                                                                                                                                transform:translateX(-50%) translateY(18px);
+                                                                                                                                                opacity:0;
+                                                                                                                                                background:var(--g);
+                                                                                                                                                color:white;
+                                                                                                                                                border-radius:999px;
+                                                                                                                                                padding:11px 17px;
+                                                                                                                                                font-weight:850;
+                                                                                                                                                transition:.2s;
+                                                                                                                                                z-index:99}
+                                                                                                                                                .toast.show {
+                                                                                                                                                  opacity:1;
+                                                                                                                                                  transform:translateX(-50%)}
+                                                                                                                                                  .toast.error {
+                                                                                                                                                    background:var(--danger)}
+                                                                                                                                                    footer {
+                                                                                                                                                      text-align:center;
+                                                                                                                                                      color:var(--m);
+                                                                                                                                                      font-size:12px;
+                                                                                                                                                      line-height:1.7;
+                                                                                                                                                      margin-top:30px}
+                                                                                                                                                      button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
+                                                                                                                                                        outline:3px solid var(--gold);
+                                                                                                                                                        outline-offset:3px}
+                                                                                                                                                        @media(max-width:900px) {
+                                                                                                                                                          .hero,.layout {
+                                                                                                                                                            grid-template-columns:1fr}
+                                                                                                                                                            .side {
+                                                                                                                                                              position:static}
+                                                                                                                                                              .cards,.records {
+                                                                                                                                                                grid-template-columns:1fr}
+                                                                                                                                                              }
+                                                                                                                                                              @media(max-width:640px) {
+                                                                                                                                                                .top {
+                                                                                                                                                                  align-items:flex-start;
+                                                                                                                                                                  flex-direction:column}
+                                                                                                                                                                  .top .row {
+                                                                                                                                                                    width:100%}
+                                                                                                                                                                    .top .btn,.top .pill {
+                                                                                                                                                                      flex:1}
+                                                                                                                                                                      .searchgrid,.boxes,.formgrid {
+                                                                                                                                                                        grid-template-columns:1fr}
+                                                                                                                                                                        .span2 {
+                                                                                                                                                                          grid-column:auto}
+                                                                                                                                                                          .hero-main,.hero-side,.panel {
+                                                                                                                                                                            border-radius:23px}
+                                                                                                                                                                            .row .btn {
+                                                                                                                                                                              width:100%}
+                                                                                                                                                                            }
+                                                                                                                                                                            @media(prefers-reduced-motion:reduce) {
+                                                                                                                                                                              * {
+                                                                                                                                                                                scroll-behavior:auto!important;
+                                                                                                                                                                                transition:none!important}
+                                                                                                                                                                              }
 
-<title>Generador de Oraciones</title>
+  </style>
+ </head>
+ <body>
+  <main class="shell">
+   <header class="top">
+    <a aria-label="Volver a Mi Espacio" class="brand" href="../dashboard.html">
+     <span class="mark">
+      HO
+     </span>
+     <span>
+      <strong>
+       Hábitos con Dios
+      </strong>
+      <small>
+       Mi Espacio de Oración
+      </small>
+     </span>
+    </a>
+    <div class="row">
+     <span class="pill" id="userPill">
+      Validando sesión...
+     </span>
+     <a class="btn" href="../dashboard.html">
+      Mi Espacio
+     </a>
+     <button class="btn danger" id="logout">
+      Cerrar sesión
+     </button>
+    </div>
+   </header>
+   <section class="status" id="loading">
+    <div class="status-card">
+     <h1>
+      Preparando tu espacio
+     </h1>
+     <p>
+      Estamos verificando tu sesión y tu acceso.
+     </p>
+    </div>
+   </section>
+   <section class="status hide" id="locked">
+    <div class="status-card">
+     <h1>
+      Acceso no disponible
+     </h1>
+     <p>
+      Este recurso forma parte de la Comunidad Hábitos con Dios. Ingresa con la cuenta asociada a tu acceso.
+     </p>
+     <div class="row" style="justify-content:center">
+      <a class="btn primary" href="../login.html">
+       Iniciar sesión
+      </a>
+      <a class="btn" href="../dashboard.html">
+       Volver a Mi Espacio
+      </a>
+     </div>
+    </div>
+   </section>
+   <section class="hide" id="app">
+    <section class="hero">
+     <div class="panel hero-main">
+      <span class="eyebrow">
+       Comunidad Hábitos con Dios
+      </span>
+      <h1>
+       Mi Espacio
+       <span>
+        de Oración
+       </span>
+      </h1>
+      <p>
+       Un lugar para presentar tu corazón delante de Dios. Cuando no sepas qué decir, encuentra palabras para comenzar y un espacio para seguir orando con honestidad.
+      </p>
+      <div class="row">
+       <button class="btn primary" id="random">
+        Muéstrame otra oración
+       </button>
+       <button class="btn gold" data-view="petitions">
+        Escribir una petición
+       </button>
+      </div>
+     </div>
+     <aside class="panel hero-side">
+      <h2>
+       Tu historia de oración
+      </h2>
+      <p>
+       Las oraciones guiadas son un punto de partida. Puedes adaptarlas y hablar con Dios con tus propias palabras.
+      </p>
+      <div class="metrics">
+       <div class="metric">
+        <strong id="mFav">
+         0
+        </strong>
+        <span>
+         Favoritas
+        </span>
+       </div>
+       <div class="metric">
+        <strong id="mActive">
+         0
+        </strong>
+        <span>
+         Peticiones activas
+        </span>
+       </div>
+       <div class="metric">
+        <strong id="mThanks">
+         0
+        </strong>
+        <span>
+         Gratitudes
+        </span>
+       </div>
+       <div class="metric">
+        <strong id="mArchived">
+         0
+        </strong>
+        <span>
+         Archivadas
+        </span>
+       </div>
+      </div>
+     </aside>
+    </section>
+    <nav aria-label="Secciones" class="panel nav">
+     <button class="btn active" data-view="discover">
+      Oraciones guiadas
+     </button>
+     <button class="btn" data-view="petitions">
+      Mis peticiones
+     </button>
+     <button class="btn" data-view="gratitudes">
+      Respuestas y gratitudes
+     </button>
+     <button class="btn" data-view="library">
+      Biblioteca personal
+     </button>
+     <button class="btn" data-view="history">
+      Historial
+     </button>
+    </nav>
+    <div class="view" id="view">
+    </div>
+    <footer>
+     <strong>
+      Hábitos con Dios
+     </strong>
+     <br/>
+     Un espacio para orar con honestidad, esperanza y responsabilidad.
+     <br/>
+     Este espacio acompaña tu vida de oración, pero no reemplaza atención médica, psicológica, pastoral responsable, asesoramiento profesional ni servicios de emergencia.
+    </footer>
+   </section>
+  </main>
+  <div aria-hidden="true" class="modalback hide" id="modalBack">
+   <section aria-labelledby="modalTitle" aria-modal="true" class="modal" id="modal" role="dialog">
+   </section>
+  </div>
+  <div aria-live="polite" class="toast" id="toast" role="status">
+  </div>
+  <script>
+   
+const SUPABASE_URL="https://cianhgmqhdnvwvjxtuji.supabase.co",SUPABASE_KEY="sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
-<style>
+const prayers = [
+   {
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#F5F0E7;
-  color:#1F2937;
+    "id": "GR01",
+    "title": "Gracias por este día",
+    "theme": "Gratitud",
+    "secondary": [],
+    "situation": "comenzar el día",
+    "intro": "Una pausa para reconocer la bondad de Dios sin negar lo que todavía pesa.",
+    "prayer": "Padre, gracias por recibirme al comenzar este día. Gracias por la vida, por las personas que me acompañan y por las oportunidades que hoy pueden abrirse. También traigo delante de ti lo que me preocupa y aquello que no puedo resolver todavía. Enséñame a agradecer con honestidad, sin fingir que todo está bien. Abre mis ojos a los regalos sencillos, ordena mis prioridades y ayúdame a responder con amor. Que la gratitud no sea una obligación, sino una forma de recordar tu fidelidad. Acompaña mis decisiones y permite que hoy viva con atención, humildad y esperanza. En el nombre de Jesús, amén.",
+    "reference": "Salmo 100:1-5",
+    "question": "¿Qué regalo sencillo puedo reconocer hoy?",
+    "action": "Anota tres motivos concretos de gratitud.",
+    "tags": [
+      "gratitud",
+      "día",
+      "fidelidad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "GR02",
+    "title": "Gracias en medio del proceso",
+    "theme": "Gratitud",
+    "secondary": [
+      "esperar"
+    ],
+    "situation": "cuando el camino sigue abierto",
+    "intro": "Agradecer también puede convivir con preguntas y asuntos no resueltos.",
+    "prayer": "Dios fiel, hoy no tengo todas las respuestas, pero quiero reconocer que sigues presente. Gracias por sostenerme durante este proceso, por cada ayuda recibida y por la fuerza que apareció cuando pensé que no podría continuar. No quiero llamar bueno a lo que duele ni usar la gratitud para esconder mis preguntas. Quiero aprender a verte en medio de una historia que todavía se está escribiendo. Dame paciencia para esperar, sabiduría para actuar y libertad para descansar. Recuérdame que mi esperanza no depende de un resultado perfecto, sino de tu carácter. Recibe mi gratitud imperfecta y acompáñame en el siguiente paso. En Cristo, amén.",
+    "reference": "Lamentaciones 3:21-26",
+    "question": "¿Qué sostén puedo reconocer dentro de este proceso?",
+    "action": "Agradece por una ayuda específica recibida.",
+    "tags": [
+      "gratitud",
+      "proceso",
+      "esperanza"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "AM01",
+    "title": "Antes de comenzar",
+    "theme": "Comenzar el día",
+    "secondary": [
+      "propósito"
+    ],
+    "situation": "al despertar",
+    "intro": "Una oración para ofrecer el día a Dios con calma y propósito.",
+    "prayer": "Señor, antes de entrar en el ritmo de este día, hago una pausa para presentarme delante de ti. Conoces mis responsabilidades, mis límites y las conversaciones que tendré. Guía mis pensamientos para que no estén gobernados por la prisa. Dame claridad para distinguir lo importante de lo urgente, humildad para pedir ayuda y atención para tratar bien a las personas. Si algo cambia, ayúdame a responder con flexibilidad. Si aparece el cansancio, recuérdame que puedo detenerme. Que mis palabras y decisiones reflejen el camino de Jesús. Entrego mis planes sin dejar de asumir mis responsabilidades. Camina conmigo en cada tarea, también en las más pequeñas. Amén.",
+    "reference": "Proverbios 3:5-6",
+    "question": "¿Qué parte del día necesito entregar sin dejar de actuar responsablemente?",
+    "action": "Respira despacio y menciona ante Dios tus tres prioridades.",
+    "tags": [
+      "mañana",
+      "dirección",
+      "propósito"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "AM02",
+    "title": "Un comienzo sin presión",
+    "theme": "Comenzar el día",
+    "secondary": [
+      "descanso"
+    ],
+    "situation": "cuando despierto cansado",
+    "intro": "No todos los días comienzan con energía; la presencia de Dios no depende de ella.",
+    "prayer": "Padre, hoy comienzo con menos fuerza de la que quisiera. No quiero esconder mi cansancio ni tratarme con dureza. Recíbeme tal como estoy y ayúdame a reconocer mis límites. Muéstrame qué puede esperar, qué necesita atención y dónde debo pedir apoyo. Dame energía para el próximo paso, no para demostrar que puedo con todo. Guarda mi mente de la culpa y mi cuerpo del exceso. Que la gracia de Cristo marque el ritmo de este día y me enseñe a trabajar, cuidar y descansar con responsabilidad. Si hoy solo puedo avanzar de manera sencilla, ayúdame a valorar ese avance. Permanece conmigo. Amén.",
+    "reference": "Mateo 11:28-30",
+    "question": "¿Qué expectativa puedo ajustar hoy?",
+    "action": "Reduce una exigencia no esencial.",
+    "tags": [
+      "mañana",
+      "cansancio",
+      "gracia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NO01",
+    "title": "Entrego el día",
+    "theme": "Terminar el día",
+    "secondary": [
+      "descanso"
+    ],
+    "situation": "antes de dormir",
+    "intro": "Cerrar el día no exige resolverlo todo.",
+    "prayer": "Dios, este día llega a su fin y lo pongo delante de ti. Gracias por lo que pude hacer y por las personas que encontré. También reconozco mis errores, mis pendientes y los momentos que todavía me inquietan. Muéstrame si necesito reparar algo mañana y ayúdame a recibir tu perdón donde fallé. No quiero llevar a la noche lo que puedo confiarte. Guarda a quienes amo, aquieta mis pensamientos y permite que mi cuerpo descanse. Lo que quedó incompleto no define mi valor. En tus manos dejo mis planes, mis preguntas y el día que vendrá. Gracias porque tu cuidado no se detiene mientras duermo. En el nombre de Jesús, amén.",
+    "reference": "Salmo 4:8",
+    "question": "¿Qué necesito dejar por hoy?",
+    "action": "Escribe un pendiente para mañana y suéltalo por esta noche.",
+    "tags": [
+      "noche",
+      "descanso",
+      "entrega"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NO02",
+    "title": "Cuando la mente no se detiene",
+    "theme": "Terminar el día",
+    "secondary": [
+      "paz",
+      "ansiedad"
+    ],
+    "situation": "insomnio o pensamientos repetitivos",
+    "intro": "Una oración breve para acompañar la noche sin prometer sueño inmediato.",
+    "prayer": "Señor, mi cuerpo está aquí, pero mi mente sigue recorriendo preocupaciones y escenarios. No voy a fingir calma. Te presento cada pensamiento que vuelve y te pido discernimiento para reconocer qué requiere una acción y qué necesita ser soltado. Ayúdame a respirar, a disminuir el ritmo y a aceptar que esta noche no tengo que resolver todo. Si el descanso tarda, acompáñame sin condena. Guíame también a buscar atención profesional si esta dificultad persiste. Guarda mi corazón en Cristo y recuérdame que no estoy solo en esta habitación ni en este proceso. Recibo este momento como una oportunidad para descansar en tu presencia. Amén.",
+    "reference": "Filipenses 4:6-7",
+    "question": "¿Qué pensamiento puedo convertir en una petición concreta?",
+    "action": "Anota la preocupación y una acción responsable para mañana.",
+    "tags": [
+      "noche",
+      "insomnio",
+      "paz"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "AN01",
+    "title": "Cuando la ansiedad ocupa demasiado espacio",
+    "theme": "Ansiedad",
+    "secondary": [
+      "paz"
+    ],
+    "situation": "preocupación intensa",
+    "intro": "La oración acompaña la ansiedad sin negarla ni reemplazar el cuidado adecuado.",
+    "prayer": "Dios cercano, la ansiedad está ocupando demasiado espacio dentro de mí. Mi mente anticipa situaciones y mi cuerpo se siente en alerta. No me avergüenzo de necesitar ayuda. Te entrego esta preocupación concreta y te pido serenidad para atravesar el momento presente. Muéstrame qué está bajo mi responsabilidad y qué no puedo controlar. Dame valentía para hablar con una persona segura y buscar atención profesional cuando sea necesario. Que tu paz no sea una frase para silenciarme, sino compañía mientras doy pasos prudentes. En Jesús encuentro permiso para acercarme con mi carga. Sostén mi respiración, mis decisiones y mi esperanza. Amén.",
+    "reference": "1 Pedro 5:6-7",
+    "question": "¿Qué preocupación necesita nombre y apoyo?",
+    "action": "Contacta a una persona segura si necesitas compañía.",
+    "tags": [
+      "ansiedad",
+      "ayuda",
+      "paz"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "AN02",
+    "title": "Una preocupación a la vez",
+    "theme": "Ansiedad",
+    "secondary": [
+      "decisiones"
+    ],
+    "situation": "muchos pendientes",
+    "intro": "Separar las preocupaciones puede ayudar a orar y actuar con mayor claridad.",
+    "prayer": "Padre, hoy todo parece importante al mismo tiempo. Traigo delante de ti esta lista de pendientes y el temor de no llegar. Ayúdame a no responder desde el pánico. Dame claridad para elegir una sola cosa a la vez, reconocer mis límites y comunicar lo que no podré cumplir. Líbrame de confundir responsabilidad con control absoluto. Quiero confiar en tu cuidado mientras organizo, pregunto y tomo decisiones concretas. Recuérdame que descansar también puede ser una decisión sabia. Si cometo un error, ayúdame a corregirlo sin tratarme con crueldad. Acompaña mi trabajo y ordena mi interior. Amén.",
+    "reference": "Mateo 6:25-34",
+    "question": "¿Cuál es el siguiente paso posible?",
+    "action": "Elige una sola tarea y pospone conscientemente otra.",
+    "tags": [
+      "ansiedad",
+      "pendientes",
+      "prioridad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "MI01",
+    "title": "Cuando tengo miedo",
+    "theme": "Miedo",
+    "secondary": [
+      "fortaleza"
+    ],
+    "situation": "temor ante lo desconocido",
+    "intro": "El miedo puede presentarse ante Dios junto con decisiones prudentes.",
+    "prayer": "Dios fiel, tengo miedo de lo que no conozco y de lo que podría suceder. No quiero que el temor decida por mí, pero tampoco deseo ignorar señales importantes. Dame discernimiento para diferenciar un riesgo real de un escenario imaginado. Sostén mi mente mientras reúno información, pido consejo y elijo el próximo paso. Recuérdame tu presencia sin convertirla en excusa para actuar de manera imprudente. Si necesito detenerme o buscar protección, dame valentía para hacerlo. Si necesito avanzar, concédeme una confianza serena. Tú conoces mi fragilidad y no me rechazas por sentir miedo. Camina conmigo. Amén.",
+    "reference": "Isaías 41:8-10",
+    "question": "¿Qué parte de mi miedo necesita información, compañía o protección?",
+    "action": "Habla con alguien confiable antes de decidir.",
+    "tags": [
+      "miedo",
+      "prudencia",
+      "presencia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "MI02",
+    "title": "Valor para una conversación difícil",
+    "theme": "Miedo",
+    "secondary": [
+      "familia",
+      "trabajo"
+    ],
+    "situation": "conversación pendiente",
+    "intro": "Pedir valor no significa asegurar el resultado de la conversación.",
+    "prayer": "Señor Jesús, conoces la conversación que necesito tener y el temor que despierta en mí. Guarda mis palabras de la agresión y mi silencio de la evasión. Ayúdame a hablar con verdad, respeto y claridad. Dame disposición para escuchar sin abandonar los límites necesarios. No puedo controlar cómo responderá la otra persona, pero sí puedo elegir una conducta íntegra. Si la conversación no es segura, muéstrame otra forma de proceder y las personas a quienes puedo pedir ayuda. Que mi objetivo no sea ganar, sino comunicar con sabiduría y cuidar lo que debe ser cuidado. Acompáñame antes, durante y después. Amén.",
+    "reference": "Efesios 4:25-29",
+    "question": "¿Qué verdad necesito comunicar con respeto?",
+    "action": "Escribe en una frase el propósito de la conversación.",
+    "tags": [
+      "miedo",
+      "conversación",
+      "verdad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PA01",
+    "title": "Paz para este momento",
+    "theme": "Paz",
+    "secondary": [
+      "ansiedad"
+    ],
+    "situation": "agitación interior",
+    "intro": "Una oración para volver al presente sin negar los asuntos pendientes.",
+    "prayer": "Jesús, en este momento mi interior necesita un centro seguro. Recibo tu invitación a permanecer cerca. No te pido que borres mágicamente mis responsabilidades, sino que me ayudes a enfrentarlas desde un lugar menos agitado. Ordena mis pensamientos, desacelera mis reacciones y guarda mis palabras. Muéstrame qué puedo atender ahora y qué debe esperar. Que la paz que prometiste a tus discípulos me recuerde tu presencia y la obra del Espíritu Santo. Ayúdame a combinar oración con descanso, consejo y acciones responsables. Aquí estoy, respirando y volviendo a ti una vez más. Amén.",
+    "reference": "Juan 14:25-27",
+    "question": "¿Qué necesita mi atención ahora y qué puede esperar?",
+    "action": "Haz una pausa breve sin pantalla.",
+    "tags": [
+      "paz",
+      "presencia",
+      "pausa"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PA02",
+    "title": "Paz mientras espero noticias",
+    "theme": "Paz",
+    "secondary": [
+      "esperar"
+    ],
+    "situation": "espera de una respuesta",
+    "intro": "Esperar puede ser difícil; la oración ofrece compañía, no control sobre el resultado.",
+    "prayer": "Padre, estoy esperando noticias y mi mente intenta adelantarse a todas las posibilidades. Tú conoces el resultado, pero yo todavía no. Ayúdame a habitar esta espera sin quedar inmóvil ni consumirme en ella. Dame sabiduría para realizar las gestiones que correspondan y paciencia para aceptar lo que no puedo acelerar. Sostén a las personas involucradas y prepara mi corazón para responder con verdad cuando llegue la información. No permitas que una respuesta defina por completo mi esperanza. Recuérdame que tu fidelidad puede acompañarme incluso si el camino resulta diferente de lo que deseo. En Cristo, amén.",
+    "reference": "Salmo 130:1-6",
+    "question": "¿Qué puedo cuidar mientras espero?",
+    "action": "Define cuándo revisarás nuevamente la información.",
+    "tags": [
+      "paz",
+      "espera",
+      "noticias"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DE01",
+    "title": "Permiso para descansar",
+    "theme": "Descanso",
+    "secondary": [
+      "trabajo"
+    ],
+    "situation": "agotamiento",
+    "intro": "Descansar no es abandonar la responsabilidad ni demostrar falta de fe.",
+    "prayer": "Creador, reconoces mis límites mejor que yo. Hoy estoy cansado y necesito detenerme. Perdóname por medir mi valor solo por lo que produzco y ayúdame a recibir el descanso como parte de una vida responsable. Muéstrame qué debo delegar, cancelar o continuar después. Cuida mi cuerpo y enséñame a escuchar sus señales sin culpa. Si este agotamiento persiste, dame humildad para buscar evaluación y apoyo. Quiero trabajar con integridad, pero no vivir como si todo dependiera de mí. Gracias porque tu cuidado permanece cuando dejo de hacer. Permite que este descanso renueve mi atención para amar y servir mejor. Amén.",
+    "reference": "Salmo 127:1-2",
+    "question": "¿Qué límite necesito respetar hoy?",
+    "action": "Programa una pausa real y protégela.",
+    "tags": [
+      "descanso",
+      "límites",
+      "agotamiento"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DE02",
+    "title": "Descanso después de una temporada intensa",
+    "theme": "Descanso",
+    "secondary": [
+      "gratitud"
+    ],
+    "situation": "cierre de etapa",
+    "intro": "Una oración para desacelerar después de sostener mucho.",
+    "prayer": "Dios de gracia, esta etapa exigió atención, energía y perseverancia. Gracias por acompañarme y por las personas que colaboraron. Ahora necesito aprender a disminuir el ritmo. Mi mente todavía funciona como si todo fuera urgente. Ayúdame a reconocer que la temporada cambió y que puedo descansar sin abandonar el propósito. Muéstrame qué aprendizajes debo conservar, qué cargas ya no me corresponden y qué heridas requieren cuidado. Recibe mi cansancio y restaura mi capacidad de disfrutar lo sencillo. Que esta pausa no sea vacío, sino espacio para agradecer, sanar y volver a escuchar. Amén.",
+    "reference": "Marcos 6:30-32",
+    "question": "¿Qué carga terminó y todavía sigo llevando?",
+    "action": "Cierra simbólicamente una tarea o etapa.",
+    "tags": [
+      "descanso",
+      "etapa",
+      "restauración"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "FA01",
+    "title": "Por mi familia",
+    "theme": "Familia",
+    "secondary": [
+      "protección"
+    ],
+    "situation": "cuidado del hogar",
+    "intro": "Orar por la familia incluye amor, límites y responsabilidad compartida.",
+    "prayer": "Padre, pongo delante de ti a mi familia, con sus fortalezas, tensiones y necesidades. Gracias por los vínculos que sostienen y por cada oportunidad de aprender a amar. Danos palabras que construyan, disposición para escuchar y valentía para pedir perdón. Ayúdanos a no esconder problemas bajo apariencias espirituales. Donde haya conflicto, guía conversaciones responsables. Donde exista riesgo o abuso, abre caminos de protección y ayuda especializada. Enséñanos a respetar los límites de cada persona y a practicar una fe que produzca servicio, verdad y cuidado. Que nuestro hogar pueda acercarse a ti sin coerción y crecer en compasión. En el nombre de Jesús, amén.",
+    "reference": "Josué 24:14-15",
+    "question": "¿Qué gesto de cuidado necesita hoy mi familia?",
+    "action": "Realiza una acción concreta de escucha o servicio.",
+    "tags": [
+      "familia",
+      "hogar",
+      "cuidado"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "FA02",
+    "title": "Por una relación familiar difícil",
+    "theme": "Familia",
+    "secondary": [
+      "perdón"
+    ],
+    "situation": "tensión familiar",
+    "intro": "La reconciliación no siempre es inmediata ni segura.",
+    "prayer": "Señor, esta relación familiar me duele y no sé cómo acercarme. Tú conoces la historia completa, las palabras dichas y los límites cruzados. Examina primero mi corazón y muéstrame aquello que debo reconocer o reparar. Dame sabiduría para distinguir entre perdonar, reconciliar y volver a confiar. No me lleves a negar el daño ni a permanecer expuesto a una situación peligrosa. Rodéame de consejo maduro y ayuda profesional cuando corresponda. Si existe un camino seguro para conversar, prepara nuestras palabras. Si es necesario mantener distancia, ayúdame a hacerlo sin odio. Sostén mi deseo de vivir en verdad y libertad. Amén.",
+    "reference": "Romanos 12:17-21",
+    "question": "¿Qué límite o reparación sería responsable?",
+    "action": "Busca consejo antes de retomar una conversación insegura.",
+    "tags": [
+      "familia",
+      "conflicto",
+      "límites"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "HI01",
+    "title": "Por mis hijos",
+    "theme": "Hijos",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "crianza cotidiana",
+    "intro": "Una oración por sabiduría, ternura y responsabilidad en la crianza.",
+    "prayer": "Dios, gracias por la vida de mis hijos y por la responsabilidad de acompañarlos. Dame sabiduría para conocer su etapa, escuchar sus preguntas y corregir sin humillar. Líbrame de proyectar sobre ellos mis miedos o expectativas. Ayúdame a reconocer cuando necesito pedir perdón y cuando debo mantener un límite firme. Protégelos y guíalos hacia personas y espacios seguros. Permite que conozcan tu amor sin manipulación ni temor. Concédeme paciencia para repetir, creatividad para enseñar y humildad para buscar apoyo profesional cuando una situación lo requiera. Que mi manera de cuidarlos refleje la ternura y la verdad de Cristo. Amén.",
+    "reference": "Efesios 6:1-4",
+    "question": "¿Qué necesita hoy cada hijo: escucha, límite, ayuda o ánimo?",
+    "action": "Dedica unos minutos de atención sin distracciones.",
+    "tags": [
+      "hijos",
+      "crianza",
+      "ternura"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "HI02",
+    "title": "Cuando un hijo atraviesa una dificultad",
+    "theme": "Hijos",
+    "secondary": [
+      "fortaleza"
+    ],
+    "situation": "preocupación por un hijo",
+    "intro": "Orar por un hijo no significa controlar sus decisiones o procesos.",
+    "prayer": "Padre, me preocupa la situación que atraviesa mi hijo. Quisiera resolverla, pero reconozco que no puedo controlar cada resultado. Dame serenidad para acompañar sin invadir, escuchar sin apresurar respuestas y actuar cuando sea necesario. Muéstrame qué señales requieren ayuda especializada y qué conversaciones debemos tener. Guarda su dignidad y permite que encuentre apoyo seguro. Cuida también mi ansiedad para que no aumente su carga. Enséñame a confiarte su vida mientras cumplo mi responsabilidad con atención y amor. Que mi presencia comunique disponibilidad, no presión. En Jesús, amén.",
+    "reference": "Salmo 121:1-8",
+    "question": "¿Qué forma de acompañamiento necesita, no solo qué solución deseo?",
+    "action": "Pregunta cómo puedes apoyar sin asumir la respuesta.",
+    "tags": [
+      "hijos",
+      "acompañamiento",
+      "preocupación"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "MA01",
+    "title": "Por nuestro matrimonio",
+    "theme": "Matrimonio",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "vida en pareja",
+    "intro": "Una oración por amor responsable, escucha y respeto mutuo.",
+    "prayer": "Cristo, ponemos delante de ti nuestro matrimonio. Gracias por la historia compartida y por las oportunidades de crecer. Enséñanos a escucharnos sin preparar defensas, a expresar necesidades con claridad y a tratarnos con respeto. Ayúdanos a no usar la fe para controlar, silenciar o imponer. Danos humildad para reconocer errores, reparar el daño y buscar acompañamiento cuando no sepamos avanzar. Renueva la amistad, el servicio mutuo y los acuerdos cotidianos. Donde haya cansancio, abre espacio para el cuidado. Donde exista peligro o abuso, guía hacia protección y ayuda especializada. Forma en nosotros un amor verdadero, responsable y libre. Amén.",
+    "reference": "Efesios 5:21-33",
+    "question": "¿Qué conversación necesita más escucha que defensa?",
+    "action": "Acuerden un momento seguro para conversar.",
+    "tags": [
+      "matrimonio",
+      "respeto",
+      "escucha"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "MA02",
+    "title": "Cuando necesitamos tomar una decisión juntos",
+    "theme": "Matrimonio",
+    "secondary": [
+      "decisiones"
+    ],
+    "situation": "decisión compartida",
+    "intro": "La unidad no exige apresurar o ignorar las diferencias.",
+    "prayer": "Dios de sabiduría, tenemos una decisión delante de nosotros y no vemos todo de la misma manera. Ayúdanos a escuchar las razones, temores y esperanzas de cada uno. Líbranos de competir por tener la razón. Muéstranos la información que falta, el consejo que conviene buscar y las consecuencias que debemos considerar. Danos paciencia para no decidir bajo presión y libertad para reconocer si necesitamos más tiempo. Que nuestra unidad no sea apariencia, sino un proceso de respeto y verdad. Guía nuestros pasos hacia aquello que sea responsable, sostenible y coherente con el amor de Cristo. Amén.",
+    "reference": "Santiago 1:5",
+    "question": "¿Qué información o perspectiva todavía falta?",
+    "action": "Escriban juntos criterios antes de elegir.",
+    "tags": [
+      "matrimonio",
+      "decisión",
+      "unidad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "TR01",
+    "title": "Antes de trabajar",
+    "theme": "Trabajo",
+    "secondary": [
+      "propósito"
+    ],
+    "situation": "inicio de jornada",
+    "intro": "Una oración para trabajar con integridad sin convertir la productividad en identidad.",
+    "prayer": "Señor, pongo delante de ti mi trabajo de hoy. Dame concentración para realizarlo con honestidad, disposición para colaborar y humildad para aprender. Ayúdame a tratar a cada persona con respeto, incluso bajo presión. Que la excelencia no se convierta en perfeccionismo ni el servicio en tolerancia al abuso. Muéstrame cuándo hablar, cuándo pedir ayuda y cuándo establecer un límite. Mi valor no depende de una métrica, un título o la opinión de otros. Permite que mi trabajo sea una expresión de responsabilidad y cuidado, sin ocupar el lugar que solo te corresponde a ti. Acompáñame en cada decisión. Amén.",
+    "reference": "Colosenses 3:22-24",
+    "question": "¿Qué significa trabajar con integridad hoy?",
+    "action": "Define una prioridad y un límite para la jornada.",
+    "tags": [
+      "trabajo",
+      "integridad",
+      "límites"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "TR02",
+    "title": "Cuando el trabajo se vuelve pesado",
+    "theme": "Trabajo",
+    "secondary": [
+      "descanso",
+      "fortaleza"
+    ],
+    "situation": "presión laboral",
+    "intro": "La oración puede acompañar la presión junto con medidas laborales responsables.",
+    "prayer": "Dios, este trabajo se ha vuelto pesado y siento que mis fuerzas disminuyen. Conoces las demandas, las relaciones y las expectativas que enfrento. Dame claridad para identificar lo urgente, comunicar capacidad y pedir recursos. Líbrame de normalizar prácticas injustas o dañinas. Si necesito documentar, conversar, establecer límites o buscar otra alternativa, guíame con prudencia. Sostén mi identidad para que una mala jornada no defina quién soy. Regálame descanso real fuera del trabajo y personas con quienes pueda pensar responsablemente. Que tu presencia me acompañe mientras tomo decisiones difíciles. Amén.",
+    "reference": "Gálatas 6:2-5",
+    "question": "¿Qué parte de esta carga necesita compartirse o limitarse?",
+    "action": "Registra por escrito una necesidad concreta para comunicar.",
+    "tags": [
+      "trabajo",
+      "presión",
+      "apoyo"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DI01",
+    "title": "Sabiduría para decidir",
+    "theme": "Decisiones",
+    "secondary": [
+      "propósito"
+    ],
+    "situation": "elección importante",
+    "intro": "Pedir sabiduría incluye investigar, escuchar y asumir consecuencias.",
+    "prayer": "Dios generoso, necesito sabiduría para esta decisión. Conoces mis deseos, mis temores y los intereses de las personas involucradas. Corrige mis motivaciones donde sea necesario. Ayúdame a reunir información, escuchar consejo responsable y evaluar las consecuencias a corto y largo plazo. No permitas que confunda prisa con dirección ni comodidad con paz. Si ninguna opción es perfecta, dame madurez para elegir con los datos disponibles y asumir la responsabilidad. Abre o cierra oportunidades de maneras que pueda reconocer sin perseguir señales aisladas. Que mi decisión refleje verdad, justicia, amor y prudencia. En el nombre de Jesús, amén.",
+    "reference": "Santiago 1:5-8",
+    "question": "¿Qué opción es más coherente con verdad, amor y responsabilidad?",
+    "action": "Escribe ventajas, riesgos y personas afectadas.",
+    "tags": [
+      "decisiones",
+      "sabiduría",
+      "discernimiento"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DI02",
+    "title": "Cuando temo equivocarme",
+    "theme": "Decisiones",
+    "secondary": [
+      "miedo"
+    ],
+    "situation": "incertidumbre",
+    "intro": "La fe no elimina toda incertidumbre ni garantiza decisiones sin consecuencias.",
+    "prayer": "Padre, temo equivocarme y quedar atrapado en las consecuencias. A veces deseo una certeza que no está disponible. Ayúdame a aceptar mis límites sin paralizarme. Dame humildad para reconocer lo que sé y lo que todavía necesito preguntar. Si aparece nueva información, permite que pueda ajustar el camino sin vergüenza. Líbrame de buscar una señal para evitar la responsabilidad de decidir. Confío en tu gracia, que puede acompañarme incluso cuando mi comprensión es incompleta. Guía mis pasos, protege a quienes podrían verse afectados y forma mi carácter durante este proceso. Amén.",
+    "reference": "Salmo 25:4-10",
+    "question": "¿Qué nivel de certeza es razonable antes de avanzar?",
+    "action": "Define una fecha para decidir con la información disponible.",
+    "tags": [
+      "decisiones",
+      "incertidumbre",
+      "gracia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PR01",
+    "title": "Propósito para esta etapa",
+    "theme": "Propósito",
+    "secondary": [
+      "decisiones"
+    ],
+    "situation": "transición",
+    "intro": "El propósito puede expresarse en fidelidad cotidiana, no solo en grandes logros.",
+    "prayer": "Dios, esta etapa trae preguntas sobre mi propósito. Ayúdame a no medirlo únicamente por visibilidad, éxito o productividad. Muéstrame a quién puedo servir, qué responsabilidad debo cuidar y qué aprendizaje necesito abrazar. Permite que mis dones se usen con humildad y límites saludables. Si debo esperar, que la espera no sea desperdicio. Si debo comenzar, dame valentía para hacerlo de manera sencilla. Si debo cerrar una puerta, concédeme paz para soltarla. Quiero caminar en las buenas obras preparadas por tu gracia, sin intentar ganarme tu amor. En Cristo, amén.",
+    "reference": "Efesios 2:8-10",
+    "question": "¿Qué servicio fiel cabe en mi realidad actual?",
+    "action": "Elige una contribución pequeña y sostenible.",
+    "tags": [
+      "propósito",
+      "transición",
+      "servicio"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PR02",
+    "title": "Cuando me comparo",
+    "theme": "Propósito",
+    "secondary": [
+      "identidad"
+    ],
+    "situation": "comparación",
+    "intro": "La comparación puede distorsionar la percepción del llamado y del proceso.",
+    "prayer": "Creador, reconozco que me estoy comparando con el avance, la apariencia o los logros de otras personas. Esta comparación me distrae de la vida que me has confiado. Ayúdame a celebrar el bien ajeno sin disminuir mi dignidad. Recuérdame que mis límites, tiempos y responsabilidades son distintos. Muéstrame qué puedo aprender sin copiar una historia que no me corresponde. Que mi propósito nazca de tu gracia y se exprese en fidelidad, no en competencia. Dame gratitud por mis dones y paciencia para desarrollarlos. Amén.",
+    "reference": "1 Corintios 12:4-7",
+    "question": "¿Qué valor propio he dejado de reconocer por compararme?",
+    "action": "Nombra un don y una forma concreta de usarlo.",
+    "tags": [
+      "propósito",
+      "comparación",
+      "identidad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PE01",
+    "title": "Pedir perdón",
+    "theme": "Perdón",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "reconocer una falta",
+    "intro": "Pedir perdón requiere verdad, reparación y respeto por el proceso de la otra persona.",
+    "prayer": "Dios misericordioso, reconozco que mis palabras o acciones causaron daño. No quiero justificarme ni apresurar a la otra persona para que me perdone. Muéstrame con claridad mi responsabilidad y ayúdame a expresarla sin excusas. Dame humildad para escuchar el impacto, reparar lo que sea posible y aceptar las consecuencias necesarias. Líbrame de usar una disculpa para recuperar rápidamente mi comodidad. Confío en tu gracia para cambiar, no solo para aliviar mi culpa. Forma en mí nuevas respuestas y acompaña a la persona herida con cuidado. En Jesús, amén.",
+    "reference": "Salmo 51:1-12",
+    "question": "¿Qué debo reconocer específicamente y cómo puedo reparar?",
+    "action": "Prepara una disculpa sin justificarte.",
+    "tags": [
+      "perdón",
+      "reparación",
+      "humildad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PE02",
+    "title": "Perdonar sin negar el daño",
+    "theme": "Perdón",
+    "secondary": [
+      "protección"
+    ],
+    "situation": "herida recibida",
+    "intro": "El perdón no equivale automáticamente a reconciliación o confianza restaurada.",
+    "prayer": "Señor, tú conoces el daño que recibí y lo que todavía despierta dentro de mí. No quiero vivir gobernado por el rencor, pero tampoco deseo fingir que nada ocurrió. Ayúdame a caminar hacia el perdón como un proceso de libertad y verdad. Dame sabiduría para mantener límites, buscar justicia responsable y decidir si una reconciliación es segura. No permitas que otras personas usen la fe para presionarme. Sostén mi corazón cuando vuelvan los recuerdos y rodéame de acompañamiento maduro. Entrego a ti mi deseo de venganza sin renunciar a la protección. En Cristo, amén.",
+    "reference": "Efesios 4:31-32",
+    "question": "¿Qué diferencia necesito reconocer entre perdón, reconciliación y confianza?",
+    "action": "Habla con una persona segura sobre límites.",
+    "tags": [
+      "perdón",
+      "límites",
+      "verdad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DU01",
+    "title": "En medio del duelo",
+    "theme": "Duelo",
+    "secondary": [
+      "consuelo"
+    ],
+    "situation": "pérdida",
+    "intro": "El duelo necesita tiempo; la fe no exige esconder las lágrimas.",
+    "prayer": "Dios cercano, esta pérdida ha cambiado mi mundo y no tengo palabras suficientes. Recibe mis lágrimas, mi cansancio, mis preguntas y también los momentos en los que no siento nada. No me apresures a encontrar una explicación. Acompáñame en el vacío que dejó esta ausencia y sostén los recuerdos que deseo conservar. Envía personas capaces de escuchar sin corregir mi dolor. Ayúdame a cuidar mi cuerpo y a buscar apoyo profesional o pastoral responsable cuando lo necesite. Cuando llegue un momento de alivio, líbrame de sentir culpa. Cuando el dolor regrese, recuérdame que el proceso no es un fracaso. Jesús, permanece conmigo. Amén.",
+    "reference": "Juan 11:32-36",
+    "question": "¿Qué parte de mi pérdida necesita palabras o compañía?",
+    "action": "Comparte un recuerdo con alguien seguro.",
+    "tags": [
+      "duelo",
+      "lágrimas",
+      "consuelo"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DU02",
+    "title": "Cuando una fecha vuelve a doler",
+    "theme": "Duelo",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "aniversario o fecha significativa",
+    "intro": "Las fechas pueden reactivar el duelo de maneras inesperadas.",
+    "prayer": "Padre de compasión, esta fecha trae recuerdos y una ausencia que vuelve a sentirse cercana. Gracias por la vida y la historia que puedo recordar, incluso cuando hacerlo duele. Dame permiso para vivir este día sin expectativas ajenas. Muéstrame si necesito compañía, silencio, una tradición o un cambio de planes. Sostén a mi familia, porque cada persona procesa la pérdida de manera diferente. Ayúdanos a tratarnos con paciencia. Que la esperanza cristiana no silencie el dolor presente, sino que lo acompañe con la promesa de tu presencia y renovación. En Jesús, amén.",
+    "reference": "1 Tesalonicenses 4:13-18",
+    "question": "¿Cómo deseo cuidar esta fecha?",
+    "action": "Planea de antemano una forma segura de transitar el día.",
+    "tags": [
+      "duelo",
+      "aniversario",
+      "memoria"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "SO01",
+    "title": "Cuando me siento solo",
+    "theme": "Soledad",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "aislamiento",
+    "intro": "La presencia de Dios no elimina la necesidad humana de vínculos seguros.",
+    "prayer": "Dios que ve, hoy la soledad pesa. Conoces mi deseo de ser escuchado, acompañado y recibido. Acércate a este lugar sin pedirme que lo minimice. Ayúdame a distinguir entre un tiempo saludable de silencio y un aislamiento que necesita romperse. Dame valentía para enviar un mensaje, aceptar una invitación o buscar una comunidad segura. Protégeme de relaciones manipuladoras nacidas de la urgencia por pertenecer. Recuérdame que en Cristo soy recibido, y guía mis pasos hacia vínculos donde existan verdad, respeto y cuidado mutuo. Amén.",
+    "reference": "Salmo 27:7-10",
+    "question": "¿A qué persona segura puedo acercarme?",
+    "action": "Envía un mensaje sencillo pidiendo compañía.",
+    "tags": [
+      "soledad",
+      "comunidad",
+      "pertenencia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "SO02",
+    "title": "Cuando no me siento comprendido",
+    "theme": "Soledad",
+    "secondary": [
+      "paz"
+    ],
+    "situation": "incomprensión",
+    "intro": "Ser escuchado puede requerir tiempo, palabras claras y la persona adecuada.",
+    "prayer": "Señor, me cuesta sentir que otras personas comprenden lo que estoy viviendo. A veces no encuentro palabras; otras veces las respuestas que recibo aumentan la distancia. Ayúdame a expresar una necesidad concreta y a elegir con cuidado a quién confiarla. Dame paciencia con quienes desean ayudar, pero no saben cómo. También dame libertad para poner límites a comentarios que me lastiman. Recuérdame que tú conoces mi historia completa, sin convertir esa verdad en una razón para aislarme. Guíame hacia acompañamiento humano seguro y responsable. Amén.",
+    "reference": "Salmo 139:1-6",
+    "question": "¿Qué necesito que otra persona comprenda o simplemente escuche?",
+    "action": "Escribe una frase clara sobre el apoyo que necesitas.",
+    "tags": [
+      "soledad",
+      "escucha",
+      "apoyo"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PO01",
+    "title": "Protección para el camino",
+    "theme": "Protección",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "viaje o traslado",
+    "intro": "La confianza en Dios camina junto con medidas concretas de seguridad.",
+    "prayer": "Dios, encomiendo a ti este camino. Guarda mis entradas y salidas y dame atención para actuar con prudencia. Ayúdame a preparar lo necesario, respetar las señales y no asumir riesgos innecesarios. Cuida a quienes viajan conmigo y a las personas que encontraremos. Si aparece un cambio o una dificultad, concédeme calma para pedir ayuda y tomar decisiones responsables. No uso esta oración como garantía de ausencia de problemas, sino como una forma de reconocer tu presencia mientras hago mi parte. Acompáñanos y llévanos con sabiduría. Amén.",
+    "reference": "Salmo 121:1-8",
+    "question": "¿Qué medida de seguridad debo revisar antes de salir?",
+    "action": "Verifica ruta, contactos y elementos necesarios.",
+    "tags": [
+      "protección",
+      "viaje",
+      "prudencia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PO02",
+    "title": "Cuando percibo una situación de riesgo",
+    "theme": "Protección",
+    "secondary": [
+      "miedo"
+    ],
+    "situation": "peligro o inseguridad",
+    "intro": "Ante peligro, la prioridad es buscar seguridad y ayuda inmediata.",
+    "prayer": "Dios de justicia, necesito claridad y protección en esta situación. Ayúdame a no minimizar las señales de riesgo. Dame valentía para salir, pedir ayuda, guardar evidencia o contactar los servicios adecuados según corresponda. Rodéame de personas responsables que crean, escuchen y actúen. Si mi mente está confundida por el miedo, guía el próximo paso hacia un lugar seguro. No permitas que la culpa o una interpretación espiritual me obliguen a permanecer expuesto al daño. Sostén mi dignidad y abre un camino de protección. Amén.",
+    "reference": "Proverbios 22:3",
+    "question": "¿Cuál es el paso más seguro ahora?",
+    "action": "Prioriza salir del riesgo y contactar ayuda adecuada.",
+    "tags": [
+      "protección",
+      "riesgo",
+      "ayuda"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "FO01",
+    "title": "Fuerza para continuar",
+    "theme": "Fortaleza",
+    "secondary": [
+      "esperar"
+    ],
+    "situation": "cansancio prolongado",
+    "intro": "La fortaleza puede incluir descansar, adaptar y recibir ayuda.",
+    "prayer": "Dios eterno, necesito nuevas fuerzas para continuar, pero no quiero confundir fortaleza con ignorar mis límites. Muéstrame qué paso es posible hoy y qué carga debo compartir. Ayúdame a descansar sin abandonar la esperanza, a recibir tratamiento si lo necesito y a aceptar ajustes sin vergüenza. Sostén mi fe cuando el avance parezca lento. Que la promesa de tu cuidado acompañe a tu pueblo también en mi realidad, sin convertirla en una exigencia de rendimiento. Dame perseverancia, comunidad y sabiduría para seguir. Amén.",
+    "reference": "Isaías 40:27-31",
+    "question": "¿Continuar significa avanzar, descansar o pedir ayuda hoy?",
+    "action": "Elige una de esas tres acciones.",
+    "tags": [
+      "fortaleza",
+      "cansancio",
+      "ayuda"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "FO02",
+    "title": "Fuerza en mi debilidad",
+    "theme": "Fortaleza",
+    "secondary": [
+      "paz"
+    ],
+    "situation": "limitación persistente",
+    "intro": "La gracia de Cristo sostiene sin glorificar el sufrimiento.",
+    "prayer": "Jesús, esta limitación no desapareció como yo esperaba. He pedido cambio y todavía convivo con ella. Ayúdame a reconocer mi debilidad sin reducir mi identidad a ella. Dame sabiduría para buscar apoyo, tratamiento y ajustes responsables. Líbrame de la vergüenza y de la presión por parecer fuerte. Que tu gracia sea suficiente para sostenerme, no una frase para negar el dolor. Muéstrame las capacidades que permanecen y las personas con quienes puedo caminar. Forma en mí una esperanza humilde mientras sigo pidiendo, cuidando y viviendo. Amén.",
+    "reference": "2 Corintios 12:7-10",
+    "question": "¿Qué apoyo o ajuste haría esta carga más sostenible?",
+    "action": "Solicita una adaptación concreta si corresponde.",
+    "tags": [
+      "fortaleza",
+      "debilidad",
+      "gracia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "ES01",
+    "title": "Mientras espero",
+    "theme": "Esperar",
+    "secondary": [
+      "esperanza"
+    ],
+    "situation": "demora",
+    "intro": "Esperar no significa quedar inmóvil ni inventar certezas.",
+    "prayer": "Señor, esta espera se ha vuelto larga y mi paciencia disminuye. No sé cuándo llegará una respuesta ni si será como deseo. Ayúdame a no llenar el silencio con conclusiones apresuradas. Muéstrame qué puedo cuidar, aprender o preparar mientras espero. Dame libertad para lamentar la demora y sabiduría para revisar si debo insistir, cambiar de dirección o aceptar un límite. Que mi esperanza se apoye en tu fidelidad y no en un calendario imaginado. Acompáñame a vivir el presente sin abandonar lo que importa. Amén.",
+    "reference": "Salmo 130:5-6",
+    "question": "¿Qué está disponible para cuidar hoy?",
+    "action": "Define una práctica sostenible durante la espera.",
+    "tags": [
+      "esperar",
+      "paciencia",
+      "esperanza"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "ES02",
+    "title": "Cuando la respuesta fue diferente",
+    "theme": "Esperar",
+    "secondary": [
+      "duelo",
+      "gratitud"
+    ],
+    "situation": "resultado inesperado",
+    "intro": "Una respuesta diferente puede requerir duelo, discernimiento y nuevos pasos.",
+    "prayer": "Padre, el resultado fue diferente de lo que pedí y necesito tiempo para procesarlo. Recibe mi decepción sin reproche. No quiero forzar una gratitud prematura ni interpretar rápidamente lo que estás haciendo. Ayúdame a reconocer la realidad, lamentar lo perdido y descubrir qué opciones permanecen. Dame consejo sabio y compañía. Si en el futuro puedo ver aprendizaje o una nueva dirección, permíteme recibirlo sin negar lo que hoy duele. Mi confianza no consiste en fingir satisfacción, sino en seguir presentándome delante de ti con verdad. En Jesús, amén.",
+    "reference": "2 Corintios 12:7-10",
+    "question": "¿Qué necesito lamentar antes de buscar significado?",
+    "action": "Nombra la pérdida sin obligarte a resolverla.",
+    "tags": [
+      "esperar",
+      "resultado",
+      "decepción"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "OT01",
+    "title": "Por alguien que amo",
+    "theme": "Orar por otra persona",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "intercesión",
+    "intro": "Interceder es amar sin controlar la vida de otra persona.",
+    "prayer": "Dios, pongo delante de ti a esta persona que amo. Tú conoces sus necesidades mejor que yo y respetas su dignidad. Te pido cuidado, sabiduría y personas seguras a su alrededor. Ayúdame a acompañar sin controlar, aconsejar sin imponer y escuchar antes de ofrecer respuestas. Muéstrame si hay una acción concreta que puedo realizar y también cuándo debo dar espacio. No permitas que mi preocupación se convierta en vigilancia. Entrego a ti lo que no me corresponde manejar y asumo con amor lo que sí puedo hacer. En Cristo, amén.",
+    "reference": "Filipenses 1:3-11",
+    "question": "¿Qué apoyo sería respetuoso y útil?",
+    "action": "Pregunta antes de ofrecer una solución.",
+    "tags": [
+      "intercesión",
+      "amor",
+      "respeto"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "OT02",
+    "title": "Por quien está enfermo",
+    "theme": "Orar por otra persona",
+    "secondary": [
+      "fortaleza"
+    ],
+    "situation": "enfermedad",
+    "intro": "La oración por salud acompaña el tratamiento y no promete un desenlace específico.",
+    "prayer": "Dios de compasión, te presento la salud de esta persona. Conoces el diagnóstico, los síntomas, el tratamiento y los temores que rodean este momento. Te pedimos alivio, sabiduría para el equipo de atención y acceso a los recursos necesarios. Sostén también a quienes cuidan. No queremos convertir la fe en presión ni atribuir el resultado a una medida de confianza. Ayúdanos a escuchar indicaciones responsables, hacer preguntas y acompañar con paciencia. En medio de la incertidumbre, concede presencia, dignidad y esperanza. Amén.",
+    "reference": "Salmo 41:1-3",
+    "question": "¿Qué necesidad práctica puedo ayudar a cubrir?",
+    "action": "Ofrece una ayuda específica y realista.",
+    "tags": [
+      "intercesión",
+      "salud",
+      "cuidado"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "OT03",
+    "title": "Por alguien que atraviesa una decisión",
+    "theme": "Orar por otra persona",
+    "secondary": [
+      "decisiones"
+    ],
+    "situation": "decisión ajena",
+    "intro": "Orar por otra persona no autoriza decidir en su lugar.",
+    "prayer": "Señor, acompaña a esta persona en la decisión que enfrenta. Dale sabiduría, información confiable y consejo responsable. Guarda su libertad y ayúdame a respetar su proceso. Si me pide opinión, permite que hable con humildad y sin manipular. Líbrame de presentar mis preferencias como si fueran tu voluntad. Protege a quienes puedan verse afectados y abre espacio para revisar el camino si fuera necesario. Que tu verdad y tu amor orienten cada paso. Amén.",
+    "reference": "Santiago 1:5",
+    "question": "¿Estoy acompañando o intentando controlar?",
+    "action": "Escucha la decisión sin convertirla en tu proyecto.",
+    "tags": [
+      "intercesión",
+      "decisión",
+      "libertad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NS01",
+    "title": "Dios, no sé qué decir",
+    "theme": "Cuando no sé qué decir",
+    "secondary": [
+      "paz"
+    ],
+    "situation": "silencio",
+    "intro": "Estar presente también puede ser oración.",
+    "prayer": "Dios, no sé qué decir. Tengo pensamientos, pero no encuentro una forma ordenada de expresarlos. Por ahora solo puedo presentarme delante de ti. Recibe mi silencio, mi respiración y esta disposición pequeña de quedarme. Tú no necesitas una frase perfecta para conocerme. Ayúdame a no convertir la oración en una actuación. Si aparecen lágrimas, preguntas o una sola palabra, permite que sean suficientes para comenzar. Recuérdame que también puedo buscar compañía humana cuando lo que vivo es demasiado pesado. Aquí estoy. Enséñame a hablar con honestidad cuando las palabras lleguen y a descansar en tu presencia mientras tanto. En el nombre de Jesús, amén.",
+    "reference": "Romanos 8:26-27",
+    "question": "¿Qué única palabra describe lo que quiero presentar?",
+    "action": "Escribe una palabra y permanece un minuto en silencio.",
+    "tags": [
+      "silencio",
+      "honestidad",
+      "presencia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NS02",
+    "title": "Una oración de tres palabras",
+    "theme": "Cuando no sé qué decir",
+    "secondary": [
+      "fortaleza"
+    ],
+    "situation": "agotamiento espiritual",
+    "intro": "Una oración breve puede ser sincera y suficiente para iniciar.",
+    "prayer": "Jesús, aquí estoy. Estas tres palabras contienen más de lo que puedo explicar: mi cansancio, mi deseo de acercarme y mis preguntas. No tengo energía para una oración extensa, pero confío en que me recibes. Ayúdame con el siguiente paso. Muéstrame si necesito dormir, hablar, pedir ayuda, leer una referencia o simplemente permanecer quieto. Líbrame de medir mi fe por la cantidad de palabras. Que tu gracia me encuentre en lo sencillo y me recuerde que la relación contigo no depende de mi desempeño. Aquí estoy, Jesús. Amén.",
+    "reference": "Mateo 11:28",
+    "question": "¿Qué necesito más en este momento?",
+    "action": "Elige una acción amable de cuidado.",
+    "tags": [
+      "pocas palabras",
+      "cansancio",
+      "gracia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "GR03",
+    "title": "Gracias por una persona",
+    "theme": "Gratitud",
+    "secondary": [
+      "familia"
+    ],
+    "situation": "vínculo significativo",
+    "intro": "Reconocer el bien recibido también fortalece los vínculos.",
+    "prayer": "Padre, gracias por la vida de esta persona y por la forma en que su presencia ha aportado a mi camino. Gracias por las palabras, los gestos y la ayuda que pude recibir. Ayúdame a no dar por sentado este vínculo ni idealizarlo. Enséñame a cuidarlo con respeto, límites y reciprocidad. Muéstrame una forma concreta de expresar gratitud sin exigir una respuesta. Donde haya diferencias, danos madurez para conversar. Que el bien recibido se convierta en generosidad hacia otras personas. En Jesús, amén.",
+    "reference": "Filipenses 1:3-5",
+    "question": "¿Qué aporte específico quiero agradecer?",
+    "action": "Envía un agradecimiento concreto.",
+    "tags": [
+      "gratitud",
+      "persona",
+      "vínculo"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "AM03",
+    "title": "Antes de una jornada importante",
+    "theme": "Comenzar el día",
+    "secondary": [
+      "trabajo",
+      "fortaleza"
+    ],
+    "situation": "día exigente",
+    "intro": "Prepararse en oración no garantiza que todo saldrá según lo planeado.",
+    "prayer": "Señor, este día tiene responsabilidades importantes y siento su peso. Te presento mi preparación, mis capacidades y las áreas que no controlo. Dame atención para hacer lo que corresponde, flexibilidad ante los cambios y respeto en cada interacción. Si algo no sale como espero, ayúdame a responder sin derrumbarme ni culpar a otros. Recuérdame hacer pausas, pedir apoyo y cuidar mi cuerpo. Mi valor no depende del resultado de hoy. Quiero actuar con integridad y aprender de lo que ocurra. Acompáñame. Amén.",
+    "reference": "Salmo 90:17",
+    "question": "¿Qué preparación concreta falta y qué debo soltar?",
+    "action": "Revisa lo esencial y deja margen para imprevistos.",
+    "tags": [
+      "mañana",
+      "jornada",
+      "integridad"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NO03",
+    "title": "Revisión amable del día",
+    "theme": "Terminar el día",
+    "secondary": [
+      "gratitud",
+      "perdón"
+    ],
+    "situation": "examen del día",
+    "intro": "Mirar el día con Dios puede producir aprendizaje sin condena.",
+    "prayer": "Dios, ayúdame a mirar este día con verdad y compasión. Muéstrame un momento por el cual agradecer, una decisión que deseo aprender a repetir y otra que necesita corrección. Si herí a alguien, dame humildad para reparar. Si fui herido, enséñame a cuidar lo que siento y buscar apoyo. No quiero revisar el día para castigarme, sino para crecer. Recibo tu misericordia y dejo contigo aquello que no puedo cambiar esta noche. Prepara mi corazón para un nuevo comienzo. Amén.",
+    "reference": "Salmo 139:23-24",
+    "question": "¿Qué agradezco, qué aprendo y qué necesito reparar?",
+    "action": "Anota una frase para cada pregunta.",
+    "tags": [
+      "noche",
+      "revisión",
+      "misericordia"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PA03",
+    "title": "Paz en una casa en tensión",
+    "theme": "Paz",
+    "secondary": [
+      "familia",
+      "protección"
+    ],
+    "situation": "conflicto en el hogar",
+    "intro": "La paz bíblica no exige permanecer en peligro ni ocultar el conflicto.",
+    "prayer": "Príncipe de paz, esta casa atraviesa tensión y necesitamos tu sabiduría. Guarda nuestras palabras y detén las respuestas que podrían aumentar el daño. Ayúdanos a reconocer cuándo pausar una conversación y cuándo buscar mediación o apoyo. No permitas que llamemos paz al silencio impuesto. Donde exista peligro, abre una salida segura y personas capaces de intervenir. Donde sea posible conversar, danos escucha, verdad y voluntad de reparar. Sostén especialmente a quienes se sienten vulnerables. Que la paz se construya con justicia, respeto y cuidado. Amén.",
+    "reference": "Santiago 3:13-18",
+    "question": "¿Qué necesita esta situación: pausa, conversación o protección?",
+    "action": "Elige la opción más segura, no la más rápida.",
+    "tags": [
+      "paz",
+      "hogar",
+      "conflicto"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "TR03",
+    "title": "Cuando busco trabajo",
+    "theme": "Trabajo",
+    "secondary": [
+      "esperar",
+      "propósito"
+    ],
+    "situation": "búsqueda laboral",
+    "intro": "La búsqueda puede afectar la autoestima; el valor personal no depende del empleo.",
+    "prayer": "Dios proveedor, estoy buscando trabajo y esta espera toca mi ánimo y mis recursos. Ayúdame a organizar la búsqueda, presentar mis capacidades con honestidad y aprender lo que sea necesario. Abre oportunidades adecuadas, pero también dame discernimiento para reconocer condiciones injustas o insostenibles. Sostén mis necesidades y muéstrame las redes de apoyo disponibles. Cuando llegue un rechazo, ayúdame a procesarlo sin convertirlo en una sentencia sobre mi valor. Dame constancia, descanso y consejo. En Cristo, amén.",
+    "reference": "Mateo 6:31-34",
+    "question": "¿Qué acción concreta fortalece hoy mi búsqueda?",
+    "action": "Actualiza una solicitud o contacta una red de apoyo.",
+    "tags": [
+      "trabajo",
+      "búsqueda",
+      "provisión"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "PR03",
+    "title": "Servir sin agotarme",
+    "theme": "Propósito",
+    "secondary": [
+      "descanso"
+    ],
+    "situation": "servicio",
+    "intro": "El servicio cristiano necesita límites y no debe sostenerse por culpa.",
+    "prayer": "Jesús, deseo servir, pero reconozco que no puedo responder a cada necesidad. Enséñame a distinguir entre compasión y sobrecarga. Muéstrame el servicio que corresponde a mis dones, mi etapa y mis límites. Dame libertad para decir no sin culpa y para compartir responsabilidades con la comunidad. Protege mi motivación de la búsqueda de aprobación. Que pueda ofrecer lo mejor de mí sin descuidar el descanso, la familia o la salud. Forma en mí un servicio alegre, humilde y sostenible. Amén.",
+    "reference": "1 Pedro 4:8-11",
+    "question": "¿Qué servicio puedo sostener sin abandonarme?",
+    "action": "Revisa una responsabilidad y decide si mantener, delegar o cerrar.",
+    "tags": [
+      "propósito",
+      "servicio",
+      "límites"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "OT04",
+    "title": "Por una comunidad que sufre",
+    "theme": "Orar por otra persona",
+    "secondary": [
+      "protección",
+      "duelo"
+    ],
+    "situation": "crisis colectiva",
+    "intro": "La intercesión puede acompañarse de información responsable y ayuda concreta.",
+    "prayer": "Dios de misericordia y justicia, miramos a esta comunidad que atraviesa sufrimiento. Te pedimos protección para las personas vulnerables, sabiduría para quienes responden y recursos suficientes para las necesidades urgentes. Consuela a quienes han perdido y fortalece a quienes cuidan. Líbranos de usar el dolor ajeno como contenido o de compartir información no verificada. Muéstranos cómo ayudar de manera responsable, respetuosa y coordinada. Que nuestra oración produzca compasión, verdad y acciones prudentes. Amén.",
+    "reference": "Salmo 46:1-3",
+    "question": "¿Qué ayuda responsable está siendo solicitada?",
+    "action": "Verifica una fuente confiable antes de colaborar o compartir.",
+    "tags": [
+      "intercesión",
+      "comunidad",
+      "crisis"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "GR04",
+    "title": "Convertir una petición en gratitud",
+    "theme": "Gratitud",
+    "secondary": [
+      "esperar"
+    ],
+    "situation": "respuesta diferente o aprendizaje",
+    "intro": "Registrar gratitud no obliga a declarar que todo ocurrió como se esperaba.",
+    "prayer": "Padre, vuelvo a esta petición y reconozco lo que cambió. Tal vez la respuesta fue clara, tal vez fue distinta o quizá la transformación ocurrió dentro de mí mientras esperaba. Gracias por las personas, aprendizajes y recursos que aparecieron. También conservo preguntas y no necesito resolverlas hoy. Ayúdame a recordar con honestidad, sin exagerar ni reducir la historia a una fórmula. Que esta gratitud fortalezca mi confianza y mi capacidad de acompañar a otros con humildad. En Jesús, amén.",
+    "reference": "Salmo 116:1-7",
+    "question": "¿Qué cambió, qué aprendí y qué sigue abierto?",
+    "action": "Registra la gratitud con fecha y relaciónala con la petición.",
+    "tags": [
+      "gratitud",
+      "respuesta",
+      "memoria"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "NS03",
+    "title": "Cuando solo puedo pedir ayuda",
+    "theme": "Cuando no sé qué decir",
+    "secondary": [
+      "protección"
+    ],
+    "situation": "crisis",
+    "intro": "En una crisis, una oración breve puede acompañar la búsqueda inmediata de ayuda.",
+    "prayer": "Dios, ayúdame. No puedo ordenar todo lo que está pasando, pero necesito protección, claridad y compañía. Muéstrame el paso más seguro y la persona o servicio que debo contactar. Dame fuerza para salir del aislamiento y decir con claridad que necesito ayuda. No permitas que use esta oración para demorar una acción urgente. Sostén mi dignidad y mi respiración mientras avanzo hacia un lugar seguro. Quédate conmigo y guía también a quienes respondan. Amén.",
+    "reference": "Salmo 40:1-3",
+    "question": "¿A quién debo llamar ahora?",
+    "action": "Contacta ayuda inmediata si existe riesgo.",
+    "tags": [
+      "crisis",
+      "ayuda",
+      "protección"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "DI03",
+    "title": "Decidir con mis valores",
+    "theme": "Decisiones",
+    "secondary": [
+      "propósito"
+    ],
+    "situation": "presión externa",
+    "intro": "Una decisión responsable considera valores, consecuencias y límites.",
+    "prayer": "Dios, siento presión para decidir rápidamente o para complacer expectativas ajenas. Ayúdame a recordar los valores que deseo vivir y las responsabilidades que realmente me corresponden. Dame valentía para pedir tiempo, hacer preguntas y decir no cuando algo contradiga la verdad, el cuidado o la justicia. Examina también mis motivos para que no confunda firmeza con orgullo. Rodéame de consejo sensato y permite que mi decisión pueda explicarse con honestidad. En Cristo, amén.",
+    "reference": "Romanos 12:1-2",
+    "question": "¿Qué valor no quiero negociar en esta decisión?",
+    "action": "Escribe tres criterios no negociables.",
+    "tags": [
+      "decisiones",
+      "valores",
+      "presión"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "FA03",
+    "title": "Por una familia en transición",
+    "theme": "Familia",
+    "secondary": [
+      "esperar"
+    ],
+    "situation": "mudanza, separación o cambio",
+    "intro": "Los cambios familiares necesitan comunicación y cuidado adaptado a cada persona.",
+    "prayer": "Dios, nuestra familia atraviesa un cambio y cada persona lo vive de manera distinta. Danos paciencia para escuchar, claridad para explicar lo posible y respeto por los ritmos individuales. Ayúdanos a conservar rutinas que den estabilidad y a crear nuevas formas de conexión. Donde haya pérdidas, permite que podamos nombrarlas. Donde aparezcan oportunidades, enséñanos a recibirlas sin negar lo difícil. Guía las decisiones prácticas y muéstranos cuándo buscar apoyo especializado. Permanece con nosotros en esta transición. Amén.",
+    "reference": "Eclesiastés 3:1-8",
+    "question": "¿Qué necesita más estabilidad durante el cambio?",
+    "action": "Conserven una rutina sencilla compartida.",
+    "tags": [
+      "familia",
+      "transición",
+      "cambio"
+    ],
+    "editorialStatus": "revisada"
+
+},
+   {
+
+    "id": "MA03",
+    "title": "Después de una discusión",
+    "theme": "Matrimonio",
+    "secondary": [
+      "perdón",
+      "paz"
+    ],
+    "situation": "conflicto de pareja",
+    "intro": "Reparar requiere regularse, asumir responsabilidad y elegir un momento seguro.",
+    "prayer": "Señor, venimos de una discusión y todavía hay tensión. Ayúdame a reconocer mi parte sin cargar con lo que no me corresponde. Guarda mi mente de repetir argumentos solo para ganar. Dame humildad para pedir perdón por lo concreto y disposición para escuchar el impacto. Muéstranos si necesitamos una pausa antes de continuar. Si el conflicto se repite o existe agresión, guíanos hacia ayuda profesional y protección. Que la reconciliación no sea una apariencia rápida, sino un proceso de verdad, respeto y cambios observables. Amén.",
+    "reference": "Santiago 1:19-20",
+    "question": "¿Qué debo reconocer antes de explicar mi posición?",
+    "action": "Espera a estar en condiciones de conversar con respeto.",
+    "tags": [
+      "matrimonio",
+      "discusión",
+      "reparación"
+    ],
+    "editorialStatus": "revisada"
+
+}
+];
+
+const sb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY),$=x=>document.getElementById(x);
+let user=null,key='',state= {
+  favorites:[],petitions:[],gratitudes:[],history:[],updatedAt:null
+},featured=prayers[0].id,view='discover';
+
+const statuses=["Sigo orando","En espera","Transformada en gratitud","Respondida de una manera que deseo recordar","Archivada"];
+
+function esc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    };
+    return entities[character];
+  });
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
-}
+function uid(){return crypto.randomUUID?.()||'id_'+Date.now()+'_'+Math.random().toString(16).slice(2)}function now(){return new Date().toISOString()}function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
+function defaults(){return{favorites:[],petitions:[],gratitudes:[],history:[],updatedAt:null}}function load(){try{const v=JSON.parse(localStorage.getItem(key)||'null');state=v&&typeof v==='object'?{...defaults(),...v}:defaults()}catch{state=defaults()}state.favorites=[...new Set((state.favorites||[]).filter(id=>prayers.some(p=>p.id===id)))];state.petitions=Array.isArray(state.petitions)?state.petitions:[];state.gratitudes=Array.isArray(state.gratitudes)?state.gratitudes:[];state.history=Array.isArray(state.history)?state.history:[]}
+function snapshot(){const s={favorites:state.favorites.length,activePetitions:state.petitions.filter(p=>!['Archivada','Transformada en gratitud'].includes(p.status)).length,gratitudes:state.gratitudes.length,archived:state.petitions.filter(p=>p.status==='Archivada').length,updatedAt:state.updatedAt};localStorage.setItem(key+'_snapshot',JSON.stringify(s))}function save(msg){try{state.updatedAt=now();localStorage.setItem(key,JSON.stringify(state));snapshot();metrics();if(msg)toast(msg);return true}catch(e){console.error(e);toast('No pudimos guardar este cambio en el dispositivo.',true);return false}}function toast(t,e=false){$('toast').textContent=t;$('toast').classList.toggle('error',e);$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2500)}function log(action,type,id,label){state.history.unshift({id:uid(),action,type,entityId:id,label,date:now()});state.history=state.history.slice(0,200)}function metrics(){$('mFav').textContent=state.favorites.length;$('mActive').textContent=state.petitions.filter(p=>!['Archivada','Transformada en gratitud'].includes(p.status)).length;$('mThanks').textContent=state.gratitudes.length;$('mArchived').textContent=state.petitions.filter(p=>p.status==='Archivada').length}
+function prayerCard(p){const f=state.favorites.includes(p.id);return `<article class="card"><span class="badge">${esc(p.theme)}</span><h3>${esc(p.title)}</h3><div class="ref">${esc(p.reference)}</div><p class="muted">${esc(p.intro)}</p><div class="row"><button class="btn openPrayer" data-id="$ {
+    p.id
+  }">Abrir</button><button class="btn gold favPrayer" aria-pressed="$ {
+    f
+  }" data-id="$ {
+    p.id
+  }">${f?'★ Favorita':'☆ Guardar'}</button></div></article>`}
+function featuredHTML(p){const f=state.favorites.includes(p.id);return `<section class="panel feature"><span class="badge">${esc(p.theme)} · ${esc(p.situation)}</span><h2>${esc(p.title)}</h2><div class="ref">${esc(p.reference)} · referencia de acompañamiento</div><p class="muted">${esc(p.intro)}</p><div class="prayer">${esc(p.prayer)}</div><div class="boxes"><div class="box"><small>Para reflexionar</small>${esc(p.question||'Puedes permanecer unos minutos en silencio.')}</div><div class="box"><small>Acción serena opcional</small>${esc(p.action||'Da un paso pequeño y responsable.')}</div></div><div class="row" style="margin-top:14px"><button class="btn gold favPrayer" aria-pressed="$ {
+    f
+  }" data-id="$ {
+    p.id
+  }">${f?'★ Favorita':'☆ Guardar favorita'}</button><button class="btn" id="copyPrayer">Copiar oración</button></div></section>`}
+function discover(){const themes=[...new Set(prayers.map(p=>p.theme))].sort();$('view').innerHTML=`<section class="panel tools"><div class="searchgrid"><div class="field"><label for="search">¿Sobre qué deseas orar hoy?</label><input id="search" type="search" placeholder="Ejemplo: ansiedad, familia, decisiones o gratitud"></div><div class="field"><label for="theme">Tema</label><select id="theme"><option value="">Todos los temas</option>${themes.map(t=>`<option>${esc(t)}</option>`).join('')}</select></div></div><div class="chips">${themes.slice(0,10).map(t=>`<button class="chip" data-theme="$ {
+    esc(t)
+  }">${esc(t)}</button>`).join('')}</div></section><div class="layout"><div><div id="featured">${featuredHTML(prayers.find(p=>p.id===featured)||prayers[0])}</div><div class="notice">Las oraciones guiadas son un punto de partida. Puedes adaptarlas y hablar con Dios con tus propias palabras.</div><h2 style="color:var(--g)">Explorar oraciones</h2><div id="prayerCards" class="cards"></div></div><aside class="panel side"><h2>Favoritas</h2><div id="favoriteSide"></div></aside></div>`;renderPrayerList();bindPrayer();$('search').oninput=renderPrayerList;$('theme').onchange=renderPrayerList;document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('theme').value=b.dataset.theme;renderPrayerList()})}
+function renderPrayerList(){const q=norm($('search')?.value),t=$('theme')?.value;const list=prayers.filter(p=>(!t||p.theme===t)&&(!q||norm([p.title,p.theme,p.situation,p.intro,p.prayer,p.reference,...p.tags].join(' ')).includes(q)));$('prayerCards').innerHTML=list.length?list.map(prayerCard).join(''):'<div class="empty">No encontramos una oración con esos criterios.</div>';const fav=state.favorites.map(id=>prayers.find(p=>p.id===id)).filter(Boolean);$('favoriteSide').innerHTML=fav.length?fav.map(p=>`<button class="btn openPrayer" data-id="$ {
+    p.id
+  }" style="width:100%;
+  margin-bottom:8px">${esc(p.title)}</button>`).join(''):'<div class="empty">Aún no guardaste oraciones favoritas.</div>';bindPrayer()}
+function bindPrayer(){document.querySelectorAll('.openPrayer').forEach(b=>b.onclick=()=>{featured=b.dataset.id;log('Abrió oración','oración',featured,prayers.find(p=>p.id===featured).title);save();$('featured').innerHTML=featuredHTML(prayers.find(p=>p.id===featured));bindPrayer();$('featured').scrollIntoView({behavior:'smooth'})});document.querySelectorAll('.favPrayer').forEach(b=>b.onclick=()=>{state.favorites=state.favorites.includes(b.dataset.id)?state.favorites.filter(x=>x!==b.dataset.id):[...state.favorites,b.dataset.id];log('Actualizó favorita','oración',b.dataset.id,prayers.find(p=>p.id===b.dataset.id).title);save('Favoritos actualizados');discover()});$('copyPrayer')?.addEventListener('click',async()=>{const p=prayers.find(x=>x.id===featured);try{await navigator.clipboard.writeText(`${p.title}\n${p.prayer}\n${p.reference}`);toast('Oración copiada')}catch{toast('No pudimos copiar automáticamente',true)}})}
+function petitionForm(p={}){return `<section class="panel formpanel"><h2>${p.id?'Editar petición':'Nueva petición'}</h2><form id="petitionForm" class="formgrid"><input type="hidden" id="pid" value="$ {
+    esc(p.id||'')
+  }"><div class="field"><label for="ptitle">Título</label><input id="ptitle" maxlength="100" required value="$ {
+    esc(p.title||'')
+  }"></div><div class="field"><label for="pcat">Categoría</label><input id="pcat" maxlength="60" value="$ {
+    esc(p.category||'')
+  }"></div><div class="field span2"><label for="pdetail">Detalle privado</label><textarea id="pdetail" maxlength="3000">${esc(p.detail||'')}</textarea></div><div class="field"><label for="pperson">Persona o situación</label><input id="pperson" maxlength="120" value="$ {
+    esc(p.person||'')
+  }"></div><div class="field"><label for="pdate">Fecha</label><input id="pdate" type="date" value="$ {
+    esc((p.date||now()).slice(0,10))
+  }"></div><div class="field"><label for="pstatus">Estado</label><select id="pstatus">${statuses.map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label for="pnote">Nota de seguimiento</label><textarea id="pnote" maxlength="2000">${esc(p.followUp||'')}</textarea></div><div class="row span2"><button class="btn primary" type="submit">Guardar petición</button>${p.id?'<button class="btn" type="button" id="cancelEdit">Cancelar</button>':''}</div></form></section>`}
+function petitions(){const list=state.petitions;$('view').innerHTML=`${petitionForm()}<section><div class="row"><div class="field" style="flex:1"><label for="psearch">Buscar peticiones</label><input id="psearch" type="search" placeholder="Título, persona, categoría o nota"></div><div class="field"><label for="pfilter">Estado</label><select id="pfilter"><option value="">Todos</option>${statuses.map(s=>`<option>${s}</option>`).join('')}</select></div></div><div id="petitionList" class="records"></div></section>`;bindPetitionForm();renderPetitions();$('psearch').oninput=renderPetitions;$('pfilter').onchange=renderPetitions}
+function renderPetitions(){const q=norm($('psearch')?.value),f=$('pfilter')?.value;const list=state.petitions.filter(p=>(!f||p.status===f)&&(!q||norm([p.title,p.category,p.person,p.detail,p.followUp].join(' ')).includes(q)));$('petitionList').innerHTML=list.length?list.map(p=>`<article class="record"><span class="badge">${esc(p.status)}</span><h3>${esc(p.title)}</h3><div class="meta">${esc(p.category||'Sin categoría')} · ${esc(p.date||'')}</div><p>${esc(p.detail||'Sin detalle')}</p>${p.followUp?`<div class="history"><strong>Seguimiento:</strong> ${esc(p.followUp)}</div>`:''}<div class="row"><button class="btn editPet" data-id="$ {
+    p.id
+  }">Editar</button>${p.status!=='Archivada'?`<button class="btn archivePet" data-id="$ {
+    p.id
+  }">Archivar</button>`:''}<button class="btn gold thankPet" data-id="$ {
+    p.id
+  }">Convertir en gratitud</button><button class="btn danger deletePet" data-id="$ {
+    p.id
+  }">Eliminar</button></div></article>`).join(''):'<div class="empty">No hay peticiones en esta vista.</div>';document.querySelectorAll('.editPet').forEach(b=>b.onclick=()=>editPet(b.dataset.id));document.querySelectorAll('.archivePet').forEach(b=>b.onclick=()=>{const p=state.petitions.find(x=>x.id===b.dataset.id);p.status='Archivada';p.updatedAt=now();log('Archivó petición','petición',p.id,p.title);save('Petición archivada');petitions()});document.querySelectorAll('.thankPet').forEach(b=>b.onclick=()=>openThank(b.dataset.id));document.querySelectorAll('.deletePet').forEach(b=>b.onclick=()=>{const p=state.petitions.find(x=>x.id===b.dataset.id);if(confirm('¿Eliminar esta petición y su historial local? Esta acción no se puede deshacer.')){state.petitions=state.petitions.filter(x=>x.id!==p.id);log('Eliminó petición','petición',p.id,p.title);save('Petición eliminada');petitions()}})}
+function bindPetitionForm(){$('petitionForm').onsubmit=e=>{e.preventDefault();const id=$('pid').value,old=state.petitions.find(x=>x.id===id),p={id:id||uid(),title:$('ptitle').value.trim(),detail:$('pdetail').value.trim(),category:$('pcat').value.trim(),person:$('pperson').value.trim(),date:$('pdate').value,status:$('pstatus').value,followUp:$('pnote').value.trim(),createdAt:old?.createdAt||now(),updatedAt:now(),statusHistory:[...(old?.statusHistory||[]),{status:$('pstatus').value,date:now()}]};if(!p.title)return;state.petitions=id?state.petitions.map(x=>x.id===id?p:x):[p,...state.petitions];log(id?'Editó petición':'Creó petición','petición',p.id,p.title);save('Petición guardada');petitions()}}
+function editPet(id){const p=state.petitions.find(x=>x.id===id);$('view').innerHTML=petitionForm(p);bindPetitionForm();$('cancelEdit').onclick=petitions;window.scrollTo({top:0,behavior:'smooth'})}
+function openThank(pid=''){const p=state.petitions.find(x=>x.id===pid);$('modal').innerHTML=`<h2 id="modalTitle">Registrar respuesta o gratitud</h2><form id="thankForm" class="formgrid"><div class="field span2"><label for="twhat">¿Qué deseas agradecer?</label><textarea id="twhat" required></textarea></div><div class="field"><label for="trel">Petición relacionada</label><select id="trel"><option value="">Ninguna</option>${state.petitions.map(x=>`<option value="$ {
+    x.id
+  }" ${x.id===pid?'selected':''}>${esc(x.title)}</option>`).join('')}</select></div><div class="field"><label for="tdate">Fecha</label><input id="tdate" type="date" value="$ {
+    now().slice(0,10)
+  }"></div><div class="field span2"><label for="tlearn">¿Qué aprendiste?</label><textarea id="tlearn"></textarea></div><div class="field span2"><label for="tnote">Nota personal</label><textarea id="tnote"></textarea></div><div class="notice span2">Una respuesta puede ser diferente de lo esperado. Registra solo lo que deseas recordar, sin convertirlo en una evaluación automática de la voluntad de Dios.</div><div class="row span2"><button class="btn primary">Guardar gratitud</button><button type="button" class="btn" id="closeModal">Cancelar</button></div></form>`;$('modalBack').classList.remove('hide');$('modalBack').setAttribute('aria-hidden','false');$('closeModal').onclick=closeModal;$('thankForm').onsubmit=e=>{e.preventDefault();const g={id:uid(),what:$('twhat').value.trim(),petitionId:$('trel').value,learned:$('tlearn').value.trim(),date:$('tdate').value,note:$('tnote').value.trim(),createdAt:now(),updatedAt:now()};state.gratitudes.unshift(g);if(g.petitionId){const pp=state.petitions.find(x=>x.id===g.petitionId);if(pp){pp.status='Transformada en gratitud';pp.updatedAt=now();pp.statusHistory=[...(pp.statusHistory||[]),{status:pp.status,date:now()}]}}log('Registró gratitud','gratitud',g.id,g.what.slice(0,60));save('Gratitud guardada');closeModal();showView('gratitudes')}}
+function gratitudeCard(g){const p=state.petitions.find(x=>x.id===g.petitionId);return `<article class="record"><span class="badge">Gratitud</span><h3>${esc(g.what)}</h3><div class="meta">${esc(g.date)}${p?' · Relacionada con: '+esc(p.title):''}</div>${g.learned?`<p><strong>Aprendizaje:</strong> ${esc(g.learned)}</p>`:''}${g.note?`<p>${esc(g.note)}</p>`:''}<div class="row"><button class="btn danger deleteThanks" data-id="$ {
+    g.id
+  }">Eliminar</button></div></article>`}
+function gratitudes(){$('view').innerHTML=`<section class="panel formpanel"><h2>Respuestas y gratitudes</h2><p class="muted">Registra lo que deseas agradecer, incluso cuando la respuesta haya sido diferente de lo esperado.</p><button class="btn primary" id="newThank">Nueva gratitud</button></section><div class="records">${state.gratitudes.length?state.gratitudes.map(gratitudeCard).join(''):'<div class="empty">Aún no registraste respuestas o gratitudes.</div>'}</div>`;$('newThank').onclick=()=>openThank();document.querySelectorAll('.deleteThanks').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar esta gratitud?')){state.gratitudes=state.gratitudes.filter(x=>x.id!==b.dataset.id);log('Eliminó gratitud','gratitud',b.dataset.id,'');save('Gratitud eliminada');gratitudes()}})}
+function library(){const fav=state.favorites.map(id=>prayers.find(x=>x.id===id)).filter(Boolean);const groups=[['Favoritas',fav.map(prayerCard).join('')],['Mis peticiones',state.petitions.map(p=>`<article class="card"><span class="badge">${esc(p.status)}</span><h3>${esc(p.title)}</h3><p class="muted">${esc(p.category||'Sin categoría')}</p></article>`).join('')],['Sigo orando',state.petitions.filter(p=>p.status==='Sigo orando').map(p=>`<article class="card"><h3>${esc(p.title)}</h3><p class="muted">${esc(p.followUp||p.detail||'')}</p></article>`).join('')],['Gratitudes',state.gratitudes.map(gratitudeCard).join('')],['Archivadas',state.petitions.filter(p=>p.status==='Archivada').map(p=>`<article class="card"><h3>${esc(p.title)}</h3><p class="muted">${esc(p.category||'')}</p></article>`).join('')]];$('view').innerHTML=groups.map(([t,c])=>`<section><h2 style="color:var(--g)">${t}</h2><div class="cards">${c||'<div class="empty">Aún no hay contenido en esta sección.</div>'}</div></section>`).join('');bindPrayer();document.querySelectorAll('.deleteThanks').forEach(b=>b.remove())}
+function historyView(){$('view').innerHTML=`<section class="panel formpanel"><h2>Historial</h2><p class="muted">Registro local de acciones para que puedas reconocer cambios en tus peticiones y gratitudes.</p></section><div class="records">${state.history.length?state.history.map(h=>`<article class="record"><span class="badge">${esc(h.type)}</span><h3>${esc(h.action)}</h3><div class="meta">${new Date(h.date).toLocaleString('es-419')}</div><p>${esc(h.label||'')}</p></article>`).join(''):'<div class="empty">Todavía no hay movimientos registrados.</div>'}</div>`}
+function closeModal(){$('modalBack').classList.add('hide');$('modalBack').setAttribute('aria-hidden','true')}function showView(v){view=v;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));({discover,petitions,gratitudes,library,history:historyView}[v]||discover)();metrics()}document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>showView(b.dataset.view));$('random').onclick=()=>{const pool=prayers.filter(p=>p.id!==featured);featured=pool[Math.floor(Math.random()*pool.length)].id;showView('discover')};$('modalBack').onclick=e=>{if(e.target===$('modalBack'))closeModal()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});$('logout').onclick=async()=>{if(!confirm('¿Deseas cerrar sesión?'))return;await sb?.auth.signOut();location.href='../login.html'};
+async function init(){if(!sb){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const{data:{session},error}=await sb.auth.getSession();if(error||!session?.user){location.href='../login.html';return}user=session.user;$('userPill').textContent=user.email||'Sesión activa';const email=String(user.email||'').trim().toLowerCase();const{data,error:entErr}=await sb.from('entitlements').select('permission_key,source_sku,active').eq('email',email).eq('active',true);if(entErr){console.error(entErr);$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const ok=(data||[]).some(x=>x.permission_key==='membership_all_access'||x.source_sku==='HCD_ALL_ACCESS');if(!ok){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}key='hcd_mi_espacio_oracion_'+user.id;load();save();$('loading').classList.add('hide');$('app').classList.remove('hide');showView('discover')}
+window.addEventListener('load',init);
 
-.card{
-  background:white;
-  border-radius:24px;
-  padding:30px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
 
-h1{
-  color:#3F4A35;
-}
-
-.button{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 20px;
-  border-radius:999px;
-  background:#3F4A35;
-  color:white;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="card">
-
-<h1>Generador de Oraciones</h1>
-
-<p>
-Espacio pensado para crear oraciones guiadas y reflexiones espirituales.
-</p>
-
-<p>
-Esta será una de las herramientas premium de la plataforma.
-</p>
-
-../dashboard.html
-Volver al Dashboard
-</a>
-
-</div>
-
-</div>
-
-</body>
+  </script>
+ </body>
 </html>
