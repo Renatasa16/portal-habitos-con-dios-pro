@@ -467,6 +467,97 @@
         line-height: 1.7;
       }
 
+      .collections-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .collection-card {
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-soft);
+        transition: 0.2s ease;
+      }
+      .collection-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow);
+      }
+      .collection-cover {
+        min-height: 138px;
+        padding: 18px;
+        display: flex;
+        align-items: flex-end;
+        color: var(--gold);
+        font-size: 1.45rem;
+        font-weight: 950;
+        letter-spacing: -0.035em;
+        background: linear-gradient(
+          135deg,
+          rgba(63, 74, 53, 0.94),
+          rgba(85, 101, 68, 0.9)
+        );
+      }
+      .collection-body {
+        padding: 20px;
+      }
+      .collection-badge {
+        display: inline-flex;
+        margin-bottom: 12px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: var(--soft-green);
+        color: var(--green);
+        font-size: 0.7rem;
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .collection-body h3 {
+        color: var(--green);
+        font-size: 1.18rem;
+        line-height: 1.18;
+        margin-bottom: 10px;
+      }
+      .collection-body p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.62;
+        margin-bottom: 18px;
+      }
+      .library-cta {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        padding: clamp(28px, 5vw, 42px);
+        border-radius: var(--radius-xl);
+        color: var(--white);
+        background: linear-gradient(
+          145deg,
+          rgba(63, 74, 53, 0.96),
+          rgba(85, 101, 68, 0.94)
+        );
+        box-shadow: var(--shadow);
+      }
+      .library-cta h2 {
+        color: var(--white);
+        font-size: clamp(2rem, 4.5vw, 3.3rem);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+        margin-bottom: 12px;
+      }
+      .library-cta p {
+        color: #efe7d8;
+        line-height: 1.7;
+        max-width: 720px;
+      }
+      .btn-gold {
+        color: var(--green);
+        background: var(--gold);
+        box-shadow: 0 14px 28px rgba(201, 166, 90, 0.24);
+      }
       .community-card {
         display: grid;
         grid-template-columns: 1fr 0.95fr;
@@ -598,8 +689,12 @@
           font-size: 0.82rem;
         }
         .hero-grid,
-        .community-card {
+        .community-card,
+        .library-cta {
           grid-template-columns: 1fr;
+        }
+        .collections-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
       @media (max-width: 780px) {
@@ -617,7 +712,8 @@
           width: 56px;
           height: 56px;
         }
-        .habit-grid {
+        .habit-grid,
+        .collections-grid {
           grid-template-columns: 1fr;
         }
         .footer-inner {
@@ -634,7 +730,8 @@
         }
         .hero-card,
         .hero-side-card,
-        .community-card {
+        .community-card,
+        .library-cta {
           padding: 22px;
           border-radius: 26px;
         }
@@ -788,6 +885,89 @@
         <div class="habit-grid is-hidden" id="habitGrid"></div>
       </section>
 
+      <section class="section page-shell" aria-labelledby="collections-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Un camino a recorrer</span>
+            <h2 id="collections-title">Colecciones destacadas</h2>
+            <p>
+              Conoce las experiencias principales de Hábitos con Dios. Cada
+              colección combina App, ebook y bonos digitales para acompañar una
+              etapa específica de crecimiento.
+            </p>
+          </div>
+        </div>
+        <div class="collections-grid">
+          <article class="collection-card">
+            <div class="collection-cover">21 Días</div>
+            <div class="collection-body">
+              <span class="collection-badge">Mujeres</span>
+              <h3>21 Días Más Cerca de Dios</h3>
+              <p>
+                Un recorrido guiado para mujeres que desean fortalecer su
+                relación con Dios, desarrollar hábitos espirituales saludables y
+                encontrar inspiración para su vida diaria.
+              </p>
+              <a
+                class="btn btn-secondary"
+                href="biblioteca.html#coleccion-21dias"
+                >Conocer</a
+              >
+            </div>
+          </article>
+          <article class="collection-card">
+            <div class="collection-cover">Familias</div>
+            <div class="collection-body">
+              <span class="collection-badge">Familia</span>
+              <h3>Pequeños Momentos con Dios</h3>
+              <p>
+                Un espacio para compartir en familia, fortalecer los vínculos y
+                vivir momentos de fe que inspiren, acompañen y transformen la
+                vida cotidiana.
+              </p>
+              <a
+                class="btn btn-secondary"
+                href="biblioteca.html#coleccion-familias"
+                >Conocer</a
+              >
+            </div>
+          </article>
+          <article class="collection-card">
+            <div class="collection-cover">Palabras</div>
+            <div class="collection-body">
+              <span class="collection-badge">Jóvenes</span>
+              <h3>Cuando las Palabras Duelen</h3>
+              <p>
+                Una guía para adolescentes y jóvenes que desean transformar el
+                dolor en crecimiento, fortalecer su identidad y descubrir la
+                esperanza que Dios tiene para sus vidas.
+              </p>
+              <a
+                class="btn btn-secondary"
+                href="biblioteca.html#coleccion-palabras-duelen"
+                >Conocer</a
+              >
+            </div>
+          </article>
+          <article class="collection-card">
+            <div class="collection-cover">Hogar</div>
+            <div class="collection-body">
+              <span class="collection-badge">Hombres</span>
+              <h3>El Hombre que Edifica su Hogar</h3>
+              <p>
+                Un camino de crecimiento para hombres que desean fortalecer su
+                liderazgo espiritual, familiar y personal, construyendo una vida
+                con propósito, carácter y fe.
+              </p>
+              <a
+                class="btn btn-secondary"
+                href="biblioteca.html#coleccion-hombre-edifica"
+                >Conocer</a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
       <section class="section page-shell is-hidden" id="communitySection">
         <div class="section-heading">
           <span class="section-kicker">Comunidad Hábitos con Dios</span>
@@ -843,6 +1023,22 @@
             >
           </div>
         </article>
+      </section>
+      <section class="section page-shell" aria-labelledby="library-title">
+        <div class="library-cta">
+          <div>
+            <h2 id="library-title">Mis Colecciones</h2>
+            <p>
+              Accede a tus Apps Premium, ebooks, bonificaciones y recursos
+              organizados en un solo lugar. Cada experiencia ha sido diseñada
+              para acompañarte en tu crecimiento con Dios y ayudarte a avanzar
+              paso a paso en tu camino espiritual.
+            </p>
+          </div>
+          <a class="btn btn-gold" href="biblioteca.html"
+            >Abrir Mis Colecciones</a
+          >
+        </div>
       </section>
     </main>
 
