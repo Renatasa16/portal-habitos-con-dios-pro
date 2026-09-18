@@ -25,8 +25,6 @@
         --muted: #6b7280;
         --line: #e8decc;
         --soft-green: #eef3ea;
-        --soft-gold: #fff4d8;
-        --soft-card: rgba(255, 255, 255, 0.86);
         --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
         --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.1);
         --radius-xl: 32px;
@@ -364,7 +362,7 @@
         overflow: hidden;
         padding: 24px;
         border-radius: var(--radius-lg);
-        background: var(--soft-card);
+        background: rgba(255, 255, 255, 0.86);
         border: 1px solid rgba(232, 222, 204, 0.96);
         box-shadow: var(--shadow-soft);
         transition: 0.2s ease;
@@ -418,7 +416,7 @@
         font-weight: 900;
       }
       .habit-pill.gold {
-        background: var(--soft-gold);
+        background: var(--gold-soft);
         border: 1px solid rgba(201, 166, 90, 0.22);
       }
       .progress-line {
@@ -467,6 +465,111 @@
         line-height: 1.7;
       }
 
+      .habit-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .resource-toggle {
+        color: var(--green);
+        background: white;
+        border: 1px solid var(--line);
+      }
+      .resource-summary {
+        width: 100%;
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+      .resource-summary.is-hidden { display: none !important; }
+      .resource-summary-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .resource-summary-head h4 {
+        color: var(--green);
+        font-size: 1rem;
+      }
+      .resource-count {
+        color: var(--muted);
+        font-size: .78rem;
+        font-weight: 850;
+      }
+      .resource-groups { display: grid; gap: 16px; }
+      .resource-group h5 {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--green);
+        font-size: .9rem;
+        margin-bottom: 9px;
+      }
+      .resource-list { display: grid; gap: 9px; }
+      .resource-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 16px;
+        background: var(--cream);
+        border: 1px solid var(--line);
+      }
+      .resource-item-copy { min-width: 0; }
+      .resource-item small {
+        display: block;
+        color: var(--muted);
+        font-weight: 800;
+        margin-bottom: 3px;
+      }
+      .resource-item strong {
+        display: block;
+        color: var(--green);
+        font-size: .88rem;
+        line-height: 1.3;
+      }
+      .resource-download {
+        min-height: 40px;
+        flex: 0 0 auto;
+        padding: 0 15px;
+        border: 0;
+        border-radius: 999px;
+        color: white;
+        background: var(--green);
+        font-weight: 900;
+      }
+      .resource-empty {
+        padding: 14px;
+        border-radius: 16px;
+        color: var(--muted);
+        background: var(--cream);
+        border: 1px solid var(--line);
+        line-height: 1.55;
+        font-size: .88rem;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        z-index: 100;
+        max-width: min(92vw, 560px);
+        transform: translate(-50%, 18px);
+        opacity: 0;
+        pointer-events: none;
+        padding: 13px 18px;
+        border-radius: 999px;
+        color: white;
+        background: var(--green);
+        box-shadow: var(--shadow);
+        font-weight: 800;
+        transition: .2s ease;
+      }
+      .toast.show { opacity: 1; transform: translate(-50%, 0); }
+      .toast.error { background: #9f3a38; }
       .community-card {
         display: grid;
         grid-template-columns: 1fr 0.95fr;
@@ -647,10 +750,14 @@
         .hero-stats {
           grid-template-columns: 1fr;
         }
-        .habit-footer {
+        .habit-footer,
+        .habit-actions,
+        .resource-item {
           align-items: stretch;
           flex-direction: column;
         }
+        .resource-download { width: 100%; }
+        .resource-summary-head { align-items: flex-start; flex-direction: column; }
         .garden-app {
           align-items: flex-start;
           flex-wrap: wrap;
@@ -865,6 +972,7 @@
       </div>
     </footer>
 
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
       const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
       const SUPABASE_PUBLISHABLE_KEY =
@@ -872,6 +980,7 @@
       const ACTIVE_EXPERIENCES = [
         {
           id: "21dias",
+          productSlug: "21dias",
           title: "21 Días Más Cerca de Dios",
           label: "Devocional de 21 días",
           description:
@@ -888,6 +997,7 @@
         },
         {
           id: "familias",
+          productSlug: "familias",
           title: "Pequeños Momentos con Dios",
           label: "Experiencia familiar",
           description:
@@ -915,6 +1025,7 @@
         },
         {
           id: "palabras",
+          productSlug: "palabras-duelen",
           title: "Cuando las Palabras Duelen",
           label: "Acompañamiento para jóvenes",
           description:
@@ -939,6 +1050,7 @@
         },
         {
           id: "hombre",
+          productSlug: "hombre-edifica",
           title: "El Hombre que Edifica su Hogar",
           label: "Camino de propósito",
           description:
@@ -953,6 +1065,20 @@
           sourceSkus: ["HCD_HOMBRE_EDIFICA_BUNDLE", "HCD_ALL_ACCESS"],
         },
       ];
+      const BUCKET_NAME = "hcd-resources";
+      const SIGNED_URL_SECONDS = 300;
+      const CATEGORY_LABELS = {
+        ebook: { title: "Ebook principal", icon: "📖" },
+        bonus: { title: "Bonos incluidos", icon: "🎁" },
+        printable: { title: "Versiones imprimibles", icon: "🖨️" },
+        app: { title: "App principal", icon: "📱" },
+        audio: { title: "Audios", icon: "🎧" },
+        video: { title: "Videos", icon: "🎬" },
+        resource: { title: "Recursos", icon: "✨" },
+      };
+      const CATEGORY_ORDER = ["ebook", "bonus", "printable", "resource", "audio", "video", "app"];
+      let dashboardClient = null;
+      let productFiles = [];
       const $ = (id) => document.getElementById(id);
       const escapeHTML = (value) =>
         String(value ?? "").replace(
@@ -1072,63 +1198,114 @@
         return items.join("");
       }
 
-      function renderActiveExperiences(experiences) {
-        const habitGrid = $("habitGrid");
-        const emptyHabit = $("emptyHabit");
-        habitGrid.innerHTML = "";
-
-        if (!experiences.length) {
-          habitGrid.classList.add("is-hidden");
-          emptyHabit.classList.remove("is-hidden");
+      function getFilesForExperience(experience) {
+        return productFiles
+          .filter((file) => file.product_slug === experience.productSlug)
+          .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+      }
+      function groupFiles(files) {
+        return files.reduce((groups, file) => {
+          const category = file.is_printable ? "printable" : String(file.category || file.file_type || "resource");
+          (groups[category] ||= []).push(file);
+          return groups;
+        }, {});
+      }
+      function readableFileType(file) {
+        if (file.is_printable) return "Versión imprimible";
+        const labels = { ebook: "Ebook digital", bonus: "Bono digital", printable: "Versión imprimible", audio: "Audio", video: "Video", resource: "Recurso" };
+        return labels[file.file_type] || labels[file.category] || "Recurso";
+      }
+      function normalizeDownloadName(title) {
+        const slug = String(title || "recurso").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return `${slug || "recurso"}.pdf`;
+      }
+      function renderResources(experience, container) {
+        const files = getFilesForExperience(experience);
+        if (!files.length) {
+          container.innerHTML = `<div class="resource-empty"><strong>Aún no encontramos archivos registrados para esta colección.</strong><br>Los ebooks, bonos, guías y versiones imprimibles aparecen aquí cuando están cargados en <code>product_files</code>.</div>`;
           return;
         }
-
-        experiences.forEach((experience) => {
-          const progress = clampProgress(experience.progress);
-          const card = document.createElement("article");
-          card.className = "habit-card";
-          card.dataset.experienceId = experience.id;
-          card.innerHTML = `
-            <div class="habit-card-top">
-              <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
-              <div>
-                <h3>${escapeHTML(experience.title)}</h3>
-                <p>${escapeHTML(experience.description)}</p>
-              </div>
-            </div>
-            <div class="habit-meta">
-              ${buildProgressMeta(experience)}
-            </div>
-            <div
-              class="progress-line"
-              role="progressbar"
-              aria-label="Progreso de ${escapeHTML(experience.title)}"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="${progress}"
-            >
-              <div class="progress-fill" style="--progress:${progress}%;"></div>
-            </div>
-            <div class="habit-footer">
-              <span class="habit-progress-text">${progress}%</span>
-              <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
-                ${progress > 0 ? "Continuar" : "Comenzar"}
-              </a>
-            </div>
-          `;
-          habitGrid.appendChild(card);
+        const grouped = groupFiles(files);
+        container.innerHTML = CATEGORY_ORDER.map((category) => {
+          const items = grouped[category] || [];
+          if (!items.length) return "";
+          const info = CATEGORY_LABELS[category] || CATEGORY_LABELS.resource;
+          return `<section class="resource-group"><h5>${info.icon} ${info.title}</h5><div class="resource-list">${items.map((file) => `<article class="resource-item"><div class="resource-item-copy"><small>${escapeHTML(readableFileType(file))}</small><strong>${escapeHTML(file.file_title || "Recurso de la colección")}</strong></div><button class="resource-download" type="button" data-file-id="${escapeHTML(String(file.id || file.storage_path || ""))}">Descargar PDF</button></article>`).join("")}</div></section>`;
+        }).join("");
+        container.querySelectorAll("[data-file-id]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const file = files.find((item) => String(item.id || item.storage_path || "") === button.dataset.fileId);
+            if (file) downloadResource(experience, file);
+          });
         });
-
-        emptyHabit.classList.add("is-hidden");
-        habitGrid.classList.remove("is-hidden");
       }
-
+      function renderExperience(experience) {
+        const progress = clampProgress(experience.progress);
+        const files = getFilesForExperience(experience);
+        const card = document.createElement("article");
+        card.className = "habit-card";
+        card.innerHTML = `
+        <div class="habit-card-top">
+          <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
+          <div><h3>${escapeHTML(experience.title)}</h3><p>${escapeHTML(experience.description)}</p></div>
+        </div>
+        <div class="habit-meta">${buildProgressMeta(experience)}</div>
+        <div class="progress-line" role="progressbar" aria-label="Progreso de ${escapeHTML(experience.title)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}"><div class="progress-fill" style="--progress:${progress}%;"></div></div>
+        <div class="habit-footer">
+          <span class="habit-progress-text">${progress}%</span>
+          <div class="habit-actions">
+            <a class="btn btn-primary" href="${escapeHTML(experience.href)}">${progress > 0 ? "Continuar" : "Comenzar"}</a>
+            <button class="btn resource-toggle" type="button" aria-expanded="false">Tus Ebooks y Bonos${files.length ? ` (${files.length})` : ""}</button>
+          </div>
+        </div>
+        <section class="resource-summary is-hidden" aria-label="Recursos de ${escapeHTML(experience.title)}">
+          <div class="resource-summary-head"><h4>Recursos de esta colección</h4><span class="resource-count">Ebooks, guía, bonos y versiones imprimibles</span></div>
+          <div class="resource-groups"></div>
+        </section>`;
+        const toggle = card.querySelector(".resource-toggle");
+        const summary = card.querySelector(".resource-summary");
+        const groups = card.querySelector(".resource-groups");
+        toggle.addEventListener("click", () => {
+          const opening = summary.classList.contains("is-hidden");
+          summary.classList.toggle("is-hidden", !opening);
+          toggle.setAttribute("aria-expanded", String(opening));
+          toggle.textContent = opening ? "Ocultar recursos" : `Tus Ebooks y Bonos${files.length ? ` (${files.length})` : ""}`;
+          if (opening) {
+            renderResources(experience, groups);
+            requestAnimationFrame(() => summary.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+          }
+        });
+        $("habitGrid").appendChild(card);
+      }
+      function showToast(message, isError = false) {
+        const toast = $("toast");
+        toast.textContent = message;
+        toast.classList.toggle("error", isError);
+        toast.classList.add("show");
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
+      }
+      async function downloadResource(experience, file) {
+        try {
+          if (!dashboardClient) throw new Error("No hay conexión con Supabase.");
+          if (!file.storage_path) throw new Error("El recurso no tiene storage_path configurado.");
+          showToast("Preparando descarga segura...");
+          const { data, error } = await dashboardClient.storage.from(BUCKET_NAME).createSignedUrl(file.storage_path, SIGNED_URL_SECONDS, { download: normalizeDownloadName(file.file_title) });
+          if (error) throw error;
+          if (!data?.signedUrl) throw new Error("No se generó la URL temporal.");
+          window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+        } catch (error) {
+          console.error(error);
+          showToast("No pudimos generar la descarga. Verifica el archivo y el acceso de la cuenta.", true);
+        }
+      }
       async function loadDashboard() {
         if (!window.supabase) return;
         const client = window.supabase.createClient(
           SUPABASE_URL,
           SUPABASE_PUBLISHABLE_KEY,
         );
+        dashboardClient = client;
         try {
           const {
             data: { user },
@@ -1151,6 +1328,13 @@
             .limit(50);
           if (error) throw error;
           const entitlements = data || [];
+          const filesResult = await client.from("product_files").select("*").order("sort_order", { ascending: true });
+          if (filesResult.error) {
+            console.warn("No se pudieron cargar product_files:", filesResult.error);
+            productFiles = [];
+          } else {
+            productFiles = filesResult.data || [];
+          }
           const activeExperiences = ACTIVE_EXPERIENCES.filter((item) =>
             hasAccess(item, entitlements),
           ).map((item) => {
@@ -1159,7 +1343,12 @@
           });
           $("loadingState").classList.add("is-hidden");
           $("collectionCount").textContent = activeExperiences.length;
-          renderActiveExperiences(activeExperiences);
+          if (activeExperiences.length) {
+            $("habitGrid").classList.remove("is-hidden");
+            activeExperiences.forEach(renderExperience);
+          } else {
+            $("emptyHabit").classList.remove("is-hidden");
+          }
           if (hasGardenAccess(entitlements)) {
             $("communityCount").textContent = "1";
             $("communitySection").classList.remove("is-hidden");
