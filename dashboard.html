@@ -1,1444 +1,1198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Mi Experiencia con Dios | Hábitos con Dios</title>
-
-  <meta
-    name="description"
-    content="Mi Experiencia con Dios es un espacio pensado para acompañarte en tu caminar con Dios. Descubre experiencias transformadoras, Apps Premium, ebooks y recursos exclusivos creados para fortalecer tu fe, cultivar hábitos espirituales y crecer cada día."
-  />
-
-  <meta name="theme-color" content="#3F4A35" />
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --green: #3F4A35;
-      --green-dark: #2F3A2C;
-      --olive: #556544;
-      --gold: #C9A65A;
-      --gold-soft: #F7EAC7;
-      --beige: #F5F0E7;
-      --cream: #FAF7F0;
-      --white: #FFFFFF;
-      --ink: #1F2937;
-      --muted: #6B7280;
-      --line: #E8DECC;
-      --soft-green: #EEF3EA;
-      --soft-gold: #FFF4D8;
-      --soft-card: rgba(255, 255, 255, 0.86);
-      --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
-      --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.10);
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --max: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(201, 166, 90, 0.24), transparent 34%),
-        radial-gradient(circle at 85% 8%, rgba(85, 101, 68, 0.14), transparent 30%),
-        linear-gradient(145deg, var(--cream), var(--beige));
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .is-hidden {
-      display: none !important;
-    }
-
-    .page-shell {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(250, 247, 240, 0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(232, 222, 204, 0.86);
-    }
-
-    .header-inner {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-      min-height: 94px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand-area {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      min-width: 0;
-    }
-
-    .brand-logo {
-      width: 68px;
-      height: 68px;
-      object-fit: contain;
-      flex: 0 0 auto;
-    }
-
-    .brand-copy {
-      display: grid;
-      gap: 4px;
-    }
-
-    .brand-name {
-      font-size: 11px;
-      font-weight: 950;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--olive);
-    }
-
-    .brand-title {
-      color: var(--green);
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-      line-height: 1.05;
-      font-weight: 950;
-      letter-spacing: -0.035em;
-    }
-
-    .header-nav {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      color: var(--olive);
-      font-size: 0.92rem;
-      font-weight: 850;
-    }
-
-    .header-nav a {
-      position: relative;
-      transition: 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .header-nav a:hover,
-    .header-nav a.active {
-      color: var(--green);
-    }
-
-    .header-nav a.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -12px;
-      width: 100%;
-      height: 3px;
-      border-radius: 999px;
-      background: var(--gold);
-    }
-
-    .mobile-menu-button {
-      display: none;
-      min-height: 44px;
-      padding: 0 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: var(--white);
-      color: var(--green);
-      font-weight: 900;
-    }
-
-    .mobile-nav {
-      display: none;
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-      padding-bottom: 16px;
-    }
-
-    .mobile-nav.open {
-      display: block;
-    }
-
-    .mobile-nav-panel {
-      display: grid;
-      gap: 8px;
-      padding: 14px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .mobile-nav-panel a {
-      padding: 12px;
-      border-radius: 14px;
-      color: var(--green);
-      font-weight: 900;
-    }
-
-    .mobile-nav-panel a:hover {
-      background: var(--soft-green);
-    }
-
-    .hero-section {
-      padding: 62px 0 34px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 26px;
-      align-items: stretch;
-    }
-
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(28px, 5vw, 46px);
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(232, 222, 204, 0.96);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      width: 280px;
-      height: 280px;
-      right: -110px;
-      top: -110px;
-      border-radius: 50%;
-      background: rgba(201, 166, 90, 0.15);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      margin-bottom: 20px;
-      border-radius: 999px;
-      background: rgba(247, 234, 199, 0.78);
-      border: 1px solid rgba(201, 166, 90, 0.24);
-      color: var(--green);
-      font-size: 0.75rem;
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .hero-eyebrow-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201, 166, 90, 0.20);
-    }
-
-    .hero-title {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-      color: var(--green);
-      font-size: clamp(2.8rem, 6.6vw, 5.25rem);
-      line-height: 0.92;
-      letter-spacing: -0.075em;
-      font-weight: 950;
-      margin-bottom: 22px;
-    }
-
-    .hero-title span {
-      color: var(--gold);
-    }
-
-    .hero-subtitle {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.14rem);
-      line-height: 1.78;
-    }
-
-    .hero-actions {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .btn {
-      min-height: 48px;
-      border: none;
-      border-radius: 999px;
-      padding: 0 22px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 950;
-      font-size: 0.92rem;
-      transition: 0.2s ease;
-      line-height: 1;
-      text-align: center;
-    }
-
-    .btn-primary {
-      color: var(--white);
-      background: var(--green);
-      box-shadow: 0 14px 28px rgba(63, 74, 53, 0.24);
-    }
-
-    .btn-secondary {
-      color: var(--green);
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-    }
-
-    .btn-gold {
-      color: var(--green);
-      background: var(--gold);
-      box-shadow: 0 14px 28px rgba(201, 166, 90, 0.24);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-side-card {
-      position: relative;
-      overflow: hidden;
-      padding: 30px;
-      border-radius: var(--radius-xl);
-      background:
-        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.26), transparent 38%);
-      color: var(--white);
-      box-shadow: var(--shadow);
-      display: grid;
-      align-content: center;
-      gap: 18px;
-    }
-
-    .hero-side-card small {
-      display: inline-flex;
-      color: var(--gold);
-      font-size: 0.76rem;
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .hero-side-card h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-    }
-
-    .hero-side-card p {
-      color: #EFE7D8;
-      line-height: 1.7;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .hero-stat {
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.10);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      text-align: center;
-    }
-
-    .hero-stat strong {
-      display: block;
-      color: var(--gold);
-      font-size: 1.45rem;
-      line-height: 1;
-      margin-bottom: 5px;
-    }
-
-    .hero-stat span {
-      color: #EFE7D8;
-      font-size: 0.76rem;
-      font-weight: 800;
-    }
-
-    .section {
-      padding: 42px 0;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-      margin-bottom: 22px;
-    }
-
-    .section-kicker {
-      display: inline-flex;
-      margin-bottom: 10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--soft-gold);
-      color: var(--green);
-      font-size: 0.74rem;
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .section-heading h2 {
-      color: var(--green);
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1;
-      letter-spacing: -0.055em;
-    }
-
-    .section-heading p {
-      max-width: 640px;
-      margin-top: 10px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .habit-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .habit-card {
-      position: relative;
-      overflow: hidden;
-      padding: 24px;
-      border-radius: var(--radius-lg);
-      background: var(--soft-card);
-      border: 1px solid rgba(232, 222, 204, 0.96);
-      box-shadow: var(--shadow-soft);
-      transition: 0.2s ease;
-    }
-
-    .habit-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .habit-card-top {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .habit-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: var(--green);
-      color: var(--gold);
-      font-weight: 950;
-      flex: 0 0 auto;
-    }
-
-    .habit-card h3 {
-      color: var(--green);
-      font-size: 1.25rem;
-      line-height: 1.15;
-      margin-bottom: 6px;
-    }
-
-    .habit-card p {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.93rem;
-    }
-
-    .habit-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0;
-    }
-
-    .habit-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--soft-green);
-      color: var(--green);
-      font-size: 0.75rem;
-      font-weight: 900;
-    }
-
-    .habit-pill.gold {
-      background: var(--soft-gold);
-      border: 1px solid rgba(201, 166, 90, 0.22);
-    }
-
-    .progress-line {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(63, 74, 53, 0.10);
-      margin: 14px 0 18px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: var(--progress, 0%);
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--green), var(--gold));
-    }
-
-    .habit-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .habit-progress-text {
-      color: var(--green);
-      font-weight: 950;
-      font-size: 0.88rem;
-    }
-
-    .empty-habit {
-      padding: clamp(26px, 5vw, 42px);
-      border-radius: var(--radius-xl);
-      background:
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.16), transparent 32%),
-        rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-
-    .empty-habit h3 {
-      color: var(--green);
-      font-size: clamp(1.7rem, 4vw, 2.6rem);
-      line-height: 1.05;
-      letter-spacing: -0.045em;
-      margin-bottom: 12px;
-    }
-
-    .empty-habit p {
-      max-width: 660px;
-      margin: 0 auto 22px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .collections-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .collection-card {
-      overflow: hidden;
-      border-radius: var(--radius-lg);
-      background: var(--white);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      transition: 0.2s ease;
-    }
-
-    .collection-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .collection-cover {
-      min-height: 138px;
-      padding: 18px;
-      display: flex;
-      align-items: flex-end;
-      color: var(--gold);
-      font-size: 1.45rem;
-      font-weight: 950;
-      letter-spacing: -0.035em;
-      background:
-        linear-gradient(135deg, rgba(63, 74, 53, 0.94), rgba(85, 101, 68, 0.90)),
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.28), transparent 36%);
-    }
-
-    .collection-body {
-      padding: 20px;
-    }
-
-    .collection-badge {
-      display: inline-flex;
-      margin-bottom: 12px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--soft-green);
-      color: var(--green);
-      font-size: 0.7rem;
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .collection-body h3 {
-      color: var(--green);
-      font-size: 1.18rem;
-      line-height: 1.18;
-      margin-bottom: 10px;
-    }
-
-    .collection-body p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.62;
-      margin-bottom: 18px;
-    }
-
-    .library-cta {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: center;
-      padding: clamp(28px, 5vw, 42px);
-      border-radius: var(--radius-xl);
-      color: var(--white);
-      background:
-        linear-gradient(145deg, rgba(63, 74, 53, 0.96), rgba(85, 101, 68, 0.94)),
-        radial-gradient(circle at top right, rgba(201, 166, 90, 0.24), transparent 34%);
-      box-shadow: var(--shadow);
-    }
-
-    .library-cta h2 {
-      color: var(--white);
-      font-size: clamp(2rem, 4.5vw, 3.3rem);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-      margin-bottom: 12px;
-    }
-
-    .library-cta p {
-      color: #EFE7D8;
-      line-height: 1.7;
-      max-width: 720px;
-    }
-
-    .site-footer {
-      margin-top: 42px;
-      padding: 32px 0;
-      background: var(--green);
-      color: var(--cream);
-    }
-
-    .footer-inner {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .footer-brand strong {
-      display: block;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .footer-brand p {
-      color: #EFE7D8;
-      font-size: 0.86rem;
-      line-height: 1.55;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      color: #EFE7D8;
-      font-size: 0.86rem;
-      font-weight: 850;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold);
-    }
-
-    @media (max-width: 1040px) {
-      .hero-grid,
-      .library-cta {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Espacio | Hábitos con Dios</title>
+    <meta
+      name="description"
+      content="Accede a tus colecciones y a Jardín de Fe desde Mi Espacio."
+    />
+    <meta name="theme-color" content="#3F4A35" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      :root {
+        --green: #3f4a35;
+        --olive: #556544;
+        --navy: #1f3146;
+        --navy-soft: #2c4662;
+        --gold: #c9a65a;
+        --gold-soft: #f7eac7;
+        --cream: #faf7f0;
+        --beige: #f5f0e7;
+        --white: #fff;
+        --ink: #1f2937;
+        --muted: #6b7280;
+        --line: #e8decc;
+        --soft-green: #eef3ea;
+        --soft-gold: #fff4d8;
+        --soft-card: rgba(255, 255, 255, 0.86);
+        --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
+        --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.1);
+        --radius-xl: 32px;
+        --radius-lg: 24px;
+        --max: 1180px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 110px;
+      }
+      body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(201, 166, 90, 0.24),
+            transparent 34%
+          ),
+          radial-gradient(
+            circle at 85% 8%,
+            rgba(85, 101, 68, 0.14),
+            transparent 30%
+          ),
+          linear-gradient(145deg, var(--cream), var(--beige));
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid rgba(201, 166, 90, 0.62);
+        outline-offset: 4px;
+      }
+      .page-shell {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .is-hidden {
+        display: none !important;
       }
 
-      .collections-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(250, 247, 240, 0.93);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(232, 222, 204, 0.86);
       }
-    }
-
-    @media (max-width: 780px) {
-      .header-nav {
-        display: none;
-      }
-
-      .mobile-menu-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
       .header-inner {
-        min-height: 82px;
+        min-height: 94px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
       }
-
+      .brand-area {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
       .brand-logo {
-        width: 56px;
-        height: 56px;
+        width: 68px;
+        height: 68px;
+        object-fit: contain;
       }
-
+      .brand-copy {
+        display: grid;
+        gap: 4px;
+      }
+      .brand-name {
+        font-size: 11px;
+        font-weight: 950;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--olive);
+      }
       .brand-title {
-        font-size: 1.14rem;
+        color: var(--green);
+        font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+        font-weight: 950;
+      }
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        color: var(--olive);
+        font-size: 0.9rem;
+        font-weight: 850;
+      }
+      .header-nav a {
+        position: relative;
+        white-space: nowrap;
+      }
+      .header-nav a:hover,
+      .header-nav a.active {
+        color: var(--green);
+      }
+      .header-nav a.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -12px;
+        width: 100%;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--gold);
+      }
+      .signout {
+        border: 0;
+        background: transparent;
+        color: var(--green);
+        font-weight: 850;
+      }
+      .mobile-menu-button {
+        display: none;
+        min-height: 44px;
+        padding: 0 14px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--green);
+        font-weight: 900;
+      }
+      .mobile-nav {
+        display: none;
+        padding-bottom: 16px;
+      }
+      .mobile-nav.open {
+        display: block;
+      }
+      .mobile-nav-panel {
+        display: grid;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 20px;
+        background: white;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-soft);
+      }
+      .mobile-nav-panel a,
+      .mobile-nav-panel button {
+        padding: 12px;
+        border-radius: 14px;
+        color: var(--green);
+        font-weight: 900;
+        text-align: left;
+        border: 0;
+        background: transparent;
       }
 
       .hero-section {
-        padding: 38px 0 24px;
+        padding: 58px 0 30px;
       }
-
-      .hero-title {
-        font-size: clamp(2.6rem, 12vw, 4.1rem);
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 26px;
       }
-
-      .habit-grid,
-      .collections-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-heading {
-        display: block;
-      }
-
-      .hero-actions,
-      .habit-meta {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .page-shell,
-      .header-inner,
-      .mobile-nav,
-      .footer-inner {
-        width: min(100% - 22px, var(--max));
-      }
-
       .hero-card,
-      .hero-side-card,
-      .habit-card,
+      .hero-side-card {
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+      }
+      .hero-card {
+        padding: clamp(28px, 5vw, 46px);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--line);
+      }
+      .eyebrow,
+      .section-kicker {
+        display: inline-flex;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+        border-radius: 999px;
+        background: var(--gold-soft);
+        color: var(--green);
+        font-size: 0.74rem;
+        font-weight: 950;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .hero-title {
+        color: var(--green);
+        font-size: clamp(2.8rem, 6.6vw, 5.25rem);
+        line-height: 0.92;
+        letter-spacing: -0.075em;
+        margin-bottom: 20px;
+      }
+      .hero-title span {
+        color: var(--gold);
+      }
+      .hero-subtitle {
+        color: var(--muted);
+        line-height: 1.78;
+        max-width: 680px;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+      .btn {
+        min-height: 48px;
+        border: 0;
+        border-radius: 999px;
+        padding: 0 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 950;
+        transition: 0.2s ease;
+        text-align: center;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+      }
+      .btn-primary {
+        color: white;
+        background: var(--green);
+      }
+      .btn-secondary {
+        color: var(--green);
+        background: white;
+        border: 1px solid var(--line);
+      }
+      .btn-garden {
+        color: var(--navy);
+        background: var(--gold);
+        border: 1px solid rgba(201, 166, 90, 0.5);
+        box-shadow: 0 14px 28px rgba(201, 166, 90, 0.24);
+      }
+      .btn-garden:hover {
+        color: var(--navy);
+        background: var(--gold-soft);
+      }
+      .hero-side-card {
+        padding: 30px;
+        color: white;
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(201, 166, 90, 0.25),
+            transparent 38%
+          ),
+          linear-gradient(145deg, var(--green), var(--olive));
+        display: grid;
+        align-content: center;
+        gap: 16px;
+      }
+      .hero-side-card small {
+        color: var(--gold);
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .hero-side-card h2 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+      .hero-side-card p {
+        color: #efe7d8;
+        line-height: 1.7;
+      }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .hero-stat {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.1);
+        text-align: center;
+      }
+      .hero-stat strong {
+        display: block;
+        color: var(--gold);
+        font-size: 1.45rem;
+      }
+      .hero-stat span {
+        color: #efe7d8;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+
+      .section {
+        padding: 40px 0;
+      }
+      .section-heading {
+        margin-bottom: 22px;
+      }
+      .section-heading h2 {
+        color: var(--green);
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1;
+        letter-spacing: -0.055em;
+      }
+      .section-heading p {
+        max-width: 700px;
+        margin-top: 10px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .habit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .habit-card {
+        position: relative;
+        overflow: hidden;
+        padding: 24px;
+        border-radius: var(--radius-lg);
+        background: var(--soft-card);
+        border: 1px solid rgba(232, 222, 204, 0.96);
+        box-shadow: var(--shadow-soft);
+        transition: 0.2s ease;
+      }
+      .habit-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow);
+      }
+      .habit-card-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .habit-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        background: var(--green);
+        color: var(--gold);
+        font-weight: 950;
+        flex: 0 0 auto;
+      }
+      .habit-card h3 {
+        color: var(--green);
+        font-size: 1.25rem;
+        line-height: 1.15;
+        margin-bottom: 6px;
+      }
+      .habit-card p {
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 0.93rem;
+      }
+      .habit-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 18px 0;
+      }
+      .habit-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: var(--soft-green);
+        color: var(--green);
+        font-size: 0.75rem;
+        font-weight: 900;
+      }
+      .habit-pill.gold {
+        background: var(--soft-gold);
+        border: 1px solid rgba(201, 166, 90, 0.22);
+      }
+      .progress-line {
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(63, 74, 53, 0.1);
+        margin: 14px 0 18px;
+      }
+      .progress-fill {
+        height: 100%;
+        width: var(--progress, 0%);
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--green), var(--gold));
+      }
+      .habit-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .habit-progress-text {
+        color: var(--green);
+        font-weight: 950;
+        font-size: 0.88rem;
+      }
       .empty-habit,
-      .library-cta {
-        border-radius: 26px;
-        padding: 22px;
+      .loading-state {
+        padding: 38px;
+        border-radius: var(--radius-xl);
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--line);
+        text-align: center;
+        box-shadow: var(--shadow-soft);
+      }
+      .empty-habit h3 {
+        color: var(--green);
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+      .empty-habit p,
+      .loading-state {
+        color: var(--muted);
+        line-height: 1.7;
       }
 
-      .brand-name {
-        font-size: 0.62rem;
+      .community-card {
+        display: grid;
+        grid-template-columns: 1fr 0.95fr;
+        gap: 26px;
+        padding: clamp(28px, 5vw, 44px);
+        border-radius: var(--radius-xl);
+        color: white;
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(201, 166, 90, 0.28),
+            transparent 34%
+          ),
+          linear-gradient(145deg, var(--navy), var(--navy-soft));
+        box-shadow: var(--shadow);
+      }
+      .community-card .section-kicker {
+        color: var(--navy);
+      }
+      .community-card h2 {
+        font-size: clamp(2.2rem, 4.8vw, 3.7rem);
+        line-height: 0.98;
+        letter-spacing: -0.06em;
+        margin-bottom: 14px;
+      }
+      .community-card h2 span {
+        color: var(--gold);
+      }
+      .community-card p {
+        color: #e8edf2;
+        line-height: 1.72;
+      }
+      .garden-apps {
+        display: grid;
+        gap: 12px;
+      }
+      .garden-app {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 19px;
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        transition: 0.2s ease;
+      }
+      .garden-app:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.13);
+        border-color: rgba(201, 166, 90, 0.5);
+      }
+      .garden-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        flex: none;
+        border-radius: 14px;
+        background: rgba(247, 234, 199, 0.14);
+      }
+      .garden-app-copy {
+        min-width: 0;
+        flex: 1;
+      }
+      .garden-app strong {
+        display: block;
+        color: white;
+        margin-bottom: 3px;
+      }
+      .garden-app-copy span {
+        color: #dde5ec;
+        font-size: 0.79rem;
+        line-height: 1.4;
+      }
+      .garden-app-button {
+        min-height: 40px;
+        padding: 0 17px;
+        border-radius: 999px;
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy);
+        background: var(--gold);
+        border: 1px solid rgba(247, 234, 199, 0.42);
+        box-shadow: 0 10px 22px rgba(201, 166, 90, 0.22);
+        font-size: 0.82rem;
+        font-weight: 950;
+      }
+      .garden-app:hover .garden-app-button {
+        background: var(--gold-soft);
       }
 
-      .brand-title {
-        font-size: 1.02rem;
+      .site-footer {
+        margin-top: 42px;
+        padding: 32px 0;
+        background: var(--green);
+        color: var(--cream);
       }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+      .footer-brand strong {
+        display: block;
+        color: var(--gold);
+        margin-bottom: 6px;
+      }
+      .footer-brand p {
+        color: #efe7d8;
+        font-size: 0.86rem;
+        line-height: 1.55;
+        max-width: 720px;
+      }
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: #efe7d8;
+        font-size: 0.86rem;
+        font-weight: 850;
       }
 
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
+      @media (max-width: 1040px) {
+        .header-nav {
+          gap: 12px;
+          font-size: 0.82rem;
+        }
+        .hero-grid,
+        .community-card {
+          grid-template-columns: 1fr;
+        }
       }
-    }
-  </style>
-</head>
-
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand-area" href="dashboard.html" aria-label="Ir a Mi Experiencia con Dios">
-  <img
-  src="assets/logo-header.png"
-  alt="Hábitos con Dios"
-  class="brand-logo"
-/>
-
-  <div class="brand-copy">
-    <span class="brand-name">Hábitos con Dios</span>
-    <strong class="brand-title">Mi Espacio</strong>
-  </div>
-</a>
-
-      <nav class="header-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="biblioteca.html">Mis Colecciones</a>
-        <a href="dashboard.html" class="active" aria-current="page">Mi Espacio</a>
-        <a href="consultas.html">Centro de Ayuda</a>
-      </nav>
-
-      <button
-        class="mobile-menu-button"
-        type="button"
-        id="mobileMenuButton"
-        aria-label="Abrir menú"
-        aria-controls="mobileNav"
-        aria-expanded="false"
-      >
-        Menú
-      </button>
-    </div>
-
-    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <div class="mobile-nav-panel">
-        <a href="index.html">Inicio</a>
-        <a href="biblioteca.html">Mis Colecciones</a>
-        <a href="dashboard.html" aria-current="page">Mi Espacio</a>
-        <a href="consultas.html">Centro de Ayuda</a>
+      @media (max-width: 780px) {
+        .header-nav {
+          display: none;
+        }
+        .mobile-menu-button {
+          display: inline-flex;
+          align-items: center;
+        }
+        .header-inner {
+          min-height: 82px;
+        }
+        .brand-logo {
+          width: 56px;
+          height: 56px;
+        }
+        .habit-grid {
+          grid-template-columns: 1fr;
+        }
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+      @media (max-width: 620px) {
+        .page-shell {
+          width: min(var(--max), calc(100% - 22px));
+        }
+        .hero-section {
+          padding-top: 36px;
+        }
+        .hero-card,
+        .hero-side-card,
+        .community-card {
+          padding: 22px;
+          border-radius: 26px;
+        }
+        .hero-actions {
+          flex-direction: column;
+        }
+        .btn {
+          width: 100%;
+        }
+        .hero-stats {
+          grid-template-columns: 1fr;
+        }
+        .habit-footer {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        .garden-app {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+        .garden-app-button {
+          width: 100%;
+          margin-top: 4px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner page-shell">
+        <a
+          class="brand-area"
+          href="dashboard.html"
+          aria-label="Ir a Mi Espacio"
+        >
+          <img
+            class="brand-logo"
+            src="assets/logo-header.png"
+            alt="Hábitos con Dios"
+          />
+          <div class="brand-copy">
+            <span class="brand-name">Hábitos con Dios</span
+            ><strong class="brand-title">Mi Espacio</strong>
+          </div>
+        </a>
+        <nav class="header-nav" aria-label="Navegación principal">
+          <a href="index.html">Inicio</a
+          ><a href="biblioteca.html">Mis Colecciones</a
+          ><a class="active" href="dashboard.html" aria-current="page"
+            >Mi Espacio</a
+          ><a href="comunidad.html">Comunidad</a
+          ><a href="consultas.html">Centro de Ayuda</a
+          ><button class="signout" id="signoutButton">Cerrar sesión</button>
+        </nav>
+        <button
+          class="mobile-menu-button"
+          id="mobileMenuButton"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          Menú
+        </button>
       </div>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="hero-section page-shell" aria-labelledby="hero-title">
-      <div class="hero-grid">
-        <article class="hero-card">
-          <div class="hero-eyebrow">
-            <span class="hero-eyebrow-dot" aria-hidden="true"></span>
-            Hábitos con Dios
-          </div>
-
-          <h1 class="hero-title" id="hero-title">
-            Encuentra un camino simple para acercarte más a <span>Dios</span>
-          </h1>
-
-          <p class="hero-subtitle">
-            Continúa tus recorridos activos y encuentra tus colecciones en un espacio
-            personal, claro y organizado.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#regar-mi-habito">
-              Regar mi hábito
-            </a>
-
-            <a class="btn btn-secondary" href="biblioteca.html">
-              Explorar Colecciones
-            </a>
-          </div>
-        </article>
-
-        <aside class="hero-side-card" aria-label="Resumen de la experiencia">
-          <small>Experiencia digital premium</small>
-
-          <h2>
-            Apps, ebooks y bonos para cultivar hábitos con Dios.
-          </h2>
-
-          <p>
-            Un ecosistema simple y guiado para descubrir colecciones, entrar a tus Apps
-            activas y acceder a tus recursos desde un solo lugar.
-          </p>
-
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <strong>4</strong>
-              <span>Colecciones</span>
-            </div>
-
-            <div class="hero-stat">
-              <strong>4</strong>
-              <span>Apps</span>
-            </div>
-
-            <div class="hero-stat">
-              <strong>+</strong>
-              <span>Ebooks y bonos</span>
-            </div>
-          </div>
-        </aside>
+      <div class="mobile-nav page-shell" id="mobileNav" aria-hidden="true">
+        <div class="mobile-nav-panel">
+          <a href="index.html">Inicio</a
+          ><a href="biblioteca.html">Mis Colecciones</a
+          ><a href="dashboard.html">Mi Espacio</a
+          ><a href="comunidad.html">Comunidad</a
+          ><a href="consultas.html">Centro de Ayuda</a
+          ><button id="mobileSignoutButton">Cerrar sesión</button>
+        </div>
       </div>
-    </section>
+    </header>
 
-    <section class="section page-shell" id="regar-mi-habito" aria-labelledby="habit-title">
-      <div class="section-heading">
-        <div>
+    <main>
+      <section class="hero-section page-shell">
+        <div class="hero-grid">
+          <article class="hero-card">
+            <span class="eyebrow">Hábitos con Dios</span>
+            <h1 class="hero-title">Bienvenida a <span>Mi Espacio</span></h1>
+            <p class="hero-subtitle">
+              Continúa tus recorridos activos y encuentra tus colecciones y
+              accesos en un espacio personal, claro y organizado.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#regar-mi-habito"
+                >Regar mi hábito</a
+              ><a class="btn btn-garden" href="#jardin-de-fe"
+                >Mi Jardín de Fe</a
+              >
+            </div>
+          </article>
+          <aside class="hero-side-card">
+            <small>Tu espacio personal</small>
+            <h2>Todo lo que forma parte de tu camino, en un solo lugar.</h2>
+            <p>
+              Las colecciones se muestran según los accesos activos de tu
+              cuenta. Jardín de Fe aparece únicamente cuando tu membresía está
+              habilitada.
+            </p>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <strong id="collectionCount">0</strong><span>Colecciones</span>
+              </div>
+              <div class="hero-stat">
+                <strong id="communityCount">0</strong><span>Comunidad</span>
+              </div>
+              <div class="hero-stat">
+                <strong>+</strong><span>Ebooks y bonos</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section page-shell" id="regar-mi-habito">
+        <div class="section-heading">
           <span class="section-kicker">Mi camino activo</span>
-          <h2 id="habit-title">Regar mi hábito</h2>
+          <h2>Regar mi hábito</h2>
           <p>
-            Aquí verás únicamente las experiencias que ya forman parte de tu camino.
-            El progreso se actualiza con el avance real guardado dentro de cada app.
+            Aquí verás únicamente las experiencias que ya forman parte de tu
+            camino. El progreso se actualiza con el avance real guardado dentro
+            de cada App.
           </p>
         </div>
-      </div>
-
-      <div class="empty-habit" id="emptyHabit">
-        <h3>Todo hábito comienza con un primer paso.</h3>
-        <p>
-          Explora experiencias diseñadas para ayudarte a cultivar fe, oración y propósito
-          de una manera simple, cercana y sostenida.
-        </p>
-        <a class="btn btn-primary" href="biblioteca.html">
-          Comenzar mi camino
-        </a>
-      </div>
-
-      <div class="habit-grid is-hidden" id="habitGrid"></div>
-    </section>
-
-    <section class="section page-shell" aria-labelledby="collections-title">
-      <div class="section-heading">
-        <div>
-          <span class="section-kicker">Un camino a recorrer</span>
-          <h2 id="collections-title">Colecciones destacadas</h2>
+        <div class="loading-state" id="loadingState">
+          Estamos preparando tu espacio...
+        </div>
+        <div class="empty-habit is-hidden" id="emptyHabit">
+          <h3>Todo hábito comienza con un primer paso.</h3>
           <p>
-            Conoce las experiencias principales de Hábitos con Dios. Cada colección combina
-            App, ebook y bonos digitales para acompañar una etapa específica de crecimiento.
+            Cuando una colección esté activa en tu cuenta, aparecerá aquí lista
+            para comenzar o continuar.
+          </p>
+          <a class="btn btn-primary" href="biblioteca.html"
+            >Explorar colecciones</a
+          >
+        </div>
+        <div class="habit-grid is-hidden" id="habitGrid"></div>
+      </section>
+
+      <section class="section page-shell is-hidden" id="communitySection">
+        <div class="section-heading">
+          <span class="section-kicker">Comunidad Hábitos con Dios</span>
+          <h2>Mi Comunidad</h2>
+          <p>
+            Jardín de Fe aparece aquí cuando tu cuenta tiene el acceso de
+            membresía activo.
           </p>
         </div>
-      </div>
-
-      <div class="collections-grid">
-        <article class="collection-card">
-          <div class="collection-cover">21 Días</div>
-          <div class="collection-body">
-            <span class="collection-badge">Mujeres</span>
-            <h3>21 Días Más Cerca de Dios</h3>
+        <article class="community-card" id="jardin-de-fe">
+          <div>
+            <span class="section-kicker">Acceso activo</span>
+            <h2>Entra a tu <span>Jardín de Fe</span></h2>
             <p>
-              Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, 
-              desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria.
+              Promesas bíblicas, oraciones y recursos de inspiración para
+              cultivar tu fe y fortalecer tu relación con Dios día a día y
+              siempre que lo necesites.
             </p>
-            <a class="btn btn-secondary" href="biblioteca.html#coleccion-21dias">
-              Conocer
-            </a>
+          </div>
+          <div class="garden-apps" aria-label="Apps de Jardín de Fe">
+            <a
+              class="garden-app"
+              href="apps/banco-promesas.html"
+              aria-label="Entrar a Biblioteca de Promesas"
+              ><span class="garden-icon" aria-hidden="true">📖</span>
+              <div class="garden-app-copy">
+                <strong>Biblioteca de Promesas</strong
+                ><span>Promesas bíblicas organizadas por temas.</span>
+              </div>
+              <span class="garden-app-button">Entrar</span></a
+            >
+            <a
+              class="garden-app"
+              href="apps/oraciones.html"
+              aria-label="Entrar a Biblioteca de Oraciones"
+              ><span class="garden-icon" aria-hidden="true">🙏</span>
+              <div class="garden-app-copy">
+                <strong>Biblioteca de Oraciones</strong
+                ><span>Oraciones para distintos momentos de tu camino.</span>
+              </div>
+              <span class="garden-app-button">Entrar</span></a
+            >
+            <a
+              class="garden-app"
+              href="apps/tarjetas-fe.html"
+              aria-label="Entrar a Tarjetas de Fe"
+              ><span class="garden-icon" aria-hidden="true">🌸</span>
+              <div class="garden-app-copy">
+                <strong>Tarjetas de Fe</strong
+                ><span>Mensajes breves para leer, guardar y consultar.</span>
+              </div>
+              <span class="garden-app-button">Entrar</span></a
+            >
           </div>
         </article>
+      </section>
+    </main>
 
-        <article class="collection-card">
-          <div class="collection-cover">Familias</div>
-          <div class="collection-body">
-            <span class="collection-badge">Familia</span>
-            <h3>Pequeños Momentos con Dios</h3>
-            <p>
-              Un espacio para compartir en familia, fortalecer los vínculos y 
-              vivir momentos de fe que inspiren, acompañen y transformen la vida cotidiana.
-            </p>
-            <a class="btn btn-secondary" href="biblioteca.html#coleccion-familias">
-              Conocer
-            </a>
-          </div>
-        </article>
-
-        <article class="collection-card">
-          <div class="collection-cover">Palabras</div>
-          <div class="collection-body">
-            <span class="collection-badge">Jóvenes</span>
-            <h3>Cuando las Palabras Duelen</h3>
-            <p>
-              Una guía para adolescentes y jóvenes que desean transformar el dolor en crecimiento, 
-              fortalecer su identidad y descubrir la esperanza que Dios tiene para sus vidas.
-            </p>
-            <a class="btn btn-secondary" href="biblioteca.html#coleccion-palabras-duelen">
-              Conocer
-            </a>
-          </div>
-        </article>
-
-        <article class="collection-card">
-          <div class="collection-cover">Hogar</div>
-          <div class="collection-body">
-            <span class="collection-badge">Hombres</span>
-            <h3>El Hombre que Edifica su Hogar</h3>
-            <p>
-              Un camino de crecimiento para hombres que desean fortalecer su liderazgo espiritual, 
-              familiar y personal, construyendo una vida con propósito, carácter y fe.
-            </p>
-            <a class="btn btn-secondary" href="biblioteca.html#coleccion-hombre-edifica">
-              Conocer
-            </a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section page-shell" aria-labelledby="library-title">
-      <div class="library-cta">
-        <div>
-          <h2 id="library-title">Mis Colecciones</h2>
+    <footer class="site-footer">
+      <div class="footer-inner page-shell">
+        <div class="footer-brand">
+          <strong>Hábitos con Dios</strong>
           <p>
-          Accede a tus Apps Premium, ebooks, bonificaciones y recursos organizados en un solo lugar.
-          Cada experiencia ha sido diseñada para acompañarte en tu crecimiento con Dios y ayudarte a avanzar paso a paso en tu camino espiritual.
-        </p>
+            Experiencias digitales de acompañamiento devocional. Este portal no
+            reemplaza terapia, atención médica, apoyo psicológico, consejería
+            pastoral responsable ni ayuda de emergencia.
+          </p>
         </div>
-
-        <a class="btn btn-gold" href="biblioteca.html">
-          Abrir Mis Colecciones
-        </a>
+        <nav class="footer-links">
+          <a href="biblioteca.html">Mis Colecciones</a
+          ><a href="dashboard.html">Mi Espacio</a
+          ><a href="comunidad.html">Comunidad</a
+          ><a href="consultas.html">Centro de Ayuda</a>
+        </nav>
       </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <strong>Hábitos con Dios</strong>
-        <p>
-          Experiencias digitales de acompañamiento devocional. Este portal no reemplaza
-          terapia, atención médica, apoyo psicológico, consejería pastoral responsable
-          ni ayuda de emergencia cuando corresponda.
-        </p>
-      </div>
-
-      <nav class="footer-links" aria-label="Enlaces del pie de página">
-        <a href="index.html">Inicio</a>
-        <a href="biblioteca.html">Mis Colecciones</a>
-        <a href="dashboard.html">Mi Espacio</a>
-        <a href="consultas.html">Centro de Ayuda</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script>
-    const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
-
-    const ACTIVE_EXPERIENCES = [
-      {
-        id: "21dias",
-        title: "21 Días Más Cerca de Dios",
-        label: "Devocional de 21 días",
-        description:
-          "Continúa tu recorrido devocional para cultivar hábitos de fe, oración y cercanía con Dios.",
-        icon: "21",
-        href: "apps/mi-tiempo-con-dios.html",
-        snapshotKeys: [
-          "hcd_21dias_progress_snapshot",
-          "hcd_mi_tiempo_con_dios_progress_snapshot",
-          "hcd_mujeres_21dias_progress_snapshot"
-        ],
-        permissionKeys: [
-          "access_21dias",
-          "membership_all_access"
-        ],
-        sourceSkus: [
-          "HCD_21DIAS_BUNDLE",
-          "HCD_ALL_ACCESS"
-        ]
-      },
-      {
-        id: "familias",
-        title: "Pequeños Momentos con Dios",
-        label: "Experiencia familiar",
-        description:
-          "Acompaña a tu familia con momentos simples de fe, reflexión y conexión espiritual.",
-        icon: "FM",
-        href: "apps/pequenos-momentos-con-dios.html",
-        snapshotKeys: [
-          "hcd_familias_progress_snapshot",
-          "hcd_momentos_familia_progress_snapshot",
-          "hcd_pequenos_momentos_progress_snapshot",
-          "hcd_pequenos_momentos_con_dios_progress_snapshot"
-        ],
-        permissionKeys: [
-          "access_familias",
-          "access_pequenos_momentos",
-          "access_pequenos_momentos_con_dios",
-          "membership_all_access"
-        ],
-        sourceSkus: [
-          "HCD_FAMILIAS_BUNDLE",
-          "HCD_PEQUENOS_MOMENTOS_BUNDLE",
-          "HCD_PEQUENOS_MOMENTOS_CON_DIOS_BUNDLE",
-          "HCD_ALL_ACCESS"
-        ]
-      },
-      {
-        id: "palabras",
-        title: "Cuando las Palabras Duelen",
-        label: "Acompañamiento para jóvenes",
-        description:
-          "Una experiencia para procesar palabras difíciles desde una mirada de fe, esperanza y restauración.",
-        icon: "PD",
-        href: "apps/cuando-las-palabras-duelen.html",
-        snapshotKeys: [
-          "hcd_palabras_duelen_progress_snapshot",
-          "hcd_palabras_progress_snapshot",
-          "hcd_cuando_las_palabras_duelen_progress_snapshot"
-        ],
-        permissionKeys: [
-          "access_palabras_duelen",
-          "access_cuando_las_palabras_duelen",
-          "membership_all_access"
-        ],
-        sourceSkus: [
-          "HCD_PALABRAS_DUELEN_BUNDLE",
-          "HCD_CUANDO_LAS_PALABRAS_DUELEN_BUNDLE",
-          "HCD_ALL_ACCESS"
-        ]
-      },
-      {
-        id: "hombre",
-        title: "El Hombre que Edifica su Hogar",
-        label: "Camino de propósito",
-        description:
-          "Fortalece liderazgo espiritual, carácter, fe y propósito familiar desde una experiencia guiada.",
-        icon: "HG",
-        href: "apps/el-hombre-que-edifica-su-hogar.html",
-        snapshotKeys: [
-          "hcd_hombre_hogar_progress_snapshot",
-          "hcd_mi_hogar_con_proposito_progress_snapshot"
-        ],
-        permissionKeys: [
-          "access_hombre_edifica",
-          "membership_all_access"
-        ],
-        sourceSkus: [
-          "HCD_HOMBRE_EDIFICA_BUNDLE",
-          "HCD_ALL_ACCESS"
-        ]
-      }
-    ];
-
-    const mobileButton = document.getElementById("mobileMenuButton");
-    const mobileNav = document.getElementById("mobileNav");
-    const habitGrid = document.getElementById("habitGrid");
-    const emptyHabit = document.getElementById("emptyHabit");
-
-    function toggleMobileMenu() {
-      if (!mobileButton || !mobileNav) return;
-
-      const isOpen = mobileNav.classList.toggle("open");
-
-      mobileButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      mobileButton.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
-      mobileNav.setAttribute("aria-hidden", isOpen ? "false" : "true");
-    }
-
-    if (mobileButton && mobileNav) {
-      mobileButton.addEventListener("click", toggleMobileMenu);
-
-      mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileNav.classList.remove("open");
-          mobileButton.setAttribute("aria-expanded", "false");
-          mobileButton.setAttribute("aria-label", "Abrir menú");
-          mobileNav.setAttribute("aria-hidden", "true");
-        });
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && mobileNav.classList.contains("open")) {
-          mobileNav.classList.remove("open");
-          mobileButton.setAttribute("aria-expanded", "false");
-          mobileButton.setAttribute("aria-label", "Abrir menú");
-          mobileNav.setAttribute("aria-hidden", "true");
-        }
-      });
-    }
-
-    function escapeHTML(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function clampProgress(value) {
-      const number = Number(value || 0);
-
-      if (Number.isNaN(number)) {
-        return 0;
-      }
-
-      return Math.max(0, Math.min(100, Math.round(number)));
-    }
-
-    function hasAccess(experience, entitlements) {
-      return entitlements.some((item) => {
-        const permission = String(item.permission_key || "");
-        const sku = String(item.source_sku || "");
-        const active = item.active === true;
-
-        if (!active) {
-          return false;
-        }
-
-        return (
-          experience.permissionKeys.includes(permission) ||
-          experience.sourceSkus.includes(sku) ||
-          permission === "membership_all_access" ||
-          sku === "HCD_ALL_ACCESS"
-        );
-      });
-    }
-
-    function readSnapshotByKey(baseKey, userId) {
-      const possibleKeys = [
-        `${baseKey}_${userId}`,
-        `${baseKey}_local`,
-        baseKey
+    <script>
+      const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
+      const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+      const ACTIVE_EXPERIENCES = [
+        {
+          id: "21dias",
+          title: "21 Días Más Cerca de Dios",
+          label: "Devocional de 21 días",
+          description:
+            "Continúa tu recorrido devocional para cultivar hábitos de fe, oración y cercanía con Dios.",
+          icon: "21",
+          href: "apps/mi-tiempo-con-dios.html",
+          snapshotKeys: [
+            "hcd_21dias_progress_snapshot",
+            "hcd_mi_tiempo_con_dios_progress_snapshot",
+            "hcd_mujeres_21dias_progress_snapshot",
+          ],
+          permissionKeys: ["access_21dias", "membership_all_access"],
+          sourceSkus: ["HCD_21DIAS_BUNDLE", "HCD_ALL_ACCESS"],
+        },
+        {
+          id: "familias",
+          title: "Pequeños Momentos con Dios",
+          label: "Experiencia familiar",
+          description:
+            "Comparte momentos simples de fe, reflexión y conexión espiritual en familia.",
+          icon: "FM",
+          href: "apps/pequenos-momentos-con-dios.html",
+          snapshotKeys: [
+            "hcd_familias_progress_snapshot",
+            "hcd_momentos_familia_progress_snapshot",
+            "hcd_pequenos_momentos_progress_snapshot",
+            "hcd_pequenos_momentos_con_dios_progress_snapshot",
+          ],
+          permissionKeys: [
+            "access_familias",
+            "access_pequenos_momentos",
+            "access_pequenos_momentos_con_dios",
+            "membership_all_access",
+          ],
+          sourceSkus: [
+            "HCD_FAMILIAS_BUNDLE",
+            "HCD_PEQUENOS_MOMENTOS_BUNDLE",
+            "HCD_PEQUENOS_MOMENTOS_CON_DIOS_BUNDLE",
+            "HCD_ALL_ACCESS",
+          ],
+        },
+        {
+          id: "palabras",
+          title: "Cuando las Palabras Duelen",
+          label: "Acompañamiento para jóvenes",
+          description:
+            "Una experiencia para procesar palabras difíciles desde una mirada de fe, esperanza y restauración.",
+          icon: "PD",
+          href: "apps/cuando-las-palabras-duelen.html",
+          snapshotKeys: [
+            "hcd_palabras_duelen_progress_snapshot",
+            "hcd_palabras_progress_snapshot",
+            "hcd_cuando_las_palabras_duelen_progress_snapshot",
+          ],
+          permissionKeys: [
+            "access_palabras_duelen",
+            "access_cuando_las_palabras_duelen",
+            "membership_all_access",
+          ],
+          sourceSkus: [
+            "HCD_PALABRAS_DUELEN_BUNDLE",
+            "HCD_CUANDO_LAS_PALABRAS_DUELEN_BUNDLE",
+            "HCD_ALL_ACCESS",
+          ],
+        },
+        {
+          id: "hombre",
+          title: "El Hombre que Edifica su Hogar",
+          label: "Camino de propósito",
+          description:
+            "Fortalece liderazgo espiritual, carácter, fe y propósito familiar desde una experiencia guiada.",
+          icon: "HG",
+          href: "apps/el-hombre-que-edifica-su-hogar.html",
+          snapshotKeys: [
+            "hcd_hombre_hogar_progress_snapshot",
+            "hcd_mi_hogar_con_proposito_progress_snapshot",
+          ],
+          permissionKeys: ["access_hombre_edifica", "membership_all_access"],
+          sourceSkus: ["HCD_HOMBRE_EDIFICA_BUNDLE", "HCD_ALL_ACCESS"],
+        },
       ];
-
-      for (const key of possibleKeys) {
-        const raw = localStorage.getItem(key);
-
-        if (!raw) {
-          continue;
-        }
-
-        try {
-          return JSON.parse(raw);
-        } catch (error) {
-          console.warn("Snapshot inválido:", key, error);
-        }
+      const $ = (id) => document.getElementById(id);
+      const escapeHTML = (value) =>
+        String(value ?? "").replace(
+          /[&<>"']/g,
+          (char) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#039;",
+            })[char],
+        );
+      function hasAccess(experience, entitlements) {
+        return entitlements.some(
+          (item) =>
+            item.active === true &&
+            (experience.permissionKeys.includes(
+              String(item.permission_key || ""),
+            ) ||
+              experience.sourceSkus.includes(String(item.source_sku || "")) ||
+              item.permission_key === "membership_all_access" ||
+              item.source_sku === "HCD_ALL_ACCESS"),
+        );
+      }
+      function hasGardenAccess(entitlements) {
+        return entitlements.some(
+          (item) =>
+            item.active === true &&
+            (item.permission_key === "access_jardin_fe" ||
+              item.source_sku === "HCD_JARDIN_FE" ||
+              item.permission_key === "membership_all_access" ||
+              item.source_sku === "HCD_ALL_ACCESS"),
+        );
+      }
+      function clampProgress(value) {
+        const number = Number(value || 0);
+        if (Number.isNaN(number)) return 0;
+        return Math.max(0, Math.min(100, Math.round(number)));
       }
 
-      return null;
-    }
-
-    function getExperienceProgress(experience, userId) {
-      const keys = Array.isArray(experience.snapshotKeys)
-        ? experience.snapshotKeys
-        : [];
-
-      for (const key of keys) {
-        const snapshot = readSnapshotByKey(key, userId);
-
-        if (!snapshot) {
-          continue;
+      function readSnapshotByKey(baseKey, userId) {
+        const possibleKeys = [
+          `${baseKey}_${userId}`,
+          `${baseKey}_local`,
+          baseKey,
+        ];
+        for (const key of possibleKeys) {
+          const raw = localStorage.getItem(key);
+          if (!raw) continue;
+          try {
+            return JSON.parse(raw);
+          } catch (error) {
+            console.warn("Snapshot inválido:", key, error);
+          }
         }
+        return null;
+      }
 
-        const percentage = clampProgress(snapshot.percentage);
-        const completed = Number(snapshot.completed || 0);
-        const total = Number(snapshot.total || 21);
-        const nextDay = snapshot.nextDay || null;
-        const level = snapshot.level || "";
-
+      function getExperienceProgress(experience, userId) {
+        const keys = Array.isArray(experience.snapshotKeys)
+          ? experience.snapshotKeys
+          : [];
+        for (const key of keys) {
+          const snapshot = readSnapshotByKey(key, userId);
+          if (!snapshot) continue;
+          const percentage = clampProgress(snapshot.percentage);
+          const completed = Number(snapshot.completed || 0);
+          const total = Number(snapshot.total || 21);
+          const nextDay = snapshot.nextDay || null;
+          const level = snapshot.level || "";
+          return {
+            progress: percentage,
+            progressLabel:
+              percentage >= 100 ? "Completado" : `${percentage}% completado`,
+            completed,
+            total,
+            nextDay,
+            level,
+            hasSnapshot: true,
+          };
+        }
         return {
-          progress: percentage,
-          progressLabel:
-            percentage >= 100
-              ? "Completado"
-              : `${percentage}% completado`,
-          completed,
-          total,
-          nextDay,
-          level,
-          hasSnapshot: true
+          progress: 0,
+          progressLabel: "Disponible para comenzar",
+          completed: 0,
+          total: 21,
+          nextDay: 1,
+          level: "Inicio",
+          hasSnapshot: false,
         };
       }
 
-      return {
-        progress: 0,
-        progressLabel: "Disponible para comenzar",
-        completed: 0,
-        total: 21,
-        nextDay: 1,
-        level: "Inicio",
-        hasSnapshot: false
-      };
-    }
-
-    function buildProgressMeta(experience) {
-      const items = [];
-
-      items.push(`<span class="habit-pill">${escapeHTML(experience.label)}</span>`);
-      items.push(`<span class="habit-pill gold">${escapeHTML(experience.progressLabel)}</span>`);
-
-      if (experience.hasSnapshot) {
+      function buildProgressMeta(experience) {
+        const items = [];
         items.push(
-          `<span class="habit-pill">${escapeHTML(String(experience.completed))}/${escapeHTML(String(experience.total))} días</span>`
+          `<span class="habit-pill">${escapeHTML(experience.label)}</span>`,
         );
-
-        if (experience.level) {
-          items.push(`<span class="habit-pill">${escapeHTML(experience.level)}</span>`);
-        }
-
-        if (experience.progress < 100 && experience.nextDay) {
+        items.push(
+          `<span class="habit-pill gold">${escapeHTML(experience.progressLabel)}</span>`,
+        );
+        if (experience.hasSnapshot) {
           items.push(
-            `<span class="habit-pill">Próximo día: ${escapeHTML(String(experience.nextDay))}</span>`
+            `<span class="habit-pill">${escapeHTML(String(experience.completed))}/${escapeHTML(String(experience.total))} días</span>`,
           );
+          if (experience.level) {
+            items.push(
+              `<span class="habit-pill">${escapeHTML(experience.level)}</span>`,
+            );
+          }
+          if (experience.progress < 100 && experience.nextDay) {
+            items.push(
+              `<span class="habit-pill">Próximo día: ${escapeHTML(String(experience.nextDay))}</span>`,
+            );
+          }
         }
+        return items.join("");
       }
 
-      return items.join("");
-    }
+      function renderActiveExperiences(experiences) {
+        const habitGrid = $("habitGrid");
+        const emptyHabit = $("emptyHabit");
+        habitGrid.innerHTML = "";
 
-    function renderActiveExperiences(experiences) {
-      habitGrid.innerHTML = "";
+        if (!experiences.length) {
+          habitGrid.classList.add("is-hidden");
+          emptyHabit.classList.remove("is-hidden");
+          return;
+        }
 
-      if (!experiences.length) {
-        habitGrid.classList.add("is-hidden");
-        emptyHabit.classList.remove("is-hidden");
-        return;
-      }
-
-      experiences.forEach((experience) => {
-        const progress = clampProgress(experience.progress);
-        const card = document.createElement("article");
-
-        card.className = "habit-card";
-
-        card.innerHTML = `
-          <div class="habit-card-top">
-            <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
-            <div>
-              <h3>${escapeHTML(experience.title)}</h3>
-              <p>${escapeHTML(experience.description)}</p>
+        experiences.forEach((experience) => {
+          const progress = clampProgress(experience.progress);
+          const card = document.createElement("article");
+          card.className = "habit-card";
+          card.dataset.experienceId = experience.id;
+          card.innerHTML = `
+            <div class="habit-card-top">
+              <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
+              <div>
+                <h3>${escapeHTML(experience.title)}</h3>
+                <p>${escapeHTML(experience.description)}</p>
+              </div>
             </div>
-          </div>
+            <div class="habit-meta">
+              ${buildProgressMeta(experience)}
+            </div>
+            <div
+              class="progress-line"
+              role="progressbar"
+              aria-label="Progreso de ${escapeHTML(experience.title)}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="${progress}"
+            >
+              <div class="progress-fill" style="--progress:${progress}%;"></div>
+            </div>
+            <div class="habit-footer">
+              <span class="habit-progress-text">${progress}%</span>
+              <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
+                ${progress > 0 ? "Continuar" : "Comenzar"}
+              </a>
+            </div>
+          `;
+          habitGrid.appendChild(card);
+        });
 
-          <div class="habit-meta">
-            ${buildProgressMeta(experience)}
-          </div>
-
-          <div class="progress-line" aria-hidden="true">
-            <div class="progress-fill" style="--progress:${progress}%;"></div>
-          </div>
-
-          <div class="habit-footer">
-            <span class="habit-progress-text">${progress}%</span>
-            <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
-              ${progress > 0 ? "Continuar" : "Comenzar"}
-            </a>
-          </div>
-        `;
-
-        habitGrid.appendChild(card);
-      });
-
-      emptyHabit.classList.add("is-hidden");
-      habitGrid.classList.remove("is-hidden");
-    }
-
-    async function loadActiveExperiences() {
-      if (!window.supabase || !SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-        renderActiveExperiences([]);
-        return;
+        emptyHabit.classList.add("is-hidden");
+        habitGrid.classList.remove("is-hidden");
       }
 
-      try {
-        const supabaseClient = window.supabase.createClient(
+      async function loadDashboard() {
+        if (!window.supabase) return;
+        const client = window.supabase.createClient(
           SUPABASE_URL,
-          SUPABASE_PUBLISHABLE_KEY
+          SUPABASE_PUBLISHABLE_KEY,
         );
-
-        const {
-          data: { user },
-          error: userError
-        } = await supabaseClient.auth.getUser();
-
-        if (userError || !user) {
-          const next = encodeURIComponent("dashboard.html");
-          window.location.replace(`login.html?next=${next}`);
-          return;
-        }
-
-        const normalizedEmail = String(user.email || "").trim().toLowerCase();
-
-        const { data, error } = await supabaseClient
-          .from("entitlements")
-          .select("email,permission_key,source_sku,active")
-          .eq("email", normalizedEmail)
-          .eq("active", true)
-          .limit(50);
-
-        if (error || !data) {
-          renderActiveExperiences([]);
-          return;
-        }
-
-        const activeExperiences = ACTIVE_EXPERIENCES
-          .filter((experience) => hasAccess(experience, data))
-          .map((experience) => {
-            const progressInfo = getExperienceProgress(experience, user.id);
-
-            return {
-              ...experience,
-              ...progressInfo
-            };
+        try {
+          const {
+            data: { user },
+            error: userError,
+          } = await client.auth.getUser();
+          if (userError || !user) {
+            window.location.replace(
+              `login.html?next=${encodeURIComponent("dashboard.html")}`,
+            );
+            return;
+          }
+          const email = String(user.email || "")
+            .trim()
+            .toLowerCase();
+          const { data, error } = await client
+            .from("entitlements")
+            .select("email,permission_key,source_sku,active")
+            .eq("email", email)
+            .eq("active", true)
+            .limit(50);
+          if (error) throw error;
+          const entitlements = data || [];
+          const activeExperiences = ACTIVE_EXPERIENCES.filter((item) =>
+            hasAccess(item, entitlements),
+          ).map((item) => {
+            const progressInfo = getExperienceProgress(item, user.id);
+            return { ...item, ...progressInfo };
           });
-
-        renderActiveExperiences(activeExperiences);
-      } catch (error) {
-        console.warn("No se pudieron cargar experiencias activas:", error);
-        renderActiveExperiences([]);
+          $("loadingState").classList.add("is-hidden");
+          $("collectionCount").textContent = activeExperiences.length;
+          renderActiveExperiences(activeExperiences);
+          if (hasGardenAccess(entitlements)) {
+            $("communityCount").textContent = "1";
+            $("communitySection").classList.remove("is-hidden");
+          } else {
+            $("communityCount").textContent = "0";
+          }
+          [$("signoutButton"), $("mobileSignoutButton")].forEach((button) =>
+            button.addEventListener("click", async () => {
+              await client.auth.signOut();
+              window.location.replace("index.html");
+            }),
+          );
+        } catch (error) {
+          console.warn("No se pudo preparar Mi Espacio:", error);
+          $("loadingState").textContent =
+            "No pudimos preparar Mi Espacio. Intenta ingresar nuevamente.";
+        }
       }
-    }
-
-    window.addEventListener("load", () => {
-      loadActiveExperiences();
-    });
-  </script>
-</body>
+      const mobileButton = $("mobileMenuButton");
+      const mobileNav = $("mobileNav");
+      mobileButton.addEventListener("click", () => {
+        const open = mobileNav.classList.toggle("open");
+        mobileButton.setAttribute("aria-expanded", String(open));
+        mobileNav.setAttribute("aria-hidden", String(!open));
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          mobileNav.classList.remove("open");
+          mobileButton.setAttribute("aria-expanded", "false");
+          mobileNav.setAttribute("aria-hidden", "true");
+        }
+      });
+      window.addEventListener("load", loadDashboard);
+    </script>
+  </body>
 </html>
