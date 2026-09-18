@@ -384,7 +384,19 @@
                                                                                                                                                                                 transition:none!important}
                                                                                                                                                                               }
 
-  </style>
+  
+/* Acceso premium: barra superior adaptable */
+@media (max-width: 980px) {
+  .top { flex-direction: column; align-items: flex-start; }
+  .top > .row { width: 100%; justify-content: stretch; }
+  .top > .row .pill, .top > .row .btn { flex: 1 1 auto; min-width: 0; }
+}
+@media (max-width: 640px) {
+  .top > .row { flex-direction: column; align-items: stretch; gap: 10px; }
+  .top > .row .pill, .top > .row .btn { width: 100%; max-width: 100%; flex: 0 0 auto; justify-content: center; }
+  .top > .row .pill { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+</style>
  </head>
  <body>
   <main class="shell">
@@ -1848,10 +1860,9 @@ function gratitudes(){$('view').innerHTML=`<section class="panel formpanel"><h2>
 function library(){const fav=state.favorites.map(id=>prayers.find(x=>x.id===id)).filter(Boolean);const groups=[['Favoritas',fav.map(prayerCard).join('')],['Mis peticiones',state.petitions.map(p=>`<article class="card"><span class="badge">${esc(p.status)}</span><h3>${esc(p.title)}</h3><p class="muted">${esc(p.category||'Sin categoría')}</p></article>`).join('')],['Sigo orando',state.petitions.filter(p=>p.status==='Sigo orando').map(p=>`<article class="card"><h3>${esc(p.title)}</h3><p class="muted">${esc(p.followUp||p.detail||'')}</p></article>`).join('')],['Gratitudes',state.gratitudes.map(gratitudeCard).join('')],['Archivadas',state.petitions.filter(p=>p.status==='Archivada').map(p=>`<article class="card"><h3>${esc(p.title)}</h3><p class="muted">${esc(p.category||'')}</p></article>`).join('')]];$('view').innerHTML=groups.map(([t,c])=>`<section><h2 style="color:var(--g)">${t}</h2><div class="cards">${c||'<div class="empty">Aún no hay contenido en esta sección.</div>'}</div></section>`).join('');bindPrayer();document.querySelectorAll('.deleteThanks').forEach(b=>b.remove())}
 function historyView(){$('view').innerHTML=`<section class="panel formpanel"><h2>Historial</h2><p class="muted">Registro local de acciones para que puedas reconocer cambios en tus peticiones y gratitudes.</p></section><div class="records">${state.history.length?state.history.map(h=>`<article class="record"><span class="badge">${esc(h.type)}</span><h3>${esc(h.action)}</h3><div class="meta">${new Date(h.date).toLocaleString('es-419')}</div><p>${esc(h.label||'')}</p></article>`).join(''):'<div class="empty">Todavía no hay movimientos registrados.</div>'}</div>`}
 function closeModal(){$('modalBack').classList.add('hide');$('modalBack').setAttribute('aria-hidden','true')}function showView(v){view=v;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));({discover,petitions,gratitudes,library,history:historyView}[v]||discover)();metrics()}document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>showView(b.dataset.view));$('random').onclick=()=>{const pool=prayers.filter(p=>p.id!==featured);featured=pool[Math.floor(Math.random()*pool.length)].id;showView('discover')};$('modalBack').onclick=e=>{if(e.target===$('modalBack'))closeModal()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});$('logout').onclick=async()=>{if(!confirm('¿Deseas cerrar sesión?'))return;await sb?.auth.signOut();location.href='../login.html'};
-async function init(){if(!sb){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const{data:{session},error}=await sb.auth.getSession();if(error||!session?.user){location.href='../login.html';return}user=session.user;$('userPill').textContent=user.email||'Sesión activa';const email=String(user.email||'').trim().toLowerCase();const{data,error:entErr}=await sb.from('entitlements').select('permission_key,source_sku,active').eq('email',email).eq('active',true);if(entErr){console.error(entErr);$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const ok=(data||[]).some(x=>x.permission_key==='membership_all_access'||x.source_sku==='HCD_ALL_ACCESS');if(!ok){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}key='hcd_mi_espacio_oracion_'+user.id;load();save();$('loading').classList.add('hide');$('app').classList.remove('hide');showView('discover')}
+async function init(){if(!sb){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const{data:{session},error}=await sb.auth.getSession();if(error||!session?.user){location.href='../login.html';return}user=session.user;$('userPill').textContent=user.email||'Sesión activa';const email=String(user.email||'').trim().toLowerCase();const{data,error:entErr}=await sb.from('entitlements').select('permission_key,source_sku,active').eq('email',email).eq('active',true);if(entErr){console.error(entErr);$('loading').classList.add('hide');$('locked').classList.remove('hide');return}const ok=(data||[]).some(item=>item.active===true&&(item.permission_key==='access_jardin_fe'||item.source_sku==='HCD_JARDIN_FE'||item.permission_key==='membership_all_access'||item.source_sku==='HCD_ALL_ACCESS'));if(!ok){$('loading').classList.add('hide');$('locked').classList.remove('hide');return}key='hcd_mi_espacio_oracion_'+user.id;load();save();$('loading').classList.add('hide');$('app').classList.remove('hide');showView('discover')}
 window.addEventListener('load',init);
 
 
   </script>
  </body>
-</html>
