@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mi Espacio | Hábitos con Dios</title>
     <meta
       name="description"
@@ -13,22 +13,22 @@
     <style>
       :root {
         --green: #3f4a35;
-        --green2: #556544;
+        --olive: #556544;
         --navy: #1f3146;
-        --navy2: #2c4662;
+        --navy-soft: #2c4662;
         --gold: #c9a65a;
-        --gold2: #f7eac7;
+        --gold-soft: #f7eac7;
         --cream: #faf7f0;
         --beige: #f5f0e7;
         --white: #fff;
         --ink: #1f2937;
         --muted: #6b7280;
         --line: #e8decc;
-        --soft: #eef3ea;
+        --soft-green: #eef3ea;
         --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
-        --shadow2: 0 12px 34px rgba(63, 74, 53, 0.1);
-        --xl: 32px;
-        --lg: 24px;
+        --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.1);
+        --radius-xl: 32px;
+        --radius-lg: 24px;
         --max: 1180px;
       }
       * {
@@ -67,25 +67,26 @@
           linear-gradient(145deg, var(--cream), var(--beige));
       }
       a {
-        text-decoration: none;
         color: inherit;
+        text-decoration: none;
       }
       button {
         font: inherit;
         cursor: pointer;
       }
-      .shell {
-        width: min(var(--max), calc(100% - 32px));
-        margin: auto;
-      }
-      .hidden {
-        display: none !important;
-      }
       :focus-visible {
         outline: 3px solid rgba(201, 166, 90, 0.62);
         outline-offset: 4px;
       }
-      header {
+      .page-shell {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .is-hidden {
+        display: none !important;
+      }
+
+      .site-header {
         position: sticky;
         top: 0;
         z-index: 50;
@@ -93,19 +94,19 @@
         backdrop-filter: blur(18px);
         border-bottom: 1px solid rgba(232, 222, 204, 0.86);
       }
-      .head {
+      .header-inner {
         min-height: 94px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 22px;
       }
-      .brand {
+      .brand-area {
         display: flex;
         align-items: center;
         gap: 16px;
       }
-      .logo {
+      .brand-logo {
         width: 68px;
         height: 68px;
         object-fit: contain;
@@ -119,37 +120,37 @@
         font-weight: 950;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--green2);
+        color: var(--olive);
       }
       .brand-title {
         color: var(--green);
         font-size: clamp(1.2rem, 2.5vw, 1.65rem);
         font-weight: 950;
       }
-      .nav {
+      .header-nav {
         display: flex;
         align-items: center;
         gap: 20px;
-        color: var(--green2);
+        color: var(--olive);
         font-size: 0.9rem;
         font-weight: 850;
       }
-      .nav a {
-        white-space: nowrap;
+      .header-nav a {
         position: relative;
+        white-space: nowrap;
       }
-      .nav a:hover,
-      .nav a.active {
+      .header-nav a:hover,
+      .header-nav a.active {
         color: var(--green);
       }
-      .nav a.active:after {
+      .header-nav a.active::after {
         content: "";
         position: absolute;
         left: 0;
         bottom: -12px;
         width: 100%;
         height: 3px;
-        border-radius: 9px;
+        border-radius: 999px;
         background: var(--gold);
       }
       .signout {
@@ -158,7 +159,7 @@
         color: var(--green);
         font-weight: 850;
       }
-      .menu {
+      .mobile-menu-button {
         display: none;
         min-height: 44px;
         padding: 0 14px;
@@ -168,24 +169,24 @@
         color: var(--green);
         font-weight: 900;
       }
-      .mobile {
+      .mobile-nav {
         display: none;
         padding-bottom: 16px;
       }
-      .mobile.open {
+      .mobile-nav.open {
         display: block;
       }
-      .mobile > div {
+      .mobile-nav-panel {
         display: grid;
         gap: 8px;
         padding: 14px;
         border-radius: 20px;
         background: white;
         border: 1px solid var(--line);
-        box-shadow: var(--shadow2);
+        box-shadow: var(--shadow-soft);
       }
-      .mobile a,
-      .mobile button {
+      .mobile-nav-panel a,
+      .mobile-nav-panel button {
         padding: 12px;
         border-radius: 14px;
         color: var(--green);
@@ -194,7 +195,8 @@
         border: 0;
         background: transparent;
       }
-      .hero {
+
+      .hero-section {
         padding: 58px 0 30px;
       }
       .hero-grid {
@@ -203,41 +205,39 @@
         gap: 26px;
       }
       .hero-card,
-      .hero-side {
-        border-radius: var(--xl);
+      .hero-side-card {
+        border-radius: var(--radius-xl);
         box-shadow: var(--shadow);
       }
       .hero-card {
-        position: relative;
-        overflow: hidden;
         padding: clamp(28px, 5vw, 46px);
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid var(--line);
       }
       .eyebrow,
-      .kicker {
+      .section-kicker {
         display: inline-flex;
         padding: 8px 12px;
         margin-bottom: 15px;
         border-radius: 999px;
-        background: var(--gold2);
+        background: var(--gold-soft);
         color: var(--green);
         font-size: 0.74rem;
         font-weight: 950;
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
-      .hero h1 {
+      .hero-title {
         color: var(--green);
         font-size: clamp(2.8rem, 6.6vw, 5.25rem);
         line-height: 0.92;
         letter-spacing: -0.075em;
         margin-bottom: 20px;
       }
-      .hero h1 span {
+      .hero-title span {
         color: var(--gold);
       }
-      .hero p {
+      .hero-subtitle {
         color: var(--muted);
         line-height: 1.78;
         max-width: 680px;
@@ -257,27 +257,23 @@
         align-items: center;
         justify-content: center;
         font-weight: 950;
-        transition: 0.2s;
+        transition: 0.2s ease;
         text-align: center;
       }
       .btn:hover {
         transform: translateY(-2px);
-        box-shadow: var(--shadow2);
+        box-shadow: var(--shadow-soft);
       }
-      .primary {
+      .btn-primary {
         color: white;
         background: var(--green);
       }
-      .secondary {
+      .btn-secondary {
         color: var(--green);
         background: white;
         border: 1px solid var(--line);
       }
-      .gold {
-        color: var(--navy);
-        background: var(--gold);
-      }
-      .hero-side {
+      .hero-side-card {
         padding: 30px;
         color: white;
         background:
@@ -286,84 +282,86 @@
             rgba(201, 166, 90, 0.25),
             transparent 38%
           ),
-          linear-gradient(145deg, var(--green), var(--green2));
+          linear-gradient(145deg, var(--green), var(--olive));
         display: grid;
         align-content: center;
         gap: 16px;
       }
-      .hero-side small {
+      .hero-side-card small {
         color: var(--gold);
         font-weight: 950;
         text-transform: uppercase;
         letter-spacing: 0.08em;
       }
-      .hero-side h2 {
+      .hero-side-card h2 {
         font-size: clamp(2rem, 4vw, 3.2rem);
         line-height: 0.98;
         letter-spacing: -0.055em;
       }
-      .hero-side p {
+      .hero-side-card p {
         color: #efe7d8;
+        line-height: 1.7;
       }
-      .stats {
+      .hero-stats {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
       }
-      .stat {
+      .hero-stat {
         padding: 14px;
         border-radius: 18px;
         background: rgba(255, 255, 255, 0.1);
         text-align: center;
       }
-      .stat strong {
+      .hero-stat strong {
         display: block;
         color: var(--gold);
         font-size: 1.45rem;
       }
-      .stat span {
+      .hero-stat span {
         color: #efe7d8;
         font-size: 0.76rem;
         font-weight: 800;
       }
+
       .section {
         padding: 40px 0;
       }
-      .section-head {
+      .section-heading {
         margin-bottom: 22px;
       }
-      .section-head h2 {
+      .section-heading h2 {
         color: var(--green);
         font-size: clamp(2rem, 4vw, 3rem);
         line-height: 1;
         letter-spacing: -0.055em;
       }
-      .section-head p {
+      .section-heading p {
         max-width: 700px;
         margin-top: 10px;
         color: var(--muted);
         line-height: 1.7;
       }
-      .grid {
+      .habit-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 18px;
       }
-      .experience {
+      .habit-card {
         display: flex;
         flex-direction: column;
         padding: 24px;
-        border-radius: var(--lg);
+        border-radius: var(--radius-lg);
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid var(--line);
-        box-shadow: var(--shadow2);
+        box-shadow: var(--shadow-soft);
       }
-      .experience-top {
+      .habit-card-top {
         display: flex;
         align-items: flex-start;
         gap: 14px;
       }
-      .icon {
+      .habit-icon {
         width: 52px;
         height: 52px;
         border-radius: 18px;
@@ -374,83 +372,83 @@
         color: var(--gold);
         font-weight: 950;
       }
-      .experience h3 {
+      .habit-card h3 {
         color: var(--green);
         font-size: 1.25rem;
         margin-bottom: 6px;
       }
-      .experience p {
+      .habit-card p {
         color: var(--muted);
         font-size: 0.93rem;
         line-height: 1.6;
       }
-      .pills {
+      .habit-meta {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         margin: 18px 0;
       }
-      .pill {
+      .habit-pill {
         padding: 7px 10px;
         border-radius: 999px;
-        background: var(--soft);
+        background: var(--soft-green);
         color: var(--green);
         font-size: 0.75rem;
         font-weight: 900;
       }
-      .pill.gold {
-        background: var(--gold2);
+      .habit-pill.gold {
+        background: var(--gold-soft);
       }
-      .progress {
+      .progress-line {
         height: 10px;
         border-radius: 999px;
         overflow: hidden;
         background: rgba(63, 74, 53, 0.1);
-        margin: 0 0 18px;
+        margin-bottom: 18px;
       }
-      .progress > div {
+      .progress-fill {
         height: 100%;
         width: var(--progress);
         background: linear-gradient(90deg, var(--green), var(--gold));
       }
-      .experience-foot {
+      .habit-footer {
         margin-top: auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 12px;
       }
-      .progress-text {
+      .habit-progress-text {
         color: var(--green);
         font-weight: 950;
         font-size: 0.88rem;
       }
-      .empty {
+      .empty-habit,
+      .loading-state {
         padding: 38px;
-        border-radius: var(--xl);
+        border-radius: var(--radius-xl);
         background: rgba(255, 255, 255, 0.88);
         border: 1px solid var(--line);
         text-align: center;
-        box-shadow: var(--shadow2);
+        box-shadow: var(--shadow-soft);
       }
-      .empty h3 {
+      .empty-habit h3 {
         color: var(--green);
         font-size: 2rem;
         margin-bottom: 10px;
       }
-      .empty p {
+      .empty-habit p,
+      .loading-state {
         color: var(--muted);
         line-height: 1.7;
-        margin-bottom: 20px;
       }
-      .community {
-        position: relative;
-        overflow: hidden;
+
+      .community-card {
         display: grid;
         grid-template-columns: 1fr 0.95fr;
         gap: 26px;
         padding: clamp(28px, 5vw, 44px);
-        border-radius: var(--xl);
+        border-radius: var(--radius-xl);
         color: white;
         background:
           radial-gradient(
@@ -458,93 +456,104 @@
             rgba(201, 166, 90, 0.28),
             transparent 34%
           ),
-          linear-gradient(145deg, var(--navy), var(--navy2));
+          linear-gradient(145deg, var(--navy), var(--navy-soft));
         box-shadow: var(--shadow);
       }
-      .community .kicker {
+      .community-card .section-kicker {
         color: var(--navy);
       }
-      .community h2 {
+      .community-card h2 {
         font-size: clamp(2.2rem, 4.8vw, 3.7rem);
         line-height: 0.98;
         letter-spacing: -0.06em;
         margin-bottom: 14px;
       }
-      .community h2 span {
+      .community-card h2 span {
         color: var(--gold);
       }
-      .community p {
+      .community-card p {
         color: #e8edf2;
         line-height: 1.72;
       }
       .garden-apps {
         display: grid;
-        gap: 10px;
+        gap: 12px;
       }
       .garden-app {
         display: flex;
         align-items: center;
         gap: 12px;
         padding: 14px 16px;
-        border-radius: 18px;
+        border-radius: 19px;
         background: rgba(255, 255, 255, 0.09);
         border: 1px solid rgba(255, 255, 255, 0.14);
+        transition: 0.2s ease;
+      }
+      .garden-app:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.13);
+        border-color: rgba(201, 166, 90, 0.5);
       }
       .garden-icon {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         display: grid;
         place-items: center;
         flex: none;
         border-radius: 14px;
         background: rgba(247, 234, 199, 0.14);
       }
+      .garden-app-copy {
+        min-width: 0;
+        flex: 1;
+      }
       .garden-app strong {
         display: block;
         color: white;
         margin-bottom: 3px;
       }
-      .garden-app span {
+      .garden-app-copy span {
         color: #dde5ec;
         font-size: 0.79rem;
+        line-height: 1.4;
       }
-      .garden-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 24px;
+      .garden-app-button {
+        min-height: 40px;
+        padding: 0 17px;
+        border-radius: 999px;
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy);
+        background: var(--gold);
+        border: 1px solid rgba(247, 234, 199, 0.42);
+        box-shadow: 0 10px 22px rgba(201, 166, 90, 0.22);
+        font-size: 0.82rem;
+        font-weight: 950;
       }
-      .garden-actions .secondary {
-        color: white;
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.22);
+      .garden-app:hover .garden-app-button {
+        background: var(--gold-soft);
       }
-      .loading {
-        padding: 36px;
-        border-radius: var(--xl);
-        background: white;
-        border: 1px solid var(--line);
-        text-align: center;
-        color: var(--muted);
-      }
-      footer {
+
+      .site-footer {
         margin-top: 42px;
         padding: 32px 0;
         background: var(--green);
         color: var(--cream);
       }
-      .footer {
+      .footer-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 24px;
       }
-      .footer strong {
+      .footer-brand strong {
         display: block;
         color: var(--gold);
         margin-bottom: 6px;
       }
-      .footer p {
+      .footer-brand p {
         color: #efe7d8;
         font-size: 0.86rem;
         line-height: 1.55;
@@ -558,216 +567,263 @@
         font-size: 0.86rem;
         font-weight: 850;
       }
+
       @media (max-width: 1040px) {
-        .nav {
+        .header-nav {
           gap: 12px;
           font-size: 0.82rem;
         }
         .hero-grid,
-        .community {
+        .community-card {
           grid-template-columns: 1fr;
         }
       }
       @media (max-width: 780px) {
-        .nav {
+        .header-nav {
           display: none;
         }
-        .menu {
+        .mobile-menu-button {
           display: inline-flex;
           align-items: center;
         }
-        .head {
+        .header-inner {
           min-height: 82px;
         }
-        .logo {
+        .brand-logo {
           width: 56px;
           height: 56px;
         }
-        .grid {
+        .habit-grid {
           grid-template-columns: 1fr;
         }
-        .footer {
+        .footer-inner {
           flex-direction: column;
           align-items: flex-start;
         }
       }
       @media (max-width: 620px) {
-        .shell {
+        .page-shell {
           width: min(var(--max), calc(100% - 22px));
         }
-        .hero {
+        .hero-section {
           padding-top: 36px;
         }
         .hero-card,
-        .hero-side,
-        .community {
+        .hero-side-card,
+        .community-card {
           padding: 22px;
           border-radius: 26px;
         }
-        .hero-actions,
-        .garden-actions {
+        .hero-actions {
           flex-direction: column;
         }
         .btn {
           width: 100%;
         }
-        .stats {
+        .hero-stats {
           grid-template-columns: 1fr;
         }
-        .experience-foot {
+        .habit-footer {
           align-items: stretch;
           flex-direction: column;
+        }
+        .garden-app {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+        .garden-app-button {
+          width: 100%;
+          margin-top: 4px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
         }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="head shell">
-        <a class="brand" href="dashboard.html"
-          ><img
-            class="logo"
+    <header class="site-header">
+      <div class="header-inner page-shell">
+        <a
+          class="brand-area"
+          href="dashboard.html"
+          aria-label="Ir a Mi Espacio"
+        >
+          <img
+            class="brand-logo"
             src="assets/logo-header.png"
             alt="Hábitos con Dios"
           />
           <div class="brand-copy">
             <span class="brand-name">Hábitos con Dios</span
             ><strong class="brand-title">Mi Espacio</strong>
-          </div></a
-        >
-        <nav class="nav">
+          </div>
+        </a>
+        <nav class="header-nav" aria-label="Navegación principal">
           <a href="index.html">Inicio</a
           ><a href="biblioteca.html">Mis Colecciones</a
-          ><a class="active" href="dashboard.html">Mi Espacio</a
+          ><a class="active" href="dashboard.html" aria-current="page"
+            >Mi Espacio</a
           ><a href="comunidad.html">Comunidad</a
           ><a href="consultas.html">Centro de Ayuda</a
-          ><button class="signout" id="signout">Cerrar sesión</button>
+          ><button class="signout" id="signoutButton">Cerrar sesión</button>
         </nav>
-        <button class="menu" id="menu" aria-expanded="false">Menú</button>
+        <button
+          class="mobile-menu-button"
+          id="mobileMenuButton"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          Menú
+        </button>
       </div>
-      <div class="mobile shell" id="mobile">
-        <div>
+      <div class="mobile-nav page-shell" id="mobileNav" aria-hidden="true">
+        <div class="mobile-nav-panel">
           <a href="index.html">Inicio</a
           ><a href="biblioteca.html">Mis Colecciones</a
           ><a href="dashboard.html">Mi Espacio</a
           ><a href="comunidad.html">Comunidad</a
           ><a href="consultas.html">Centro de Ayuda</a
-          ><button id="signoutMobile">Cerrar sesión</button>
+          ><button id="mobileSignoutButton">Cerrar sesión</button>
         </div>
       </div>
     </header>
+
     <main>
-      <section class="hero shell">
+      <section class="hero-section page-shell">
         <div class="hero-grid">
           <article class="hero-card">
             <span class="eyebrow">Hábitos con Dios</span>
-            <h1>Bienvenida a <span>Mi Espacio</span></h1>
-            <p>
+            <h1 class="hero-title">Bienvenida a <span>Mi Espacio</span></h1>
+            <p class="hero-subtitle">
               Continúa tus recorridos activos y encuentra tus colecciones y
               accesos en un espacio personal, claro y organizado.
             </p>
             <div class="hero-actions">
-              <a class="btn primary" href="#mis-colecciones"
+              <a class="btn btn-primary" href="#mis-colecciones"
                 >Ver mis colecciones</a
-              ><a class="btn secondary" href="#jardin-de-fe"
+              ><a class="btn btn-secondary" href="#jardin-de-fe"
                 >Ir a Jardín de Fe</a
               >
             </div>
           </article>
-          <aside class="hero-side">
+          <aside class="hero-side-card">
             <small>Tu espacio personal</small>
             <h2>Todo lo que forma parte de tu camino, en un solo lugar.</h2>
             <p>
-              Las colecciones se muestran de acuerdo con los accesos activos de
-              tu cuenta. Jardín de Fe aparece únicamente si tu membresía está
+              Las colecciones se muestran según los accesos activos de tu
+              cuenta. Jardín de Fe aparece únicamente cuando tu membresía está
               habilitada.
             </p>
-            <div class="stats">
-              <div class="stat">
+            <div class="hero-stats">
+              <div class="hero-stat">
                 <strong id="collectionCount">0</strong><span>Colecciones</span>
               </div>
-              <div class="stat">
+              <div class="hero-stat">
                 <strong id="communityCount">0</strong><span>Comunidad</span>
               </div>
-              <div class="stat">
+              <div class="hero-stat">
                 <strong>+</strong><span>Ebooks y bonos</span>
               </div>
             </div>
           </aside>
         </div>
       </section>
-      <section class="section shell" id="mis-colecciones">
-        <div class="section-head">
-          <span class="kicker">Mi camino activo</span>
+
+      <section class="section page-shell" id="mis-colecciones">
+        <div class="section-heading">
+          <span class="section-kicker">Mi camino activo</span>
           <h2>Mis Colecciones</h2>
           <p>
-            Aquí verás únicamente las colecciones que ya forman parte de tu
-            cuenta, junto con el avance guardado dentro de cada App.
+            Aquí verás únicamente las colecciones que forman parte de tu cuenta,
+            junto con el avance guardado dentro de cada App.
           </p>
         </div>
-        <div class="loading" id="loading">Estamos preparando tu espacio...</div>
-        <div class="empty hidden" id="empty">
+        <div class="loading-state" id="loadingState">
+          Estamos preparando tu espacio...
+        </div>
+        <div class="empty-habit is-hidden" id="emptyHabit">
           <h3>Todo hábito comienza con un primer paso.</h3>
           <p>
-            Cuando una colección esté activa en tu cuenta aparecerá aquí, lista
+            Cuando una colección esté activa en tu cuenta, aparecerá aquí lista
             para comenzar o continuar.
           </p>
-          <a class="btn primary" href="biblioteca.html">Explorar colecciones</a>
+          <a class="btn btn-primary" href="biblioteca.html"
+            >Explorar colecciones</a
+          >
         </div>
-        <div class="grid hidden" id="collectionGrid"></div>
+        <div class="habit-grid is-hidden" id="habitGrid"></div>
       </section>
-      <section class="section shell hidden" id="communitySection">
-        <div class="section-head">
-          <span class="kicker">Comunidad Hábitos con Dios</span>
+
+      <section class="section page-shell is-hidden" id="communitySection">
+        <div class="section-heading">
+          <span class="section-kicker">Comunidad Hábitos con Dios</span>
           <h2>Mi Comunidad</h2>
           <p>
-            Un espacio independiente de tus colecciones, disponible cuando tu
-            cuenta tiene acceso activo a Jardín de Fe.
+            Jardín de Fe aparece aquí cuando tu cuenta tiene el acceso de
+            membresía activo.
           </p>
         </div>
-        <article class="community" id="jardin-de-fe">
+        <article class="community-card" id="jardin-de-fe">
           <div>
-            <span class="kicker">Acceso activo</span>
+            <span class="section-kicker">Acceso activo</span>
             <h2>Entra a tu <span>Jardín de Fe</span></h2>
             <p>
               Promesas bíblicas, oraciones y recursos de inspiración para
               cultivar tu fe y fortalecer tu relación con Dios día a día y
               siempre que lo necesites.
             </p>
-            <div class="garden-actions">
-              <a class="btn gold" href="#gardenApps">Explorar las 3 Apps</a
-              ><a class="btn secondary" href="comunidad.html"
-                >Conocer Jardín de Fe</a
-              >
-            </div>
           </div>
-          <div class="garden-apps" id="gardenApps">
-            <a class="garden-app" href="apps/banco-promesas.html"
-              ><span class="garden-icon">📖</span>
-              <div>
+          <div class="garden-apps" aria-label="Apps de Jardín de Fe">
+            <a
+              class="garden-app"
+              href="apps/banco-promesas.html"
+              aria-label="Entrar a Biblioteca de Promesas"
+              ><span class="garden-icon" aria-hidden="true">📖</span>
+              <div class="garden-app-copy">
                 <strong>Biblioteca de Promesas</strong
                 ><span>Promesas bíblicas organizadas por temas.</span>
-              </div></a
-            ><a class="garden-app" href="apps/oraciones.html"
-              ><span class="garden-icon">🙏</span>
-              <div>
+              </div>
+              <span class="garden-app-button">Entrar</span></a
+            >
+            <a
+              class="garden-app"
+              href="apps/oraciones.html"
+              aria-label="Entrar a Biblioteca de Oraciones"
+              ><span class="garden-icon" aria-hidden="true">🙏</span>
+              <div class="garden-app-copy">
                 <strong>Biblioteca de Oraciones</strong
                 ><span>Oraciones para distintos momentos de tu camino.</span>
-              </div></a
-            ><a class="garden-app" href="apps/tarjetas-fe.html"
-              ><span class="garden-icon">🌸</span>
-              <div>
+              </div>
+              <span class="garden-app-button">Entrar</span></a
+            >
+            <a
+              class="garden-app"
+              href="apps/tarjetas-fe.html"
+              aria-label="Entrar a Tarjetas de Fe"
+              ><span class="garden-icon" aria-hidden="true">🌸</span>
+              <div class="garden-app-copy">
                 <strong>Tarjetas de Fe</strong
                 ><span>Mensajes breves para leer, guardar y consultar.</span>
-              </div></a
+              </div>
+              <span class="garden-app-button">Entrar</span></a
             >
           </div>
         </article>
       </section>
     </main>
-    <footer>
-      <div class="footer shell">
-        <div>
+
+    <footer class="site-footer">
+      <div class="footer-inner page-shell">
+        <div class="footer-brand">
           <strong>Hábitos con Dios</strong>
           <p>
             Experiencias digitales de acompañamiento devocional. Este portal no
@@ -783,10 +839,12 @@
         </nav>
       </div>
     </footer>
+
     <script>
       const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-      const SUPABASE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
-      const EXPERIENCES = [
+      const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
+      const ACTIVE_EXPERIENCES = [
         {
           id: "21dias",
           title: "21 Días Más Cerca de Dios",
@@ -871,57 +929,65 @@
         },
       ];
       const $ = (id) => document.getElementById(id);
-      const esc = (v) =>
-        String(v ?? "").replace(
+      const escapeHTML = (value) =>
+        String(value ?? "").replace(
           /[&<>"']/g,
-          (c) =>
+          (char) =>
             ({
               "&": "&amp;",
               "<": "&lt;",
               ">": "&gt;",
               '"': "&quot;",
               "'": "&#039;",
-            })[c],
+            })[char],
         );
-      function hasAccess(x, items) {
-        return items.some(
-          (i) =>
-            i.active === true &&
-            (x.permissionKeys.includes(String(i.permission_key || "")) ||
-              x.sourceSkus.includes(String(i.source_sku || "")) ||
-              i.permission_key === "membership_all_access" ||
-              i.source_sku === "HCD_ALL_ACCESS"),
-        );
-      }
-      function gardenAccess(items) {
-        return items.some(
-          (i) =>
-            i.active === true &&
-            (i.permission_key === "access_jardin_fe" ||
-              i.source_sku === "HCD_JARDIN_FE" ||
-              i.permission_key === "membership_all_access" ||
-              i.source_sku === "HCD_ALL_ACCESS"),
+      function hasAccess(experience, entitlements) {
+        return entitlements.some(
+          (item) =>
+            item.active === true &&
+            (experience.permissionKeys.includes(
+              String(item.permission_key || ""),
+            ) ||
+              experience.sourceSkus.includes(String(item.source_sku || "")) ||
+              item.permission_key === "membership_all_access" ||
+              item.source_sku === "HCD_ALL_ACCESS"),
         );
       }
-      function getProgress(x, userId) {
-        for (const base of x.snapshotKeys) {
-          for (const key of [`${base}_${userId}`, `${base}_local`, base]) {
+      function hasGardenAccess(entitlements) {
+        return entitlements.some(
+          (item) =>
+            item.active === true &&
+            (item.permission_key === "access_jardin_fe" ||
+              item.source_sku === "HCD_JARDIN_FE" ||
+              item.permission_key === "membership_all_access" ||
+              item.source_sku === "HCD_ALL_ACCESS"),
+        );
+      }
+      function readProgress(experience, userId) {
+        for (const baseKey of experience.snapshotKeys) {
+          for (const key of [
+            `${baseKey}_${userId}`,
+            `${baseKey}_local`,
+            baseKey,
+          ]) {
             try {
               const raw = localStorage.getItem(key);
               if (!raw) continue;
-              const s = JSON.parse(raw),
-                p = Math.max(
-                  0,
-                  Math.min(100, Math.round(Number(s.percentage || 0))),
-                );
+              const snapshot = JSON.parse(raw);
+              const progress = Math.max(
+                0,
+                Math.min(100, Math.round(Number(snapshot.percentage || 0))),
+              );
               return {
-                progress: p,
-                label: p >= 100 ? "Completado" : `${p}% completado`,
-                completed: Number(s.completed || 0),
-                total: Number(s.total || 21),
-                level: s.level || "",
+                progress,
+                label:
+                  progress >= 100 ? "Completado" : `${progress}% completado`,
+                completed: Number(snapshot.completed || 0),
+                total: Number(snapshot.total || 21),
               };
-            } catch (e) {}
+            } catch (error) {
+              console.warn("Snapshot inválido:", key, error);
+            }
           }
         }
         return {
@@ -929,25 +995,27 @@
           label: "Disponible para comenzar",
           completed: 0,
           total: 21,
-          level: "",
         };
       }
-      function renderCard(x) {
-        const c = document.createElement("article");
-        c.className = "experience";
-        c.innerHTML = `<div class="experience-top"><div class="icon">${esc(x.icon)}</div><div><h3>${esc(x.title)}</h3><p>${esc(x.description)}</p></div></div><div class="pills"><span class="pill">${esc(x.label)}</span><span class="pill gold">${esc(x.labelProgress)}</span>${x.progress ? `<span class="pill">${x.completed}/${x.total} días</span>` : ""}</div><div class="progress"><div style="--progress:${x.progress}%"></div></div><div class="experience-foot"><span class="progress-text">${x.progress}%</span><a class="btn primary" href="${esc(x.href)}">${x.progress ? "Continuar" : "Comenzar"}</a></div>`;
-        $("collectionGrid").append(c);
+      function renderExperience(experience) {
+        const card = document.createElement("article");
+        card.className = "habit-card";
+        card.innerHTML = `<div class="habit-card-top"><div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div><div><h3>${escapeHTML(experience.title)}</h3><p>${escapeHTML(experience.description)}</p></div></div><div class="habit-meta"><span class="habit-pill">${escapeHTML(experience.label)}</span><span class="habit-pill gold">${escapeHTML(experience.progressLabel)}</span>${experience.progress > 0 ? `<span class="habit-pill">${experience.completed}/${experience.total} días</span>` : ""}</div><div class="progress-line" aria-hidden="true"><div class="progress-fill" style="--progress:${experience.progress}%"></div></div><div class="habit-footer"><span class="habit-progress-text">${experience.progress}%</span><a class="btn btn-primary" href="${escapeHTML(experience.href)}">${experience.progress > 0 ? "Continuar" : "Comenzar"}</a></div>`;
+        $("habitGrid").appendChild(card);
       }
-      async function init() {
+      async function loadDashboard() {
         if (!window.supabase) return;
-        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const client = window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY,
+        );
         try {
           const {
             data: { user },
-            error,
+            error: userError,
           } = await client.auth.getUser();
-          if (error || !user) {
-            location.replace(
+          if (userError || !user) {
+            window.location.replace(
               `login.html?next=${encodeURIComponent("dashboard.html")}`,
             );
             return;
@@ -955,54 +1023,61 @@
           const email = String(user.email || "")
             .trim()
             .toLowerCase();
-          const r = await client
+          const { data, error } = await client
             .from("entitlements")
             .select("email,permission_key,source_sku,active")
             .eq("email", email)
             .eq("active", true)
             .limit(50);
-          const items = r.data || [];
-          const active = EXPERIENCES.filter((x) => hasAccess(x, items)).map(
-            (x) => {
-              const p = getProgress(x, user.id);
-              return { ...x, ...p, labelProgress: p.label };
-            },
-          );
-          $("loading").classList.add("hidden");
-          $("collectionCount").textContent = active.length;
-          if (active.length) {
-            $("collectionGrid").classList.remove("hidden");
-            active.forEach(renderCard);
+          if (error) throw error;
+          const entitlements = data || [];
+          const activeExperiences = ACTIVE_EXPERIENCES.filter((item) =>
+            hasAccess(item, entitlements),
+          ).map((item) => {
+            const progress = readProgress(item, user.id);
+            return { ...item, ...progress, progressLabel: progress.label };
+          });
+          $("loadingState").classList.add("is-hidden");
+          $("collectionCount").textContent = activeExperiences.length;
+          if (activeExperiences.length) {
+            $("habitGrid").classList.remove("is-hidden");
+            activeExperiences.forEach(renderExperience);
           } else {
-            $("empty").classList.remove("hidden");
+            $("emptyHabit").classList.remove("is-hidden");
           }
-          if (gardenAccess(items)) {
+          if (hasGardenAccess(entitlements)) {
             $("communityCount").textContent = "1";
-            $("communitySection").classList.remove("hidden");
+            $("communitySection").classList.remove("is-hidden");
           } else {
             $("communityCount").textContent = "0";
           }
-        } catch (e) {
-          console.warn(e);
-          $("loading").textContent =
+          [$("signoutButton"), $("mobileSignoutButton")].forEach((button) =>
+            button.addEventListener("click", async () => {
+              await client.auth.signOut();
+              window.location.replace("index.html");
+            }),
+          );
+        } catch (error) {
+          console.warn("No se pudo preparar Mi Espacio:", error);
+          $("loadingState").textContent =
             "No pudimos preparar Mi Espacio. Intenta ingresar nuevamente.";
         }
-        [$("signout"), $("signoutMobile")].forEach(
-          (b) =>
-            (b.onclick = async () => {
-              await client.auth.signOut();
-              location.replace("index.html");
-            }),
-        );
       }
-      $("menu").onclick = () => {
-        const open = $("mobile").classList.toggle("open");
-        $("menu").setAttribute("aria-expanded", String(open));
-      };
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") $("mobile").classList.remove("open");
+      const mobileButton = $("mobileMenuButton");
+      const mobileNav = $("mobileNav");
+      mobileButton.addEventListener("click", () => {
+        const open = mobileNav.classList.toggle("open");
+        mobileButton.setAttribute("aria-expanded", String(open));
+        mobileNav.setAttribute("aria-hidden", String(!open));
       });
-      window.addEventListener("load", init);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          mobileNav.classList.remove("open");
+          mobileButton.setAttribute("aria-expanded", "false");
+          mobileNav.setAttribute("aria-hidden", "true");
+        }
+      });
+      window.addEventListener("load", loadDashboard);
     </script>
   </body>
 </html>
