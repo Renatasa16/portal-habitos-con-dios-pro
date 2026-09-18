@@ -43,6 +43,8 @@
       --radius-lg: 24px;
       --radius-md: 18px;
       --max: 1180px;
+      --navy: #1F3146;
+      --navy-dark: #172738;
     }
 
     * {
@@ -341,6 +343,15 @@
       background: var(--gold);
       box-shadow: 0 14px 28px rgba(201, 166, 90, 0.24);
     }
+    .btn-community {
+  color: var(--gold-soft);
+  background: linear-gradient(
+    145deg,
+    var(--navy),
+    var(--navy-dark)
+  );
+  box-shadow: 0 14px 28px rgba(31, 49, 70, 0.24);
+}
 
     .btn:hover {
       transform: translateY(-2px);
@@ -1002,6 +1013,7 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="biblioteca.html">Explorar Colecciones</a>
             <a class="btn btn-secondary" href="login.html">Ingresar a Mi Espacio</a>
+            <a class="btn btn-community" href="comunidad.html">Explorar Comunidad</a>
           </div>
         </article>
 
