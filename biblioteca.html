@@ -1391,6 +1391,10 @@
 
     const els = {
       heroLoginLink: document.getElementById("heroLoginLink"),
+      headerLoginLink: document.getElementById("headerLoginLink"),
+      mobileLoginLink: document.getElementById("mobileLoginLink"),
+      gardenAccessBtn: document.getElementById("gardenAccessBtn"),
+      gardenBuyBtn: document.getElementById("gardenBuyBtn"),
 
       headerLogoutBtn: document.getElementById("headerLogoutBtn"),
       mobileLogoutBtn: document.getElementById("mobileLogoutBtn"),
@@ -1431,6 +1435,7 @@
     let activePermissionKeys = new Set();
     let activeSourceSkus = new Set();
     let hasAllAccess = false;
+    let hasGardenAccess = false;
 
     init();
     bindMobileNavigation();
@@ -1440,10 +1445,7 @@
         setLoading(true);
 
         if (!supabaseClient) {
-          products = FALLBACK_PRODUCTS;
-          renderLibrary();
-          setLoading(false);
-          return;
+          throw new Error("No se pudo inicializar Supabase. Verifica que la librería esté cargada.");
         }
 
         await loadSession();
@@ -1454,10 +1456,11 @@
         }
 
         renderLibrary();
+        renderGardenState();
         setLoading(false);
       } catch (error) {
         console.error(error);
-        showError("No pudimos cargar Mis Colecciones. Intenta actualizar la página.");
+        showError("No pudimos validar tu sesión ni cargar Mis Colecciones. Intenta actualizar la página o ingresar nuevamente.");
       }
     }
 
@@ -1487,48 +1490,37 @@
     }
 
     async function loadSession() {
-      const { data, error } = await supabaseClient.auth.getSession();
+      const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
 
-      if (error) {
-        console.warn("Session warning:", error);
+      if (sessionError) {
+        console.warn("No se pudo leer la sesión local:", sessionError);
       }
 
-      currentUser = data && data.session && data.session.user
-        ? data.session.user
-        : null;
+      const sessionUser = sessionData?.session?.user || null;
+
+      if (sessionUser) {
+        const { data: userData, error: userError } = await supabaseClient.auth.getUser();
+        if (userError) {
+          console.warn("No se pudo validar el usuario:", userError);
+        }
+        currentUser = userData?.user || sessionUser;
+      } else {
+        currentUser = null;
+      }
 
       if (currentUser) {
-        if (els.heroLoginLink) {
-          els.heroLoginLink.classList.add("hide");
-        }
-
-        if (els.headerLoginLink) els.headerLoginLink.classList.add("hide");
-        if (els.mobileLoginLink) els.mobileLoginLink.classList.add("hide");
-        if (els.headerLogoutBtn) {
-          els.headerLogoutBtn.classList.remove("hide");
-        }
-        if (els.gardenAccessBtn) els.gardenAccessBtn.href = "dashboard.html#jardin-de-fe";
-
-        if (els.mobileLogoutBtn) {
-          els.mobileLogoutBtn.classList.remove("hide");
-        }
-
+        els.heroLoginLink?.classList.add("hide");
+        els.headerLoginLink?.classList.add("hide");
+        els.mobileLoginLink?.classList.add("hide");
+        els.headerLogoutBtn?.classList.remove("hide");
+        els.mobileLogoutBtn?.classList.remove("hide");
         els.libraryStatus.textContent = "Sesión activa";
       } else {
-        if (els.heroLoginLink) {
-          els.heroLoginLink.classList.remove("hide");
-        }
-
-        if (els.headerLoginLink) els.headerLoginLink.classList.remove("hide");
-        if (els.mobileLoginLink) els.mobileLoginLink.classList.remove("hide");
-        if (els.headerLogoutBtn) {
-          els.headerLogoutBtn.classList.add("hide");
-        }
-
-        if (els.mobileLogoutBtn) {
-          els.mobileLogoutBtn.classList.add("hide");
-        }
-
+        els.heroLoginLink?.classList.remove("hide");
+        els.headerLoginLink?.classList.remove("hide");
+        els.mobileLoginLink?.classList.remove("hide");
+        els.headerLogoutBtn?.classList.add("hide");
+        els.mobileLogoutBtn?.classList.add("hide");
         els.libraryStatus.textContent = "Pública";
       }
     }
@@ -1590,6 +1582,28 @@
       hasAllAccess =
         activePermissionKeys.has("membership_all_access") ||
         activeSourceSkus.has("HCD_ALL_ACCESS");
+
+      hasGardenAccess =
+        hasAllAccess ||
+        activePermissionKeys.has(JARDIN_FE.permission_key) ||
+        activeSourceSkus.has(JARDIN_FE.source_sku);
+    }
+
+    function renderGardenState() {
+      if (!els.gardenAccessBtn || !els.gardenBuyBtn) return;
+
+      if (currentUser && hasGardenAccess) {
+        els.gardenAccessBtn.href = "dashboard.html#jardin-de-fe";
+        els.gardenAccessBtn.textContent = "Entrar a mi Jardín de Fe";
+        els.gardenBuyBtn.classList.add("hide");
+        return;
+      }
+
+      els.gardenBuyBtn.classList.remove("hide");
+      els.gardenAccessBtn.href = currentUser
+        ? "comunidad.html"
+        : "login.html?next=dashboard.html%23jardin-de-fe";
+      els.gardenAccessBtn.textContent = currentUser ? "Conocer Jardín de Fe" : "Ingresar para acceder";
     }
 
     function renderLibrary() {
