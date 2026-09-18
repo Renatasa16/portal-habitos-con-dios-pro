@@ -830,6 +830,11 @@
     }
     .community-app strong { display:block; color:white; font-size:0.95rem; margin-bottom:3px; }
     .community-app span { color:#DDE5EC; font-size:0.79rem; line-height:1.4; }
+    .garden-enter { margin-left:auto; flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 16px; border-radius:999px; color:var(--navy) !important; background:var(--gold); font-size:.8rem !important; font-weight:950; box-shadow:0 10px 22px rgba(201,166,90,.22); }
+    .garden-direct-link { transition:transform .2s ease, background .2s ease, border-color .2s ease; }
+    .garden-direct-link:hover { transform:translateY(-2px); background:rgba(255,255,255,.14); border-color:rgba(201,166,90,.5); }
+    .garden-direct-link.is-locked { pointer-events:none; opacity:.58; }
+
 
     .faq-section { margin-top: 42px; }
     .faq-intro { max-width: 760px; margin: 0 auto 24px; text-align: center; }
@@ -1030,6 +1035,8 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      .garden-direct-link { flex-wrap: wrap; align-items: flex-start; }
+      .garden-enter { width: 100%; margin-left: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1223,10 +1230,10 @@
             <a class="secondary-btn community-more" href="comunidad.html">Conocer más</a>
           </div>
         </div>
-        <div class="community-apps" aria-label="Apps incluidas en Jardín de Fe">
-          <div class="community-app"><span class="community-app-icon" aria-hidden="true">📖</span><div><strong>Biblioteca de Promesas</strong><span>Promesas bíblicas organizadas por temas y necesidades.</span></div></div>
-          <div class="community-app"><span class="community-app-icon" aria-hidden="true">🙏</span><div><strong>Biblioteca de Oraciones</strong><span>Oraciones para distintos momentos de tu camino de fe.</span></div></div>
-          <div class="community-app"><span class="community-app-icon" aria-hidden="true">🌸</span><div><strong>Tarjetas de Fe</strong><span>Mensajes breves para leer, guardar y volver a consultar.</span></div></div>
+        <div class="community-apps" id="gardenApps" aria-label="Apps incluidas en Jardín de Fe">
+          <a class="community-app garden-direct-link" href="apps/banco-promesas.html" aria-label="Entrar a Biblioteca de Promesas"><span class="community-app-icon" aria-hidden="true">📖</span><div><strong>Biblioteca de Promesas</strong><span>Promesas bíblicas organizadas por temas y necesidades.</span></div><span class="garden-enter">Entrar</span></a>
+          <a class="community-app garden-direct-link" href="apps/oraciones.html" aria-label="Entrar a Biblioteca de Oraciones"><span class="community-app-icon" aria-hidden="true">🙏</span><div><strong>Biblioteca de Oraciones</strong><span>Oraciones para distintos momentos de tu camino de fe.</span></div><span class="garden-enter">Entrar</span></a>
+          <a class="community-app garden-direct-link" href="apps/tarjetas-fe.html" aria-label="Entrar a Tarjetas de Fe"><span class="community-app-icon" aria-hidden="true">🌸</span><div><strong>Tarjetas de Fe</strong><span>Mensajes breves para leer, guardar y volver a consultar.</span></div><span class="garden-enter">Entrar</span></a>
         </div>
       </div>
     </section>
@@ -1395,6 +1402,7 @@
       mobileLoginLink: document.getElementById("mobileLoginLink"),
       gardenAccessBtn: document.getElementById("gardenAccessBtn"),
       gardenBuyBtn: document.getElementById("gardenBuyBtn"),
+      gardenApps: document.getElementById("gardenApps"),
 
       headerLogoutBtn: document.getElementById("headerLogoutBtn"),
       mobileLogoutBtn: document.getElementById("mobileLogoutBtn"),
@@ -1590,19 +1598,28 @@
     }
 
     function renderGardenState() {
-      if (!els.gardenAccessBtn || !els.gardenBuyBtn) return;
+      if (!els.gardenAccessBtn || !els.gardenBuyBtn || !els.gardenApps) return;
 
-      if (currentUser && hasGardenAccess) {
-        els.gardenAccessBtn.href = "dashboard.html#jardin-de-fe";
+      const appLinks = [...els.gardenApps.querySelectorAll(".garden-direct-link")];
+      const canEnterGarden = Boolean(currentUser && hasGardenAccess);
+
+      appLinks.forEach((link) => {
+        link.classList.toggle("is-locked", !canEnterGarden);
+        link.setAttribute("aria-disabled", String(!canEnterGarden));
+        link.tabIndex = canEnterGarden ? 0 : -1;
+        const action = link.querySelector(".garden-enter");
+        if (action) action.textContent = canEnterGarden ? "Entrar" : "Acceso requerido";
+      });
+
+      if (canEnterGarden) {
+        els.gardenAccessBtn.href = "#gardenApps";
         els.gardenAccessBtn.textContent = "Entrar a mi Jardín de Fe";
         els.gardenBuyBtn.classList.add("hide");
         return;
       }
 
       els.gardenBuyBtn.classList.remove("hide");
-      els.gardenAccessBtn.href = currentUser
-        ? "comunidad.html"
-        : "login.html?next=dashboard.html%23jardin-de-fe";
+      els.gardenAccessBtn.href = currentUser ? "comunidad.html" : "login.html?next=biblioteca.html%23gardenApps";
       els.gardenAccessBtn.textContent = currentUser ? "Conocer Jardín de Fe" : "Ingresar para acceder";
     }
 
@@ -1613,14 +1630,17 @@
       const activeFiles = getVisibleFilesForUnlockedProducts(unlocked);
 
       els.totalProducts.textContent = products.length;
-      els.unlockedProducts.textContent = currentUser ? unlocked.length : 0;
-      els.totalFiles.textContent = currentUser ? activeFiles.length : 0;
-      els.accessCount.textContent = currentUser ? unlocked.length : products.length;
+      const activeAccessCount = currentUser ? unlocked.length + (hasGardenAccess ? 1 : 0) : 0;
+      const privateResourceCount = currentUser ? activeFiles.length + (hasGardenAccess ? 3 : 0) : 0;
+
+      els.unlockedProducts.textContent = activeAccessCount;
+      els.totalFiles.textContent = privateResourceCount;
+      els.accessCount.textContent = currentUser ? activeAccessCount : products.length;
 
       els.accessMessage.textContent = currentUser
-        ? unlocked.length > 0
-          ? "Tienes colecciones activas listas para usar."
-          : "Iniciaste sesión, pero aún no tienes colecciones activas."
+        ? activeAccessCount > 0
+          ? "Tienes accesos activos listos para usar."
+          : "Iniciaste sesión, pero aún no tienes accesos activos."
         : "Puedes explorar el catálogo y adquirir nuevas experiencias desde nuestra tienda.";
 
       products.forEach((product) => {
