@@ -25,6 +25,8 @@
         --muted: #6b7280;
         --line: #e8decc;
         --soft-green: #eef3ea;
+        --soft-gold: #fff4d8;
+        --soft-card: rgba(255, 255, 255, 0.86);
         --shadow: 0 22px 60px rgba(63, 74, 53, 0.14);
         --shadow-soft: 0 12px 34px rgba(63, 74, 53, 0.1);
         --radius-xl: 32px;
@@ -362,7 +364,7 @@
         overflow: hidden;
         padding: 24px;
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.86);
+        background: var(--soft-card);
         border: 1px solid rgba(232, 222, 204, 0.96);
         box-shadow: var(--shadow-soft);
         transition: 0.2s ease;
@@ -416,7 +418,7 @@
         font-weight: 900;
       }
       .habit-pill.gold {
-        background: var(--gold-soft);
+        background: var(--soft-gold);
         border: 1px solid rgba(201, 166, 90, 0.22);
       }
       .progress-line {
@@ -1070,27 +1072,55 @@
         return items.join("");
       }
 
-      function renderExperience(experience) {
-        const progress = clampProgress(experience.progress);
-        const card = document.createElement("article");
-        card.className = "habit-card";
-        card.innerHTML = `
-        <div class="habit-card-top">
-          <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
-          <div>
-            <h3>${escapeHTML(experience.title)}</h3>
-            <p>${escapeHTML(experience.description)}</p>
-          </div>
-        </div>
-        <div class="habit-meta">${buildProgressMeta(experience)}</div>
-        <div class="progress-line" aria-hidden="true">
-          <div class="progress-fill" style="--progress:${progress}%;"></div>
-        </div>
-        <div class="habit-footer">
-          <span class="habit-progress-text">${progress}%</span>
-          <a class="btn btn-primary" href="${escapeHTML(experience.href)}">${progress > 0 ? "Continuar" : "Comenzar"}</a>
-        </div>`;
-        $("habitGrid").appendChild(card);
+      function renderActiveExperiences(experiences) {
+        const habitGrid = $("habitGrid");
+        const emptyHabit = $("emptyHabit");
+        habitGrid.innerHTML = "";
+
+        if (!experiences.length) {
+          habitGrid.classList.add("is-hidden");
+          emptyHabit.classList.remove("is-hidden");
+          return;
+        }
+
+        experiences.forEach((experience) => {
+          const progress = clampProgress(experience.progress);
+          const card = document.createElement("article");
+          card.className = "habit-card";
+          card.dataset.experienceId = experience.id;
+          card.innerHTML = `
+            <div class="habit-card-top">
+              <div class="habit-icon" aria-hidden="true">${escapeHTML(experience.icon)}</div>
+              <div>
+                <h3>${escapeHTML(experience.title)}</h3>
+                <p>${escapeHTML(experience.description)}</p>
+              </div>
+            </div>
+            <div class="habit-meta">
+              ${buildProgressMeta(experience)}
+            </div>
+            <div
+              class="progress-line"
+              role="progressbar"
+              aria-label="Progreso de ${escapeHTML(experience.title)}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="${progress}"
+            >
+              <div class="progress-fill" style="--progress:${progress}%;"></div>
+            </div>
+            <div class="habit-footer">
+              <span class="habit-progress-text">${progress}%</span>
+              <a class="btn btn-primary" href="${escapeHTML(experience.href)}">
+                ${progress > 0 ? "Continuar" : "Comenzar"}
+              </a>
+            </div>
+          `;
+          habitGrid.appendChild(card);
+        });
+
+        emptyHabit.classList.add("is-hidden");
+        habitGrid.classList.remove("is-hidden");
       }
 
       async function loadDashboard() {
@@ -1129,12 +1159,7 @@
           });
           $("loadingState").classList.add("is-hidden");
           $("collectionCount").textContent = activeExperiences.length;
-          if (activeExperiences.length) {
-            $("habitGrid").classList.remove("is-hidden");
-            activeExperiences.forEach(renderExperience);
-          } else {
-            $("emptyHabit").classList.remove("is-hidden");
-          }
+          renderActiveExperiences(activeExperiences);
           if (hasGardenAccess(entitlements)) {
             $("communityCount").textContent = "1";
             $("communitySection").classList.remove("is-hidden");
