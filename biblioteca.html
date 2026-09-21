@@ -1753,11 +1753,10 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       const productTopContent = productImage
   ? `
       <div class="product-top has-product-image">
-        ${escapeAttr(productImage)}"
-          class="product-hero-image"
-          loading="lazy"
-          decoding="async"
-        />
+  <img
+    src="${escapeAttr(productImage)}"
+    alt="${escapeAttr(productImageAlt)}"
+    class="product/>
 
         <div class="product-badges">
           <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
@@ -1805,19 +1804,6 @@ card.innerHTML = `
     <div class="product-actions">${actions}</div>
   </div>
 `;
-          <h3>${escapeHTML(product.title)}</h3>
-          <p>${escapeHTML(productDescription)}</p>
-
-          <div class="included-list">
-            <span>✓ App exclusiva</span>
-            <span>✓ La guía de tu App</span>
-            <span>✓ Ebook premium</span>
-            <span>✓ Bonos digitales</span>
-          </div>
-
-          <div class="product-actions">${actions}</div>
-        </div>
-      `;
 
       const openButton = card.querySelector('[data-action="open"]');
       const buyButton = card.querySelector('[data-action="buy"]');
