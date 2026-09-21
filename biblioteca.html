@@ -1751,11 +1751,12 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       const productTopContent = productImage
   ? `
       <div class="product-top has-product-image">
-  <img
-  src="${escapeAttr(productImage)}"
-  alt="${escapeAttr(productImageAlt)}"
- ding="async"
-/>
+        "
+          alt="${escapeAttr(productImageAlt)}"
+          class="product-hero-image"
+          loading="lazy"
+          decoding="async"
+        />
 
         <div class="product-badges">
           <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
