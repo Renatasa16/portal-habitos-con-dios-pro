@@ -1751,10 +1751,10 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       const productTopContent = productImage
   ? `
       <div class="product-top has-product-image">
-  <imgalt="${escapeAttr(productImageAlt)}"
-  class="product-hero-image"
-  loading="lazy"
-  decoding="async"
+  <img
+  src="${escapeAttr(productImage)}"
+  alt="${escapeAttr(productImageAlt)}"
+ ding="async"
 />
 
         <div class="product-badges">
