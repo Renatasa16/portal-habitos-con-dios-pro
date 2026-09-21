@@ -516,7 +516,8 @@
 .product-hero-image {
   display: block;
   width: 100%;
-  height: 220px;
+  aspect-ratio: 1103 / 360;
+  height: auto;
   object-fit: cover;
   object-position: center;
 }
@@ -1177,6 +1178,7 @@
             <a class="primary-btn" href="#biblioteca">Explorar colecciones</a>
             <a class="secondary-btn" href="login.html?next=biblioteca.html" id="heroLoginLink">Ya compré, quiero ingresar</a>
           </div>
+        </div>
 
         <aside class="hero-card">
           <div class="tiny">Catálogo Premium</div>
@@ -1422,22 +1424,28 @@
     const CATEGORY_ORDER = ["app", "ebook", "bonus", "printable", "audio", "video", "resource"];
 
     const PRODUCT_META = {
-  "21dias": {
-    icon: "🌸",
-    image: "assets/21dias-biblioteca-hero.png",
-    imageAlt: "Colección 21 Días Más Cerca de Dios con App, ebook y recursos digitales",
-    description: "Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria."
-  },
+      "21dias": {
+        icon: "🌸",
+        image: "assets/21dias-biblioteca-hero.png",
+        imageAlt: "Colección 21 Días Más Cerca de Dios con App, ebook y recursos digitales",
+        description: "Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria."
+      },
       "familias": {
         icon: "👨‍👩‍👧‍👦",
+        image: "assets/familias-biblioteca-hero.png",
+        imageAlt: "Colección Pequeños Momentos con Dios con App, ebook y recursos digitales",
         description: "Un espacio para compartir en familia, fortalecer los vínculos y vivir momentos de fe que inspiren, acompañen y transformen la vida cotidiana."
       },
       "palabras-duelen": {
         icon: "💛",
+        image: "assets/palabras-duelen-biblioteca-hero.png",
+        imageAlt: "Colección Cuando las Palabras Duelen con App, ebook y recursos digitales",
         description: "Una guía para adolescentes y jóvenes que desean transformar el dolor en crecimiento, fortalecer su identidad y descubrir la esperanza que Dios tiene para sus vidas."
       },
       "hombre-edifica": {
         icon: "🏡",
+        image: "assets/hombre-edifica-biblioteca-hero.png",
+        imageAlt: "Colección El Hombre que Edifica su Hogar con App, ebook y recursos digitales",
         description: "Un camino de crecimiento para hombres que desean fortalecer su liderazgo espiritual, familiar y personal, construyendo una vida con propósito, carácter y fe."
       }
     };
@@ -1749,48 +1757,46 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       }
 
       const productTopContent = productImage
-  ? `
-      <div class="product-top has-product-image">
+        ? `
+            <div class="product-top has-product-image">
+              <img
+                src="${escapeAttr(productImage)}"
+                alt="${escapeAttr(productImageAlt)}"
+                class="product-hero-image"
+                loading="lazy"
+                decoding="async"
+              />
 
-        ${escapeAttr(productImage)}"
-          class="product-hero-image"
-          loading="lazy"
-          decoding="async"
-        />
+              <div class="product-badges">
+                <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
+                  ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
+                </span>
 
-        <div class="product-badges">
-          <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
-            ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
-          </span>
+                <span class="badge badge-status">
+                  ${escapeHTML(statusLabel)}
+                </span>
+              </div>
+            </div>
+          `
+        : `
+            <div class="product-top">
+              <div class="product-badges">
+                <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
+                  ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
+                </span>
 
-          <span class="badge badge-status">
-            ${escapeHTML(statusLabel)}
-          </span>
-        </div>
+                <span class="badge badge-status">
+                  ${escapeHTML(statusLabel)}
+                </span>
+              </div>
 
-      </div>
-    `
-  : `
-      <div class="product-top">
+              <div class="product-symbol">
+                ${escapeHTML(productIcon)}
+              </div>
+            </div>
+          `;
 
-        <div class="product-badges">
-          <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
-            ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
-          </span>
-
-          <span class="badge badge-status">
-            ${escapeHTML(statusLabel)}
-          </span>
-        </div>
-
-        <div class="product-symbol">
-          ${escapeHTML(productIcon)}
-        </div>
-
-      </div>
-    `;
-
-card.innerHTML = `
+      card.innerHTML = `
   ${productTopContent}
 
   <div class="product-body">
