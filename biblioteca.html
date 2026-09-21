@@ -1751,8 +1751,8 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       const productTopContent = productImage
   ? `
       <div class="product-top has-product-image">
-        "
-          alt="${escapeAttr(productImageAlt)}"
+
+        ${escapeAttr(productImage)}"
           class="product-hero-image"
           loading="lazy"
           decoding="async"
@@ -1767,10 +1767,12 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
             ${escapeHTML(statusLabel)}
           </span>
         </div>
+
       </div>
     `
   : `
       <div class="product-top">
+
         <div class="product-badges">
           <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
             ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
@@ -1784,6 +1786,7 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
         <div class="product-symbol">
           ${escapeHTML(productIcon)}
         </div>
+
       </div>
     `;
 
