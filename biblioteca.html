@@ -1424,7 +1424,7 @@
     const PRODUCT_META = {
   "21dias": {
     icon: "🌸",
-    image: "assets/21dias-card-hero.png",
+    image: "assets/21dias-biblioteca-hero.png",
     imageAlt: "Colección 21 Días Más Cerca de Dios con App, ebook y recursos digitales",
     description: "Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria."
   },
@@ -1751,10 +1751,11 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       const productTopContent = productImage
   ? `
       <div class="product-top has-product-image">
-  <img
-    src="${escapeAttr(productImage)}"
-    alt="${escapeAttr(productImageAlt)}"
-    class="product/>
+  <imgalt="${escapeAttr(productImageAlt)}"
+  class="product-hero-image"
+  loading="lazy"
+  decoding="async"
+/>
 
         <div class="product-badges">
           <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
