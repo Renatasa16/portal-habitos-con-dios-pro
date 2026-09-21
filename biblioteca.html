@@ -502,6 +502,56 @@
       justify-content: space-between;
       background: linear-gradient(135deg, var(--green), var(--olive));
     }
+    /* Imagen promocional dentro de las tarjetas de colección */
+.product-top.has-product-image {
+  position: relative;
+  min-height: 0;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+  background: var(--green);
+}
+
+/* Mantiene visible el banner completo sin recortarlo */
+.product-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1103 / 620;
+  object-fit: contain;
+  object-position: center;
+  background: var(--green);
+}
+
+/* Coloca las etiquetas de acceso sobre la imagen */
+.product-top.has-product-image .product-badges {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+/* Sombra suave para que las etiquetas se lean sobre cualquier imagen */
+.product-top.has-product-image .badge {
+  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+/* Oscurece ligeramente la etiqueta Disponible */
+.product-top.has-product-image .badge-status {
+  background: rgba(63, 74, 53, 0.86);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* La tarjeta conserva una transición visual elegante */
+.product-top.has-product-image .product-hero-image {
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-top.has-product-image .product-hero-image {
+  transform: scale(1.015);
+}
 
     .product-card.familias .product-top {
       background: linear-gradient(135deg, #7C6544, #C9A65A);
@@ -1374,10 +1424,12 @@
     const CATEGORY_ORDER = ["app", "ebook", "bonus", "printable", "audio", "video", "resource"];
 
     const PRODUCT_META = {
-      "21dias": {
-        icon: "🌸",
-        description: "Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria."
-      },
+  "21dias": {
+    icon: "🌸",
+    image: "assets/21dias-card-hero.png",
+    imageAlt: "Colección 21 Días Más Cerca de Dios con App, ebook y recursos digitales",
+    description: "Un recorrido guiado para mujeres que desean fortalecer su relación con Dios, desarrollar hábitos espirituales saludables y encontrar inspiración para su vida diaria."
+  },
       "familias": {
         icon: "👨‍👩‍👧‍👦",
         description: "Un espacio para compartir en familia, fortalecer los vínculos y vivir momentos de fe que inspiren, acompañen y transformen la vida cotidiana."
@@ -1663,8 +1715,10 @@
       card.id = `coleccion-${product.slug}`;
 
       const productIcon = meta.icon || "✦";
-      const productDescription = meta.description || "Colección premium de Hábitos con Dios.";
-      const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
+const productImage = meta.image || "";
+const productImageAlt = meta.imageAlt || product.title;
+const productDescription = meta.description || "Colección premium de Hábitos con Dios.";
+const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
 
       let actions = "";
 
@@ -1696,19 +1750,61 @@
         `;
       }
 
-      card.innerHTML = `
-        <div class="product-top">
-          <div class="product-badges">
-            <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
-              ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
-            </span>
-            <span class="badge badge-status">${escapeHTML(statusLabel)}</span>
-          </div>
+      const productTopContent = productImage
+  ? `
+      <div class="product-top has-product-image">
+        ${escapeAttr(productImage)}"
+          class="product-hero-image"
+          loading="lazy"
+          decoding="async"
+        />
 
-          <div class="product-symbol">${escapeHTML(productIcon)}</div>
+        <div class="product-badges">
+          <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
+            ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
+          </span>
+
+          <span class="badge badge-status">
+            ${escapeHTML(statusLabel)}
+          </span>
+        </div>
+      </div>
+    `
+  : `
+      <div class="product-top">
+        <div class="product-badges">
+          <span class="badge ${isUnlocked ? "badge-unlocked" : "badge-locked"}">
+            ${isUnlocked ? "✅ Acceso activo" : "🔒 Acceso por compra"}
+          </span>
+
+          <span class="badge badge-status">
+            ${escapeHTML(statusLabel)}
+          </span>
         </div>
 
-        <div class="product-body">
+        <div class="product-symbol">
+          ${escapeHTML(productIcon)}
+        </div>
+      </div>
+    `;
+
+card.innerHTML = `
+  ${productTopContent}
+
+  <div class="product-body">
+    <h3>${escapeHTML(product.title)}</h3>
+    <p>${escapeHTML(productDescription)}</p>
+
+    <div class="included-list">
+      <span>✓ App exclusiva</span>
+      <span>✓ La guía de tu App</span>
+      <span>✓ Ebook premium</span>
+      <span>✓ Bonos digitales</span>
+    </div>
+
+    <div class="product-actions">${actions}</div>
+  </div>
+`;
           <h3>${escapeHTML(product.title)}</h3>
           <p>${escapeHTML(productDescription)}</p>
 
