@@ -1681,32 +1681,55 @@
       els.gardenAccessBtn.textContent = currentUser ? "Conocer Jardín de Fe" : "Ingresar para acceder";
     }
 
+    function isGardenProduct(product) {
+      if (!product) return false;
+
+      const normalizedTitle = String(product.title || "").trim().toLowerCase();
+      const normalizedSlug = String(product.slug || "").trim().toLowerCase();
+
+      return (
+        product.permission_key === JARDIN_FE.permission_key ||
+        product.source_sku === JARDIN_FE.source_sku ||
+        normalizedSlug === "jardin-fe" ||
+        normalizedSlug === "jardin_de_fe" ||
+        normalizedTitle === "jardín de fe" ||
+        normalizedTitle === "jardin de fe"
+      );
+    }
+
+    function getCollectionProducts() {
+      return products.filter((product) => !isGardenProduct(product));
+    }
+
     function renderLibrary() {
       els.productGrid.innerHTML = "";
 
-      const unlocked = products.filter((product) => userHasAccess(product));
-      const activeFiles = getVisibleFilesForUnlockedProducts(unlocked);
+      // Jardín de Fe se gestiona exclusivamente desde la sección azul de comunidad.
+      // No se muestra ni se contabiliza como una colección.
+      const collectionProducts = getCollectionProducts();
+      const unlockedCollections = collectionProducts.filter((product) => userHasAccess(product));
+      const activeFiles = getVisibleFilesForUnlockedProducts(unlockedCollections);
 
-      els.totalProducts.textContent = products.length;
-      const activeAccessCount = currentUser ? unlocked.length + (hasGardenAccess ? 1 : 0) : 0;
-      const privateResourceCount = currentUser ? activeFiles.length + (hasGardenAccess ? 3 : 0) : 0;
-
-      els.unlockedProducts.textContent = activeAccessCount;
-      els.totalFiles.textContent = privateResourceCount;
-      els.accessCount.textContent = currentUser ? activeAccessCount : products.length;
+      els.totalProducts.textContent = collectionProducts.length;
+      els.unlockedProducts.textContent = currentUser ? unlockedCollections.length : 0;
+      els.totalFiles.textContent = currentUser ? activeFiles.length : 0;
+      els.accessCount.textContent = currentUser
+        ? unlockedCollections.length
+        : collectionProducts.length;
 
       els.accessMessage.textContent = currentUser
-        ? activeAccessCount > 0
-          ? "Tienes accesos activos listos para usar."
-          : "Iniciaste sesión, pero aún no tienes accesos activos."
-        : "Puedes explorar el catálogo y adquirir nuevas experiencias desde nuestra tienda.";
+        ? unlockedCollections.length > 0
+          ? "Tienes colecciones activas listas para usar."
+          : hasGardenAccess
+            ? "Tu acceso a Jardín de Fe está activo en la sección Comunidad."
+            : "Iniciaste sesión, pero aún no tienes colecciones activas."
+        : "Puedes explorar las cuatro colecciones y conocer Jardín de Fe en la sección Comunidad.";
 
-      products.forEach((product) => {
+      collectionProducts.forEach((product) => {
         els.productGrid.appendChild(createProductCard(product));
       });
 
       els.libraryApp.classList.remove("hide");
-
       setTimeout(scrollToHashTarget, 80);
     }
 
