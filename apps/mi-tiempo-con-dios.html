@@ -1045,6 +1045,15 @@
     }
 
 
+    
+    /* Indicadores de recorrido sincronizado */
+    .day-button { position:relative; min-height:48px; display:grid; place-items:center; }
+    .day-number { line-height:1; }
+    .day-status { position:absolute; right:5px; top:4px; min-width:15px; height:15px; display:grid; place-items:center; font-size:9px; border-radius:999px; background:var(--soft-gold); color:var(--green); }
+    .day-button.completed .day-status { background:var(--green); color:var(--white); }
+    .day-button.active::after { content:""; position:absolute; left:50%; bottom:4px; width:16px; height:3px; transform:translateX(-50%); border-radius:999px; background:var(--gold); }
+    .sync-note { margin-top:12px; color:var(--muted); font-size:12px; line-height:1.5; font-weight:700; }
+
     button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
     .history-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:14px 0 18px; }
     .history-summary-card { background:var(--soft-cream); border:1px solid var(--line); border-radius:18px; padding:15px; }
@@ -1163,6 +1172,7 @@
           <div class="user-row">
             <span class="pill gold">👑 Bundle 21 Días</span>
             <span class="pill" id="levelPill">🌱 Nivel Semilla</span>
+            <span class="pill">☁️ Tu recorrido te acompaña</span>
           </div>
         </div>
 
@@ -1250,7 +1260,7 @@
         <aside class="sidebar" id="dias">
           <h2>Días del recorrido</h2>
           <p class="sidebar-subtitle">
-            Elige un día, registra tu avance y vuelve cuando quieras. Tu progreso queda guardado en este dispositivo.
+            Elige un día, registra tu avance y vuelve cuando quieras. Tu recorrido se conserva en tu cuenta para que puedas continuar desde cualquier dispositivo donde inicies sesión.
           </p>
           <div class="day-grid" id="dayGrid"></div>
         </aside>
@@ -1367,7 +1377,7 @@
 
           <section class="library-panel collection-panel" id="miColeccion" aria-labelledby="collectionTitle">
             <h2 id="collectionTitle">Mi Historia con Dios</h2>
-            <p class="reflection">Conserva oraciones, gratitudes, aprendizajes y días significativos de cada vez que recorres estos 21 días.</p>
+            <p class="reflection">Conserva tus oraciones, gratitudes, aprendizajes y días significativos. Tu historia te acompaña cada vez que inicias sesión, desde cualquier dispositivo.</p>
             <div class="history-summary" aria-label="Resumen de mi historia"><div class="history-summary-card"><strong id="historyPrayerCount">0</strong><span>Oraciones guardadas</span></div><div class="history-summary-card"><strong id="historyGratitudeCount">0</strong><span>Gratitudes guardadas</span></div><div class="history-summary-card"><strong id="historyNoteCount">0</strong><span>Aprendizajes y notas</span></div><div class="history-summary-card"><strong id="historyCycleCount">1</strong><span>Recorridos iniciados</span></div></div>
             <div class="collection-tabs" role="tablist" aria-label="Contenido personal">
               <button class="collection-tab active" type="button" data-tab="favoritos">Favoritos</button>
@@ -1391,7 +1401,7 @@
 
             <div class="continue-card">
               <h3>Continúa cultivando tu camino</h3>
-              <p>Vuelve a tus favoritos, revisa tu diario o explora nuevas experiencias desde Mi Espacio. La futura Comunidad Hábitos con Dios se integrará aquí cuando esté disponible.</p>
+              <p>Tu recorrido completado se conservará en Mi Historia con Dios. Puedes volver a tus favoritos, revisar tu diario, iniciar un nuevo recorrido o explorar nuevas experiencias desde Mi Espacio.</p>
               <div class="actions-row">
                 <button class="btn btn-secondary" type="button" data-collection="favoritos">Ver mis favoritos</button>
                 <button class="btn btn-primary" type="button" id="restartJourneyButton">Volver a recorrer los 21 días</button>
@@ -1441,12 +1451,6 @@
 
     const REQUIRED_PERMISSION_KEY = "access_21dias";
     const REQUIRED_SOURCE_SKU = "HCD_21DIAS_BUNDLE";
-
-    const PROGRESS_SNAPSHOT_KEYS = [
-      "hcd_21dias_progress_snapshot",
-      "hcd_mi_tiempo_con_dios_progress_snapshot",
-      "hcd_mujeres_21dias_progress_snapshot"
-    ];
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -1730,9 +1734,12 @@
 ];
 
     let currentUser = null;
+    let currentJourney = null;
     let currentDay = 1;
-    let storageKey = "";
     let state = {};
+    let historyItems = [];
+    let activeCollectionTab = "favoritos";
+    let isSaving = false;
 
     const loadingScreen = document.getElementById("loadingScreen");
     const lockedScreen = document.getElementById("lockedScreen");
@@ -1776,621 +1783,218 @@
     const historyGratitudeCount = document.getElementById("historyGratitudeCount");
     const historyNoteCount = document.getElementById("historyNoteCount");
     const historyCycleCount = document.getElementById("historyCycleCount");
-    let activeCollectionTab = "favoritos";
 
     function getFriendlyNameFromEmail(email) {
       if (!email || typeof email !== "string") return "Usuario";
-
       const firstPart = email.split("@")[0] || "";
       const firstName = firstPart.split(/[._-]/).filter(Boolean)[0];
-
       if (!firstName) return email;
-
       return firstName.charAt(0).toUpperCase() + firstName.slice(1);
     }
 
     function getDefaultEntry() {
+      return { checks:{leer:false,orar:false,escribir:false,practicar:false}, prayer:"", gratitude:"", notes:"", favorite:false, completed:false };
+    }
+
+    function initializeState() {
+      state = {};
+      devotionals.forEach((item) => { state[item.day] = getDefaultEntry(); });
+    }
+
+    function rowToEntry(row) {
       return {
-        checks: {
-          leer: false,
-          orar: false,
-          escribir: false,
-          practicar: false
-        },
-        prayer: "",
-        gratitude: "",
-        notes: "",
-        favorite: false,
-        completed: false
+        checks:{...getDefaultEntry().checks,...(row.checks || {})},
+        prayer:row.prayer || "",
+        gratitude:row.gratitude || "",
+        notes:row.notes || "",
+        favorite:Boolean(row.favorite),
+        completed:Boolean(row.completed)
       };
-    }
-
-    function loadState() {
-      const saved = localStorage.getItem(storageKey);
-
-      if (saved) {
-        try {
-          state = JSON.parse(saved);
-        } catch {
-          state = {};
-        }
-      }
-
-      if (!Array.isArray(state._history)) state._history = [];
-      if (!Number.isInteger(state._cycle) || state._cycle < 1) state._cycle = 1;
-      devotionals.forEach((item) => {
-        if (!state[item.day] || Array.isArray(state[item.day])) state[item.day] = getDefaultEntry();
-        state[item.day].checks = { ...getDefaultEntry().checks, ...(state[item.day].checks || {}) };
-      });
-
-      const savedDay = Number(localStorage.getItem(storageKey + "_currentDay"));
-
-      if (savedDay >= 1 && savedDay <= 21) {
-        currentDay = savedDay;
-      }
-    }
-
-    function saveState() {
-      localStorage.setItem(storageKey, JSON.stringify(state));
-      localStorage.setItem(storageKey + "_currentDay", String(currentDay));
-      saveProgressSnapshot();
     }
 
     function showToast(message) {
       toast.textContent = message;
       toast.classList.add("show");
-
-      window.clearTimeout(showToast.timer);
-
-      showToast.timer = window.setTimeout(() => {
-        toast.classList.remove("show");
-      }, 1800);
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
-    function getCompletedCount() {
-      return devotionals.filter((item) => state[item.day]?.completed).length;
+    function setBusy(button, busy, label) {
+      if (!button) return;
+      if (busy) { button.dataset.originalText = button.textContent; button.disabled = true; button.textContent = label || "Guardando..."; }
+      else { button.disabled = false; button.textContent = button.dataset.originalText || button.textContent; }
     }
 
-    function getFavoriteCount() {
-      return devotionals.filter((item) => state[item.day]?.favorite).length;
-    }
+    function getCompletedCount(){ return devotionals.filter((item)=>state[item.day]?.completed).length; }
+    function getFavoriteCount(){ return devotionals.filter((item)=>state[item.day]?.favorite).length; }
+    function getPrayerCount(){ return historyItems.filter((x)=>x.kind==="Oración").length + devotionals.filter((item)=>state[item.day]?.prayer).length; }
+    function getGratitudeCount(){ return historyItems.filter((x)=>x.kind==="Gratitud").length + devotionals.filter((item)=>state[item.day]?.gratitude).length; }
+    function getStreakCount(){ let streak=0; for(let day=1;day<=21;day++){ if(state[day]?.completed) streak++; else break; } return streak; }
+    function getNextRecommendedDay(){ for(let day=1;day<=21;day++){ if(!state[day]?.completed) return day; } return 21; }
+    function getLevel(completed){ if(completed>=21)return{icon:"🏆",name:"Discípulo Constante"}; if(completed>=16)return{icon:"✨",name:"Transformación"}; if(completed>=11)return{icon:"🌳",name:"Raíces Firmes"}; if(completed>=6)return{icon:"🌿",name:"Crecimiento"}; return{icon:"🌱",name:"Semilla"}; }
 
-    function getPrayerCount() {
-      return (state._history || []).filter((x) => x.kind === "Oración").length + devotionals.filter((item) => state[item.day]?.prayer).length;
-    }
-
-    function getGratitudeCount() {
-      return (state._history || []).filter((x) => x.kind === "Gratitud").length + devotionals.filter((item) => state[item.day]?.gratitude).length;
-    }
-
-    function getStreakCount() {
-      let streak = 0;
-
-      for (let day = 1; day <= 21; day++) {
-        if (state[day]?.completed) {
-          streak++;
-        } else {
-          break;
+    async function getOrCreateActiveJourney() {
+      const {data:active,error} = await supabaseClient.from("user_journeys").select("*").eq("is_active",true).order("cycle_number",{ascending:false}).limit(10);
+      if(error) throw error;
+      if(active?.length){
+        const [keep,...extras]=active;
+        if(extras.length){
+          await supabaseClient.from("user_journeys").update({is_active:false,archived_at:new Date().toISOString(),updated_at:new Date().toISOString()}).in("id",extras.map(x=>x.id));
         }
+        return keep;
       }
-
-      return streak;
+      const {data:last,error:lastError}=await supabaseClient.from("user_journeys").select("cycle_number").order("cycle_number",{ascending:false}).limit(1);
+      if(lastError) throw lastError;
+      const cycle=(last?.[0]?.cycle_number || 0)+1;
+      const payload={user_id:currentUser.id,cycle_number:cycle,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+      const {data,error:insertError}=await supabaseClient.from("user_journeys").insert(payload).select().single();
+      if(insertError) throw insertError;
+      return data;
     }
 
-    function getNextRecommendedDay() {
-      for (let day = 1; day <= 21; day++) {
-        if (!state[day]?.completed) {
-          return day;
-        }
-      }
-
-      return 21;
+    async function loadCloudState() {
+      initializeState();
+      currentJourney = await getOrCreateActiveJourney();
+      currentDay = Math.min(21,Math.max(1,Number(currentJourney.current_day)||1));
+      const [{data:entries,error:entriesError},{data:history,error:historyError}] = await Promise.all([
+        supabaseClient.from("user_devotional_entries").select("*").eq("journey_id",currentJourney.id).order("day_number"),
+        supabaseClient.from("user_journal_history").select("*").order("event_date",{ascending:false})
+      ]);
+      if(entriesError) throw entriesError;
+      if(historyError) throw historyError;
+      (entries||[]).forEach(row=>{ if(row.day_number>=1&&row.day_number<=21) state[row.day_number]=rowToEntry(row); });
+      historyItems=(history||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
     }
 
-    function getLevel(completed) {
-      if (completed >= 21) return { icon: "🏆", name: "Discípulo Constante" };
-      if (completed >= 16) return { icon: "✨", name: "Transformación" };
-      if (completed >= 11) return { icon: "🌳", name: "Raíces Firmes" };
-      if (completed >= 6) return { icon: "🌿", name: "Crecimiento" };
-      return { icon: "🌱", name: "Semilla" };
+    async function findEntryRow(day) {
+      const {data,error}=await supabaseClient.from("user_devotional_entries").select("id").eq("journey_id",currentJourney.id).eq("day_number",day).limit(1);
+      if(error) throw error;
+      return data?.[0]?.id || null;
     }
 
-    function saveProgressSnapshot() {
-      if (!currentUser) return;
-
-      const completed = getCompletedCount();
-      const total = 21;
-      const percentage = Math.round((completed / total) * 100);
-      const streak = getStreakCount();
-      const favorites = getFavoriteCount();
-      const prayers = getPrayerCount();
-      const gratitudes = getGratitudeCount();
-      const level = getLevel(completed);
-      const nextDay = getNextRecommendedDay();
-
-      const snapshot = {
-        slug: "21dias",
-        title: "21 Días Más Cerca de Dios",
-        appTitle: "Mi Tiempo con Dios",
-        completed,
-        total,
-        percentage,
-        streak,
-        favorites,
-        prayers,
-        gratitudes,
-        nextDay,
-        level: level.name,
-        updatedAt: new Date().toISOString()
-      };
-
-      PROGRESS_SNAPSHOT_KEYS.forEach((baseKey) => {
-        localStorage.setItem(
-          `${baseKey}_${currentUser.id}`,
-          JSON.stringify(snapshot)
-        );
-      });
+    async function saveEntry(day) {
+      const entry=state[day] || getDefaultEntry();
+      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:Boolean(entry.completed),favorite:Boolean(entry.favorite),checks:entry.checks||{},prayer:entry.prayer||"",gratitude:entry.gratitude||"",notes:entry.notes||"",updated_at:new Date().toISOString()};
+      const id=await findEntryRow(day);
+      const result=id ? await supabaseClient.from("user_devotional_entries").update(payload).eq("id",id) : await supabaseClient.from("user_devotional_entries").insert(payload);
+      if(result.error) throw result.error;
     }
 
-    function getBadges(completed, streak, favorites, prayers, gratitudes) {
-      return [
-        { label: "🌱 Primer Paso", unlocked: completed >= 1 },
-        { label: "🔥 Racha de 3 días", unlocked: streak >= 3 },
-        { label: "📖 7 Reflexiones", unlocked: completed >= 7 },
-        { label: "🙏 5 Oraciones", unlocked: prayers >= 5 },
-        { label: "💛 5 Gratitudes", unlocked: gratitudes >= 5 },
-        { label: "⭐ Primer Favorito", unlocked: favorites >= 1 },
-        { label: "🌿 14 días de avance", unlocked: completed >= 14 },
-        { label: "🏆 21 Días Completados", unlocked: completed >= 21 }
-      ];
+    async function saveJourneyProgress() {
+      const completed=getCompletedCount(), percentage=Math.round((completed/21)*100), streak=getStreakCount(), level=getLevel(completed);
+      const payload={current_day:currentDay,completed_days:completed,progress_percentage:percentage,streak_days:streak,level_name:level.name,completed_at:completed===21?(currentJourney.completed_at||new Date().toISOString()):null,updated_at:new Date().toISOString()};
+      const {data,error}=await supabaseClient.from("user_journeys").update(payload).eq("id",currentJourney.id).select().single();
+      if(error) throw error;
+      currentJourney=data;
     }
 
-    function renderBadges(completed, streak, favorites, prayers, gratitudes) {
-      const badges = getBadges(completed, streak, favorites, prayers, gratitudes);
-      const unlockedCount = badges.filter((badge) => badge.unlocked).length;
+    async function persistDayAndJourney(day=currentDay) { await saveEntry(day); await saveJourneyProgress(); }
 
-      /* Las insignias siguen visibles en su panel; el tablero muestra oraciones. */
+    function getBadges(completed,streak,favorites,prayers,gratitudes){ return [
+      {label:"🌱 Primer Paso",unlocked:completed>=1},{label:"🔥 Racha de 3 días",unlocked:streak>=3},{label:"📖 7 Reflexiones",unlocked:completed>=7},{label:"🙏 5 Oraciones",unlocked:prayers>=5},{label:"💛 5 Gratitudes",unlocked:gratitudes>=5},{label:"⭐ Primer Favorito",unlocked:favorites>=1},{label:"🌿 14 días de avance",unlocked:completed>=14},{label:"🏆 21 Días Completados",unlocked:completed>=21}
+    ]; }
+    function renderBadges(completed,streak,favorites,prayers,gratitudes){ badgesGrid.innerHTML=getBadges(completed,streak,favorites,prayers,gratitudes).map(b=>`<div class="badge-card ${b.unlocked?"":"locked"}">${b.unlocked?b.label:"🔒 "+b.label.replace(/^.. /,"")}</div>`).join(""); }
+    function renderAchievements(completed,streak){ const a=[]; if(completed===0)a.push("🌱 Comenzando"); if(completed>=1)a.push("✨ Primer paso"); if(completed>=7)a.push("🌿 7 días de avance"); if(streak>=3)a.push("🔥 Racha activa"); if(completed>=21)a.push("🏆 Recorrido completo"); achievementRow.innerHTML=a.map(x=>`<span class="achievement">${x}</span>`).join(""); }
 
-      badgesGrid.innerHTML = badges
-        .map((badge) => {
-          return `<div class="badge-card ${badge.unlocked ? "" : "locked"}">${badge.unlocked ? badge.label : "🔒 " + badge.label.replace(/^.. /, "")}</div>`;
-        })
-        .join("");
+    function renderProgress(){
+      const completed=getCompletedCount(),streak=getStreakCount(),favorites=getFavoriteCount(),prayers=getPrayerCount(),gratitudes=getGratitudeCount(),percentage=Math.round((completed/21)*100),degrees=Math.round((percentage/100)*360),level=getLevel(completed);
+      completedDays.textContent=completed; streakDays.textContent=streak; progressBar.style.width=percentage+"%";
+      const pw=progressBar.parentElement; pw.setAttribute("role","progressbar"); pw.setAttribute("aria-valuemin","0"); pw.setAttribute("aria-valuemax","21"); pw.setAttribute("aria-valuenow",String(completed));
+      progressPercent.textContent=percentage+"%"; progressCircle.style.background=`conic-gradient(var(--gold) ${degrees}deg, rgba(255,255,255,.14) ${degrees}deg)`;
+      levelPill.textContent=`${level.icon} Nivel ${level.name}`; currentLevelMetric.textContent=level.name; currentDayMetric.textContent=`${currentDay} de 21`; badgeCountMetric.textContent=prayers; favoriteCountMetric.textContent=gratitudes;
+      renderAchievements(completed,streak); renderBadges(completed,streak,favorites,prayers,gratitudes); celebrationPanel.classList.toggle("hidden",completed<21);
     }
 
-    function renderAchievements(completed, streak) {
-      const achievements = [];
-
-      if (completed === 0) achievements.push("🌱 Comenzando");
-      if (completed >= 1) achievements.push("✨ Primer paso");
-      if (completed >= 7) achievements.push("🌿 7 días de avance");
-      if (streak >= 3) achievements.push("🔥 Racha activa");
-      if (completed >= 21) achievements.push("🏆 Recorrido completo");
-
-      achievementRow.innerHTML = achievements
-        .map((item) => `<span class="achievement">${item}</span>`)
-        .join("");
-    }
-
-    function renderProgress() {
-      const completed = getCompletedCount();
-      const streak = getStreakCount();
-      const favorites = getFavoriteCount();
-      const prayers = getPrayerCount();
-      const gratitudes = getGratitudeCount();
-      const percentage = Math.round((completed / 21) * 100);
-      const degrees = Math.round((percentage / 100) * 360);
-      const level = getLevel(completed);
-
-      completedDays.textContent = completed;
-      streakDays.textContent = streak;
-      progressBar.style.width = percentage + "%"; const pw=progressBar.parentElement; pw.setAttribute("role","progressbar"); pw.setAttribute("aria-valuemin","0"); pw.setAttribute("aria-valuemax","21"); pw.setAttribute("aria-valuenow",String(completed));
-      progressPercent.textContent = percentage + "%";
-
-      progressCircle.style.background =
-        `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.14) ${degrees}deg)`;
-
-      levelPill.textContent = `${level.icon} Nivel ${level.name}`;
-      currentLevelMetric.textContent = level.name;
-      currentDayMetric.textContent = `${currentDay} de 21`;
-      badgeCountMetric.textContent = prayers;
-      favoriteCountMetric.textContent = gratitudes;
-
-      renderAchievements(completed, streak);
-      renderBadges(completed, streak, favorites, prayers, gratitudes);
-
-      celebrationPanel.classList.toggle("hidden", completed < 21);
-
-      saveProgressSnapshot();
-    }
-
-    function renderDayGrid() {
-      dayGrid.innerHTML = "";
-
-      devotionals.forEach((item) => {
-        const entry = state[item.day] || getDefaultEntry();
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.className = "day-button";
-        button.textContent = item.day; button.setAttribute("aria-label", `Día ${item.day}: ${item.title}${entry.completed ? ", completado" : ", pendiente"}${entry.favorite ? ", favorito" : ""}`);
-
-        if (item.day === currentDay) button.classList.add("active");
-        if (entry.completed) button.classList.add("completed");
-        if (entry.favorite) button.classList.add("favorite");
-
-        button.addEventListener("click", () => {
-          currentDay = item.day;
-          saveState();
-          renderApp();
-          document.getElementById("hoy").scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        });
-
+    function renderDayGrid(){
+      dayGrid.innerHTML="";
+      devotionals.forEach(item=>{
+        const entry=state[item.day]||getDefaultEntry(),button=document.createElement("button");
+        button.type="button"; button.className="day-button";
+        const status=entry.completed?"✓":(entry.favorite?"★":"");
+        button.innerHTML=`<span class="day-number">${item.day}</span>${status?`<span class="day-status" aria-hidden="true">${status}</span>`:""}`;
+        button.setAttribute("aria-label",`Día ${item.day}: ${item.title}${entry.completed?", completado":", pendiente"}${entry.favorite?", favorito":""}`);
+        if(item.day===currentDay)button.classList.add("active"); if(entry.completed)button.classList.add("completed"); if(entry.favorite)button.classList.add("favorite");
+        button.addEventListener("click",async()=>{ currentDay=item.day; renderApp(); try{await saveJourneyProgress();}catch(e){console.error(e);showToast("No pudimos actualizar el día actual");} document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); });
         dayGrid.appendChild(button);
       });
     }
 
-    function renderCurrentDay() {
-      const devotional = devotionals.find((item) => item.day === currentDay);
-      const entry = state[currentDay] || getDefaultEntry();
-
-      dayLabel.textContent = "Día " + devotional.day;
-      dayTitle.textContent = devotional.title;
-     const reflectionParts =
-  devotional.reflection
-    .split(/(?<=\.)\s+/)
-    .filter(Boolean);
-
-let formattedReflection = "";
-
-reflectionParts.forEach((paragraph, index) => {
-
-  if(index === 0){
-
-    formattedReflection += `
-      <div style="
-        background:#EEF3EA;
-        border-left:4px solid #3F4A35;
-        padding:16px;
-        border-radius:12px;
-        margin-bottom:18px;
-        font-weight:700;
-        color:#3F4A35;
-      ">
-        🌿 ${paragraph}
-      </div>
-    `;
-
-  } else {
-
-    formattedReflection += `
-      <p style="
-        margin-bottom:16px;
-        line-height:1.9;
-      ">
-        ${paragraph}
-      </p>
-    `;
-
-  }
-
-});
-
-formattedReflection += `
-  <div style="
-    margin-top:24px;
-    padding-top:16px;
-    border-top:1px solid #E8DECC;
-    color:#556544;
-    font-style:italic;
-    font-weight:700;
-  ">
-    ✨ Permite que esta verdad acompañe tu día y guíe tus próximos pasos.
-  </div>
-`;
-
-reflectionText.innerHTML =
-  formattedReflection;
-      verseText.textContent = devotional.verse;
-      focusText.textContent = devotional.focus;
-      shortPrayerText.textContent = devotional.prayer;
-      actionText.textContent = devotional.action;
-      journalPromptText.textContent = devotional.journal;
-      declarationText.textContent = devotional.declaration;
-
-      favoriteButton.textContent = entry.favorite
-        ? "★ Favorito guardado"
-        : "☆ Guardar favorito";
-
-      favoriteButton.classList.toggle("active", Boolean(entry.favorite)); favoriteButton.setAttribute("aria-pressed", String(Boolean(entry.favorite)));
-
-      document.querySelectorAll("[data-check]").forEach((checkbox) => {
-        const key = checkbox.getAttribute("data-check");
-        checkbox.checked = Boolean(entry.checks[key]);
-      });
-
-      prayerInput.value = entry.prayer || "";
-      gratitudeInput.value = entry.gratitude || "";
-      notesInput.value = entry.notes || "";
+    function renderCurrentDay(){
+      const devotional=devotionals.find(item=>item.day===currentDay),entry=state[currentDay]||getDefaultEntry();
+      dayLabel.textContent="Día "+devotional.day; dayTitle.textContent=devotional.title;
+      const reflectionParts=devotional.reflection.split(/(?<=\.)\s+/).filter(Boolean); let formattedReflection="";
+      reflectionParts.forEach((paragraph,index)=>{ formattedReflection += index===0 ? `<div style="background:#EEF3EA;border-left:4px solid #3F4A35;padding:16px;border-radius:12px;margin-bottom:18px;font-weight:700;color:#3F4A35;">🌿 ${paragraph}</div>` : `<p style="margin-bottom:16px;line-height:1.9;">${paragraph}</p>`; });
+      formattedReflection += `<div style="margin-top:24px;padding-top:16px;border-top:1px solid #E8DECC;color:#556544;font-style:italic;font-weight:700;">✨ Permite que esta verdad acompañe tu día y guíe tus próximos pasos.</div>`;
+      reflectionText.innerHTML=formattedReflection; verseText.textContent=devotional.verse; focusText.textContent=devotional.focus; shortPrayerText.textContent=devotional.prayer; actionText.textContent=devotional.action; journalPromptText.textContent=devotional.journal; declarationText.textContent=devotional.declaration;
+      favoriteButton.textContent=entry.favorite?"★ Favorito guardado":"☆ Guardar favorito"; favoriteButton.classList.toggle("active",entry.favorite); favoriteButton.setAttribute("aria-pressed",String(entry.favorite));
+      document.querySelectorAll("[data-check]").forEach(c=>{c.checked=Boolean(entry.checks[c.dataset.check]);}); prayerInput.value=entry.prayer||""; gratitudeInput.value=entry.gratitude||""; notesInput.value=entry.notes||"";
     }
 
-
-    function getCollectionItems(type) {
-      const history = (state._history || []).filter((item) => {
-        if (type === "oraciones") return item.kind === "Oración";
-        if (type === "gratitudes") return item.kind === "Gratitud";
-        if (type === "notas") return item.kind === "Nota";
-        if (type === "diario") return true;
-        return false;
-      });
-      const current = devotionals.flatMap((item) => {
-        const entry = state[item.day] || getDefaultEntry();
-        if (type === "favoritos" && entry.favorite) return [{ day:item.day, title:item.title, text:item.focus, kind:"Favorito", date:"Recorrido actual" }];
-        const map = { oraciones:["Oración",entry.prayer], gratitudes:["Gratitud",entry.gratitude], notas:["Nota",entry.notes] };
-        if (map[type] && map[type][1]) return [{day:item.day,title:item.title,text:map[type][1],kind:map[type][0],date:"Recorrido actual"}];
-        if (type === "diario") return [["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].filter(([,v])=>v).map(([kind,text])=>({day:item.day,title:item.title,text,kind,date:"Recorrido actual"}));
-        return [];
-      });
-      return [...history, ...current];
-    }
-    function renderHistoryIndicators() {
-      const all = state._history || [];
-      historyPrayerCount.textContent = all.filter(x=>x.kind==="Oración").length + devotionals.filter(d=>state[d.day]?.prayer).length;
-      historyGratitudeCount.textContent = all.filter(x=>x.kind==="Gratitud").length + devotionals.filter(d=>state[d.day]?.gratitude).length;
-      historyNoteCount.textContent = all.filter(x=>x.kind==="Nota").length + devotionals.filter(d=>state[d.day]?.notes).length;
-      historyCycleCount.textContent = state._cycle || 1;
-    }
-    function renderCollection(type = activeCollectionTab) {
-      activeCollectionTab = type === "diario" ? "oraciones" : type;
-      const sourceType = type;
-      document.querySelectorAll(".collection-tab").forEach((button) => {
-        button.classList.toggle("active", button.dataset.tab === activeCollectionTab);
-      });
-      const items = getCollectionItems(sourceType);
-      if (!items.length) {
-        collectionList.innerHTML = '<div class="empty-state">Aún no hay contenido guardado en esta sección. Puedes volver a un día y guardar una oración, gratitud, nota o favorito.</div>';
-        return;
-      }
-      collectionList.innerHTML = items.map((item) => `
-        <article class="collection-item">
-          <div class="collection-item-top">
-            <div><strong>Día ${item.day} · ${item.title}</strong><small>${item.kind}${item.date ? " · " + escapeHTML(item.date) : ""}</small></div>
-            <button class="btn btn-secondary open-saved-day" type="button" data-day="${item.day}">Abrir día</button>
-          </div>
-          <p>${escapeHTML(item.text)}</p>
-        </article>
-      `).join("");
-      collectionList.querySelectorAll(".open-saved-day").forEach((button) => {
-        button.addEventListener("click", () => {
-          currentDay = Number(button.dataset.day);
-          saveState(); renderApp();
-          document.getElementById("hoy").scrollIntoView({ behavior:"smooth", block:"start" });
-        });
-      });
+    function getCollectionItems(type){
+      const history=historyItems.filter(item=>type==="oraciones"?item.kind==="Oración":type==="gratitudes"?item.kind==="Gratitud":type==="notas"?item.kind==="Nota":type==="favoritos"?item.kind==="Favorito":type==="diario");
+      const current=devotionals.flatMap(item=>{ const entry=state[item.day]||getDefaultEntry(); if(type==="favoritos"&&entry.favorite)return[{day:item.day,title:item.title,text:item.focus,kind:"Favorito",date:"Recorrido actual"}]; const map={oraciones:["Oración",entry.prayer],gratitudes:["Gratitud",entry.gratitude],notas:["Nota",entry.notes]}; if(map[type]?.[1])return[{day:item.day,title:item.title,text:map[type][1],kind:map[type][0],date:"Recorrido actual"}]; if(type==="diario")return[["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].filter(([,v])=>v).map(([kind,text])=>({day:item.day,title:item.title,text,kind,date:"Recorrido actual"})); return[]; });
+      return [...history,...current];
     }
 
-    function escapeHTML(value) {
-      return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    function renderHistoryIndicators(){ historyPrayerCount.textContent=historyItems.filter(x=>x.kind==="Oración").length+devotionals.filter(d=>state[d.day]?.prayer).length; historyGratitudeCount.textContent=historyItems.filter(x=>x.kind==="Gratitud").length+devotionals.filter(d=>state[d.day]?.gratitude).length; historyNoteCount.textContent=historyItems.filter(x=>x.kind==="Nota").length+devotionals.filter(d=>state[d.day]?.notes).length; historyCycleCount.textContent=currentJourney?.cycle_number||1; }
+    function renderCollection(type=activeCollectionTab){ activeCollectionTab=type==="diario"?"oraciones":type; document.querySelectorAll(".collection-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===activeCollectionTab)); const items=getCollectionItems(type); if(!items.length){collectionList.innerHTML='<div class="empty-state">Aún no hay contenido guardado en esta sección. Puedes volver a un día y guardar una oración, gratitud, nota o favorito.</div>';return;} collectionList.innerHTML=items.map(item=>`<article class="collection-item"><div class="collection-item-top"><div><strong>Día ${item.day} · ${escapeHTML(item.title)}</strong><small>${escapeHTML(item.kind)}${item.date?" · "+escapeHTML(formatHistoryDate(item.date)):""}</small></div><button class="btn btn-secondary open-saved-day" type="button" data-day="${item.day}">Abrir día</button></div><p>${escapeHTML(item.text)}</p></article>`).join(""); collectionList.querySelectorAll(".open-saved-day").forEach(b=>b.onclick=()=>{currentDay=Number(b.dataset.day);renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});}); }
+    function formatHistoryDate(value){ if(!value||value==="Recorrido actual")return value||""; const d=new Date(value); return Number.isNaN(d.getTime())?value:d.toLocaleDateString("es-MX",{day:"numeric",month:"short",year:"numeric"}); }
+    function escapeHTML(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+    function renderPersonalHeader(name){const now=new Date(),formattedDate=now.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"});dateLine.textContent=formattedDate;welcomeMessage.textContent=`Buenos días, ${name}. Hoy es un nuevo día para acercarte a Dios, un paso sencillo a la vez.`;}
+    function renderApp(){renderDayGrid();renderCurrentDay();renderProgress();renderCollection(activeCollectionTab);renderHistoryIndicators();}
+    function syncCurrentEntryFromFields(){const entry=state[currentDay]||getDefaultEntry();document.querySelectorAll("[data-check]").forEach(c=>entry.checks[c.dataset.check]=c.checked);entry.prayer=prayerInput.value.trim();entry.gratitude=gratitudeInput.value.trim();entry.notes=notesInput.value.trim();state[currentDay]=entry;}
+
+    async function archiveCurrentJourney(){
+      const date=new Date().toISOString(),rows=[];
+      devotionals.forEach(item=>{const entry=state[item.day]||getDefaultEntry();[["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes],["Favorito",entry.favorite?item.focus:""]].forEach(([kind,text])=>{if(text&&String(text).trim())rows.push({user_id:currentUser.id,journey_id:currentJourney.id,cycle_number:currentJourney.cycle_number,day_number:item.day,kind,title:item.title,content:String(text).trim(),event_date:date,devotional_title:item.title,verse_reference:item.verse});});});
+      if(rows.length){const {error}=await supabaseClient.from("user_journal_history").insert(rows);if(error)throw error;}
+      const {error}=await supabaseClient.from("user_journeys").update({is_active:false,completed_at:currentJourney.completed_at||date,archived_at:date,updated_at:date}).eq("id",currentJourney.id); if(error)throw error;
     }
 
-    function renderPersonalHeader(name) {
-      const now = new Date();
-
-      const formattedDate = now.toLocaleDateString("es-MX", {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-      });
-
-      dateLine.textContent = formattedDate;
-      welcomeMessage.textContent = `Buenos días, ${name}. Hoy es un nuevo día para acercarte a Dios, un paso sencillo a la vez.`;
+    async function restartJourney(){
+      if(!confirm("¿Quieres volver a recorrer los 21 días? Tu historia, oraciones, gratitudes, notas y favoritos se conservarán."))return;
+      setBusy(document.getElementById("restartJourneyButton"),true,"Preparando nuevo recorrido...");
+      try{
+        await archiveCurrentJourney();
+        const previousFavorites=devotionals.filter(d=>state[d.day]?.favorite).map(d=>d.day);
+        const payload={user_id:currentUser.id,cycle_number:(currentJourney.cycle_number||1)+1,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+        const {data,error}=await supabaseClient.from("user_journeys").insert(payload).select().single(); if(error)throw error;
+        currentJourney=data; currentDay=1; initializeState(); previousFavorites.forEach(day=>state[day].favorite=true); historyItems=[];
+        const {data:h,error:hError}=await supabaseClient.from("user_journal_history").select("*").order("event_date",{ascending:false}); if(hError)throw hError;
+        historyItems=(h||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
+        for(const day of previousFavorites) await saveEntry(day);
+        renderApp(); document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu historia fue conservada.");
+      }catch(error){console.error("Error iniciando nuevo recorrido:",error);showToast("No pudimos iniciar el nuevo recorrido");}
+      finally{setBusy(document.getElementById("restartJourneyButton"),false);}
     }
 
-    function renderApp() {
-      renderDayGrid();
-      renderCurrentDay();
-      renderProgress();
-      renderCollection(activeCollectionTab);
-      renderHistoryIndicators();
+    async function validateAccess(){
+      try{
+        const {data:{user},error}=await supabaseClient.auth.getUser(); if(error||!user){location.href="../login.html";return;}
+        currentUser=user; const normalizedEmail=String(user.email||"").trim().toLowerCase();
+        const {data,error:entitlementError}=await supabaseClient.from("entitlements").select("id,email,permission_key,source_sku,active").eq("email",normalizedEmail).eq("active",true).limit(50);
+        if(entitlementError||!data){if(entitlementError)console.error(entitlementError);loadingScreen.classList.add("hidden");lockedScreen.classList.remove("hidden");return;}
+        const hasValidAccess=data.some(item=>{const permission=String(item.permission_key||""),sku=String(item.source_sku||"");return(permission===REQUIRED_PERMISSION_KEY&&sku===REQUIRED_SOURCE_SKU)||permission==="membership_all_access"||sku==="HCD_ALL_ACCESS";});
+        if(!hasValidAccess){loadingScreen.classList.add("hidden");lockedScreen.classList.remove("hidden");return;}
+        userPill.textContent=currentUser.email||"Sesión activa";
+        await loadCloudState(); renderPersonalHeader(getFriendlyNameFromEmail(normalizedEmail)); renderApp(); loadingScreen.classList.add("hidden"); appShell.classList.remove("hidden");
+      }catch(error){console.error("Error preparando Mi Tiempo con Dios:",error);loadingScreen.classList.add("hidden");lockedScreen.classList.remove("hidden");}
     }
 
-    function syncCurrentEntryFromFields() {
-      const entry = state[currentDay] || getDefaultEntry();
-
-      document.querySelectorAll("[data-check]").forEach((checkbox) => {
-        const key = checkbox.getAttribute("data-check");
-        entry.checks[key] = checkbox.checked;
-      });
-
-      entry.prayer = prayerInput.value.trim();
-      entry.gratitude = gratitudeInput.value.trim();
-      entry.notes = notesInput.value.trim();
-
-      state[currentDay] = entry;
+    function bindEvents(){
+      document.querySelectorAll("[data-scroll-target]").forEach(button=>button.addEventListener("click",async()=>{if(button.dataset.scrollTarget==="hoy"){currentDay=getNextRecommendedDay();renderApp();try{await saveJourneyProgress();}catch(e){console.error(e);}}document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({behavior:"smooth",block:"start"});}));
+      document.querySelectorAll("[data-collection]").forEach(button=>button.addEventListener("click",()=>{renderCollection(button.dataset.collection);document.getElementById("miColeccion")?.scrollIntoView({behavior:"smooth",block:"start"});}));
+      document.querySelectorAll(".collection-tab").forEach(button=>button.addEventListener("click",()=>renderCollection(button.dataset.tab)));
+      document.querySelectorAll("[data-check]").forEach(checkbox=>checkbox.addEventListener("change",async()=>{syncCurrentEntryFromFields();try{await persistDayAndJourney();renderProgress();showToast("Avance guardado");}catch(error){console.error(error);showToast("No pudimos guardar el avance");}}));
+      favoriteButton.addEventListener("click",async()=>{const entry=state[currentDay]||getDefaultEntry();entry.favorite=!entry.favorite;state[currentDay]=entry;try{await persistDayAndJourney();renderApp();showToast(entry.favorite?"Guardado como favorito":"Favorito quitado");}catch(error){entry.favorite=!entry.favorite;console.error(error);renderApp();showToast("No pudimos actualizar el favorito");}});
+      saveJournalButton.addEventListener("click",async()=>{setBusy(saveJournalButton,true,"Guardando...");syncCurrentEntryFromFields();try{await persistDayAndJourney();renderApp();showToast("Diario guardado");}catch(error){console.error(error);showToast("No pudimos guardar el diario");}finally{setBusy(saveJournalButton,false);}});
+      completeDayButton.addEventListener("click",async()=>{setBusy(completeDayButton,true,"Guardando día...");syncCurrentEntryFromFields();state[currentDay].completed=true;try{await persistDayAndJourney();renderApp();showToast("🎉 Día completado");}catch(error){state[currentDay].completed=false;console.error(error);renderApp();showToast("No pudimos completar el día");}finally{setBusy(completeDayButton,false);}});
+      nextDayButton.addEventListener("click",async()=>{syncCurrentEntryFromFields();try{await persistDayAndJourney();if(currentDay<21){currentDay++;await saveJourneyProgress();renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});}else showToast("Llegaste al día 21");}catch(error){console.error(error);showToast("No pudimos avanzar al siguiente día");}});
+      document.getElementById("restartJourneyButton")?.addEventListener("click",restartJourney);
+      document.getElementById("logoutButton")?.addEventListener("click",async()=>{if(!confirm("¿Deseas cerrar sesión?"))return;await supabaseClient.auth.signOut();location.href="../login.html";});
     }
 
-    function archiveCurrentJourney() {
-      const date = new Date().toISOString();
-      devotionals.forEach((item) => {
-        const entry = state[item.day] || getDefaultEntry();
-        [["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].forEach(([kind,text]) => {
-          if (text && String(text).trim()) state._history.push({ id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random()), cycle:state._cycle||1, day:item.day, title:item.title, kind, text:String(text).trim(), date });
-        });
-      });
-    }
-    function restartJourney() {
-      if (!confirm("¿Quieres volver a recorrer los 21 días? Tu historia, oraciones, gratitudes, notas y favoritos se conservarán.")) return;
-      archiveCurrentJourney();
-      devotionals.forEach((item) => { const favorite=Boolean(state[item.day]?.favorite); state[item.day]={...getDefaultEntry(),favorite}; });
-      state._cycle=(state._cycle||1)+1; currentDay=1; saveState(); renderApp();
-      document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu historia fue conservada.");
-    }
-    async function validateAccess() {
-      try {
-        const {
-          data: { user },
-          error
-        } = await supabaseClient.auth.getUser();
-
-        if (error || !user) {
-          window.location.href = "../login.html";
-          return;
-        }
-
-        currentUser = user;
-
-        const normalizedEmail = String(user.email || "").trim().toLowerCase();
-
-        const { data, error: entitlementError } = await supabaseClient
-          .from("entitlements")
-          .select("id,email,permission_key,source_sku,active")
-          .eq("email", normalizedEmail)
-          .eq("active", true)
-          .limit(50);
-
-        if (entitlementError || !data) {
-          if (entitlementError) console.error("Error consultando entitlements:", entitlementError);
-          loadingScreen.classList.add("hidden");
-          lockedScreen.classList.remove("hidden");
-          return;
-        }
-
-        const hasValidAccess = data.some((item) => {
-          const permission = String(item.permission_key || "");
-          const sku = String(item.source_sku || "");
-
-          return (
-            (permission === REQUIRED_PERMISSION_KEY && sku === REQUIRED_SOURCE_SKU) ||
-            permission === "membership_all_access" ||
-            sku === "HCD_ALL_ACCESS"
-          );
-        });
-
-        if (!hasValidAccess) {
-          loadingScreen.classList.add("hidden");
-          lockedScreen.classList.remove("hidden");
-          return;
-        }
-
-        const friendlyName = getFriendlyNameFromEmail(normalizedEmail);
-
-        userPill.textContent = currentUser.email || "Sesión activa";
-        const legacyStorageKey = "hcd_mi_tiempo_con_dios_" + normalizedEmail;
-        storageKey = "hcd_mi_tiempo_con_dios_" + currentUser.id;
-        if (localStorage.getItem(storageKey) === null && localStorage.getItem(legacyStorageKey) !== null) localStorage.setItem(storageKey, localStorage.getItem(legacyStorageKey));
-        if (localStorage.getItem(storageKey + "_currentDay") === null && localStorage.getItem(legacyStorageKey + "_currentDay") !== null) localStorage.setItem(storageKey + "_currentDay", localStorage.getItem(legacyStorageKey + "_currentDay"));
-
-        loadState();
-        renderPersonalHeader(friendlyName);
-        renderApp();
-        saveProgressSnapshot();
-
-        loadingScreen.classList.add("hidden");
-        appShell.classList.remove("hidden");
-      } catch (error) {
-        console.error("Error validando acceso:", error);
-        loadingScreen.classList.add("hidden");
-        lockedScreen.classList.remove("hidden");
-      }
-    }
-
-    function bindEvents() {
-      document.querySelectorAll("[data-scroll-target]").forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.dataset.scrollTarget === "hoy") {
-            currentDay = getNextRecommendedDay();
-            saveState(); renderApp();
-          }
-          document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior:"smooth", block:"start" });
-        });
-      });
-      document.querySelectorAll("[data-collection]").forEach((button) => {
-        button.addEventListener("click", () => {
-          renderCollection(button.dataset.collection);
-          document.getElementById("miColeccion")?.scrollIntoView({ behavior:"smooth", block:"start" });
-        });
-      });
-      document.querySelectorAll(".collection-tab").forEach((button) => {
-        button.addEventListener("click", () => renderCollection(button.dataset.tab));
-      });
-      document.querySelectorAll("[data-check]").forEach((checkbox) => {
-        checkbox.addEventListener("change", () => {
-          syncCurrentEntryFromFields();
-          saveState();
-          renderProgress();
-        });
-      });
-
-      favoriteButton.addEventListener("click", () => {
-        const entry = state[currentDay] || getDefaultEntry();
-
-        entry.favorite = !entry.favorite;
-        state[currentDay] = entry;
-
-        saveState();
-        renderApp();
-
-        showToast(entry.favorite ? "Guardado como favorito" : "Favorito quitado");
-      });
-
-      saveJournalButton.addEventListener("click", () => {
-        syncCurrentEntryFromFields();
-        saveState();
-        renderProgress();
-        showToast("Diario guardado");
-      });
-
-      completeDayButton.addEventListener("click", () => {
-        syncCurrentEntryFromFields();
-        state[currentDay].completed = true;
-
-        saveState();
-        renderApp();
-
-        showToast("🎉 Día completado");
-      });
-
-      nextDayButton.addEventListener("click", () => {
-        syncCurrentEntryFromFields();
-        saveState();
-
-        if (currentDay < 21) {
-          currentDay++;
-          saveState();
-          renderApp();
-
-          document.getElementById("hoy").scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        } else {
-          showToast("Llegaste al día 21");
-        }
-      });
-
-      const restartJourneyButton = document.getElementById("restartJourneyButton");
-      if (restartJourneyButton) restartJourneyButton.addEventListener("click", restartJourney);
-      const logoutButton = document.getElementById("logoutButton");
-
-      if (logoutButton) {
-        logoutButton.addEventListener("click", async () => {
-          const confirmExit = confirm("¿Deseas cerrar sesión?");
-
-          if (!confirmExit) return;
-
-          await supabaseClient.auth.signOut();
-          window.location.href = "../login.html";
-        });
-      }
-    }
-
-    window.addEventListener("load", () => {
-      bindEvents();
-      validateAccess();
-    });
+    window.addEventListener("load",()=>{bindEvents();validateAccess();});
   </script>
 </body>
 </html>
