@@ -1088,6 +1088,18 @@
     .completion-card h3 { color:var(--gold); font-size:30px; margin-bottom:10px; }
     .completion-card p { line-height:1.7; color:rgba(255,255,255,.9); }
     .adult-note { margin-top:12px; color:var(--muted); font-size:12px; line-height:1.55; }
+
+    /* Indicadores del recorrido y cofre sincronizado */
+    .day-chip { position:relative; display:grid; place-items:center; }
+    .day-chip-number { line-height:1; }
+    .day-chip-status { position:absolute; right:5px; top:4px; min-width:16px; height:16px; display:grid; place-items:center; border-radius:999px; background:var(--gold-soft); color:var(--green); font-size:9px; }
+    .day-chip.done .day-chip-status { background:var(--green); color:white; }
+    .day-chip.active::after { content:""; width:16px; height:3px; border-radius:999px; background:var(--gold); position:absolute; left:50%; bottom:4px; transform:translateX(-50%); }
+    .memory-context { margin-top:9px; padding:10px 12px; border-radius:14px; background:var(--soft-green); color:var(--olive); font-size:12px; line-height:1.5; font-weight:750; }
+    .memory-toolbar { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .sync-family-note { display:inline-flex; margin-top:14px; padding:9px 12px; border-radius:999px; background:var(--soft-green); color:var(--green); font-size:12px; font-weight:850; }
+    @media (max-width:760px){ .memory-toolbar { grid-template-columns:1fr; } }
+
     @media (max-width:640px) { .step-strip { grid-template-columns:1fr; } .memory-toolbar { grid-template-columns:1fr; } .day-navigation { flex-direction:column; } .day-navigation button { width:100%; } }
 
 
@@ -1325,6 +1337,7 @@
               <span class="sticker">🌿 Fe simple</span>
               <span class="sticker">💛 Gratitud</span>
               <span class="sticker">🙏 Oración</span>
+              <span class="sticker">☁️ Recorrido sincronizado</span>
             </div>
           </aside>
         </div>
@@ -1386,7 +1399,7 @@
             <div class="panel-head">
               <small id="calendario">Camino familiar</small>
               <h2>14 días para acercarnos a Dios</h2>
-              <p>Marca los momentos completados y vuelve a cualquiera de los días cuando quieras.</p>
+              <p>Marca los momentos completados y vuelve a cualquiera de los días cuando quieras. Tu recorrido se conserva en tu cuenta.</p>
             </div>
 
             <div class="panel-body">
@@ -1417,9 +1430,10 @@
               <div class="memory-toolbar">
                 <div class="field"><label for="memoryType">Tipo de recuerdo</label><select id="memoryType"><option value="gratitud">Gratitud</option><option value="oracion">Oración</option><option value="aprendizaje">Aprendizaje</option><option value="frase">Frase especial</option><option value="momento">Momento en familia</option></select></div>
                 <div class="field"><label for="memoryFilter">Mostrar</label><select id="memoryFilter"><option value="todos">Todos los recuerdos</option><option value="gratitud">Gratitudes</option><option value="oracion">Oraciones</option><option value="aprendizaje">Aprendizajes</option><option value="frase">Frases especiales</option><option value="momento">Momentos en familia</option></select></div>
+                <div class="field"><label for="memoryCycleFilter">Recorrido</label><select id="memoryCycleFilter"><option value="todos">Todos los recorridos</option><option value="actual">Recorrido actual</option></select></div>
               </div>
               <div class="field"><label for="memoryInput">Nuevo recuerdo</label><textarea id="memoryInput" maxlength="1200" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea></div>
-              <p class="adult-note">Este cofre se guarda por ahora en este navegador y queda asociado a la cuenta que inició sesión. La sincronización entre dispositivos se incorporará en la fase de Supabase.</p>
+              <p class="adult-note">Tus recuerdos familiares se conservan en tu cuenta para acompañar a tu familia desde cualquier dispositivo donde inicien sesión.</p>
 
               <div class="action-row">
                 <button class="btn" type="button" id="saveMemoryBtn">Guardar recuerdo</button>
@@ -1465,13 +1479,6 @@
     const REQUIRED_PERMISSION = "access_familias";
     const REQUIRED_SKU = "HCD_FAMILIAS_BUNDLE";
     const SHOPIFY_URL = "https://skoolrenovae.store/products/pequenos-momentos-con-dios";
-
-    const STORAGE_PREFIX = "hcd_momentos_familia";
-    const LEGACY_STORAGE = {
-      completed: `${STORAGE_PREFIX}_completed`, favorites: `${STORAGE_PREFIX}_favorites`, memories: `${STORAGE_PREFIX}_memories`,
-      selectedDay: `${STORAGE_PREFIX}_selected_day`, kidMode: `${STORAGE_PREFIX}_kid_mode`, snapshot: `${STORAGE_PREFIX}_progress_snapshot`
-    };
-    let storageKeys = null;
 
     const momentos = [
       {
@@ -1736,681 +1743,158 @@
     );
 
     const els = {
-      userPill: document.getElementById("userPill"),
-      logoutBtn: document.getElementById("logoutBtn"),
-      loadingState: document.getElementById("loadingState"),
-      errorState: document.getElementById("errorState"),
-      lockedState: document.getElementById("lockedState"),
-      errorMessage: document.getElementById("errorMessage"),
-      appContent: document.getElementById("appContent"),
-      completedCount: document.getElementById("completedCount"),
-      progressMessage: document.getElementById("progressMessage"),
-      nextStepMessage: document.getElementById("nextStepMessage"),
-      progressCircle: document.getElementById("progressCircle"),
-      progressPercent: document.getElementById("progressPercent"),
-      progressBar: document.getElementById("progressBar"),
-      journeyLevel: document.getElementById("journeyLevel"),
-      journeyFavorites: document.getElementById("journeyFavorites"),
-      journeyMemories: document.getElementById("journeyMemories"),
-      metricCompleted: document.getElementById("metricCompleted"),
-      metricFavorites: document.getElementById("metricFavorites"),
-      metricMemories: document.getElementById("metricMemories"),
-      metricReward: document.getElementById("metricReward"),
-      momentTodayBtn: document.getElementById("momentTodayBtn"),
-      goCalendarBtn: document.getElementById("goCalendarBtn"),
-      kidModeBtn: document.getElementById("kidModeBtn"),
-      momentContainer: document.getElementById("momentContainer"),
-      calendarGrid: document.getElementById("calendarGrid"),
-      kidCards: document.getElementById("kidCards"),
-      memoryInput: document.getElementById("memoryInput"),
-      memoryType: document.getElementById("memoryType"),
-      memoryFilter: document.getElementById("memoryFilter"),
-      saveMemoryBtn: document.getElementById("saveMemoryBtn"),
-      clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"),
-      memoryList: document.getElementById("memoryList"),
-      toast: document.getElementById("toast")
+      userPill: document.getElementById("userPill"), logoutBtn: document.getElementById("logoutBtn"), loadingState: document.getElementById("loadingState"), errorState: document.getElementById("errorState"), lockedState: document.getElementById("lockedState"), errorMessage: document.getElementById("errorMessage"), appContent: document.getElementById("appContent"),
+      completedCount: document.getElementById("completedCount"), progressMessage: document.getElementById("progressMessage"), nextStepMessage: document.getElementById("nextStepMessage"), progressCircle: document.getElementById("progressCircle"), progressPercent: document.getElementById("progressPercent"), progressBar: document.getElementById("progressBar"), journeyLevel: document.getElementById("journeyLevel"), journeyFavorites: document.getElementById("journeyFavorites"), journeyMemories: document.getElementById("journeyMemories"), metricCompleted: document.getElementById("metricCompleted"), metricFavorites: document.getElementById("metricFavorites"), metricMemories: document.getElementById("metricMemories"), metricReward: document.getElementById("metricReward"),
+      momentTodayBtn: document.getElementById("momentTodayBtn"), goCalendarBtn: document.getElementById("goCalendarBtn"), kidModeBtn: document.getElementById("kidModeBtn"), momentContainer: document.getElementById("momentContainer"), calendarGrid: document.getElementById("calendarGrid"), kidCards: document.getElementById("kidCards"), memoryInput: document.getElementById("memoryInput"), memoryType: document.getElementById("memoryType"), memoryFilter: document.getElementById("memoryFilter"), memoryCycleFilter: document.getElementById("memoryCycleFilter"), saveMemoryBtn: document.getElementById("saveMemoryBtn"), clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"), memoryList: document.getElementById("memoryList"), toast: document.getElementById("toast")
     };
-
-    let currentUser = null;
-    let completed = [];
-    let favorites = [];
-    let memories = [];
-    let kidMode = false;
-    let selectedDay = 1;
-    let editingMemoryId = null;
+    let currentUser=null, currentJourney=null, journeyArchive=[];
+    let completed=[], favorites=[], memories=[], kidMode=false, selectedDay=1, editingMemoryId=null;
 
     init();
 
-    async function init() {
-      try {
+    async function init(){
+      try{
         showLoading();
+        const {data:{user},error}=await supabaseClient.auth.getUser();
+        if(error||!user){window.location.href="../login.html";return;}
+        currentUser=user; els.userPill.textContent=user.email||"Sesión activa";
+        if(!(await validateAccess())){showLocked();return;}
+        await loadCloudState(); bindEvents(); applyKidMode(); renderAll(); showApp();
+      }catch(error){console.error("Error preparando la experiencia familiar:",error);showError("No pudimos preparar tu recorrido familiar. Intenta ingresar nuevamente desde Mi Espacio.");}
+    }
 
-        const { data: sessionData, error: sessionError } =
-          await supabaseClient.auth.getSession();
+    async function validateAccess(){
+      const email=String(currentUser?.email||"").trim().toLowerCase();
+      const {data,error}=await supabaseClient.from("entitlements").select("email,permission_key,source_sku,active").eq("email",email).eq("active",true);
+      if(error)throw error;
+      return (data||[]).some(item=>{const permission=String(item.permission_key||""),sku=String(item.source_sku||"");return(permission===REQUIRED_PERMISSION&&sku===REQUIRED_SKU&&item.active===true)||permission==="membership_all_access"||sku==="HCD_ALL_ACCESS";});
+    }
 
-        if (sessionError) {
-          throw sessionError;
-        }
-
-        const session = sessionData && sessionData.session;
-
-        if (!session || !session.user) {
-          window.location.href = "../login.html";
-          return;
-        }
-
-        currentUser = session.user;
-        storageKeys = createUserStorageKeys(currentUser.id);
-        migrateLegacyStorage();
-        els.userPill.textContent = currentUser.email || "Sesión activa";
-
-        const hasAccess = await validateAccess();
-
-        if (!hasAccess) {
-          showLocked();
-          return;
-        }
-
-        loadLocalState();
-        bindEvents();
-        applyKidMode();
-        renderAll();
-        showApp();
-      } catch (error) {
-        console.error(error);
-        showError("No pudimos validar tu acceso. Intenta ingresar nuevamente desde Mi Espacio.");
+    async function getOrCreateJourney(){
+      const {data:active,error}=await supabaseClient.from("user_family_journeys").select("*").eq("is_active",true).order("cycle_number",{ascending:false}).limit(10);
+      if(error)throw error;
+      if(active?.length){
+        const [keep,...extras]=active;
+        if(extras.length){await supabaseClient.from("user_family_journeys").update({is_active:false,archived_at:new Date().toISOString(),updated_at:new Date().toISOString()}).in("id",extras.map(x=>x.id));}
+        return keep;
       }
+      const {data:last,error:lastError}=await supabaseClient.from("user_family_journeys").select("cycle_number").order("cycle_number",{ascending:false}).limit(1);
+      if(lastError)throw lastError;
+      const payload={user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Momentos con Dios en Familia",current_day:1,completed_count:0,progress_percentage:0,journey_level:"Inicio",kid_mode:false,is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+      const {data,error:insertError}=await supabaseClient.from("user_family_journeys").insert(payload).select().single();
+      if(insertError)throw insertError; return data;
     }
 
-    async function validateAccess() {
-      const normalizedEmail = String(currentUser?.email || "").trim().toLowerCase();
-
-      const { data, error } = await supabaseClient
-        .from("entitlements")
-        .select("email, permission_key, source_sku, active")
-        .eq("email", normalizedEmail)
-        .eq("active", true);
-
-      if (error) {
-        throw error;
-      }
-
-      return (data || []).some((item) => {
-        const permission = String(item.permission_key || "");
-        const sku = String(item.source_sku || "");
-
-        return (
-          (
-            permission === REQUIRED_PERMISSION &&
-            sku === REQUIRED_SKU &&
-            item.active === true
-          ) ||
-          permission === "membership_all_access" ||
-          sku === "HCD_ALL_ACCESS"
-        );
-      });
+    async function loadCloudState(){
+      currentJourney=await getOrCreateJourney();
+      selectedDay=Math.min(momentos.length,Math.max(1,Number(currentJourney.current_day)||1)); kidMode=Boolean(currentJourney.kid_mode);
+      const [entriesResult,memoriesResult,journeysResult]=await Promise.all([
+        supabaseClient.from("user_family_entries").select("*").eq("journey_id",currentJourney.id).order("day_number"),
+        supabaseClient.from("user_family_memories").select("*").order("created_at",{ascending:false}),
+        supabaseClient.from("user_family_journeys").select("id,cycle_number,is_active,started_at,completed_at,archived_at").order("cycle_number",{ascending:false})
+      ]);
+      if(entriesResult.error)throw entriesResult.error; if(memoriesResult.error)throw memoriesResult.error; if(journeysResult.error)throw journeysResult.error;
+      completed=(entriesResult.data||[]).filter(x=>x.completed).map(x=>Number(x.day_number)); favorites=(entriesResult.data||[]).filter(x=>x.favorite).map(x=>Number(x.day_number));
+      memories=(memoriesResult.data||[]).map(row=>({id:row.id,text:row.content,type:row.memory_type,day:Number(row.day_number)||null,cycle:Number(row.cycle_number)||1,title:row.devotional_title||"",verse:row.verse_reference||"",createdAt:row.created_at,updatedAt:row.updated_at,journeyId:row.journey_id}));
+      journeyArchive=journeysResult.data||[];
+      renderCycleOptions();
     }
 
-    function bindEvents() {
-      document.querySelectorAll("[data-view]").forEach((button) => {
-        button.addEventListener("click", () => {
-          setView(button.dataset.view);
-        });
-      });
-
-      els.momentTodayBtn.addEventListener("click", () => {
-        selectedDay = getNextRecommendedDay();
-        persistSelectedDay();
-        setView("momento");
-        renderAll();
-        showToast("Momento del día preparado para tu familia.");
-      });
-
-      els.goCalendarBtn.addEventListener("click", () => {
-        setView("calendario");
-        document.getElementById("viewCalendario").scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      });
-
-      els.kidModeBtn.addEventListener("click", () => {
-        kidMode = !kidMode;
-        safeSetItem(storageKeys.kidMode, String(kidMode));
-        applyKidMode();
-        renderMoment();
-        showToast(kidMode ? "Vista para compartir activada." : "Guía familiar activada.");
-      });
-
-      els.saveMemoryBtn.addEventListener("click", saveMemory);
-      els.memoryFilter.addEventListener("change", renderMemories);
-      els.clearMemoryInputBtn.addEventListener("click", resetMemoryForm);
-
-      els.logoutBtn.addEventListener("click", async () => {
-        els.logoutBtn.disabled = true;
-        const { error } = await supabaseClient.auth.signOut();
-        if (error) { els.logoutBtn.disabled = false; showToast("No pudimos cerrar la sesión. Intenta nuevamente.", true); return; }
-        window.location.href = "../login.html";
-      });
+    function bindEvents(){
+      document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
+      els.momentTodayBtn.addEventListener("click",async()=>{selectedDay=getNextRecommendedDay();await saveJourneySettings();setView("momento");renderAll();showToast("Momento del día preparado para tu familia.");});
+      els.goCalendarBtn.addEventListener("click",()=>{setView("calendario");document.getElementById("viewCalendario").scrollIntoView({behavior:"smooth",block:"start"});});
+      els.kidModeBtn.addEventListener("click",async()=>{kidMode=!kidMode;try{await saveJourneySettings();applyKidMode();renderMoment();showToast(kidMode?"Vista para compartir activada.":"Guía familiar activada.");}catch(error){kidMode=!kidMode;console.error(error);showToast("No pudimos actualizar la vista.",true);}});
+      els.saveMemoryBtn.addEventListener("click",saveMemory); els.memoryFilter.addEventListener("change",renderMemories); els.memoryCycleFilter?.addEventListener("change",renderMemories); els.clearMemoryInputBtn.addEventListener("click",resetMemoryForm);
+      els.logoutBtn.addEventListener("click",async()=>{els.logoutBtn.disabled=true;const {error}=await supabaseClient.auth.signOut();if(error){els.logoutBtn.disabled=false;showToast("No pudimos cerrar la sesión. Intenta nuevamente.",true);return;}window.location.href="../login.html";});
     }
 
-    function setView(viewName) {
-      const views = {
-        momento: document.getElementById("viewMomento"),
-        calendario: document.getElementById("viewCalendario"),
-        tarjetas: document.getElementById("viewTarjetas"),
-        cofre: document.getElementById("viewCofre"),
-        legal: document.getElementById("viewLegal")
-      };
+    function setView(name){const views={momento:document.getElementById("viewMomento"),calendario:document.getElementById("viewCalendario"),tarjetas:document.getElementById("viewTarjetas"),cofre:document.getElementById("viewCofre"),legal:document.getElementById("viewLegal")};Object.entries(views).forEach(([k,e])=>e.classList.toggle("hide",k!==name));document.querySelectorAll("[data-view]").forEach(b=>{const active=b.dataset.view===name;b.classList.toggle("active",active);active?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current");});}
+    function renderAll(){renderMoment();renderCalendar();renderKidCards();renderMemories();renderStats();}
+    function renderMoment(){const selected=momentos.find(x=>x.day===selectedDay)||momentos[0];selectedDay=selected.day;kidMode?renderKidMoment(selected):renderFamilyMoment(selected);}
+    function getThemeLabel(theme){return({amor:"Amor de Dios",oracion:"Oración",confianza:"Confianza",gratitud:"Gratitud",bondad:"Bondad",perdon:"Perdón",familia:"Familia"})[theme]||"Fe en familia";}
 
-      Object.entries(views).forEach(([key, el]) => {
-        el.classList.toggle("hide", key !== viewName);
-      });
-
-      document.querySelectorAll("[data-view]").forEach((button) => {
-        const active = button.dataset.view === viewName;
-        button.classList.toggle("active", active);
-        if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
-      });
-    }
-
-    function renderAll() {
-      renderMoment();
-      renderCalendar();
-      renderKidCards();
-      renderMemories();
-      renderStats();
-    }
-
-    function renderMoment() {
-      const selected = momentos.find((item) => item.day === selectedDay) || momentos[0];
-
-      if (selected) {
-        selectedDay = selected.day;
-        persistSelectedDay();
-      }
-
-      if (kidMode) {
-        renderKidMoment(selected);
-      } else {
-        renderFamilyMoment(selected);
-      }
-    }
-
-    function getThemeLabel(theme) {
-      const labels = {
-        amor: "Amor de Dios",
-        oracion: "Oración",
-        confianza: "Confianza",
-        gratitud: "Gratitud",
-        bondad: "Bondad",
-        perdon: "Perdón",
-        familia: "Familia"
-      };
-      return labels[theme] || "Fe en familia";
-    }
-
-    function renderFamilyMoment(selected) {
-      const isDone = completed.includes(selected.day);
-      const isFavorite = favorites.includes(selected.day);
-
-      els.momentContainer.innerHTML = `
-        ${completed.length >= momentos.length ? renderCompletionCelebration() : ""}
-        <article class="moment-card">
-          <div class="moment-top">
-            <span class="moment-day">Día ${selected.day}</span>
-            <span class="moment-day">${isDone ? "Completado" : "Pendiente"}</span>
-          </div>
-
-          <h3>${escapeHTML(selected.title)}</h3>
-          <div class="verse">${escapeHTML(selected.verse)}</div>
-          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
-          <div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div>
-
-          <div class="moment-grid">
-            <div class="mini-box green">
-              <small>Objetivo</small>
-              <p>${escapeHTML(selected.objective)}</p>
-            </div>
-
-            <div class="mini-box blue">
-              <small>Idea central</small>
-              <p>${escapeHTML(selected.idea)}</p>
-            </div>
-
-            <div class="mini-box">
-              <small>Frase para el niño</small>
-              <p>${escapeHTML(selected.childPhrase)}</p>
-            </div>
-
-            <div class="mini-box green">
-              <small>Para el adulto</small>
-              <p>${escapeHTML(selected.adultGuide)}</p>
-            </div>
-
-            <div class="mini-box gold">
-              <small>Pregunta para conversar</small>
-              <p>${escapeHTML(selected.question)}</p>
-            </div>
-
-            <div class="mini-box gold">
-              <small>Oración familiar</small>
-              <p>${escapeHTML(selected.prayer)}</p>
-            </div>
-          </div>
-
-          <div class="mini-box pink" style="margin-top:12px;">
-            <small>Actividad simple</small>
-            <p>${escapeHTML(selected.activity)}</p>
-          </div>
-
-          <div class="declaration">
-            ${escapeHTML(selected.declaration)}
-          </div>
-
-          ${renderRewardBox()}
-
-          <div class="action-row">
-            <button class="btn" type="button" id="completeMomentBtn">
-              ${isDone ? "Marcar como pendiente" : "Marcar completado"}
-            </button>
-
-            <button class="btn-gold" type="button" id="favoriteMomentBtn">
-              ${isFavorite ? "Quitar de favoritos" : "Guardar favorito"}
-            </button>
-
-            <button class="btn-soft" type="button" id="randomActivityBtn">
-              Actividad extra
-            </button>
-          </div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day === 1 ? "disabled" : ""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day === momentos.length ? "disabled" : ""}>Día siguiente →</button></div>
-        </article>
-      `;
-
+    function renderFamilyMoment(selected){
+      const isDone=completed.includes(selected.day),isFavorite=favorites.includes(selected.day);
+      els.momentContainer.innerHTML=`${completed.length>=momentos.length?renderCompletionCelebration():""}<article class="moment-card"><div class="moment-top"><span class="moment-day">Día ${selected.day}</span><span class="moment-day">${isDone?"Completado":"Pendiente"}</span></div><h3>${escapeHTML(selected.title)}</h3><div class="verse">${escapeHTML(selected.verse)}</div><span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span><div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div><div class="moment-grid"><div class="mini-box green"><small>Objetivo</small><p>${escapeHTML(selected.objective)}</p></div><div class="mini-box blue"><small>Idea central</small><p>${escapeHTML(selected.idea)}</p></div><div class="mini-box"><small>Frase para el niño</small><p>${escapeHTML(selected.childPhrase)}</p></div><div class="mini-box green"><small>Para el adulto</small><p>${escapeHTML(selected.adultGuide)}</p></div><div class="mini-box gold"><small>Pregunta para conversar</small><p>${escapeHTML(selected.question)}</p></div><div class="mini-box gold"><small>Oración familiar</small><p>${escapeHTML(selected.prayer)}</p></div></div><div class="mini-box pink" style="margin-top:12px;"><small>Actividad simple</small><p>${escapeHTML(selected.activity)}</p></div><div class="declaration">${escapeHTML(selected.declaration)}</div>${renderRewardBox()}<div class="action-row"><button class="btn" type="button" id="completeMomentBtn">${isDone?"Marcar como pendiente":"Marcar completado"}</button><button class="btn-gold" type="button" id="favoriteMomentBtn">${isFavorite?"Quitar de favoritos":"Guardar favorito"}</button><button class="btn-soft" type="button" id="randomActivityBtn">Actividad extra</button></div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day===1?"disabled":""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day===momentos.length?"disabled":""}>Día siguiente →</button></div></article>`;
       bindMomentButtons(selected);
     }
 
-    function renderKidMoment(selected) {
-      const isDone = completed.includes(selected.day);
-      const isFavorite = favorites.includes(selected.day);
-
-      els.momentContainer.innerHTML = `
-        ${completed.length >= momentos.length ? renderCompletionCelebration() : ""}
-        <article class="kid-moment-card">
-          <div class="moment-top">
-            <span class="moment-day">Día ${selected.day}</span>
-            <span class="moment-day">${isDone ? "Estrella ganada ⭐" : "Para hacer hoy"}</span>
-          </div>
-
-          <h3>${escapeHTML(selected.title)}</h3>
-          <div class="verse">${escapeHTML(selected.verse)}</div>
-          <span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span>
-          <div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div>
-
-          <div class="kid-grid">
-            <div class="kid-box" style="background: var(--soft-gold);">
-              <strong>💛 Recuerda</strong>
-              <p>${escapeHTML(selected.childPhrase)}</p>
-            </div>
-
-            <div class="kid-box" style="background: var(--soft-blue);">
-              <strong>🤔 Hablemos</strong>
-              <p>${escapeHTML(selected.question)}</p>
-            </div>
-
-            <div class="kid-box" style="background: var(--soft-pink);">
-              <strong>🎨 Hagamos algo</strong>
-              <p>${escapeHTML(selected.activity)}</p>
-            </div>
-
-            <div class="kid-box" style="background: var(--soft-green);">
-              <strong>🙏 Oremos</strong>
-              <p>${escapeHTML(selected.prayer)}</p>
-            </div>
-          </div>
-
-          <div class="declaration">
-            ${escapeHTML(selected.declaration)}
-          </div>
-
-          ${renderRewardBox()}
-
-          <div class="action-row">
-            <button class="btn" type="button" id="completeMomentBtn">
-              ${isDone ? "Quitar estrella" : "Gané mi estrella ⭐"}
-            </button>
-
-            <button class="btn-gold" type="button" id="favoriteMomentBtn">
-              ${isFavorite ? "Quitar favorito" : "Guardar favorito 💛"}
-            </button>
-
-            <button class="btn-soft" type="button" id="randomActivityBtn">
-              Sorpresa familiar ✨
-            </button>
-          </div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day === 1 ? "disabled" : ""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day === momentos.length ? "disabled" : ""}>Día siguiente →</button></div><p class="adult-note">Esta vista está pensada para compartir acompañados por una persona adulta.</p>
-        </article>
-      `;
-
+    function renderKidMoment(selected){
+      const isDone=completed.includes(selected.day),isFavorite=favorites.includes(selected.day);
+      els.momentContainer.innerHTML=`${completed.length>=momentos.length?renderCompletionCelebration():""}<article class="kid-moment-card"><div class="moment-top"><span class="moment-day">Día ${selected.day}</span><span class="moment-day">${isDone?"Estrella ganada ⭐":"Para hacer hoy"}</span></div><h3>${escapeHTML(selected.title)}</h3><div class="verse">${escapeHTML(selected.verse)}</div><span class="moment-day">Tema: ${escapeHTML(getThemeLabel(selected.theme))}</span><div class="step-strip" aria-label="Pasos del momento"><span class="step-chip">1. Nos preparamos</span><span class="step-chip">2. Descubrimos</span><span class="step-chip">3. Conversamos</span><span class="step-chip">4. Creamos juntos</span><span class="step-chip">5. Oramos</span></div><div class="kid-grid"><div class="kid-box" style="background:var(--soft-gold);"><strong>💛 Recuerda</strong><p>${escapeHTML(selected.childPhrase)}</p></div><div class="kid-box" style="background:var(--soft-blue);"><strong>🤔 Hablemos</strong><p>${escapeHTML(selected.question)}</p></div><div class="kid-box" style="background:var(--soft-pink);"><strong>🎨 Hagamos algo</strong><p>${escapeHTML(selected.activity)}</p></div><div class="kid-box" style="background:var(--soft-green);"><strong>🙏 Oremos</strong><p>${escapeHTML(selected.prayer)}</p></div></div><div class="declaration">${escapeHTML(selected.declaration)}</div>${renderRewardBox()}<div class="action-row"><button class="btn" type="button" id="completeMomentBtn">${isDone?"Quitar estrella":"Gané mi estrella ⭐"}</button><button class="btn-gold" type="button" id="favoriteMomentBtn">${isFavorite?"Quitar favorito":"Guardar favorito 💛"}</button><button class="btn-soft" type="button" id="randomActivityBtn">Sorpresa familiar ✨</button></div><div class="day-navigation"><button class="btn-soft" type="button" id="previousDayBtn" ${selected.day===1?"disabled":""}>← Día anterior</button><button class="btn-dark" type="button" id="nextDayBtn" ${selected.day===momentos.length?"disabled":""}>Día siguiente →</button></div><p class="adult-note">Esta vista está pensada para compartir acompañados por una persona adulta.</p></article>`;
       bindMomentButtons(selected);
     }
 
-    function bindMomentButtons(selected) {
-      document.getElementById("completeMomentBtn").addEventListener("click", () => {
-        toggleCompleted(selected.day);
-      });
+    function bindMomentButtons(selected){const completeMomentBtn=document.getElementById("completeMomentBtn"),favoriteMomentBtn=document.getElementById("favoriteMomentBtn"),randomActivityBtn=document.getElementById("randomActivityBtn"),previousDayBtn=document.getElementById("previousDayBtn"),nextDayBtn=document.getElementById("nextDayBtn");completeMomentBtn.addEventListener("click",()=>toggleCompleted(selected.day));favoriteMomentBtn.addEventListener("click",()=>toggleFavorite(selected.day));completeMomentBtn.setAttribute("aria-pressed",String(completed.includes(selected.day)));favoriteMomentBtn.setAttribute("aria-pressed",String(favorites.includes(selected.day)));randomActivityBtn.addEventListener("click",()=>showToast(extraActivities[Math.floor(Math.random()*extraActivities.length)]));previousDayBtn?.addEventListener("click",()=>changeDay(selected.day-1));nextDayBtn?.addEventListener("click",()=>changeDay(selected.day+1));}
+    function renderRewardBox(){const r=getReward();return`<div class="reward-box">${r.icon} ${escapeHTML(r.title)}<br><span style="font-weight:700;">${escapeHTML(r.description)}</span></div>`;}
 
-      document.getElementById("favoriteMomentBtn").addEventListener("click", () => {
-        toggleFavorite(selected.day);
-      });
+    function renderCalendar(){
+      els.calendarGrid.innerHTML="";
+      momentos.forEach(m=>{const b=document.createElement("button"),done=completed.includes(m.day),fav=favorites.includes(m.day);b.className="day-chip";b.type="button";const status=done?"✓":(fav?"★":"");b.innerHTML=`<span class="day-chip-number">${m.day}</span>${status?`<span class="day-chip-status" aria-hidden="true">${status}</span>`:""}`;b.setAttribute("aria-label",`Día ${m.day}: ${m.title}${done?", completado":", pendiente"}${fav?", favorito":""}`);if(done)b.classList.add("done");if(fav)b.classList.add("favorite");if(selectedDay===m.day)b.classList.add("active");b.onclick=async()=>{selectedDay=m.day;await saveJourneySettings();setView("momento");renderAll();};els.calendarGrid.appendChild(b);});
+    }
+    function renderKidCards(){els.kidCards.innerHTML="";kidCards.forEach(card=>{const a=document.createElement("article");a.className="kid-card";a.innerHTML=`<strong>${escapeHTML(card.title)}</strong><p>${escapeHTML(card.text)}</p>`;els.kidCards.appendChild(a);});}
 
-      const completeButton = document.getElementById("completeMomentBtn");
-      const favoriteButton = document.getElementById("favoriteMomentBtn");
-      completeButton.setAttribute("aria-pressed", String(completed.includes(selected.day)));
-      favoriteButton.setAttribute("aria-pressed", String(favorites.includes(selected.day)));
-      document.getElementById("randomActivityBtn").addEventListener("click", () => {
-        const activity = extraActivities[Math.floor(Math.random() * extraActivities.length)]; showToast(activity);
-      });
-      document.getElementById("previousDayBtn")?.addEventListener("click", () => changeDay(selected.day - 1));
-      document.getElementById("nextDayBtn")?.addEventListener("click", () => changeDay(selected.day + 1));
+    function renderCycleOptions(){
+      if(!els.memoryCycleFilter)return; const previous=els.memoryCycleFilter.value||"todos";
+      els.memoryCycleFilter.innerHTML='<option value="todos">Todos los recorridos</option><option value="actual">Recorrido actual</option>'+journeyArchive.filter(j=>!j.is_active).map(j=>`<option value="${j.cycle_number}">Recorrido ${j.cycle_number}</option>`).join("");
+      if([...els.memoryCycleFilter.options].some(o=>o.value===previous))els.memoryCycleFilter.value=previous;
+    }
+    function renderMemories(){
+      els.memoryList.innerHTML="";const type=els.memoryFilter?.value||"todos",cycle=els.memoryCycleFilter?.value||"todos";
+      const visible=memories.filter(m=>(type==="todos"||m.type===type)&&(cycle==="todos"||(cycle==="actual"?m.journeyId===currentJourney.id:Number(cycle)===m.cycle)));
+      if(!visible.length){els.memoryList.innerHTML=`<div class="memory-item">${type==="todos"?"Todavía no guardaste recuerdos familiares. Puedes comenzar con una gratitud, oración o frase especial.":"No hay recuerdos en esta categoría todavía."}</div>`;return;}
+      visible.forEach(memory=>{const div=document.createElement("article");div.className="memory-item";div.innerHTML=`<div class="memory-head"><div><strong>${escapeHTML(memoryTypeLabel(memory.type))}</strong><div class="memory-meta">${escapeHTML(formatMemoryDate(memory.createdAt))}${memory.day?` · Día ${memory.day}`:""} · Recorrido ${memory.cycle}</div></div></div>${memory.title||memory.verse?`<div class="memory-context">${memory.title?`<strong>${escapeHTML(memory.title)}</strong>`:""}${memory.verse?`<br>${escapeHTML(memory.verse)}`:""}</div>`:""}<p>${escapeHTML(memory.text)}</p><div class="memory-actions"><button class="btn-mini" type="button" data-edit-memory="${escapeHTML(memory.id)}">Editar</button><button class="btn-mini" type="button" data-delete-memory="${escapeHTML(memory.id)}">Eliminar</button></div>`;els.memoryList.appendChild(div);});
+      document.querySelectorAll("[data-edit-memory]").forEach(b=>b.onclick=()=>editMemory(b.dataset.editMemory));document.querySelectorAll("[data-delete-memory]").forEach(b=>b.onclick=()=>deleteMemory(b.dataset.deleteMemory));
     }
 
-    function renderRewardBox() {
-      const reward = getReward();
+    async function findEntryId(day){const {data,error}=await supabaseClient.from("user_family_entries").select("id").eq("journey_id",currentJourney.id).eq("day_number",day).limit(1);if(error)throw error;return data?.[0]?.id||null;}
+    async function saveEntry(day){const id=await findEntryId(day),payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:completed.includes(day),favorite:favorites.includes(day),updated_at:new Date().toISOString()};const result=id?await supabaseClient.from("user_family_entries").update(payload).eq("id",id):await supabaseClient.from("user_family_entries").insert(payload);if(result.error)throw result.error;}
+    async function saveJourneySettings(){const percentage=Math.round((completed.length/momentos.length)*100),level=getJourneyLevel(percentage).name,payload={current_day:selectedDay,completed_count:completed.length,progress_percentage:percentage,journey_level:level,kid_mode:kidMode,completed_at:percentage===100?(currentJourney.completed_at||new Date().toISOString()):null,updated_at:new Date().toISOString()};const {data,error}=await supabaseClient.from("user_family_journeys").update(payload).eq("id",currentJourney.id).select().single();if(error)throw error;currentJourney=data;}
 
-      return `
-        <div class="reward-box">
-          ${reward.icon} ${escapeHTML(reward.title)}<br />
-          <span style="font-weight:700;">${escapeHTML(reward.description)}</span>
-        </div>
-      `;
+    async function toggleCompleted(day){const was=completed.includes(day);completed=was?completed.filter(x=>x!==day):[...completed,day];try{await saveEntry(day);await saveJourneySettings();renderAll();showToast(was?"Momento marcado como pendiente.":(kidMode?"¡Estrella de fe ganada! ⭐":"Momento completado. Qué lindo paso familiar."));}catch(error){completed=was?[...completed,day]:completed.filter(x=>x!==day);console.error(error);renderAll();showToast("No pudimos actualizar este momento.",true);}}
+    async function toggleFavorite(day){const was=favorites.includes(day);favorites=was?favorites.filter(x=>x!==day):[...favorites,day];try{await saveEntry(day);await saveJourneySettings();renderAll();showToast(was?"Momento quitado de favoritos.":"Momento guardado como favorito.");}catch(error){favorites=was?[...favorites,day]:favorites.filter(x=>x!==day);console.error(error);renderAll();showToast("No pudimos actualizar el favorito.",true);}}
+
+    async function saveMemory(){
+      const text=els.memoryInput.value.trim();if(!text){showToast("Escribe un pequeño recuerdo antes de guardar.",true);return;}
+      const selected=momentos.find(x=>x.day===selectedDay)||momentos[0],now=new Date().toISOString();setBusy(els.saveMemoryBtn,true,editingMemoryId?"Actualizando...":"Guardando...");
+      try{
+        if(editingMemoryId){const {data,error}=await supabaseClient.from("user_family_memories").update({memory_type:els.memoryType.value,content:text,updated_at:now}).eq("id",editingMemoryId).select().single();if(error)throw error;const i=memories.findIndex(x=>x.id===editingMemoryId);if(i>=0)memories[i]={...memories[i],text:data.content,type:data.memory_type,updatedAt:data.updated_at};showToast("Recuerdo actualizado.");}
+        else{const payload={user_id:currentUser.id,journey_id:currentJourney.id,cycle_number:currentJourney.cycle_number,day_number:selected.day,memory_type:els.memoryType.value,devotional_title:selected.title,verse_reference:selected.verse,content:text,created_at:now,updated_at:now};const {data,error}=await supabaseClient.from("user_family_memories").insert(payload).select().single();if(error)throw error;memories.unshift({id:data.id,text:data.content,type:data.memory_type,day:Number(data.day_number),cycle:Number(data.cycle_number),title:data.devotional_title||"",verse:data.verse_reference||"",createdAt:data.created_at,updatedAt:data.updated_at,journeyId:data.journey_id});showToast("Recuerdo familiar guardado.");}
+        resetMemoryForm();renderAll();
+      }catch(error){console.error(error);showToast("No pudimos guardar el recuerdo.",true);}finally{setBusy(els.saveMemoryBtn,false);}
     }
+    function editMemory(id){const m=memories.find(x=>x.id===id);if(!m)return;editingMemoryId=id;els.memoryInput.value=m.text;els.memoryType.value=m.type||"momento";els.saveMemoryBtn.textContent="Actualizar recuerdo";els.memoryInput.focus();}
+    async function deleteMemory(id){if(!confirm("¿Quieres eliminar este recuerdo? Esta acción no se puede deshacer."))return;try{const {error}=await supabaseClient.from("user_family_memories").delete().eq("id",id);if(error)throw error;memories=memories.filter(x=>x.id!==id);renderAll();showToast("Recuerdo eliminado.");}catch(error){console.error(error);showToast("No pudimos eliminar el recuerdo.",true);}}
+    function resetMemoryForm(){editingMemoryId=null;els.memoryInput.value="";els.memoryType.value="gratitud";els.saveMemoryBtn.textContent="Guardar recuerdo";}
 
-    function renderCalendar() {
-      els.calendarGrid.innerHTML = "";
+    function renderStats(){completed=uniqueNumbers(completed);favorites=uniqueNumbers(favorites);const total=momentos.length,c=completed.length,f=favorites.length,m=memories.length,p=Math.round((c/total)*100),degrees=Math.round((p/100)*360),reward=getReward(),level=getJourneyLevel(p),next=getNextRecommendedDay();els.completedCount.textContent=`${c}/${total}`;els.metricCompleted.textContent=c;els.metricFavorites.textContent=f;els.metricMemories.textContent=m;els.metricReward.textContent=reward.icon;els.progressPercent.textContent=`${p}%`;els.progressBar.style.width=`${p}%`;const wrap=els.progressBar.parentElement;wrap.setAttribute("role","progressbar");wrap.setAttribute("aria-valuemin","0");wrap.setAttribute("aria-valuemax",String(total));wrap.setAttribute("aria-valuenow",String(c));els.progressCircle.style.background=`conic-gradient(var(--gold) ${degrees}deg, rgba(255,255,255,.15) ${degrees}deg)`;els.progressMessage.textContent=p>0?`${p}% del camino familiar completado.`:"Cada pequeño momento cuenta.";els.nextStepMessage.textContent=p>=100?"Camino completado. Pueden volver a sus momentos favoritos.":`Tu próximo paso: Día ${next}`;els.journeyLevel.textContent=level.name;els.journeyFavorites.textContent=f;els.journeyMemories.textContent=m;}
+    function getJourneyLevel(p){if(p>=100)return{name:"Completado"};if(p>=76)return{name:"Muy cerca"};if(p>=51)return{name:"Creciendo"};if(p>=26)return{name:"Avanzando"};if(p>0)return{name:"Comenzando"};return{name:"Inicio"};}
+    function getNextRecommendedDay(){const set=new Set(uniqueNumbers(completed));for(let d=1;d<=momentos.length;d++)if(!set.has(d))return d;return momentos.length;}
+    function getReward(){if(completed.length>=14)return{icon:"👑",title:"Exploradores de fe",description:"Completaron los 14 momentos familiares."};if(completed.length>=7)return{icon:"🌳",title:"Árbol de fe creciendo",description:"Ya compartieron varios momentos con Dios."};if(completed.length>=3)return{icon:"🌱",title:"Semilla de fe",description:"Los pequeños hábitos están comenzando a crecer."};return{icon:"✨",title:"Primeros pasos",description:"Cada pequeño momento cuenta."};}
 
-      momentos.forEach((momento) => {
-        const button = document.createElement("button");
-        button.className = "day-chip";
-        button.type = "button";
-        button.textContent = momento.day;
-        button.setAttribute("aria-label", `Día ${momento.day}: ${momento.title}${completed.includes(momento.day) ? ", completado" : ", pendiente"}${favorites.includes(momento.day) ? ", favorito" : ""}`);
-
-        if (completed.includes(momento.day)) {
-          button.classList.add("done");
-        }
-
-        if (favorites.includes(momento.day)) {
-          button.classList.add("favorite");
-        }
-
-        if (selectedDay === momento.day) {
-          button.classList.add("active");
-        }
-
-        button.addEventListener("click", () => {
-          selectedDay = momento.day;
-          persistSelectedDay();
-          setView("momento");
-          renderAll();
-        });
-
-        els.calendarGrid.appendChild(button);
-      });
+    async function archiveAndRestart(){
+      if(!confirm("¿Quieren comenzar un nuevo camino familiar? El recorrido actual y todos los recuerdos del Cofre permanecerán disponibles para que puedan volver a ellos cuando lo deseen."))return;
+      const button=document.getElementById("restartFamilyJourneyBtn");setBusy(button,true,"Preparando nuevo recorrido...");
+      try{const now=new Date().toISOString();const {error}=await supabaseClient.from("user_family_journeys").update({is_active:false,completed_at:currentJourney.completed_at||now,archived_at:now,updated_at:now}).eq("id",currentJourney.id);if(error)throw error;const payload={user_id:currentUser.id,cycle_number:(currentJourney.cycle_number||1)+1,title:"Momentos con Dios en Familia",current_day:1,completed_count:0,progress_percentage:0,journey_level:"Inicio",kid_mode:kidMode,is_active:true,started_at:now,updated_at:now};const {data,error:insertError}=await supabaseClient.from("user_family_journeys").insert(payload).select().single();if(insertError)throw insertError;currentJourney=data;selectedDay=1;completed=[];favorites=[];journeyArchive=await reloadJourneyArchive();renderCycleOptions();renderAll();setView("momento");document.getElementById("viewMomento").scrollIntoView({behavior:"smooth",block:"start"});showToast("Nuevo recorrido iniciado. El Cofre conserva todos sus recuerdos.");}catch(error){console.error(error);showToast("No pudimos iniciar el nuevo recorrido.",true);}finally{setBusy(button,false);}
     }
+    async function reloadJourneyArchive(){const {data,error}=await supabaseClient.from("user_family_journeys").select("id,cycle_number,is_active,started_at,completed_at,archived_at").order("cycle_number",{ascending:false});if(error)throw error;return data||[];}
+    function renderCompletionCelebration(){return`<section class="completion-card" aria-label="Camino familiar completado"><h3>Este camino continúa en su hogar ✨</h3><p>Compartieron los 14 momentos familiares. Pueden volver a sus días favoritos, releer los recuerdos del Cofre y elegir un momento semanal para seguir cultivando la fe juntos.</p><div class="action-row"><button class="btn-gold" type="button" data-open-cofre>Ver Cofre de recuerdos</button><button class="btn" type="button" id="restartFamilyJourneyBtn">Comenzar un nuevo recorrido</button></div></section>`;}
 
-    function renderKidCards() {
-      els.kidCards.innerHTML = "";
+    function memoryTypeLabel(type){return({gratitud:"Gratitud",oracion:"Oración",aprendizaje:"Aprendizaje",frase:"Frase especial",momento:"Momento en familia"})[type]||"Recuerdo familiar";}
+    function formatMemoryDate(value){const d=new Date(value);return Number.isNaN(d.getTime())?String(value||"Sin fecha"):d.toLocaleDateString("es-AR",{year:"numeric",month:"long",day:"numeric"});}
+    function uniqueNumbers(values){return[...new Set(values.map(Number))].filter(n=>Number.isInteger(n)&&n>=1&&n<=momentos.length).sort((a,b)=>a-b);}
+    async function changeDay(day){if(day<1||day>momentos.length)return;selectedDay=day;try{await saveJourneySettings();}catch(error){console.error(error);showToast("No pudimos actualizar el día actual.",true);}setView("momento");renderAll();document.getElementById("viewMomento").scrollIntoView({behavior:"smooth",block:"start"});}
+    function applyKidMode(){document.body.classList.toggle("kid-mode",kidMode);if(els.kidModeBtn)els.kidModeBtn.innerHTML=kidMode?'<span>🌿</span> Volver a la guía familiar <small>Ver acompañamiento completo para adultos.</small>':'<span>🎨</span> Vista para compartir <small>Tarjetas simples para usar con acompañamiento adulto.</small>';}
+    function setBusy(button,busy,label){if(!button)return;if(busy){button.dataset.originalText=button.textContent;button.disabled=true;button.textContent=label||"Guardando...";}else{button.disabled=false;button.textContent=button.dataset.originalText||button.textContent;}}
+    function showLoading(){els.loadingState.classList.remove("hide");els.errorState.classList.add("hide");els.lockedState.classList.add("hide");els.appContent.classList.add("hide");}
+    function showApp(){els.loadingState.classList.add("hide");els.errorState.classList.add("hide");els.lockedState.classList.add("hide");els.appContent.classList.remove("hide");}
+    function showLocked(){els.loadingState.classList.add("hide");els.errorState.classList.add("hide");els.lockedState.classList.remove("hide");els.appContent.classList.add("hide");}
+    function showError(message){els.loadingState.classList.add("hide");els.lockedState.classList.add("hide");els.appContent.classList.add("hide");els.errorState.classList.remove("hide");els.errorMessage.textContent=message;}
+    function showToast(message,isError=false){els.toast.textContent=message;els.toast.classList.toggle("error",isError);els.toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>els.toast.classList.remove("show"),3600);}
+    function escapeHTML(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#039;");}
 
-      kidCards.forEach((card) => {
-        const article = document.createElement("article");
-        article.className = "kid-card";
-        article.innerHTML = `
-          <strong>${escapeHTML(card.title)}</strong>
-          <p>${escapeHTML(card.text)}</p>
-        `;
-        els.kidCards.appendChild(article);
-      });
-    }
-
-    function renderMemories() {
-      els.memoryList.innerHTML = "";
-      const filter = els.memoryFilter?.value || "todos";
-      const visible = memories.filter(m => filter === "todos" || m.type === filter).slice().reverse();
-      if (!visible.length) { els.memoryList.innerHTML = `<div class="memory-item">${filter === "todos" ? "Todavía no guardaste recuerdos familiares. Puedes comenzar con una gratitud, oración o frase especial." : "No hay recuerdos en esta categoría todavía."}</div>`; return; }
-      visible.forEach(memory => {
-        const div = document.createElement("article"); div.className = "memory-item";
-        div.innerHTML = `<div class="memory-head"><div><strong>${escapeHTML(memoryTypeLabel(memory.type))}</strong><div class="memory-meta">${escapeHTML(formatMemoryDate(memory.createdAt || memory.date))}${memory.day ? ` · Día ${Number(memory.day)}` : ""}</div></div></div><p>${escapeHTML(memory.text)}</p><div class="memory-actions"><button class="btn-mini" type="button" data-edit-memory="${escapeHTML(memory.id)}">Editar</button><button class="btn-mini" type="button" data-delete-memory="${escapeHTML(memory.id)}">Eliminar</button></div>`;
-        els.memoryList.appendChild(div);
-      });
-      document.querySelectorAll("[data-edit-memory]").forEach(b => b.addEventListener("click", () => editMemory(b.dataset.editMemory)));
-      document.querySelectorAll("[data-delete-memory]").forEach(b => b.addEventListener("click", () => deleteMemory(b.dataset.deleteMemory)));
-    }
-    function renderStats() {
-      completed = uniqueNumbers(completed);
-      favorites = uniqueNumbers(favorites);
-
-      const total = momentos.length;
-      const completedTotal = completed.length;
-      const favoriteTotal = favorites.length;
-      const memoryTotal = memories.length;
-      const percentage = Math.round((completedTotal / total) * 100);
-      const degrees = Math.round((percentage / 100) * 360);
-      const reward = getReward();
-      const level = getJourneyLevel(percentage);
-      const nextDay = getNextRecommendedDay();
-
-      els.completedCount.textContent = `${completedTotal}/${total}`;
-      els.metricCompleted.textContent = completedTotal;
-      els.metricFavorites.textContent = favoriteTotal;
-      els.metricMemories.textContent = memoryTotal;
-      els.metricReward.textContent = reward.icon;
-
-      els.progressPercent.textContent = `${percentage}%`;
-      els.progressBar.style.width = `${percentage}%`;
-      const progressWrap = els.progressBar.parentElement;
-      progressWrap.setAttribute("role", "progressbar"); progressWrap.setAttribute("aria-valuemin", "0"); progressWrap.setAttribute("aria-valuemax", String(total)); progressWrap.setAttribute("aria-valuenow", String(completedTotal));
-      els.progressCircle.style.background =
-        `conic-gradient(var(--gold) ${degrees}deg, rgba(255, 255, 255, 0.15) ${degrees}deg)`;
-
-      els.progressMessage.textContent = percentage > 0
-        ? `${percentage}% del camino familiar completado.`
-        : "Cada pequeño momento cuenta.";
-
-      els.nextStepMessage.textContent = percentage >= 100
-        ? "Camino completado. Pueden volver a sus momentos favoritos."
-        : `Tu próximo paso: Día ${nextDay}`;
-
-      els.journeyLevel.textContent = level.name;
-      els.journeyFavorites.textContent = favoriteTotal;
-      els.journeyMemories.textContent = memoryTotal;
-
-      saveProgressSnapshot({
-        slug: "familias",
-        title: "Pequeños Momentos con Dios",
-        appTitle: "Momentos con Dios en Familia",
-        completed: completedTotal,
-        total,
-        percentage,
-        favorites: favoriteTotal,
-        memories: memoryTotal,
-        nextDay,
-        level: level.name,
-        reward: reward.icon,
-        updatedAt: new Date().toISOString()
-      });
-    }
-
-    function getJourneyLevel(percentage) {
-      if (percentage >= 100) return { name: "Completado" };
-      if (percentage >= 76) return { name: "Muy cerca" };
-      if (percentage >= 51) return { name: "Creciendo" };
-      if (percentage >= 26) return { name: "Avanzando" };
-      if (percentage > 0) return { name: "Comenzando" };
-      return { name: "Inicio" };
-    }
-
-    function getNextRecommendedDay() {
-      const completedSet = new Set(uniqueNumbers(completed));
-
-      for (let day = 1; day <= momentos.length; day++) {
-        if (!completedSet.has(day)) {
-          return day;
-        }
-      }
-
-      return momentos.length;
-    }
-
-    function getReward() {
-      if (completed.length >= 14) {
-        return {
-          icon: "👑",
-          title: "Exploradores de fe",
-          description: "Completaron los 14 momentos familiares."
-        };
-      }
-
-      if (completed.length >= 7) {
-        return {
-          icon: "🌳",
-          title: "Árbol de fe creciendo",
-          description: "Ya compartieron varios momentos con Dios."
-        };
-      }
-
-      if (completed.length >= 3) {
-        return {
-          icon: "🌱",
-          title: "Semilla de fe",
-          description: "Los pequeños hábitos están comenzando a crecer."
-        };
-      }
-
-      return {
-        icon: "✨",
-        title: "Primeros pasos",
-        description: "Cada pequeño momento cuenta."
-      };
-    }
-
-    function toggleCompleted(day) {
-      if (completed.includes(day)) {
-        completed = completed.filter((item) => item !== day);
-        showToast("Momento marcado como pendiente.");
-      } else {
-        completed.push(day);
-        showToast(kidMode ? "¡Estrella de fe ganada! ⭐" : "Momento completado. Qué lindo paso familiar.");
-      }
-
-      saveLocalState();
-      renderAll();
-    }
-
-    function toggleFavorite(day) {
-      if (favorites.includes(day)) {
-        favorites = favorites.filter((item) => item !== day);
-        showToast("Momento quitado de favoritos.");
-      } else {
-        favorites.push(day);
-        showToast("Momento guardado como favorito.");
-      }
-
-      saveLocalState();
-      renderAll();
-    }
-
-    function saveMemory() {
-      const text = els.memoryInput.value.trim();
-      if (!text) { showToast("Escribe un pequeño recuerdo antes de guardar.", true); return; }
-      const now = new Date().toISOString();
-      if (editingMemoryId) {
-        const memory = memories.find(item => item.id === editingMemoryId);
-        if (memory) { memory.text = text; memory.type = els.memoryType.value; memory.updatedAt = now; }
-        showToast("Recuerdo actualizado.");
-      } else {
-        memories.push({ id: createId(), text, type: els.memoryType.value, day: selectedDay, createdAt: now, updatedAt: now });
-        showToast("Recuerdo familiar guardado.");
-      }
-      resetMemoryForm(); saveLocalState(); renderAll();
-    }
-    function editMemory(id) { const m = memories.find(x => x.id === id); if (!m) return; editingMemoryId=id; els.memoryInput.value=m.text; els.memoryType.value=m.type || "momento"; els.saveMemoryBtn.textContent="Actualizar recuerdo"; els.memoryInput.focus(); }
-    function deleteMemory(id) { if (!window.confirm("¿Quieres eliminar este recuerdo? Esta acción no se puede deshacer.")) return; memories=memories.filter(x => x.id !== id); saveLocalState(); renderAll(); showToast("Recuerdo eliminado."); }
-    function resetMemoryForm() { editingMemoryId=null; els.memoryInput.value=""; els.memoryType.value="gratitud"; els.saveMemoryBtn.textContent="Guardar recuerdo"; }
-    function memoryTypeLabel(type) { return ({gratitud:"Gratitud",oracion:"Oración",aprendizaje:"Aprendizaje",frase:"Frase especial",momento:"Momento en familia"})[type] || "Recuerdo familiar"; }
-    function formatMemoryDate(value) { const d=new Date(value); return Number.isNaN(d.getTime()) ? String(value || "Sin fecha") : d.toLocaleDateString("es-AR",{year:"numeric",month:"long",day:"numeric"}); }
-    function createId() { return globalThis.crypto?.randomUUID?.() || `memory_${Date.now()}_${Math.random().toString(16).slice(2)}`; }
-    function getSuggestedDay() { return getNextRecommendedDay(); }
-    function createUserStorageKeys(userId) { const root=`${STORAGE_PREFIX}_${userId}`; return {completed:`${root}_completed`,favorites:`${root}_favorites`,memories:`${root}_memories`,selectedDay:`${root}_selected_day`,kidMode:`${root}_kid_mode`,snapshot:`${root}_progress_snapshot`,migration:`${root}_migration_v1`}; }
-    function migrateLegacyStorage() { if (!storageKeys || localStorage.getItem(storageKeys.migration)==="done") return; const map=[[LEGACY_STORAGE.completed,storageKeys.completed],[LEGACY_STORAGE.favorites,storageKeys.favorites],[LEGACY_STORAGE.memories,storageKeys.memories],[LEGACY_STORAGE.selectedDay,storageKeys.selectedDay],[LEGACY_STORAGE.kidMode,storageKeys.kidMode],[LEGACY_STORAGE.snapshot,storageKeys.snapshot]]; map.forEach(([oldKey,newKey])=>{ if(localStorage.getItem(newKey)===null && localStorage.getItem(oldKey)!==null) safeSetItem(newKey,localStorage.getItem(oldKey),false); }); safeSetItem(storageKeys.migration,"done",false); }
-    function persistSelectedDay() { safeSetItem(storageKeys.selectedDay,String(selectedDay)); }
-    function normalizeMemories(items) { return items.map((m,i)=>({id:m.id||`legacy_${i}_${Date.now()}`,text:String(m.text||""),type:m.type||"momento",day:Number(m.day)||null,createdAt:m.createdAt||m.updatedAt||m.date||new Date().toISOString(),updatedAt:m.updatedAt||m.createdAt||new Date().toISOString()})).filter(m=>m.text); }
-    function loadLocalState() { completed=readStorageArray(storageKeys.completed); favorites=readStorageArray(storageKeys.favorites); memories=normalizeMemories(readStorageArray(storageKeys.memories)); kidMode=localStorage.getItem(storageKeys.kidMode)==="true"; selectedDay=Number(localStorage.getItem(storageKeys.selectedDay))||getNextRecommendedDay(); }
-    function saveLocalState() { completed=uniqueNumbers(completed); favorites=uniqueNumbers(favorites); safeSetItem(storageKeys.completed,JSON.stringify(completed)); safeSetItem(storageKeys.favorites,JSON.stringify(favorites)); safeSetItem(storageKeys.memories,JSON.stringify(memories)); safeSetItem(storageKeys.selectedDay,String(selectedDay)); }
-    function saveProgressSnapshot(snapshot) { safeSetItem(storageKeys.snapshot,JSON.stringify(snapshot),false); }
-    function safeSetItem(key,value,notify=true) { try { localStorage.setItem(key,value); return true; } catch(error) { console.error("Storage error",error); if(notify) showToast("No pudimos guardar este cambio en el dispositivo.",true); return false; } }
-    function readStorageArray(key) { try { const value=JSON.parse(localStorage.getItem(key)||"[]"); return Array.isArray(value)?value:[]; } catch { return []; } }
-    function uniqueNumbers(values) { return [...new Set(values.map(Number))].filter(n=>Number.isInteger(n)&&n>=1&&n<=momentos.length).sort((a,b)=>a-b); }
-    function changeDay(day) { if(day<1||day>momentos.length)return; selectedDay=day; persistSelectedDay(); setView("momento"); renderAll(); document.getElementById("viewMomento").scrollIntoView({behavior:"smooth",block:"start"}); }
-    function formatAge(age) { return age==="todas" ? "para compartir en distintas edades" : `sugerido para ${age} años, adaptable a cada familia`; }
-    function renderCompletionCelebration() { return `<section class="completion-card" aria-label="Camino familiar completado"><h3>Este camino continúa en su hogar ✨</h3><p>Compartieron los 14 momentos familiares. Pueden volver a sus días favoritos, releer los recuerdos del cofre y elegir un momento semanal para seguir cultivando la fe juntos.</p></section>`; }
-    function applyKidMode() {
-      document.body.classList.toggle("kid-mode", kidMode);
-
-      if (els.kidModeBtn) {
-        els.kidModeBtn.innerHTML = kidMode
-          ? "<span>🌿</span> Volver a la guía familiar <small>Ver acompañamiento completo para adultos.</small>"
-          : "<span>🎨</span> Vista para compartir <small>Tarjetas simples para usar con acompañamiento adulto.</small>";
-      }
-    }
-
-    function showLoading() {
-      els.loadingState.classList.remove("hide");
-      els.errorState.classList.add("hide");
-      els.lockedState.classList.add("hide");
-      els.appContent.classList.add("hide");
-    }
-
-    function showApp() {
-      els.loadingState.classList.add("hide");
-      els.errorState.classList.add("hide");
-      els.lockedState.classList.add("hide");
-      els.appContent.classList.remove("hide");
-    }
-
-    function showLocked() {
-      els.loadingState.classList.add("hide");
-      els.errorState.classList.add("hide");
-      els.lockedState.classList.remove("hide");
-      els.appContent.classList.add("hide");
-    }
-
-    function showError(message) {
-      els.loadingState.classList.add("hide");
-      els.lockedState.classList.add("hide");
-      els.appContent.classList.add("hide");
-      els.errorState.classList.remove("hide");
-      els.errorMessage.textContent = message;
-    }
-
-    function showToast(message, isError = false) {
-      els.toast.textContent = message;
-      els.toast.classList.toggle("error", isError);
-      els.toast.classList.add("show");
-
-      window.clearTimeout(showToast.timer);
-
-      showToast.timer = window.setTimeout(() => {
-        els.toast.classList.remove("show");
-      }, 3600);
-    }
-
-    function escapeHTML(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+    document.addEventListener("click",event=>{if(event.target.closest("[data-open-cofre]")){setView("cofre");document.getElementById("viewCofre").scrollIntoView({behavior:"smooth",block:"start"});}if(event.target.id==="restartFamilyJourneyBtn")archiveAndRestart();});
   </script>
 </body>
 </html>
