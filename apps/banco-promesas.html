@@ -116,6 +116,23 @@
 .ecosystem-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.ecosystem-card{padding:18px;border-radius:22px;color:#fff;background:linear-gradient(135deg,#1F3146,#2C4662);box-shadow:var(--soft)}.ecosystem-card:nth-child(2){background:linear-gradient(135deg,var(--green),var(--olive))}.ecosystem-card strong{display:block;color:var(--gold);font-size:16px;margin-bottom:7px}.ecosystem-card p{font-size:13px;line-height:1.55;margin-bottom:12px;color:#F4EFE5}.ecosystem-card .btn{width:100%;box-shadow:none}.feature h2,.truth-card h3,.saved-item strong{text-wrap:balance;overflow-wrap:anywhere}.badge{align-items:center;justify-content:center;text-align:center}.need-card strong{overflow-wrap:anywhere}.field label{line-height:1.25}.btn{line-height:1.2;text-align:center}.filter-actions .btn{white-space:normal}
 @media(max-width:640px){.ecosystem-links{grid-template-columns:1fr}.ecosystem-card{padding:16px}.feature-top .btn{width:100%;margin-top:12px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Mi Biblioteca premium: visible, calida y responsive */
+.library-panel{padding:clamp(20px,3vw,30px);margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(250,247,240,.96))}
+.library-panel:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-125px;top:-145px;background:rgba(201,166,90,.13);pointer-events:none}
+.library-head{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.library-title{display:flex;align-items:center;gap:13px}.library-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(135deg,var(--green),var(--olive));color:var(--gold);font-size:21px;box-shadow:var(--soft)}
+.library-head h2{color:var(--green);font-size:clamp(25px,3.2vw,36px);letter-spacing:-.04em;line-height:1.05;margin-bottom:5px}.library-head p{color:var(--muted);line-height:1.55}
+.library-total{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;background:var(--softgold);color:var(--green);font-size:12px;font-weight:950}
+.library-accordions{position:relative;z-index:1;display:grid;gap:10px}.library-accordion{border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.9);overflow:hidden;box-shadow:0 10px 26px rgba(63,74,53,.07)}
+.library-summary{width:100%;border:0;background:transparent;color:var(--green);display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px;padding:15px 17px;text-align:left;font-weight:950}.library-summary:hover{background:rgba(247,234,199,.38)}
+.library-summary-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:var(--softgold);font-size:18px}.library-summary-copy small{display:block;color:var(--muted);font-weight:750;margin-top:2px}.library-count{min-width:31px;height:31px;padding:0 9px;border-radius:999px;display:grid;place-items:center;background:var(--softg);color:var(--green);font-size:12px}.library-chevron{font-size:16px;transition:transform .2s ease}.library-accordion.open .library-chevron{transform:rotate(180deg)}
+.library-body{display:none;border-top:1px solid var(--line);padding:14px 16px 17px;background:linear-gradient(180deg,rgba(250,247,240,.55),rgba(255,255,255,.95))}.library-accordion.open .library-body{display:block}
+.library-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.library-item{border:1px solid var(--line);background:white;border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(63,74,53,.06)}.library-item strong{display:block;color:var(--green);line-height:1.3;margin:8px 0 5px;text-wrap:balance}.library-item .ref{font-size:12px;margin-bottom:9px}.library-item p{font-size:13px;color:var(--muted);line-height:1.5}.library-item .row{margin-top:11px}.library-item .btn{min-height:40px;padding:9px 13px;font-size:12px;box-shadow:none}
+.collection-accordion{border:1px solid var(--line);border-radius:18px;background:white;overflow:hidden;margin-bottom:10px}.collection-summary{width:100%;border:0;background:transparent;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;text-align:left;padding:14px;color:var(--green)}.collection-summary:hover{background:var(--cream)}.collection-summary strong{display:block}.collection-summary small{display:block;color:var(--muted);margin-top:3px}.collection-accordion.open .library-chevron{transform:rotate(180deg)}.collection-content{display:none;padding:0 14px 14px;border-top:1px solid var(--line)}.collection-accordion.open .collection-content{display:block}.collection-actions{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0}.collection-actions .btn{min-height:38px;padding:8px 12px;font-size:12px;box-shadow:none}
+.library-empty{border:1px dashed rgba(201,166,90,.7);border-radius:18px;padding:16px;background:var(--cream);color:var(--muted);line-height:1.55}.library-empty strong{display:block;color:var(--green);margin-bottom:4px}.library-create{margin-top:12px}.library-create .btn{box-shadow:none}
+@media(max-width:930px){.library-panel{margin-top:0}.library-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.library-panel{padding:17px;border-radius:25px}.library-head{flex-direction:column}.library-title{align-items:flex-start}.library-total{align-self:flex-start}.library-summary{grid-template-columns:auto 1fr auto auto;padding:14px 13px;gap:9px}.library-summary-copy small{font-size:11px}.library-items{grid-template-columns:1fr}.library-item .row,.collection-actions{display:grid;grid-template-columns:1fr}.library-item .btn,.collection-actions .btn,.library-create .btn{width:100%}.collection-summary{padding:13px}.library-body{padding:12px}.library-icon{width:44px;height:44px}}
 </style></head><body>
 <main class="shell">
 <header class="topbar"><a class="brand" href="../dashboard.html" aria-label="Volver a Mi Espacio"><span class="mark">✦</span><span><strong>Hábitos con Dios</strong><small>Banco de Promesas</small></span></a><div class="actions"><span id="userPill" class="pill">Preparando tu acceso...</span><a class="btn" href="../dashboard.html">Mi Espacio</a><button id="logoutBtn" class="btn danger" type="button">Cerrar sesión</button></div></header>
@@ -133,9 +150,7 @@
 </div>
 <div class="filter-summary"><span id="activeFilterText">Mostrando toda la biblioteca</span><span><strong id="filterResultCount">350</strong> fichas disponibles</span></div>
 </section>
-<div class="layout"><div class="content"><section id="featured" class="panel feature"></section><div class="notice">Este recurso acompaña la lectura bíblica. Te animamos a leer cada pasaje completo y considerar su contexto. Las “verdades centrales” son paráfrasis editoriales, no citas textuales.</div><section><div class="feature-top" style="margin-bottom:12px"><div><h2 style="color:var(--green)">Explorar la biblioteca</h2><p id="resultsLabel" style="color:var(--muted)">350 fichas disponibles</p></div></div><div id="results" class="results"></div></section></div>
-<aside class="sidebar"><section class="panel side-panel"><h2>Mis verdades guardadas</h2><div class="tabs"><button class="tab active" data-side-tab="favorites" type="button">Favoritos</button><button class="tab" data-side-tab="collections" type="button">Colecciones</button><button class="tab" data-side-tab="recent" type="button">Recientes</button></div><div id="savedContent"></div></section></aside></div>
-<footer class="footer"><strong>Hábitos con Dios</strong><br>Verdades bíblicas para volver a la esperanza.<br>Este recurso no reemplaza acompañamiento médico, psicológico, pastoral responsable ni profesional.</footer></section></main>
+<section class="panel library-panel" id="myLibrary" aria-labelledby="libraryTitle"><div class="library-head"><div class="library-title"><span class="library-icon" aria-hidden="true">✦</span><div><h2 id="libraryTitle">Mi Biblioteca</h2><p>Guarda, organiza y vuelve a las verdades que acompañan tu camino.</p></div></div><span class="library-total"><span id="librarySavedCount">0</span> guardadas</span></div><div id="libraryAccordions" class="library-accordions"></div></section><div class="layout"><div class="content"><section id="featured" class="panel feature"></section><div class="notice">Este recurso acompaña la lectura bíblica. Te animamos a leer cada pasaje completo y considerar su contexto. Las “verdades centrales” son paráfrasis editoriales, no citas textuales.</div><section><div class="feature-top" style="margin-bottom:12px"><div><h2 style="color:var(--green)">Explorar la biblioteca</h2><p id="resultsLabel" style="color:var(--muted)">350 fichas disponibles</p></div></div><div id="results" class="results"></div></section></div></div><footer class="footer"><strong>Hábitos con Dios</strong><br>Verdades bíblicas para volver a la esperanza.<br>Este recurso no reemplaza acompañamiento médico, psicológico, pastoral responsable ni profesional.</footer></section></main>
 <div id="modalBackdrop" class="modal-backdrop hide" role="presentation" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h2 id="modalTitle">Agregar a una colección</h2><div id="modalBody"></div><div class="row"><button id="closeModal" class="btn" type="button">Cerrar</button></div></section></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
@@ -152,7 +167,8 @@ let state={favorites:[],collections:[],recent:[]};
 let filtered=[];
 let featuredId=null;
 let favoritesOnly=false;
-let sideTab='favorites';
+const libraryOpen={favorites:false,collections:false,recent:false};
+const openCollections=new Set();
 
 const featuredNeeds=[
   {theme:'Paz',icon:'🕊️'},
@@ -271,27 +287,43 @@ async function toggleFavorite(id){
 }
 
 function renderMetrics(){$('favoriteCount').textContent=state.favorites.length;$('collectionCount').textContent=state.collections.length;$('themeCount').textContent=new Set(items.map(x=>x.theme)).size}
-function renderSaved(){
-  let list=[];
-  if(sideTab==='favorites')list=state.favorites.map(id=>items.find(x=>x.id===id)).filter(Boolean);
-  if(sideTab==='recent')list=state.recent.map(id=>items.find(x=>x.id===id)).filter(Boolean);
-  if(sideTab==='collections'){
-    $('savedContent').innerHTML=state.collections.length?`<div class="collection-list">${state.collections.map(x=>`<div class="collection-item"><div class="collection-top"><div><strong>${escapeHTML(x.name)}</strong><small>${x.itemIds.length} contenidos</small></div><div class="row"><button class="btn" data-open-collection="${x.id}" type="button">Abrir</button><button class="btn" data-rename="${x.id}" type="button">Renombrar</button><button class="btn danger" data-delete-collection="${x.id}" type="button">Eliminar</button></div></div></div>`).join('')}</div><button id="newCollectionSide" class="btn primary" type="button" style="margin-top:12px">Nueva colección</button>`:'<div class="empty">Todavía no creaste colecciones.</div><button id="newCollectionSide" class="btn primary" type="button" style="margin-top:12px">Crear colección</button>';
-    bindSaved();return;
-  }
-  $('savedContent').innerHTML=list.length?`<div class="saved-list">${list.map(x=>`<button class="saved-item" type="button" data-open="${x.id}" style="text-align:left"><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.reference)}</small></button>`).join('')}</div>`:'<div class="empty">Todavía no hay contenidos en esta sección.</div>';
-  bindDynamic();
+function libraryItemCard(x){
+  return `<article class="library-item"><span class="badge">${escapeHTML(x.type)}</span><strong>${escapeHTML(x.title)}</strong><div class="ref">${escapeHTML(x.reference)}</div><p>${escapeHTML(x.truth)}</p><div class="row"><button class="btn open" type="button" data-open="${x.id}">Abrir verdad</button><button class="btn gold collect" type="button" data-collect="${x.id}">Colección</button></div></article>`;
 }
-
-function openCollection(id){const c=state.collections.find(x=>x.id===id);if(!c)return;filtered=c.itemIds.map(i=>items.find(x=>x.id===i)).filter(Boolean);$('results').innerHTML=filtered.length?filtered.map(itemCard).join(''):'<div class="empty">Esta colección está vacía.</div>';$('resultsLabel').textContent=`Colección: ${c.name}`;bindDynamic();document.querySelector('.layout').scrollIntoView({behavior:'smooth'})}
+function emptyLibrary(title,text){return `<div class="library-empty"><strong>${escapeHTML(title)}</strong>${escapeHTML(text)}</div>`}
+function accordionMarkup(key,icon,title,subtitle,count,body){
+  const open=libraryOpen[key];
+  return `<section class="library-accordion ${open?'open':''}" data-library-section="${key}"><button class="library-summary" type="button" data-library-toggle="${key}" aria-expanded="${open}"><span class="library-summary-icon" aria-hidden="true">${icon}</span><span class="library-summary-copy">${title}<small>${subtitle}</small></span><span class="library-count">${count}</span><span class="library-chevron" aria-hidden="true">⌄</span></button><div class="library-body">${body}</div></section>`;
+}
+function renderSaved(){
+  const favorites=state.favorites.map(id=>items.find(x=>x.id===id)).filter(Boolean);
+  const recent=state.recent.map(id=>items.find(x=>x.id===id)).filter(Boolean);
+  const favoritesBody=favorites.length?`<div class="library-items">${favorites.map(libraryItemCard).join('')}</div>`:emptyLibrary('Tu espacio está listo','Guarda una verdad como favorita y aparecerá aquí para volver a ella cuando quieras.');
+  const recentBody=recent.length?`<div class="library-items">${recent.map(libraryItemCard).join('')}</div>`:emptyLibrary('Aún no hay recientes','Las verdades que abras intencionalmente aparecerán aquí.');
+  const collectionBody=state.collections.length?`<div class="collection-list">${state.collections.map(c=>{
+    const open=openCollections.has(c.id);
+    const collectionItems=c.itemIds.map(id=>items.find(x=>x.id===id)).filter(Boolean);
+    const content=collectionItems.length?`<div class="library-items">${collectionItems.map(libraryItemCard).join('')}</div>`:emptyLibrary('Esta colección está esperando','Agrega una verdad desde cualquier ficha para comenzar a llenarla.');
+    return `<section class="collection-accordion ${open?'open':''}" data-collection="${c.id}"><button class="collection-summary" type="button" data-collection-toggle="${c.id}" aria-expanded="${open}"><span><strong>${escapeHTML(c.name)}</strong><small>${collectionItems.length} ${collectionItems.length===1?'verdad guardada':'verdades guardadas'}</small></span><span class="library-count">${collectionItems.length}</span><span class="library-chevron" aria-hidden="true">⌄</span></button><div class="collection-content"><div class="collection-actions"><button class="btn" data-rename="${c.id}" type="button">Renombrar</button><button class="btn danger" data-delete-collection="${c.id}" type="button">Eliminar colección</button></div>${content}</div></section>`;
+  }).join('')}</div><div class="library-create"><button id="newCollectionSide" class="btn primary" type="button">＋ Nueva colección</button></div>`:`${emptyLibrary('Crea tu primera colección','Reúne verdades para momentos como paz, familia, decisiones o esperanza.')}<div class="library-create"><button id="newCollectionSide" class="btn primary" type="button">＋ Crear colección</button></div>`;
+  $('librarySavedCount').textContent=state.favorites.length;
+  $('libraryAccordions').innerHTML=accordionMarkup('favorites','★','Favoritos','Las verdades que quieres tener cerca',favorites.length,favoritesBody)+accordionMarkup('collections','▦','Colecciones','Tus espacios personales para volver',state.collections.length,collectionBody)+accordionMarkup('recent','◷','Recientes','Lo último que abriste',recent.length,recentBody);
+  bindSaved();bindDynamic();
+}
+function openCollection(id){
+  libraryOpen.collections=true;
+  openCollections.add(id);
+  renderSaved();
+  requestAnimationFrame(()=>document.querySelector(`[data-collection="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'center'}));
+}
 async function createCollection(name){
   const v=String(name||'').trim();if(!v)return null;
   const {data,error}=await supabaseClient.from('promise_collections').insert({user_id:user.id,name:v}).select('id,name,created_at,updated_at').single();
   if(error){console.error(error);toast('No pudimos crear la colección.',true);return null}
   const c={...data,itemIds:[]};state.collections.push(c);renderMetrics();renderSaved();return c;
 }
-async function renameCollection(id){const c=state.collections.find(x=>x.id===id);const name=prompt('Nuevo nombre',c?.name||'');if(!c||!name?.trim())return;const {error}=await supabaseClient.from('promise_collections').update({name:name.trim(),updated_at:new Date().toISOString()}).eq('id',id).eq('user_id',user.id);if(error){toast('No pudimos renombrar la colección.',true);return}c.name=name.trim();renderSaved();toast('Colección renombrada.')}
-async function deleteCollection(id){if(!confirm('¿Eliminar esta colección? Las verdades no se borrarán de favoritos.'))return;const {error}=await supabaseClient.from('promise_collections').delete().eq('id',id).eq('user_id',user.id);if(error){toast('No pudimos eliminar la colección.',true);return}state.collections=state.collections.filter(x=>x.id!==id);renderMetrics();renderSaved();toast('Colección eliminada.')}
+async function renameCollection(id){const c=state.collections.find(x=>x.id===id);const name=prompt('Nuevo nombre',c?.name||'');if(!c||!name?.trim())return;const {error}=await supabaseClient.from('promise_collections').update({name:name.trim(),updated_at:new Date().toISOString()}).eq('id',id).eq('user_id',user.id);if(error){toast('No pudimos renombrar la colección.',true);return}c.name=name.trim();openCollections.add(id);renderSaved();toast('Colección renombrada.')}
+async function deleteCollection(id){if(!confirm('¿Eliminar esta colección? Las verdades no se borrarán de favoritos.'))return;const {error}=await supabaseClient.from('promise_collections').delete().eq('id',id).eq('user_id',user.id);if(error){toast('No pudimos eliminar la colección.',true);return}openCollections.delete(id);state.collections=state.collections.filter(x=>x.id!==id);renderMetrics();renderSaved();toast('Colección eliminada.')}
 
 function collectionModal(itemId){
   $('modalTitle').textContent='Agregar a una colección';
@@ -310,8 +342,9 @@ function collectionModal(itemId){
 }
 
 function bindSaved(){
-  $('newCollectionSide')?.addEventListener('click',async()=>{const name=prompt('Nombre de la colección');if(await createCollection(name))toast('Colección creada.')});
-  document.querySelectorAll('[data-open-collection]').forEach(b=>b.onclick=()=>openCollection(b.dataset.openCollection));
+  document.querySelectorAll('[data-library-toggle]').forEach(b=>b.onclick=()=>{const key=b.dataset.libraryToggle;libraryOpen[key]=!libraryOpen[key];renderSaved()});
+  document.querySelectorAll('[data-collection-toggle]').forEach(b=>b.onclick=()=>{const id=b.dataset.collectionToggle;openCollections.has(id)?openCollections.delete(id):openCollections.add(id);renderSaved()});
+  $('newCollectionSide')?.addEventListener('click',async()=>{const name=prompt('Nombre de la colección');const c=await createCollection(name);if(c){libraryOpen.collections=true;openCollections.add(c.id);renderSaved();toast('Colección creada.')}});
   document.querySelectorAll('[data-rename]').forEach(b=>b.onclick=()=>renameCollection(b.dataset.rename));
   document.querySelectorAll('[data-delete-collection]').forEach(b=>b.onclick=()=>deleteCollection(b.dataset.deleteCollection));
 }
@@ -328,7 +361,6 @@ function bindStatic(){
   $('randomBtn').onclick=async()=>{const pool=filtered.length?filtered:items;const available=pool.filter(x=>x.id!==featuredId);featuredId=(available[Math.floor(Math.random()*available.length)]||pool[0]).id;await renderFeatured();$('featured').scrollIntoView({behavior:'smooth',block:'start'})};
   $('focusSearch').onclick=()=>{$('explorerPanel').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('themeFilter').focus(),350)};
   document.querySelectorAll('.need-card').forEach(card=>card.onclick=()=>{$('themeFilter').value=$('themeFilter').value===card.dataset.theme?'':card.dataset.theme;applyFilters()});
-  document.querySelectorAll('[data-side-tab]').forEach(b=>b.onclick=()=>{sideTab=b.dataset.sideTab;document.querySelectorAll('[data-side-tab]').forEach(x=>x.classList.toggle('active',x===b));renderSaved()});
   const close=()=>{$('modalBackdrop').classList.add('hide');$('modalBackdrop').setAttribute('aria-hidden','true')};$('closeModal').onclick=close;$('modalBackdrop').onclick=e=>{if(e.target===$('modalBackdrop'))close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
   $('logoutBtn').onclick=async()=>{if(!confirm('¿Deseas cerrar sesión?'))return;$('logoutBtn').disabled=true;const{error}=await supabaseClient.auth.signOut();if(error){$('logoutBtn').disabled=false;toast('No pudimos cerrar la sesión.',true);return}location.href='../login.html'};
 }
