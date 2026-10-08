@@ -228,6 +228,10 @@ function applyFilters(){
   $('resultsLabel').textContent=`${filtered.length} contenido${filtered.length===1?'':'s'} encontrado${filtered.length===1?'':'s'}`;
   const labels=[];if(theme)labels.push(`Tema: ${displayTheme(theme)}`);if(type)labels.push(`Tipo: ${type}`);if(favoritesOnly)labels.push('Solo favoritos');
   $('activeFilterText').textContent=labels.length?labels.join(' · '):'Mostrando toda la biblioteca';
+  if(filtered.length){
+    featuredId=filtered[0].id;
+    renderFeatured(false);
+  }
   renderResults();
   document.querySelectorAll('.need-card').forEach(card=>{const active=card.dataset.theme===theme;card.classList.toggle('active',active);card.setAttribute('aria-pressed',String(active))});
 }
