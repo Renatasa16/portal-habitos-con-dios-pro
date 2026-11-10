@@ -14,6 +14,7 @@ const MODULE_FILES = {
   escalation: "escalation.json",
   faq: "faq.json",
   knowledgeBase: "knowledge-base.json",
+  jardinDeFe: "jardin-de-fe.json",
   map: "map.json"
 };
 
@@ -96,6 +97,7 @@ function loadKnowledgeBase() {
     escalation: readJsonFile(MODULE_FILES.escalation),
     faq: readJsonFile(MODULE_FILES.faq),
     knowledgeBase: readJsonFile(MODULE_FILES.knowledgeBase),
+    jardinDeFe: readJsonFile(MODULE_FILES.jardinDeFe),
     map: readJsonFile(MODULE_FILES.map)
   };
 
@@ -682,6 +684,12 @@ function getApps() {
   return knowledge.apps?.apps || [];
 }
 
+function getJardinDeFeKnowledge() {
+  const knowledge = loadKnowledgeBase();
+
+  return knowledge.jardinDeFe || null;
+}
+
 function getDisclaimerText(disclaimerKey = "none") {
   const knowledge = loadKnowledgeBase();
 
@@ -715,6 +723,7 @@ module.exports = {
   scoreTextMatch,
   getProducts,
   getApps,
+  getJardinDeFeKnowledge,
   getProductFiles,
   getAppFiles,
   loadProductFile,
