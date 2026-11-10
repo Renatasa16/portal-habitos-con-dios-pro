@@ -181,6 +181,18 @@ const ALLOWED_CATEGORIES = {
     aiRoute: "app"
   },
 
+  comunidad: {
+    label: "Comunidad",
+    priority: "Normal",
+    aiRoute: "jardin_de_fe_comunidad"
+  },
+
+  apps: {
+    label: "Apps de Jardín de Fe",
+    priority: "Normal",
+    aiRoute: "jardin_de_fe_apps"
+  },
+
   acceso: {
     label: "Acceso",
     priority: "Alta",
@@ -219,6 +231,10 @@ const ALLOWED_CATEGORIES = {
 };
 
 const ALLOWED_PRODUCTS = {
+
+  prod_jardin_fe: {
+    label: "Jardín de Fe"
+  },
 
   prod_21dias: {
     label: "21 Días Más Cerca de Dios"
