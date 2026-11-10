@@ -385,8 +385,8 @@
     <h1>Estamos aquí para ayudarte</h1>
 
     <p>
-      Si necesitas ayuda con el acceso a tus Apps Premium, ebooks,
-      bonos complementarios o tienes otra consulta, selecciona la
+      Si necesitas ayuda con Jardín de Fe, el acceso a tus Apps Premium,
+      ebooks, bonos complementarios o tienes otra consulta, selecciona la
       experiencia y el tipo de ayuda que necesitas.
     </p>
   </section>
@@ -470,6 +470,9 @@
                 Selecciona una opción
               </option>
 
+              <option value="prod_jardin_fe">
+                Jardín de Fe
+              </option>
               <option value="prod_21dias">
                 21 Días Más Cerca de Dios
               </option>
@@ -594,6 +597,12 @@ Elige la opción que mejor describa el tema principal de tu consulta.
   <div class="support-list">
 
     <div class="support-item">
+      <strong>Jardín de Fe</strong>
+      <span>
+        Consultas sobre la comunidad, el acceso y la membresía, o sus Apps.
+      </span>
+    </div>
+    <div class="support-item">
       <strong>Apps Premium</strong>
       <span>
         Uso de la App, funciones disponibles y consultas relacionadas.
@@ -659,6 +668,30 @@ Elige la opción que mejor describa el tema principal de tu consulta.
 const form = document.getElementById("contactForm");
 const messageBox = document.getElementById("formMessage");
 const submitBtn = document.getElementById("submitBtn");
+const productSelect = document.getElementById("product");
+const categorySelect = document.getElementById("category");
+const defaultCategoryOptions = categorySelect.innerHTML;
+const jardinFeCategoryOptions = `
+              <option value="">
+                Selecciona una opción
+              </option>
+              <option value="comunidad">
+                Comunidad
+              </option>
+              <option value="acceso_membresia">
+                Acceso y membresía
+              </option>
+              <option value="apps">
+                Apps de Jardín de Fe
+              </option>`;
+
+function updateCategoryOptions() {
+  const isJardinFe = productSelect.value === "prod_jardin_fe";
+  categorySelect.innerHTML = isJardinFe ? jardinFeCategoryOptions : defaultCategoryOptions;
+  categorySelect.value = "";
+}
+
+productSelect.addEventListener("change", updateCategoryOptions);
 
 form.addEventListener("submit", async (event) => {
 
@@ -704,7 +737,7 @@ form.addEventListener("submit", async (event) => {
       "Tu consulta fue enviada correctamente. Te responderemos a la brevedad.";
 
     form.reset();
-
+    updateCategoryOptions();
   } catch (error) {
 
     console.error(error);
