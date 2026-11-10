@@ -3,201 +3,366 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#3F4A35" />
+  <title>Seguimos contigo | Hábitos con Dios</title>
+  <style>
+    :root {
+      --forest: #3F4A35;
+      --forest-dark: #2F3828;
+      --sage: #77856B;
+      --cream: #FAF7F0;
+      --paper: #FFFDF8;
+      --sand: #E8DECC;
+      --gold: #BA9560;
+      --ink: #30382C;
+      --muted: #6B7280;
+      --white: #FFFFFF;
+      --danger: #9B3F3F;
+      --shadow: 0 18px 50px rgba(63, 74, 53, 0.12);
+    }
 
-  <title>Escalamiento de Soporte | Hábitos con Dios</title>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(186,149,96,.13), transparent 34%),
+        linear-gradient(180deg, #F5F0E6 0%, var(--cream) 52%, #F8F4EC 100%);
+    }
+
+    .page-shell {
+      width: min(100% - 32px, 780px);
+      margin: 0 auto;
+      padding: 48px 0 56px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--forest);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 1px solid var(--sand);
+      box-shadow: 0 6px 18px rgba(63,74,53,.08);
+      font-size: 18px;
+    }
+
+    .card {
+      overflow: hidden;
+      background: rgba(255, 253, 248, .96);
+      border: 1px solid rgba(232, 222, 204, .95);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 36px 36px 30px;
+      text-align: center;
+      background: linear-gradient(145deg, rgba(63,74,53,.07), rgba(186,149,96,.08));
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,253,248,.88);
+      border: 1px solid var(--sand);
+      color: var(--forest);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--forest-dark);
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.08;
+      font-weight: 700;
+    }
+
+    .hero p {
+      max-width: 610px;
+      margin: 16px auto 0;
+      color: #596153;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .content { padding: 32px 36px 38px; }
+
+    .context-card,
+    .note {
+      border-radius: 18px;
+      border: 1px solid var(--sand);
+    }
+
+    .note {
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: #FFF9EE;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--forest);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    #caseContext { margin-top: 4px; }
+
+    .context-card {
+      padding: 20px 22px;
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .context-card p { margin: 0; line-height: 1.65; }
+    .context-card p + p { margin-top: 12px; }
+    .context-card strong { color: var(--forest-dark); }
+
+    .form-block { margin-top: 26px; }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--forest-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 16px 17px;
+      border: 1px solid #DCD2BF;
+      border-radius: 16px;
+      outline: none;
+      resize: vertical;
+      background: var(--white);
+      color: #364033;
+      font: 15px/1.65 Arial, Helvetica, sans-serif;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--sage);
+      box-shadow: 0 0 0 4px rgba(119,133,107,.13);
+    }
+
+    textarea::placeholder { color: #91978D; }
+
+    .actions { margin-top: 18px; }
+
+    button {
+      min-height: 50px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--forest), var(--forest-dark));
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(63,74,53,.20);
+      transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); box-shadow: 0 13px 28px rgba(63,74,53,.24); }
+    button:focus-visible { outline: 3px solid rgba(186,149,96,.45); outline-offset: 3px; }
+    button:disabled { cursor: not-allowed; opacity: .65; transform: none; }
+
+    #escalationStatus {
+      min-height: 24px;
+      margin-top: 15px;
+      color: var(--muted);
+      font: 14px/1.6 Arial, Helvetica, sans-serif;
+    }
+
+    .error-message {
+      padding: 15px 17px;
+      border-radius: 14px;
+      background: #FFF4F2;
+      border: 1px solid #E8C1BA;
+      color: var(--danger);
+      font: 14px/1.6 Arial, Helvetica, sans-serif;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      color: #7E837A;
+      font: 12px/1.6 Arial, Helvetica, sans-serif;
+    }
+
+    @media (max-width: 600px) {
+      .page-shell { width: min(100% - 20px, 780px); padding: 24px 0 34px; }
+      .card { border-radius: 22px; }
+      .hero { padding: 28px 22px 24px; }
+      .content { padding: 24px 20px 28px; }
+      button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="page-shell">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">🌿</span>
+      <span>Hábitos con Dios</span>
+    </div>
 
-  <h1>Todavía necesito ayuda</h1>
+    <section class="card" aria-labelledby="pageTitle">
+      <header class="hero">
+        <div class="eyebrow">💛 Seguimos contigo</div>
+        <h1 id="pageTitle">Queremos acompañarte un poco más</h1>
+        <p>
+          Gracias por contarnos que la respuesta anterior no resolvió completamente tu consulta.
+          Ya tenemos el contexto de tu caso, así que no necesitas empezar de nuevo.
+        </p>
+      </header>
 
-  <p>
-    Gracias por indicarnos que la respuesta recibida no resolvió completamente tu consulta.
-  </p>
+      <div class="content">
+        <div id="caseContext" aria-live="polite"></div>
 
-  <p>
-    Ya tenemos el contexto de tu caso. Cuéntanos qué información sigues necesitando para que nuestro equipo pueda ayudarte mejor.
-  </p>
+        <div class="note">
+          <strong>🌿 No es necesario repetir toda tu consulta.</strong>
+          <p>
+            Cuéntanos únicamente qué información adicional necesitas o qué parte quedó pendiente.
+            Nuestro equipo podrá revisar el contexto que ya compartiste.
+          </p>
+        </div>
 
-  <div id="caseContext"></div>
-  <div
-  style="
-    margin-top:18px;
-    padding:18px;
-    background:#FFFDF8;
-    border:1px solid #E8DECC;
-    border-radius:16px;
-  "
->
-  <p
-    style="
-      margin:0 0 10px;
-      color:#3F4A35;
-      font-weight:700;
-    "
-  >
-    💜 No es necesario repetir toda tu consulta.
-  </p>
+        <div class="form-block">
+          <label for="escalationMessage">¿Qué información sigues necesitando?</label>
+          <textarea
+            id="escalationMessage"
+            rows="6"
+            placeholder="Cuéntanos qué información adicional necesitas..."
+          ></textarea>
 
-  <p
-    style="
-      margin:0;
-      color:#6B7280;
-      line-height:1.7;
-    "
-  >
-    Cuéntanos únicamente qué información adicional necesitas para que podamos ayudarte mejor.
-  </p>
-</div>
-  <div style="margin-top:20px;">
+          <div class="actions">
+            <button id="submitEscalation" type="button">Enviar solicitud de ayuda</button>
+          </div>
 
-  <label
-    for="escalationMessage"
-    style="
-      display:block;
-      margin-bottom:10px;
-      font-weight:700;
-      color:#3F4A35;
-    "
-  >
-    ¿Qué información sigues necesitando?
-  </label>
+          <div id="escalationStatus" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
 
-  <textarea
-    id="escalationMessage"
-    rows="6"
-    style="
-      width:100%;
-      padding:14px;
-      border:1px solid #E8DECC;
-      border-radius:12px;
-      font-family:inherit;
-      resize:vertical;
-    "
-    placeholder="Cuéntanos qué información adicional necesitas..."
-  ></textarea>
-    <div style="margin-top:16px;">
-  <button
-    id="submitEscalation"
-    type="button"
-    style="
-      background:#3F4A35;
-      color:#FFFFFF;
-      border:none;
-      border-radius:999px;
-      padding:14px 24px;
-      font-size:15px;
-      font-weight:700;
-      cursor:pointer;
-    "
-  >
-    Enviar solicitud
-  </button>
-</div>
-
-<div
-  id="escalationStatus"
-  style="
-    margin-top:14px;
-    color:#6B7280;
-  "
-></div>
-
-</div>
+    <p class="footer-note">Hábitos con Dios · Acompañándote en cada etapa de tu camino espiritual.</p>
+  </main>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-
     const caseId = params.get("id");
-
     console.log("ESCALATION_CASE_ID", caseId);
 
     fetch(`/api/escalation?id=${caseId}`)
-  .then(response => response.json())
-  .then(data => {
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("caseContext").innerHTML = `
+          <div class="context-card">
+            <p>
+              <strong>Caso:</strong>
+              ${data.case.case_id}
+            </p>
+            <p>
+              <strong>Tu consulta:</strong><br>
+              ${data.case.question || "No disponible"}
+            </p>
+          </div>
+        `;
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById("caseContext").innerHTML = `
+          <div class="error-message">
+            No pudimos cargar la información del caso.
+          </div>
+        `;
+      });
 
-    document.getElementById("caseContext").innerHTML = `
-  <div style="
-    margin-top:20px;
-    padding:20px;
-    border:1px solid #E8DECC;
-    border-radius:16px;
-    background:#FAF7F0;
-  ">
-
-    <p>
-      <strong>Caso:</strong>
-      ${data.case.case_id}
-    </p>
-
-    <p>
-      <strong>Tu consulta:</strong><br>
-      ${data.case.question || "No disponible"}
-    </p>
-
-  </div>
-`;
-
-  })
-  .catch(error => {
-    console.error(error);
-
-    document.getElementById("caseContext").innerHTML = `
-      <div style="color:red;">
-        No pudimos cargar la información del caso.
-      </div>
-    `;
-  });
     document
-  .getElementById("submitEscalation")
-  .addEventListener("click", async () => {
+      .getElementById("submitEscalation")
+      .addEventListener("click", async () => {
+        const message = document
+          .getElementById("escalationMessage")
+          .value
+          .trim();
 
-    const message =
-      document
-        .getElementById("escalationMessage")
-        .value
-        .trim();
+        if (!message) {
+          document.getElementById("escalationStatus").textContent =
+            "Por favor cuéntanos qué información adicional necesitas.";
+          return;
+        }
 
-    if (!message) {
-      document.getElementById("escalationStatus").textContent =
-        "Por favor cuéntanos qué información adicional necesitas.";
-      return;
-    }
+        document.getElementById("escalationStatus").textContent =
+          "⏳ Enviando solicitud...";
 
-    document.getElementById("escalationStatus").textContent =
-      "⏳ Enviando solicitud...";
+        try {
+          const response = await fetch("/api/escalation", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              id: caseId,
+              escalation_message: message
+            })
+          });
 
-   try {
+          const data = await response.json();
 
-  const response = await fetch("/api/escalation", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id: caseId,
-      escalation_message: message
-    })
-  });
-
-  const data = await response.json();
-
-  document.getElementById("escalationStatus").textContent =
-    data.ok
-      ? "💜 Gracias. Hemos recibido tu mensaje y nuestro equipo revisará tu caso para ayudarte de la mejor manera posible."
-      : (data.message || "No pudimos enviar tu solicitud.");
-
-} catch (error) {
-
-  console.error(error);
-
-  document.getElementById("escalationStatus").textContent =
-    "No pudimos enviar tu solicitud. Inténtalo nuevamente.";
-
-}
-
-  });
+          document.getElementById("escalationStatus").textContent =
+            data.ok
+              ? "💛 Gracias. Recibimos tu mensaje y nuestro equipo revisará tu caso con el contexto que ya compartiste."
+              : (data.message || "No pudimos enviar tu solicitud.");
+        } catch (error) {
+          console.error(error);
+          document.getElementById("escalationStatus").textContent =
+            "No pudimos enviar tu solicitud. Inténtalo nuevamente.";
+        }
+      });
   </script>
-
 </body>
 </html>
