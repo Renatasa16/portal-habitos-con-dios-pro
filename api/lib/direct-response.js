@@ -7,6 +7,7 @@ const {
   getAppFiles,
   loadProductFile,
   loadAppFile,
+  getJardinDeFeKnowledge,
   getDisclaimerText,
   getEscalationMessages
 } = require("./knowledge-loader");
@@ -1511,6 +1512,136 @@ function shouldSkipAutomaticDirectResponse(
   );
 }
 
+function buildJardinDeFeConfigurationResponse(
+  reason
+) {
+  console.error(
+    "JARDIN_DE_FE_CONFIGURATION_ERROR",
+    reason
+  );
+
+  return {
+    found: true,
+    source: "jardin_de_fe_configuration",
+    intent: "jardin_de_fe_configuration_error",
+    usedFile: "jardin-de-fe.json",
+    requiresHumanReview: true,
+    text: "🌿 No pudimos consultar la información de Jardín de Fe en este momento. Tu consulta será revisada para poder acompañarte correctamente."
+  };
+}
+
+function findJardinDeFeResponse(
+  product,
+  category
+) {
+  if (product !== "prod_jardin_fe") {
+    return null;
+  }
+
+  if (
+    typeof getJardinDeFeKnowledge !==
+    "function"
+  ) {
+    console.log(
+      "JARDIN_DE_FE_GETTER_NOT_AVAILABLE"
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "getter_not_available"
+    );
+  }
+
+  const jardinDeFe =
+    getJardinDeFeKnowledge();
+
+  if (!jardinDeFe) {
+    console.log(
+      "JARDIN_DE_FE_KNOWLEDGE_NOT_FOUND"
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "knowledge_not_found"
+    );
+  }
+
+  if (
+    jardinDeFe.product_key !==
+    "prod_jardin_fe"
+  ) {
+    console.log(
+      "JARDIN_DE_FE_PRODUCT_KEY_MISMATCH"
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "product_key_mismatch"
+    );
+  }
+
+  if (
+    jardinDeFe.routing?.mode !==
+    "deterministic"
+  ) {
+    console.log(
+      "JARDIN_DE_FE_ROUTING_NOT_DETERMINISTIC"
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "routing_not_deterministic"
+    );
+  }
+
+  const responseKey =
+    jardinDeFe.routing
+      ?.categories
+      ?.[category] ||
+    null;
+
+  if (!responseKey) {
+    console.log(
+      "JARDIN_DE_FE_CATEGORY_NOT_FOUND",
+      category || "none"
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "category_not_found"
+    );
+  }
+
+  const response =
+    jardinDeFe.responses
+      ?.[responseKey] ||
+    null;
+
+  if (
+    !response ||
+    response.category !== category ||
+    typeof response.content !== "string" ||
+    !response.content.trim()
+  ) {
+    console.log(
+      "JARDIN_DE_FE_RESPONSE_INVALID",
+      responseKey
+    );
+
+    return buildJardinDeFeConfigurationResponse(
+      "response_invalid"
+    );
+  }
+
+  console.log(
+    "JARDIN_DE_FE_DETERMINISTIC_RESPONSE",
+    responseKey
+  );
+
+  return {
+    found: true,
+    source: "jardin_de_fe",
+    intent: responseKey,
+    usedFile: "jardin-de-fe.json",
+    text: response.content
+  };
+}
+
 function getFormRoutingTarget(
   product,
   category
@@ -1582,6 +1713,20 @@ function findFormRoutedResponse({
     );
 
     return null;
+  }
+
+  /*
+   * JARDÍN DE FE
+   *
+   * Producto + categoría seleccionan una respuesta
+   * predeterminada. El mensaje libre no participa
+   * en la redacción ni en la selección de respuesta.
+   */
+  if (product === "prod_jardin_fe") {
+    return findJardinDeFeResponse(
+      product,
+      category
+    );
   }
 
   /*
