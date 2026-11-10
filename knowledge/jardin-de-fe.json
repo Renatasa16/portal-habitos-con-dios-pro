@@ -1,0 +1,63 @@
+{
+  "id": "jardin_de_fe",
+  "name": "Jardín de Fe",
+  "version": "1.2",
+  "product_key": "prod_jardin_fe",
+  "aliases": [
+    "jardin de fe",
+    "jardín de fe",
+    "mi jardin de fe",
+    "mi jardín de fe",
+    "comunidad jardin de fe",
+    "comunidad jardín de fe",
+    "banco de promesas",
+    "mi espacio de oracion",
+    "mi espacio de oración",
+    "tarjetas de fe"
+  ],
+  "routing": {
+    "mode": "deterministic",
+    "rule": "Cuando product sea prod_jardin_fe, usar category para seleccionar exactamente una respuesta predeterminada. No combinar categorías ni generar una respuesta alternativa.",
+    "categories": {
+      "comunidad": "community_response",
+      "acceso": "access_response",
+      "apps": "apps_response"
+    }
+  },
+  "response_style": {
+    "tone": [
+      "humano",
+      "cálido",
+      "natural",
+      "cercano",
+      "sereno",
+      "esperanzador"
+    ],
+    "emoji_rule": "Los emojis incluidos en las respuestas aprobadas forman parte del texto predeterminado. No agregar emojis adicionales.",
+    "generation_rule": "Devolver la respuesta predeterminada correspondiente sin reescribirla, resumirla, ampliarla ni mezclarla con otra sección."
+  },
+  "responses": {
+    "community_response": {
+      "category": "comunidad",
+      "subject": "Comunidad Jardín de Fe",
+      "content": "🌿 Jardín de Fe es una comunidad digital de Hábitos con Dios creada para acompañarte de forma continua en tu vida espiritual.\n\nEn Jardín de Fe encontrarás Banco de Promesas, Mi Espacio de Oración y Tarjetas de Fe, junto con sus guías de uso y las actualizaciones que vayamos incorporando a estas experiencias.\n\n💛 No necesitas seguir un orden ni completar un recorrido. Puedes acercarte a cada espacio según lo que necesites en el momento que estás viviendo.\n\nJardín de Fe se adquiere mediante un único pago y te brinda acceso de por vida, sin pagos periódicos ni renovaciones.\n\nSi en algún momento deseas profundizar en un tema o etapa particular, también puedes explorar las colecciones disponibles de Hábitos con Dios. 🌿"
+    },
+    "access_response": {
+      "category": "acceso",
+      "subject": "Acceso a Jardín de Fe",
+      "content": "💛 Para acceder a Jardín de Fe, inicia sesión con el mismo correo electrónico que utilizaste al adquirirlo.\n\nLuego entra en Mi Espacio → Mi Jardín de Fe. Desde allí podrás elegir entre Banco de Promesas, Mi Espacio de Oración y Tarjetas de Fe.\n\n🌿 Si Mi Jardín de Fe todavía no aparece, envíanos tu consulta indicando el correo utilizado en la compra para que podamos revisarlo contigo.\n\nPor seguridad, no compartas contraseñas ni datos bancarios."
+    },
+    "apps_response": {
+      "category": "apps",
+      "subject": "Apps de Jardín de Fe",
+      "content": "🌿 Dentro de Mi Jardín de Fe encontrarás Banco de Promesas, Mi Espacio de Oración y Tarjetas de Fe.\n\nSi necesitas orientación para utilizar alguna función, consulta la guía de la App correspondiente dentro de tu espacio. Allí encontrarás el paso a paso de manera sencilla. 💛\n\nSi aun siguiendo la guía algo no responde como esperas, cuéntanos cuál App estás utilizando y qué ocurre para que podamos orientarte."
+    }
+  },
+  "guardrails": {
+    "do_not_include_numeric_price": true,
+    "do_not_use_membership_wording": true,
+    "do_not_expose_internal_technical_details": true,
+    "apps_are_guide_first": true,
+    "fallback": "Si product o category no coinciden con el routing definido, no seleccionar una respuesta de Jardín de Fe."
+  }
+}
