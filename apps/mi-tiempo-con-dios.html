@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Mi Tiempo con Dios | Hábitos con Dios Pro</title>
+  <title>Mi Tiempo con Dios | Hábitos con Dios</title>
 
   <meta
     name="description"
@@ -1104,6 +1104,55 @@
       .collection-item-top .btn{margin-top:10px;width:100%;}
     }
 
+
+    /* V7: Mi Historia con Dios - experiencia responsive */
+    .history-toolbar { display:grid; grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(130px,.7fr)); gap:10px; margin:16px 0 12px; }
+    .history-field label { display:block; color:var(--green); font-size:12px; font-weight:900; margin:0 0 6px 4px; }
+    .history-field input,.history-field select { width:100%; min-height:46px; border:1px solid var(--line); border-radius:14px; background:var(--white); color:var(--ink); padding:10px 12px; outline:none; }
+    .history-field input:focus,.history-field select:focus { border-color:var(--gold); box-shadow:0 0 0 4px rgba(201,166,90,.14); }
+    .history-actions { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:10px 0 16px; }
+    .history-result-count { color:var(--muted); font-size:13px; font-weight:800; }
+    .history-card { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:14px; align-items:start; border:1px solid var(--line); background:rgba(255,255,255,.94); border-radius:22px; padding:16px; transition:.2s ease; }
+    .history-card:hover { border-color:rgba(201,166,90,.6); box-shadow:0 10px 24px rgba(63,74,53,.08); }
+    .history-kind-icon { width:42px; height:42px; border-radius:15px; display:grid; place-items:center; background:var(--soft-green); color:var(--green); font-size:19px; }
+    .history-card[data-kind="Favorito"] .history-kind-icon { background:var(--soft-gold); }
+    .history-card[data-kind="Gratitud"] .history-kind-icon { background:#FFF2D8; }
+    .history-card[data-kind="Nota"] .history-kind-icon { background:#F4E9E1; }
+    .history-card h3 { color:var(--green); font-size:16px; line-height:1.35; margin-bottom:5px; }
+    .history-meta { color:var(--muted); font-size:12px; font-weight:800; line-height:1.5; }
+    .history-preview { color:var(--ink); margin-top:9px; line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .history-load { display:flex; justify-content:center; margin-top:14px; }
+    .history-continue { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:14px 0 18px; padding:16px 18px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(135deg,var(--soft-green),var(--soft-cream)); }
+    .history-continue strong { display:block; color:var(--green); margin-bottom:4px; }
+    .history-continue span { color:var(--muted); font-size:13px; line-height:1.45; }
+    .history-dialog { width:min(760px,calc(100% - 28px)); max-height:min(86vh,860px); border:0; border-radius:28px; padding:0; background:var(--cream); color:var(--ink); box-shadow:0 28px 90px rgba(31,41,55,.28); }
+    .history-dialog::backdrop { background:rgba(31,41,55,.48); backdrop-filter:blur(3px); }
+    .history-dialog-inner { padding:26px; overflow:auto; max-height:min(86vh,860px); }
+    .history-dialog-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+    .history-dialog-head h2 { color:var(--green); margin:5px 0 3px; font-size:clamp(24px,4vw,34px); }
+    .history-dialog-close { width:44px; height:44px; border:1px solid var(--line); border-radius:50%; background:var(--white); color:var(--green); font-size:22px; flex:0 0 auto; }
+    .history-reading { margin:22px 0; padding:22px; border:1px solid var(--line); border-radius:20px; background:var(--white); font-size:17px; line-height:1.75; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .history-verse { color:var(--olive); font-weight:850; margin-top:12px; }
+    .history-dialog-actions { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .history-nav-group { display:flex; gap:8px; }
+    .mobile-history-nav { display:none; }
+    @media (max-width:980px){ .history-toolbar{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:640px){
+      body{padding-bottom:88px;}
+      .history-toolbar{grid-template-columns:1fr;}
+      .history-actions,.history-continue{align-items:stretch;flex-direction:column;}
+      .history-actions .btn,.history-continue .btn{width:100%;}
+      .history-card{grid-template-columns:auto minmax(0,1fr);}
+      .history-card>.btn{grid-column:1/-1;width:100%;}
+      .history-dialog{width:100%;max-height:100vh;height:100vh;border-radius:0;margin:0;}
+      .history-dialog-inner{max-height:100vh;height:100%;padding:20px;}
+      .history-dialog-actions,.history-nav-group{display:grid;grid-template-columns:1fr 1fr;width:100%;}
+      .history-dialog-actions>.btn{grid-column:1/-1;}
+      .mobile-history-nav{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:0;right:0;bottom:0;z-index:70;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:rgba(250,247,240,.96);border-top:1px solid var(--line);backdrop-filter:blur(16px);}
+      .mobile-history-nav button{border:0;background:transparent;color:var(--green);min-height:54px;border-radius:12px;font-size:11px;font-weight:900;padding:5px;}
+      .mobile-history-nav button span{display:block;font-size:19px;margin-bottom:2px;}
+    }
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
   </style>
 </head>
 
@@ -1249,7 +1298,7 @@
         </div>
         <div class="tool-grid">
           <button class="tool-btn" type="button" data-scroll-target="hoy">🌿 Camino de 21 días<span>Continúa el próximo día pendiente.</span></button>
-          <button class="tool-btn" type="button" data-collection="diario">📖 Mi diario espiritual<span>Revisa oraciones, gratitudes y notas.</span></button>
+          <button class="tool-btn" type="button" data-collection="diario">📖 Mi Historia con Dios<span>Vuelve a tus oraciones, gratitudes, notas y favoritos.</span></button>
           <button class="tool-btn" type="button" data-collection="favoritos">⭐ Mis favoritos<span>Vuelve a los días que deseas recordar.</span></button>
           <button class="tool-btn" type="button" data-scroll-target="badges-title">🏆 Mis avances<span>Consulta niveles, insignias y progreso.</span></button>
           <button class="tool-btn" type="button" data-scroll-target="libraryTitle">📚 Nuevas Experiencias para ti<span>Conoce más recursos y recorridos de Hábitos con Dios.</span></button>
@@ -1377,17 +1426,34 @@
 
           <section class="library-panel collection-panel" id="miColeccion" aria-labelledby="collectionTitle">
             <h2 id="collectionTitle">Mi Historia con Dios</h2>
-            <p class="reflection">Conserva tus oraciones, gratitudes, aprendizajes y días significativos. Tu historia te acompaña cada vez que inicias sesión, desde cualquier dispositivo.</p>
-            <div class="history-summary" aria-label="Resumen de mi historia"><div class="history-summary-card"><strong id="historyPrayerCount">0</strong><span>Oraciones guardadas</span></div><div class="history-summary-card"><strong id="historyGratitudeCount">0</strong><span>Gratitudes guardadas</span></div><div class="history-summary-card"><strong id="historyNoteCount">0</strong><span>Aprendizajes y notas</span></div><div class="history-summary-card"><strong id="historyCycleCount">1</strong><span>Recorridos iniciados</span></div></div>
-            <div class="collection-tabs" role="tablist" aria-label="Contenido personal">
-              <button class="collection-tab active" type="button" data-tab="favoritos">Favoritos</button>
-              <button class="collection-tab" type="button" data-tab="oraciones">Oraciones</button>
-              <button class="collection-tab" type="button" data-tab="gratitudes">Gratitudes</button>
-              <button class="collection-tab" type="button" data-tab="notas">Notas</button>
+            <p class="reflection">Un espacio personal para volver a tus oraciones, gratitudes, notas y momentos especiales de cada recorrido.</p>
+            <div class="history-continue">
+              <div><strong>Tu recorrido continúa</strong><span>Regresa al próximo día pendiente sin perder los filtros de tu historia.</span></div>
+              <button class="btn btn-primary" type="button" id="continueJourneyButton">Continuar mi recorrido</button>
             </div>
+            <div class="history-summary" aria-label="Resumen de mi historia">
+              <button class="history-summary-card" type="button" data-summary-tab="oraciones"><strong id="historyPrayerCount">0</strong><span>Oraciones guardadas</span></button>
+              <button class="history-summary-card" type="button" data-summary-tab="gratitudes"><strong id="historyGratitudeCount">0</strong><span>Gratitudes guardadas</span></button>
+              <button class="history-summary-card" type="button" data-summary-tab="notas"><strong id="historyNoteCount">0</strong><span>Aprendizajes y notas</span></button>
+              <div class="history-summary-card"><strong id="historyCycleCount">1</strong><span>Recorridos iniciados</span></div>
+            </div>
+            <div class="collection-tabs" role="tablist" aria-label="Contenido personal">
+              <button class="collection-tab active" type="button" role="tab" aria-selected="true" data-tab="recientes">Recientes</button>
+              <button class="collection-tab" type="button" role="tab" aria-selected="false" data-tab="favoritos">Favoritos</button>
+              <button class="collection-tab" type="button" role="tab" aria-selected="false" data-tab="oraciones">Oraciones</button>
+              <button class="collection-tab" type="button" role="tab" aria-selected="false" data-tab="gratitudes">Gratitudes</button>
+              <button class="collection-tab" type="button" role="tab" aria-selected="false" data-tab="notas">Notas</button>
+            </div>
+            <div class="history-toolbar" aria-label="Filtros de mi historia">
+              <div class="history-field"><label for="historySearch">Buscar</label><input id="historySearch" type="search" placeholder="Buscar en títulos y contenidos" autocomplete="off"></div>
+              <div class="history-field"><label for="historyCycleFilter">Recorrido</label><select id="historyCycleFilter"><option value="">Todos</option></select></div>
+              <div class="history-field"><label for="historyYearFilter">Año</label><select id="historyYearFilter"><option value="">Todos</option></select></div>
+              <div class="history-field"><label for="historyMonthFilter">Mes</label><select id="historyMonthFilter" disabled><option value="">Todos</option></select></div>
+            </div>
+            <div class="history-actions"><span class="history-result-count" id="historyResultCount" aria-live="polite">Preparando tu historia...</span><button class="btn btn-secondary" type="button" id="clearHistoryFilters">Limpiar filtros</button></div>
             <div class="collection-list" id="collectionList"></div>
+            <div class="history-load"><button class="btn btn-secondary hidden" type="button" id="loadMoreHistory">Ver más</button></div>
           </section>
-
           <section class="badges-panel" aria-labelledby="badges-title">
             <h2 id="badges-title">Mis insignias</h2>
             <div class="badges-grid" id="badgesGrid"></div>
@@ -1443,6 +1509,16 @@
     </main>
   </div>
 
+  <dialog class="history-dialog" id="historyDialog" aria-labelledby="historyDialogTitle">
+    <div class="history-dialog-inner">
+      <div class="history-dialog-head"><div><small class="history-meta" id="historyDialogMeta"></small><h2 id="historyDialogTitle">Mi recuerdo</h2></div><button class="history-dialog-close" type="button" id="closeHistoryDialog" aria-label="Cerrar">×</button></div>
+      <div class="history-reading" id="historyDialogText"></div><p class="history-verse" id="historyDialogVerse"></p>
+      <div class="history-dialog-actions"><div class="history-nav-group"><button class="btn btn-secondary" type="button" id="previousHistoryItem">← Anterior</button><button class="btn btn-secondary" type="button" id="nextHistoryItem">Siguiente →</button></div><button class="btn btn-primary" type="button" id="openHistoryDay">Ver el día completo</button></div>
+    </div>
+  </dialog>
+  <nav class="mobile-history-nav" aria-label="Navegación principal">
+    <button type="button" data-mobile-target="inicio"><span>☀️</span>Inicio</button><button type="button" data-mobile-target="hoy"><span>🌿</span>Recorrido</button><button type="button" data-mobile-target="miColeccion"><span>📖</span>Mi Historia</button><button type="button" data-mobile-target="herramientas"><span>•••</span>Más</button>
+  </nav>
   <div class="toast" id="toast">Guardado</div>
 
   <script>
@@ -1738,7 +1814,10 @@
     let currentDay = 1;
     let state = {};
     let historyItems = [];
-    let activeCollectionTab = "favoritos";
+    let activeCollectionTab = "recientes";
+    let historyVisibleCount = 10;
+    let filteredHistoryItems = [];
+    let activeHistoryIndex = -1;
     let isSaving = false;
 
     const loadingScreen = document.getElementById("loadingScreen");
@@ -1783,6 +1862,13 @@
     const historyGratitudeCount = document.getElementById("historyGratitudeCount");
     const historyNoteCount = document.getElementById("historyNoteCount");
     const historyCycleCount = document.getElementById("historyCycleCount");
+    const historySearch = document.getElementById("historySearch");
+    const historyCycleFilter = document.getElementById("historyCycleFilter");
+    const historyYearFilter = document.getElementById("historyYearFilter");
+    const historyMonthFilter = document.getElementById("historyMonthFilter");
+    const historyResultCount = document.getElementById("historyResultCount");
+    const loadMoreHistory = document.getElementById("loadMoreHistory");
+    const historyDialog = document.getElementById("historyDialog");
 
     function getFriendlyNameFromEmail(email) {
       if (!email || typeof email !== "string") return "Usuario";
@@ -1793,7 +1879,7 @@
     }
 
     function getDefaultEntry() {
-      return { checks:{leer:false,orar:false,escribir:false,practicar:false}, prayer:"", gratitude:"", notes:"", favorite:false, completed:false };
+      return { checks:{leer:false,orar:false,escribir:false,practicar:false}, prayer:"", gratitude:"", notes:"", favorite:false, completed:false, updatedAt:null };
     }
 
     function initializeState() {
@@ -1808,7 +1894,8 @@
         gratitude:row.gratitude || "",
         notes:row.notes || "",
         favorite:Boolean(row.favorite),
-        completed:Boolean(row.completed)
+        completed:Boolean(row.completed),
+        updatedAt:row.updated_at || row.created_at || null
       };
     }
 
@@ -1834,7 +1921,7 @@
     function getLevel(completed){ if(completed>=21)return{icon:"🏆",name:"Discípulo Constante"}; if(completed>=16)return{icon:"✨",name:"Transformación"}; if(completed>=11)return{icon:"🌳",name:"Raíces Firmes"}; if(completed>=6)return{icon:"🌿",name:"Crecimiento"}; return{icon:"🌱",name:"Semilla"}; }
 
     async function getOrCreateActiveJourney() {
-      const {data:active,error} = await supabaseClient.from("user_journeys").select("*").eq("is_active",true).order("cycle_number",{ascending:false}).limit(10);
+      const {data:active,error} = await supabaseClient.from("user_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(10);
       if(error) throw error;
       if(active?.length){
         const [keep,...extras]=active;
@@ -1843,7 +1930,7 @@
         }
         return keep;
       }
-      const {data:last,error:lastError}=await supabaseClient.from("user_journeys").select("cycle_number").order("cycle_number",{ascending:false}).limit(1);
+      const {data:last,error:lastError}=await supabaseClient.from("user_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);
       if(lastError) throw lastError;
       const cycle=(last?.[0]?.cycle_number || 0)+1;
       const payload={user_id:currentUser.id,cycle_number:cycle,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
@@ -1858,7 +1945,7 @@
       currentDay = Math.min(21,Math.max(1,Number(currentJourney.current_day)||1));
       const [{data:entries,error:entriesError},{data:history,error:historyError}] = await Promise.all([
         supabaseClient.from("user_devotional_entries").select("*").eq("journey_id",currentJourney.id).order("day_number"),
-        supabaseClient.from("user_journal_history").select("*").order("event_date",{ascending:false})
+        supabaseClient.from("user_journal_history").select("*").eq("user_id",currentUser.id).order("event_date",{ascending:false})
       ]);
       if(entriesError) throw entriesError;
       if(historyError) throw historyError;
@@ -1878,6 +1965,7 @@
       const id=await findEntryRow(day);
       const result=id ? await supabaseClient.from("user_devotional_entries").update(payload).eq("id",id) : await supabaseClient.from("user_devotional_entries").insert(payload);
       if(result.error) throw result.error;
+      entry.updatedAt=payload.updated_at;
     }
 
     async function saveJourneyProgress() {
@@ -1930,18 +2018,91 @@
       document.querySelectorAll("[data-check]").forEach(c=>{c.checked=Boolean(entry.checks[c.dataset.check]);}); prayerInput.value=entry.prayer||""; gratitudeInput.value=entry.gratitude||""; notesInput.value=entry.notes||"";
     }
 
-    function getCollectionItems(type){
-      const history=historyItems.filter(item=>type==="oraciones"?item.kind==="Oración":type==="gratitudes"?item.kind==="Gratitud":type==="notas"?item.kind==="Nota":type==="favoritos"?item.kind==="Favorito":type==="diario");
-      const current=devotionals.flatMap(item=>{ const entry=state[item.day]||getDefaultEntry(); if(type==="favoritos"&&entry.favorite)return[{day:item.day,title:item.title,text:item.focus,kind:"Favorito",date:"Recorrido actual"}]; const map={oraciones:["Oración",entry.prayer],gratitudes:["Gratitud",entry.gratitude],notas:["Nota",entry.notes]}; if(map[type]?.[1])return[{day:item.day,title:item.title,text:map[type][1],kind:map[type][0],date:"Recorrido actual"}]; if(type==="diario")return[["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes]].filter(([,v])=>v).map(([kind,text])=>({day:item.day,title:item.title,text,kind,date:"Recorrido actual"})); return[]; });
-      return [...history,...current];
+    function kindForTab(tab){ return {favoritos:"Favorito",oraciones:"Oración",gratitudes:"Gratitud",notas:"Nota"}[tab] || null; }
+    function kindIcon(kind){ return {Favorito:"★",Oración:"🙏",Gratitud:"♡",Nota:"✎"}[kind] || "•"; }
+    function normalizeHistoryItem(item,index){
+      const dateValue=item.date && item.date!=="Recorrido actual" ? new Date(item.date) : null;
+      return {...item,_key:item.id || `current-${item.kind}-${item.day}-${index}`,_date:dateValue && !Number.isNaN(dateValue.getTime()) ? dateValue : null};
     }
-
-    function renderHistoryIndicators(){ historyPrayerCount.textContent=historyItems.filter(x=>x.kind==="Oración").length+devotionals.filter(d=>state[d.day]?.prayer).length; historyGratitudeCount.textContent=historyItems.filter(x=>x.kind==="Gratitud").length+devotionals.filter(d=>state[d.day]?.gratitude).length; historyNoteCount.textContent=historyItems.filter(x=>x.kind==="Nota").length+devotionals.filter(d=>state[d.day]?.notes).length; historyCycleCount.textContent=currentJourney?.cycle_number||1; }
-    function renderCollection(type=activeCollectionTab){ activeCollectionTab=type==="diario"?"oraciones":type; document.querySelectorAll(".collection-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===activeCollectionTab)); const items=getCollectionItems(type); if(!items.length){collectionList.innerHTML='<div class="empty-state">Aún no hay contenido guardado en esta sección. Puedes volver a un día y guardar una oración, gratitud, nota o favorito.</div>';return;} collectionList.innerHTML=items.map(item=>`<article class="collection-item"><div class="collection-item-top"><div><strong>Día ${item.day} · ${escapeHTML(item.title)}</strong><small>${escapeHTML(item.kind)}${item.date?" · "+escapeHTML(formatHistoryDate(item.date)):""}</small></div><button class="btn btn-secondary open-saved-day" type="button" data-day="${item.day}">Abrir día</button></div><p>${escapeHTML(item.text)}</p></article>`).join(""); collectionList.querySelectorAll(".open-saved-day").forEach(b=>b.onclick=()=>{currentDay=Number(b.dataset.day);renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});}); }
-    function formatHistoryDate(value){ if(!value||value==="Recorrido actual")return value||""; const d=new Date(value); return Number.isNaN(d.getTime())?value:d.toLocaleDateString("es-MX",{day:"numeric",month:"short",year:"numeric"}); }
+    function getAllCollectionItems(){
+      const archived=historyItems.map((item,index)=>normalizeHistoryItem(item,index));
+      const current=[];
+      devotionals.forEach((item)=>{
+        const entry=state[item.day]||getDefaultEntry();
+        const base={day:item.day,title:item.title,cycle:currentJourney?.cycle_number||1,date:entry.updatedAt||currentJourney?.updated_at||currentJourney?.started_at||null,verse:item.verse,isCurrent:true};
+        if(entry.favorite) current.push({...base,kind:"Favorito",text:item.focus});
+        if(entry.prayer) current.push({...base,kind:"Oración",text:entry.prayer});
+        if(entry.gratitude) current.push({...base,kind:"Gratitud",text:entry.gratitude});
+        if(entry.notes) current.push({...base,kind:"Nota",text:entry.notes});
+      });
+      return [...archived,...current.map((item,index)=>normalizeHistoryItem(item,index))].sort((a,b)=>(b._date?.getTime()||0)-(a._date?.getTime()||0));
+    }
+    function populateHistoryFilters(items){
+      const currentCycle=historyCycleFilter.value, currentYear=historyYearFilter.value;
+      const cycles=[...new Set(items.map(x=>Number(x.cycle)).filter(Boolean))].sort((a,b)=>b-a);
+      const years=[...new Set(items.map(x=>x._date?.getFullYear()).filter(Boolean))].sort((a,b)=>b-a);
+      historyCycleFilter.innerHTML='<option value="">Todos</option>'+cycles.map(x=>`<option value="${x}">Recorrido ${x}</option>`).join("");
+      historyYearFilter.innerHTML='<option value="">Todos</option>'+years.map(x=>`<option value="${x}">${x}</option>`).join("");
+      if(cycles.map(String).includes(currentCycle)) historyCycleFilter.value=currentCycle;
+      if(years.map(String).includes(currentYear)) historyYearFilter.value=currentYear;
+      populateMonthFilter(items);
+    }
+    function populateMonthFilter(items){
+      const year=Number(historyYearFilter.value), previous=historyMonthFilter.value;
+      historyMonthFilter.disabled=!year;
+      const months=year?[...new Set(items.filter(x=>x._date?.getFullYear()===year).map(x=>x._date.getMonth()+1))].sort((a,b)=>a-b):[];
+      historyMonthFilter.innerHTML='<option value="">Todos</option>'+months.map(month=>`<option value="${month}">${new Date(2024,month-1,1).toLocaleDateString("es",{month:"long"})}</option>`).join("");
+      if(months.map(String).includes(previous)) historyMonthFilter.value=previous;
+    }
+    function getFilteredHistoryItems(){
+      const query=historySearch.value.trim().toLocaleLowerCase("es"), cycle=Number(historyCycleFilter.value), year=Number(historyYearFilter.value), month=Number(historyMonthFilter.value), kind=kindForTab(activeCollectionTab);
+      return getAllCollectionItems().filter(item=>{
+        if(kind && item.kind!==kind) return false;
+        if(cycle && Number(item.cycle)!==cycle) return false;
+        if(year && item._date?.getFullYear()!==year) return false;
+        if(month && (item._date?.getMonth()+1)!==month) return false;
+        if(query && !`${item.title} ${item.text} ${item.kind}`.toLocaleLowerCase("es").includes(query)) return false;
+        return true;
+      });
+    }
+    function renderHistoryIndicators(){
+      const all=getAllCollectionItems();
+      historyPrayerCount.textContent=all.filter(x=>x.kind==="Oración").length;
+      historyGratitudeCount.textContent=all.filter(x=>x.kind==="Gratitud").length;
+      historyNoteCount.textContent=all.filter(x=>x.kind==="Nota").length;
+      historyCycleCount.textContent=Math.max(currentJourney?.cycle_number||1,...all.map(x=>Number(x.cycle)||1));
+    }
+    function renderCollection(type=activeCollectionTab,resetPage=true){
+      activeCollectionTab=type==="diario"?"recientes":type;
+      if(resetPage) historyVisibleCount=10;
+      document.querySelectorAll(".collection-tab").forEach(button=>{const active=button.dataset.tab===activeCollectionTab;button.classList.toggle("active",active);button.setAttribute("aria-selected",String(active));});
+      const all=getAllCollectionItems(); populateHistoryFilters(all); filteredHistoryItems=getFilteredHistoryItems();
+      historyResultCount.textContent=`${filteredHistoryItems.length} ${filteredHistoryItems.length===1?"registro encontrado":"registros encontrados"}`;
+      const visible=filteredHistoryItems.slice(0,historyVisibleCount);
+      if(!visible.length){collectionList.innerHTML='<div class="empty-state">No encontramos registros con estos filtros. Puedes elegir otro período o volver a ver toda tu historia.</div>';loadMoreHistory.classList.add("hidden");return;}
+      collectionList.innerHTML=visible.map((item,index)=>`<article class="history-card" data-kind="${escapeHTML(item.kind)}"><div class="history-kind-icon" aria-hidden="true">${kindIcon(item.kind)}</div><div><h3>${escapeHTML(item.kind)} · Día ${item.day} · ${escapeHTML(item.title)}</h3><div class="history-meta">${item.cycle?`Recorrido ${item.cycle} · `:""}${escapeHTML(formatHistoryDate(item.date)||"Sin fecha")}</div><p class="history-preview">${escapeHTML(item.text)}</p></div><button class="btn btn-secondary read-history-item" type="button" data-key="${escapeHTML(item._key)}">Leer</button></article>`).join("");
+      collectionList.querySelectorAll(".read-history-item").forEach(button=>button.addEventListener("click",()=>openHistoryItem(button.dataset.key)));
+      loadMoreHistory.classList.toggle("hidden",historyVisibleCount>=filteredHistoryItems.length);
+    }
+    function openHistoryItem(key){
+      activeHistoryIndex=filteredHistoryItems.findIndex(x=>String(x._key)===String(key)); if(activeHistoryIndex<0)return;
+      renderHistoryDialog(); if(typeof historyDialog.showModal==="function")historyDialog.showModal(); else historyDialog.setAttribute("open","");
+    }
+    function renderHistoryDialog(){
+      const item=filteredHistoryItems[activeHistoryIndex]; if(!item)return;
+      document.getElementById("historyDialogMeta").textContent=`${item.kind} · Recorrido ${item.cycle||1} · ${formatHistoryDate(item.date)||"Sin fecha"}`;
+      document.getElementById("historyDialogTitle").textContent=`Día ${item.day} · ${item.title}`;
+      document.getElementById("historyDialogText").textContent=item.text;
+      const verse=document.getElementById("historyDialogVerse"); verse.textContent=item.verse?`Referencia bíblica: ${item.verse}`:""; verse.hidden=!item.verse;
+      document.getElementById("previousHistoryItem").disabled=activeHistoryIndex<=0;
+      document.getElementById("nextHistoryItem").disabled=activeHistoryIndex>=filteredHistoryItems.length-1;
+      document.getElementById("openHistoryDay").dataset.day=item.day;
+    }
+    function closeHistory(){ if(historyDialog.open)historyDialog.close(); else historyDialog.removeAttribute("open"); }
+    function formatHistoryDate(value){ if(!value||value==="Recorrido actual")return value||""; const d=new Date(value); return Number.isNaN(d.getTime())?value:d.toLocaleDateString("es",{day:"numeric",month:"long",year:"numeric"}); }
     function escapeHTML(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
     function renderPersonalHeader(name){const now=new Date(),formattedDate=now.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"});dateLine.textContent=formattedDate;welcomeMessage.textContent=`Buenos días, ${name}. Hoy es un nuevo día para acercarte a Dios, un paso sencillo a la vez.`;}
-    function renderApp(){renderDayGrid();renderCurrentDay();renderProgress();renderCollection(activeCollectionTab);renderHistoryIndicators();}
+    function renderApp(){renderDayGrid();renderCurrentDay();renderProgress();renderHistoryIndicators();renderCollection(activeCollectionTab,false);}
     function syncCurrentEntryFromFields(){const entry=state[currentDay]||getDefaultEntry();document.querySelectorAll("[data-check]").forEach(c=>entry.checks[c.dataset.check]=c.checked);entry.prayer=prayerInput.value.trim();entry.gratitude=gratitudeInput.value.trim();entry.notes=notesInput.value.trim();state[currentDay]=entry;}
 
     async function archiveCurrentJourney(){
@@ -1960,7 +2121,7 @@
         const payload={user_id:currentUser.id,cycle_number:(currentJourney.cycle_number||1)+1,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
         const {data,error}=await supabaseClient.from("user_journeys").insert(payload).select().single(); if(error)throw error;
         currentJourney=data; currentDay=1; initializeState(); previousFavorites.forEach(day=>state[day].favorite=true); historyItems=[];
-        const {data:h,error:hError}=await supabaseClient.from("user_journal_history").select("*").order("event_date",{ascending:false}); if(hError)throw hError;
+        const {data:h,error:hError}=await supabaseClient.from("user_journal_history").select("*").eq("user_id",currentUser.id).order("event_date",{ascending:false}); if(hError)throw hError;
         historyItems=(h||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
         for(const day of previousFavorites) await saveEntry(day);
         renderApp(); document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu historia fue conservada.");
@@ -1983,8 +2144,22 @@
 
     function bindEvents(){
       document.querySelectorAll("[data-scroll-target]").forEach(button=>button.addEventListener("click",async()=>{if(button.dataset.scrollTarget==="hoy"){currentDay=getNextRecommendedDay();renderApp();try{await saveJourneyProgress();}catch(e){console.error(e);}}document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({behavior:"smooth",block:"start"});}));
-      document.querySelectorAll("[data-collection]").forEach(button=>button.addEventListener("click",()=>{renderCollection(button.dataset.collection);document.getElementById("miColeccion")?.scrollIntoView({behavior:"smooth",block:"start"});}));
-      document.querySelectorAll(".collection-tab").forEach(button=>button.addEventListener("click",()=>renderCollection(button.dataset.tab)));
+      document.querySelectorAll("[data-collection]").forEach(button=>button.addEventListener("click",()=>{renderCollection(button.dataset.collection,true);document.getElementById("miColeccion")?.scrollIntoView({behavior:"smooth",block:"start"});}));
+      document.querySelectorAll(".collection-tab").forEach(button=>button.addEventListener("click",()=>renderCollection(button.dataset.tab,true)));
+      document.querySelectorAll("[data-summary-tab]").forEach(button=>button.addEventListener("click",()=>renderCollection(button.dataset.summaryTab,true)));
+      let searchTimer; historySearch.addEventListener("input",()=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>renderCollection(activeCollectionTab,true),180);});
+      historyCycleFilter.addEventListener("change",()=>renderCollection(activeCollectionTab,true));
+      historyYearFilter.addEventListener("change",()=>{historyMonthFilter.value="";populateMonthFilter(getAllCollectionItems());renderCollection(activeCollectionTab,true);});
+      historyMonthFilter.addEventListener("change",()=>renderCollection(activeCollectionTab,true));
+      document.getElementById("clearHistoryFilters").addEventListener("click",()=>{historySearch.value="";historyCycleFilter.value="";historyYearFilter.value="";historyMonthFilter.value="";renderCollection(activeCollectionTab,true);});
+      loadMoreHistory.addEventListener("click",()=>{historyVisibleCount+=10;renderCollection(activeCollectionTab,false);});
+      document.getElementById("continueJourneyButton").addEventListener("click",()=>{currentDay=getNextRecommendedDay();renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});});
+      document.getElementById("closeHistoryDialog").addEventListener("click",closeHistory);
+      historyDialog.addEventListener("click",event=>{if(event.target===historyDialog)closeHistory();});
+      document.getElementById("previousHistoryItem").addEventListener("click",()=>{if(activeHistoryIndex>0){activeHistoryIndex--;renderHistoryDialog();}});
+      document.getElementById("nextHistoryItem").addEventListener("click",()=>{if(activeHistoryIndex<filteredHistoryItems.length-1){activeHistoryIndex++;renderHistoryDialog();}});
+      document.getElementById("openHistoryDay").addEventListener("click",event=>{currentDay=Number(event.currentTarget.dataset.day)||1;closeHistory();renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});});
+      document.querySelectorAll("[data-mobile-target]").forEach(button=>button.addEventListener("click",()=>document.getElementById(button.dataset.mobileTarget)?.scrollIntoView({behavior:"smooth",block:"start"})));
       document.querySelectorAll("[data-check]").forEach(checkbox=>checkbox.addEventListener("change",async()=>{syncCurrentEntryFromFields();try{await persistDayAndJourney();renderProgress();showToast("Avance guardado");}catch(error){console.error(error);showToast("No pudimos guardar el avance");}}));
       favoriteButton.addEventListener("click",async()=>{const entry=state[currentDay]||getDefaultEntry();entry.favorite=!entry.favorite;state[currentDay]=entry;try{await persistDayAndJourney();renderApp();showToast(entry.favorite?"Guardado como favorito":"Favorito quitado");}catch(error){entry.favorite=!entry.favorite;console.error(error);renderApp();showToast("No pudimos actualizar el favorito");}});
       saveJournalButton.addEventListener("click",async()=>{setBusy(saveJournalButton,true,"Guardando...");syncCurrentEntryFromFields();try{await persistDayAndJourney();renderApp();showToast("Diario guardado");}catch(error){console.error(error);showToast("No pudimos guardar el diario");}finally{setBusy(saveJournalButton,false);}});
