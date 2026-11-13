@@ -1921,18 +1921,12 @@
     function getLevel(completed){ if(completed>=21)return{icon:"🏆",name:"Discípulo Constante"}; if(completed>=16)return{icon:"✨",name:"Transformación"}; if(completed>=11)return{icon:"🌳",name:"Raíces Firmes"}; if(completed>=6)return{icon:"🌿",name:"Crecimiento"}; return{icon:"🌱",name:"Semilla"}; }
 
     async function getOrCreateActiveJourney() {
-      const {data:active,error} = await supabaseClient.from("user_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(10);
+      const {data:active,error}=await supabaseClient.from("user_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();
       if(error) throw error;
-      if(active?.length){
-        const [keep,...extras]=active;
-        if(extras.length){
-          await supabaseClient.from("user_journeys").update({is_active:false,archived_at:new Date().toISOString(),updated_at:new Date().toISOString()}).in("id",extras.map(x=>x.id));
-        }
-        return keep;
-      }
+      if(active) return active;
       const {data:last,error:lastError}=await supabaseClient.from("user_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);
       if(lastError) throw lastError;
-      const cycle=(last?.[0]?.cycle_number || 0)+1;
+      const cycle=(last?.[0]?.cycle_number||0)+1;
       const payload={user_id:currentUser.id,cycle_number:cycle,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
       const {data,error:insertError}=await supabaseClient.from("user_journeys").insert(payload).select().single();
       if(insertError) throw insertError;
@@ -2016,6 +2010,7 @@
       reflectionText.innerHTML=formattedReflection; verseText.textContent=devotional.verse; focusText.textContent=devotional.focus; shortPrayerText.textContent=devotional.prayer; actionText.textContent=devotional.action; journalPromptText.textContent=devotional.journal; declarationText.textContent=devotional.declaration;
       favoriteButton.textContent=entry.favorite?"★ Favorito guardado":"☆ Guardar favorito"; favoriteButton.classList.toggle("active",entry.favorite); favoriteButton.setAttribute("aria-pressed",String(entry.favorite));
       document.querySelectorAll("[data-check]").forEach(c=>{c.checked=Boolean(entry.checks[c.dataset.check]);}); prayerInput.value=entry.prayer||""; gratitudeInput.value=entry.gratitude||""; notesInput.value=entry.notes||"";
+      nextDayButton.textContent=currentDay===21?(entry.completed?"Ver cierre del recorrido":"Completa el día para finalizar"):"Siguiente día";
     }
 
     function kindForTab(tab){ return {favoritos:"Favorito",oraciones:"Oración",gratitudes:"Gratitud",notas:"Nota"}[tab] || null; }
@@ -2105,30 +2100,54 @@
     function renderApp(){renderDayGrid();renderCurrentDay();renderProgress();renderHistoryIndicators();renderCollection(activeCollectionTab,false);}
     function syncCurrentEntryFromFields(){const entry=state[currentDay]||getDefaultEntry();document.querySelectorAll("[data-check]").forEach(c=>entry.checks[c.dataset.check]=c.checked);entry.prayer=prayerInput.value.trim();entry.gratitude=gratitudeInput.value.trim();entry.notes=notesInput.value.trim();state[currentDay]=entry;}
 
-    async function archiveCurrentJourney(){
-      const date=new Date().toISOString(),rows=[];
-      devotionals.forEach(item=>{const entry=state[item.day]||getDefaultEntry();[["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes],["Favorito",entry.favorite?item.focus:""]].forEach(([kind,text])=>{if(text&&String(text).trim())rows.push({user_id:currentUser.id,journey_id:currentJourney.id,cycle_number:currentJourney.cycle_number,day_number:item.day,kind,title:item.title,content:String(text).trim(),event_date:date,devotional_title:item.title,verse_reference:item.verse});});});
-      if(rows.length){const {error}=await supabaseClient.from("user_journal_history").insert(rows);if(error)throw error;}
-      const {error}=await supabaseClient.from("user_journeys").update({is_active:false,completed_at:currentJourney.completed_at||date,archived_at:date,updated_at:date}).eq("id",currentJourney.id); if(error)throw error;
+    function buildJourneyHistoryRows(journey,snapshot,eventDate){
+      const rows=[];
+      devotionals.forEach(item=>{
+        const entry=snapshot[item.day]||getDefaultEntry();
+        [["Oración",entry.prayer],["Gratitud",entry.gratitude],["Nota",entry.notes],["Favorito",entry.favorite?item.focus:""]].forEach(([kind,text])=>{
+          if(text&&String(text).trim()) rows.push({user_id:currentUser.id,journey_id:journey.id,cycle_number:journey.cycle_number,day_number:item.day,kind,title:item.title,content:String(text).trim(),event_date:eventDate,devotional_title:item.title,verse_reference:item.verse});
+        });
+      });
+      return rows;
     }
-
+    async function archiveJourneyHistory(journey,snapshot){
+      const eventDate=journey.completed_at||new Date().toISOString();
+      const rows=buildJourneyHistoryRows(journey,snapshot,eventDate);
+      if(!rows.length) return;
+      const {data:existing,error:existingError}=await supabaseClient.from("user_journal_history").select("day_number,kind").eq("user_id",currentUser.id).eq("journey_id",journey.id);
+      if(existingError) throw existingError;
+      const existingKeys=new Set((existing||[]).map(row=>`${row.day_number}|${row.kind}`));
+      const pending=rows.filter(row=>!existingKeys.has(`${row.day_number}|${row.kind}`));
+      if(pending.length){const {error}=await supabaseClient.from("user_journal_history").insert(pending);if(error)throw error;}
+    }
+    async function reloadJournalHistory(){
+      const {data,error}=await supabaseClient.from("user_journal_history").select("*").eq("user_id",currentUser.id).order("event_date",{ascending:false});
+      if(error)throw error;
+      historyItems=(data||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
+    }
     async function restartJourney(){
       if(!confirm("¿Quieres volver a recorrer los 21 días? Tu historia, oraciones, gratitudes, notas y favoritos se conservarán."))return;
-      setBusy(document.getElementById("restartJourneyButton"),true,"Preparando nuevo recorrido...");
+      const button=document.getElementById("restartJourneyButton");
+      setBusy(button,true,"Preparando nuevo recorrido...");
+      const previousJourney={...currentJourney};
+      const previousState=JSON.parse(JSON.stringify(state));
       try{
-        await archiveCurrentJourney();
-        const previousFavorites=devotionals.filter(d=>state[d.day]?.favorite).map(d=>d.day);
-        const payload={user_id:currentUser.id,cycle_number:(currentJourney.cycle_number||1)+1,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
-        const {data,error}=await supabaseClient.from("user_journeys").insert(payload).select().single(); if(error)throw error;
-        currentJourney=data; currentDay=1; initializeState(); previousFavorites.forEach(day=>state[day].favorite=true); historyItems=[];
-        const {data:h,error:hError}=await supabaseClient.from("user_journal_history").select("*").eq("user_id",currentUser.id).order("event_date",{ascending:false}); if(hError)throw hError;
-        historyItems=(h||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
-        for(const day of previousFavorites) await saveEntry(day);
-        renderApp(); document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu historia fue conservada.");
-      }catch(error){console.error("Error iniciando nuevo recorrido:",error);showToast("No pudimos iniciar el nuevo recorrido");}
-      finally{setBusy(document.getElementById("restartJourneyButton"),false);}
+        const {data,error}=await supabaseClient.rpc("start_new_devotional_journey");
+        if(error)throw error;
+        const newJourney=Array.isArray(data)?data[0]:data;
+        if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");
+        currentJourney=newJourney;currentDay=1;initializeState();
+        let historyWarning=false;
+        try{await archiveJourneyHistory(previousJourney,previousState);await reloadJournalHistory();}
+        catch(historyError){historyWarning=true;console.error("El nuevo recorrido se creó, pero no pudimos actualizar la vista histórica:",historyError);}
+        renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});
+        showToast(historyWarning?"Nuevo recorrido iniciado. Tu recorrido anterior permanece guardado.":"Nuevo recorrido iniciado. Tu historia fue conservada.");
+      }catch(error){
+        console.error("Error iniciando nuevo recorrido:",error);
+        const message=String(error?.message||"");
+        showToast(message.includes("NOT_COMPLETE")?"Completa los 21 días antes de iniciar otro recorrido.":"No pudimos iniciar el nuevo recorrido");
+      }finally{setBusy(button,false);}
     }
-
     async function validateAccess(){
       try{
         const {data:{user},error}=await supabaseClient.auth.getUser(); if(error||!user){location.href="../login.html";return;}
@@ -2164,7 +2183,7 @@
       favoriteButton.addEventListener("click",async()=>{const entry=state[currentDay]||getDefaultEntry();entry.favorite=!entry.favorite;state[currentDay]=entry;try{await persistDayAndJourney();renderApp();showToast(entry.favorite?"Guardado como favorito":"Favorito quitado");}catch(error){entry.favorite=!entry.favorite;console.error(error);renderApp();showToast("No pudimos actualizar el favorito");}});
       saveJournalButton.addEventListener("click",async()=>{setBusy(saveJournalButton,true,"Guardando...");syncCurrentEntryFromFields();try{await persistDayAndJourney();renderApp();showToast("Diario guardado");}catch(error){console.error(error);showToast("No pudimos guardar el diario");}finally{setBusy(saveJournalButton,false);}});
       completeDayButton.addEventListener("click",async()=>{setBusy(completeDayButton,true,"Guardando día...");syncCurrentEntryFromFields();state[currentDay].completed=true;try{await persistDayAndJourney();renderApp();showToast("🎉 Día completado");}catch(error){state[currentDay].completed=false;console.error(error);renderApp();showToast("No pudimos completar el día");}finally{setBusy(completeDayButton,false);}});
-      nextDayButton.addEventListener("click",async()=>{syncCurrentEntryFromFields();try{await persistDayAndJourney();if(currentDay<21){currentDay++;await saveJourneyProgress();renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});}else showToast("Llegaste al día 21");}catch(error){console.error(error);showToast("No pudimos avanzar al siguiente día");}});
+      nextDayButton.addEventListener("click",async()=>{syncCurrentEntryFromFields();try{await persistDayAndJourney();if(currentDay<21){currentDay++;await saveJourneyProgress();renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});}else if(state[21]?.completed){celebrationPanel.scrollIntoView({behavior:"smooth",block:"start"});}else showToast("Completa el día 21 para finalizar el recorrido");}catch(error){console.error(error);showToast("No pudimos avanzar al siguiente día");}});
       document.getElementById("restartJourneyButton")?.addEventListener("click",restartJourney);
       document.getElementById("logoutButton")?.addEventListener("click",async()=>{if(!confirm("¿Deseas cerrar sesión?"))return;await supabaseClient.auth.signOut();location.href="../login.html";});
     }
