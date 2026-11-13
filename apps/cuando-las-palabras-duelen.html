@@ -1166,7 +1166,13 @@
     .privacy-note { margin-top:14px; border-radius:20px; padding:15px; background:var(--soft-blue); border:1px solid var(--line); color:var(--olive); line-height:1.55; font-size:13px; }
     .edit-banner { margin-bottom:14px; padding:14px; border-radius:18px; background:var(--soft-gold); color:var(--green); font-weight:850; }
 
-  .history-filters,.library-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.filter-btn,.library-tab{border:1px solid var(--line);background:white;color:var(--green);border-radius:999px;padding:10px 14px;font-weight:900}.filter-btn.active,.library-tab.active{background:var(--green);color:white;border-color:var(--green)}.favorite-day-btn.active{background:var(--soft-gold);border-color:rgba(201,166,90,.55)}.library-list{display:grid;gap:12px}.library-item{background:white;border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:0 10px 28px rgba(63,74,53,.08)}.library-item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.library-item strong{display:block;color:var(--green);margin-bottom:5px}.library-item small{color:var(--muted);font-weight:800}.library-item p{color:var(--ink);line-height:1.58;margin-top:10px;white-space:pre-wrap}.empty-library{padding:18px;border:1px dashed var(--line);border-radius:18px;background:var(--soft-gold);color:var(--olive)}@media(max-width:640px){.library-item-head{display:block}.library-item-head button{width:100%;margin-top:10px}}</style>
+  .history-filters,.library-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.filter-btn,.library-tab{border:1px solid var(--line);background:white;color:var(--green);border-radius:999px;padding:10px 14px;font-weight:900}.filter-btn.active,.library-tab.active{background:var(--green);color:white;border-color:var(--green)}.favorite-day-btn.active{background:var(--soft-gold);border-color:rgba(201,166,90,.55)}.library-list{display:grid;gap:12px}.library-item{background:white;border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:0 10px 28px rgba(63,74,53,.08)}.library-item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.library-item strong{display:block;color:var(--green);margin-bottom:5px}.library-item small{color:var(--muted);font-weight:800}.library-item p{color:var(--ink);line-height:1.58;margin-top:10px;white-space:pre-wrap}.empty-library{padding:18px;border:1px dashed var(--line);border-radius:18px;background:var(--soft-gold);color:var(--olive)}@media(max-width:640px){.library-item-head{display:block}.library-item-head button{width:100%;margin-top:10px}}
+      .mobile-tools-sheet{display:none}
+      @media(max-width:640px){
+        .mobile-tools-sheet{display:block;position:fixed;left:10px;right:10px;bottom:78px;z-index:59;background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:24px;padding:14px;box-shadow:0 22px 60px rgba(47,57,41,.28);backdrop-filter:blur(16px)}
+        .mobile-tools-sheet.hide{display:none!important}.mobile-tools-head{display:flex;align-items:center;justify-content:space-between;color:var(--green);margin-bottom:12px}.mobile-tools-head button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:white;color:var(--green);font-size:24px}.mobile-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mobile-tools-grid button{min-height:48px;border:1px solid var(--line);border-radius:16px;background:var(--cream);color:var(--green);font-weight:850;padding:10px;text-align:left}
+      }
+</style>
 </head>
 
 <body>
@@ -1457,7 +1463,7 @@
 
                 <div class="field">
                   <label for="noteInput">Lo que necesito decir con honestidad</label>
-                  <textarea id="noteInput" placeholder="Escribe con calma. Este registro queda guardado en este dispositivo y separado por tu usuario."></textarea>
+                  <textarea id="noteInput" placeholder="Escribe con calma. Este registro se guarda de forma privada en tu cuenta."></textarea>
                 </div>
 
                 <label class="check-card" style="margin-bottom:14px;">
@@ -1558,13 +1564,13 @@
             </div>
 
             <div class="panel-body">
-              <div class="history-filters" aria-label="Filtrar historial"><button class="filter-btn active" type="button" data-history-filter="all">Todos</button><button class="filter-btn" type="button" data-history-filter="entry">Registros emocionales</button><button class="filter-btn" type="button" data-history-filter="pause">Pausas digitales</button><button class="filter-btn" type="button" data-history-filter="risk">Situaciones de riesgo</button></div>
+              <div class="journey-context"><div class="field"><label for="historyJourneyFilter">Recorrido</label><select id="historyJourneyFilter"><option value="actual">Recorrido actual</option></select></div><span class="journey-badge" id="currentJourneyBadge">Recorrido 1 · En curso</span></div><div class="history-filters" aria-label="Filtrar historial"><button class="filter-btn active" type="button" data-history-filter="all">Todos</button><button class="filter-btn" type="button" data-history-filter="entry">Registros emocionales</button><button class="filter-btn" type="button" data-history-filter="pause">Pausas digitales</button><button class="filter-btn" type="button" data-history-filter="risk">Situaciones de riesgo</button></div>
               <div class="action-row" style="margin-top:0;">
                 <button class="btn-soft" type="button" id="refreshHistoryBtn">Actualizar historial</button>
                 <button class="btn-danger" type="button" id="clearHistoryBtn">Borrar historial</button>
               </div>
 
-              <div class="privacy-note">Los registros actuales se conservan en este dispositivo y separados por tu usuario. La sincronización entre dispositivos se incorporará en la fase común de Supabase.</div>
+              <div class="privacy-note">Tus registros se conservan de forma privada en tu cuenta y se sincronizan entre tus dispositivos.</div>
               <div id="historyList" class="entry-list"></div>
             </div>
           </section>
@@ -1607,6 +1613,13 @@
       </section>
     </section>
 
+
+    <nav class="mobile-primary-nav" aria-label="Navegación principal">
+      <button class="active" type="button" data-view="camino"><span>🌿</span>Hoy</button>
+      <button type="button" data-view="sanidad"><span>🗺️</span>Camino</button>
+      <button type="button" data-view="historial"><span>💛</span>Mi espacio</button>
+      <button type="button" id="openMobileTools"><span>✨</span>Más</button>
+    </nav>
     <footer class="footer">
       <strong>Hábitos con Dios Pro</strong><br />
       Tu valor no depende de lo que otros dijeron. Un paso pequeño hacia la paz también cuenta.
@@ -1970,6 +1983,12 @@
     let favoriteDays = [];
     let historyFilter = "all";
     let activeLibraryTab = "favorites";
+    let currentJourney = null;
+    let journeyArchive = [];
+    let historyJourneyFilter = "actual";
+    let remoteSyncTimer = null;
+    let remoteSyncRunning = false;
+    let summarySyncPending = false;
 
     init();
 
@@ -2001,8 +2020,8 @@
           return;
         }
 
-        loadLocalState();
-        selectedDay = Number(localStorage.getItem(storageKey("selected_day"))) || getCurrentSuggestedDay();
+        await loadPeaceData();
+        selectedDay = Number(currentJourney?.current_day) || getCurrentSuggestedDay();
         if (selectedDay < 1 || selectedDay > days.length) selectedDay = getCurrentSuggestedDay();
         bindEvents();
         renderAll();
@@ -2067,6 +2086,7 @@
         document.getElementById("viewAyuda").scrollIntoView({ behavior: "smooth", block: "start" });
       });
       els.goToolsBtn.addEventListener("click", () => {
+        if(window.matchMedia("(max-width: 640px)").matches){openMobileTools();return;}
         document.querySelector(".sidebar").scrollIntoView({ behavior: "smooth", block: "start" });
         showToast("Elige una herramienta del menú.");
       });
@@ -2096,12 +2116,18 @@
       els.clearHistoryBtn.addEventListener("click", clearHistory);
 
       document.querySelectorAll("[data-history-filter]").forEach((button) => button.addEventListener("click", () => { historyFilter=button.dataset.historyFilter; document.querySelectorAll("[data-history-filter]").forEach((x)=>x.classList.toggle("active",x===button)); renderHistory(); }));
+      document.getElementById("historyJourneyFilter")?.addEventListener("change",(event)=>{historyJourneyFilter=event.target.value;renderHistory();});
       document.querySelectorAll("[data-library-tab]").forEach((button) => button.addEventListener("click", () => { activeLibraryTab=button.dataset.libraryTab; document.querySelectorAll("[data-library-tab]").forEach((x)=>x.classList.toggle("active",x===button)); renderPersonalLibrary(); }));
+      document.getElementById("openMobileTools")?.addEventListener("click",openMobileTools);
+      document.getElementById("closeMobileTools")?.addEventListener("click",closeMobileTools);
+      document.querySelectorAll("[data-mobile-view]").forEach(button=>button.addEventListener("click",()=>{closeMobileTools();setView(button.dataset.mobileView);document.getElementById(`view${button.dataset.mobileView.charAt(0).toUpperCase()+button.dataset.mobileView.slice(1)}`)?.scrollIntoView({behavior:"smooth",block:"start"});}));
       els.logoutBtn.addEventListener("click", async () => {
         els.logoutBtn.disabled=true; const { error }=await supabaseClient.auth.signOut(); if(error){els.logoutBtn.disabled=false;showToast("No pudimos cerrar la sesión. Intenta nuevamente.",true);return;} window.location.href="../login.html";
       });
     }
 
+    function openMobileTools(){const sheet=document.getElementById("mobileToolsSheet");if(!sheet)return;sheet.classList.remove("hide");sheet.setAttribute("aria-hidden","false");document.getElementById("closeMobileTools")?.focus();}
+    function closeMobileTools(){const sheet=document.getElementById("mobileToolsSheet");if(!sheet)return;sheet.classList.add("hide");sheet.setAttribute("aria-hidden","true");}
     function setView(viewName) {
       const views = {
         camino: document.getElementById("viewCamino"),
@@ -2183,7 +2209,7 @@
             <button class="btn" type="button" id="completeDayBtn">${isDone ? "Marcar como pendiente" : "Completar este día"}</button><button class="btn-gold favorite-day-btn ${favoriteDays.includes(day.day)?"active":""}" type="button" id="favoriteDayBtn">${favoriteDays.includes(day.day)?"★ Favorito guardado":"☆ Guardar favorito"}</button>
 
             <button class="btn-soft" type="button" id="previousDayBtn">Día anterior</button>
-            <button class="btn-gold" type="button" id="nextDayBtn">Siguiente día</button>
+            <button class="btn-gold" type="button" id="nextDayBtn">${day.day===21?(isDone?"Ver cierre del recorrido":"Completa el día para finalizar"):"Siguiente día"}</button>
           </div>
         </article>
       `;
@@ -2198,9 +2224,9 @@
       });
 
       document.getElementById("nextDayBtn").addEventListener("click", () => {
-        selectedDay = selectedDay < 21 ? selectedDay + 1 : 21;
-        persistSelectedDay();
-        renderAll();
+        if(selectedDay<21){selectedDay+=1;persistSelectedDay();renderAll();return;}
+        if(completedDays.includes(21)){setView("sanidad");document.getElementById("viewSanidad").scrollIntoView({behavior:"smooth",block:"start"});}
+        else showToast("Completa el día 21 para finalizar el recorrido.",true);
       });
     }
 
@@ -2237,66 +2263,39 @@
       });
     }
 
-    function toggleCurrentDay() {
-      if (completedDays.includes(selectedDay)) {
-        completedDays = completedDays.filter((item) => item !== selectedDay);
-        showToast("Día marcado como pendiente.");
-      } else {
-        completedDays.push(selectedDay);
-        showToast("Día completado. Un paso pequeño también cuenta.");
+    async function toggleCurrentDay() {
+      const wasCompleted=completedDays.includes(selectedDay);
+      completedDays=wasCompleted?completedDays.filter(item=>item!==selectedDay):uniqueNumbers([...completedDays,selectedDay]);
+      try{
+        await persistProgressDay(selectedDay);
+        await updateJourneySummary();
+        renderAll();
+        showToast(wasCompleted?"Día marcado como pendiente.":"Día completado. Un paso pequeño también cuenta.");
+      }catch(error){
+        completedDays=wasCompleted?uniqueNumbers([...completedDays,selectedDay]):completedDays.filter(item=>item!==selectedDay);
+        console.error(error);renderAll();showToast("No pudimos actualizar este día.",true);
       }
-
-      completedDays = uniqueNumbers(completedDays);
-      saveLocalState();
-      renderAll();
     }
-
-    function toggleFavoriteDay(){if(favoriteDays.includes(selectedDay)){favoriteDays=favoriteDays.filter((d)=>d!==selectedDay);showToast("Día quitado de favoritos.");}else{favoriteDays.push(selectedDay);favoriteDays=uniqueNumbers(favoriteDays);showToast("Día guardado en tu biblioteca personal.");}saveLocalState();renderAll();}
-    function saveEntry() {
-      const afterIntensity = Number(els.intensityAfter.value);
-      const hasRisk = els.riskInput.checked;
-
-      const entry = {
-        id: createId(),
-        createdAt: new Date().toISOString(),
-        date: new Date().toLocaleString("es-AR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }),
-        day: selectedDay,
-        platform: els.platformInput.value,
-        trigger: els.triggerInput.value,
-        before: els.beforeInput.value,
-        after: els.afterInput.value,
-        intensityBefore: Number(els.intensityBefore.value),
-        intensityAfter: afterIntensity,
-        note: els.noteInput.value.trim(),
-        risk: hasRisk
-      };
-
-      if (editingEntryId) {
-        const index = entries.findIndex((item) => item.id === editingEntryId);
-        if (index >= 0) entry.id = editingEntryId, entries[index] = entry;
-        editingEntryId = null;
-      } else {
-        entries.push(entry);
-      }
-      saveLocalState();
-      renderAll();
-      clearRegisterForm();
-
-      if (hasRisk || afterIntensity >= 5) {
-        setView("ayuda");
-        showToast("Registro guardado. Busca ayuda segura si estás en riesgo.", true);
-        return;
-      }
-
-      showToast("Registro guardado con cuidado.");
+    async function toggleFavoriteDay(){
+      const wasFavorite=favoriteDays.includes(selectedDay);
+      favoriteDays=wasFavorite?favoriteDays.filter(d=>d!==selectedDay):uniqueNumbers([...favoriteDays,selectedDay]);
+      try{await persistProgressDay(selectedDay);renderAll();showToast(wasFavorite?"Día quitado de favoritos.":"Día guardado en tu biblioteca personal.");}
+      catch(error){favoriteDays=wasFavorite?uniqueNumbers([...favoriteDays,selectedDay]):favoriteDays.filter(d=>d!==selectedDay);console.error(error);renderAll();showToast("No pudimos actualizar el favorito.",true);}
     }
-
+    async function saveEntry() {
+      const afterIntensity=Number(els.intensityAfter.value),hasRisk=els.riskInput.checked,now=new Date().toISOString();
+      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:selectedDay,platform:els.platformInput.value,trigger_type:els.triggerInput.value,feeling_before:els.beforeInput.value,feeling_after:els.afterInput.value,intensity_before:Number(els.intensityBefore.value),intensity_after:afterIntensity,note:els.noteInput.value.trim(),risk_flag:hasRisk,occurred_at:now};
+      try{
+        let data,error;
+        if(editingEntryId)({data,error}=await supabaseClient.from("user_peace_entries").update(payload).eq("id",editingEntryId).eq("user_id",currentUser.id).select().single());
+        else ({data,error}=await supabaseClient.from("user_peace_entries").insert(payload).select().single());
+        if(error)throw error;
+        const item=mapEntryRow(data);const index=entries.findIndex(x=>x.id===item.id);if(index>=0)entries[index]=item;else entries.unshift(item);
+        editingEntryId=null;renderAll();clearRegisterForm();
+        if(hasRisk||afterIntensity>=5){setView("ayuda");showToast("Registro guardado. Busca ayuda segura si estás en riesgo.",true);return;}
+        showToast("Registro guardado con cuidado.");
+      }catch(error){console.error(error);showToast("No pudimos guardar el registro.",true);}
+    }
     function clearRegisterForm() {
       els.noteInput.value = "";
       els.riskInput.checked = false;
@@ -2327,55 +2326,29 @@
       });
     }
 
-    function saveLimits() {
-      const selected = [...document.querySelectorAll("[data-limit-index]")]
-        .filter((input) => input.checked)
-        .map((input) => Number(input.dataset.limitIndex));
-
-      limits = selected;
-      saveLocalState();
-      renderStats();
-      showToast("Límites digitales guardados.");
+    async function saveLimits() {
+      const previous=[...limits];
+      limits=[...document.querySelectorAll("[data-limit-index]")].filter(input=>input.checked).map(input=>Number(input.dataset.limitIndex));
+      try{const {error}=await supabaseClient.from("user_peace_limits").upsert({user_id:currentUser.id,journey_id:currentJourney.id,selected_limit_indexes:limits},{onConflict:"journey_id"});if(error)throw error;renderStats();renderPersonalLibrary();showToast("Límites digitales guardados.");}
+      catch(error){limits=previous;renderLimits();renderStats();console.error(error);showToast("No pudimos guardar los límites.",true);}
     }
-
-    function resetLimits() {
-      limits = [];
-      saveLocalState();
-      renderLimits();
-      renderStats();
-      showToast("Checklist reiniciado.");
+    async function resetLimits() {
+      const previous=[...limits];limits=[];
+      try{const {error}=await supabaseClient.from("user_peace_limits").upsert({user_id:currentUser.id,journey_id:currentJourney.id,selected_limit_indexes:[]},{onConflict:"journey_id"});if(error)throw error;renderLimits();renderStats();renderPersonalLibrary();showToast("Checklist reiniciado.");}
+      catch(error){limits=previous;renderLimits();renderStats();console.error(error);showToast("No pudimos reiniciar los límites.",true);}
     }
-
-    function savePause() {
-      const pause = {
-        id: createId(),
-        createdAt: new Date().toISOString(),
-        date: new Date().toLocaleString("es-AR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }),
-        day: selectedDay,
-        time: els.pauseTime.value,
-        action: els.pauseAction.value,
-        reason: els.pauseReason.value.trim()
-      };
-
-      if (editingPauseId) {
-        const index = pauses.findIndex((item) => item.id === editingPauseId);
-        if (index >= 0) pause.id = editingPauseId, pauses[index] = pause;
-        editingPauseId = null;
-      } else {
-        pauses.push(pause);
-      }
-      els.pauseReason.value = "";
-      saveLocalState();
-      renderAll();
-      showToast("Pausa digital guardada.");
+    async function savePause() {
+      const now=new Date().toISOString();
+      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:selectedDay,duration_label:els.pauseTime.value,action_label:els.pauseAction.value,reason:els.pauseReason.value.trim(),occurred_at:now};
+      try{
+        let data,error;
+        if(editingPauseId)({data,error}=await supabaseClient.from("user_peace_pauses").update(payload).eq("id",editingPauseId).eq("user_id",currentUser.id).select().single());
+        else ({data,error}=await supabaseClient.from("user_peace_pauses").insert(payload).select().single());
+        if(error)throw error;
+        const item=mapPauseRow(data);const index=pauses.findIndex(x=>x.id===item.id);if(index>=0)pauses[index]=item;else pauses.unshift(item);
+        editingPauseId=null;els.pauseReason.value="";renderAll();showToast("Pausa digital guardada.");
+      }catch(error){console.error(error);showToast("No pudimos guardar la pausa.",true);}
     }
-
     function suggestPause() {
       const suggestions = [
         "Suelta el celular por 5 minutos, respira lento y repite: Dios está conmigo.",
@@ -2421,7 +2394,7 @@
     function renderHistory() {
       els.historyList.innerHTML = "";
 
-      let allItems=[...entries.map((item)=>({itemType:"entry",type:"Registro emocional",...item})),...pauses.map((item)=>({itemType:"pause",type:"Pausa digital",...item}))];if(historyFilter==="entry")allItems=allItems.filter((x)=>x.itemType==="entry");if(historyFilter==="pause")allItems=allItems.filter((x)=>x.itemType==="pause");if(historyFilter==="risk")allItems=allItems.filter((x)=>x.itemType==="entry"&&x.risk);allItems.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+      let allItems=[...entries.map((item)=>({itemType:"entry",type:"Registro emocional",...item})),...pauses.map((item)=>({itemType:"pause",type:"Pausa digital",...item}))];const chosenJourney=historyJourneyFilter==="actual"?currentJourney?.id:historyJourneyFilter;allItems=allItems.filter((x)=>!chosenJourney||x.journeyId===chosenJourney);if(historyFilter==="entry")allItems=allItems.filter((x)=>x.itemType==="entry");if(historyFilter==="pause")allItems=allItems.filter((x)=>x.itemType==="pause");if(historyFilter==="risk")allItems=allItems.filter((x)=>x.itemType==="entry"&&x.risk);allItems.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 
       if (!allItems.length) {
         els.historyList.innerHTML = `
@@ -2439,7 +2412,7 @@
 
         if (item.type === "Registro emocional") {
           card.innerHTML = `
-            <strong>${escapeHTML(item.type)} · ${escapeHTML(item.date)}</strong>
+            <strong>${escapeHTML(item.type)} · Recorrido ${item.cycle||1} · ${escapeHTML(item.date)}</strong>
             <p><b>Día:</b> ${item.day || "-"} · <b>Lugar:</b> ${escapeHTML(item.platform)} · <b>Activador:</b> ${escapeHTML(item.trigger)}</p>
             <p><b>Antes:</b> ${escapeHTML(item.before)} (${item.intensityBefore}/5) · <b>Después:</b> ${escapeHTML(item.after)} (${item.intensityAfter}/5)</p>
             <p>${escapeHTML(item.note || "Sin nota adicional.")}</p>
@@ -2448,7 +2421,7 @@
           `;
         } else {
           card.innerHTML = `
-            <strong>${escapeHTML(item.type)} · ${escapeHTML(item.date)}</strong>
+            <strong>${escapeHTML(item.type)} · Recorrido ${item.cycle||1} · ${escapeHTML(item.date)}</strong>
             <p><b>Día:</b> ${item.day || "-"} · <b>Duración:</b> ${escapeHTML(item.time)} · <b>Acción:</b> ${escapeHTML(item.action)}</p>
             <p>${escapeHTML(item.reason || "Sin motivo escrito.")}</p>
             <div class="entry-actions"><button class="btn-soft history-edit" type="button" data-id="${item.id}" data-type="pause">Editar</button><button class="btn-danger history-delete" type="button" data-id="${item.id}" data-type="pause">Eliminar</button></div>
@@ -2498,29 +2471,16 @@
       }
     }
 
-    function deleteHistoryItem(type, id) {
-      if (!window.confirm("¿Deseas eliminar este registro? Esta acción no se puede deshacer.")) return;
-      if (type === "entry") entries = entries.filter((row) => row.id !== id);
-      else pauses = pauses.filter((row) => row.id !== id);
-      saveLocalState();
-      renderAll();
-      showToast("Registro eliminado.");
+    async function deleteHistoryItem(type, id) {
+      if(!window.confirm("¿Deseas eliminar este registro? Esta acción no se puede deshacer."))return;
+      try{const table=type==="entry"?"user_peace_entries":"user_peace_pauses";const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);if(error)throw error;if(type==="entry")entries=entries.filter(row=>row.id!==id);else pauses=pauses.filter(row=>row.id!==id);renderAll();showToast("Registro eliminado.");}
+      catch(error){console.error(error);showToast("No pudimos eliminar el registro.",true);}
     }
-
-    function clearHistory() {
-      const confirmClear = window.confirm("¿Quieres borrar todos tus registros emocionales y pausas guardadas?");
-
-      if (!confirmClear) {
-        return;
-      }
-
-      entries = [];
-      pauses = [];
-      saveLocalState();
-      renderAll();
-      showToast("Historial privado borrado.");
+    async function clearHistory() {
+      if(!window.confirm("¿Quieres borrar todos tus registros emocionales y pausas guardadas?"))return;
+      try{const [entriesDelete,pausesDelete]=await Promise.all([supabaseClient.from("user_peace_entries").delete().eq("user_id",currentUser.id),supabaseClient.from("user_peace_pauses").delete().eq("user_id",currentUser.id)]);if(entriesDelete.error)throw entriesDelete.error;if(pausesDelete.error)throw pausesDelete.error;entries=[];pauses=[];renderAll();showToast("Historial privado borrado.");}
+      catch(error){console.error(error);await reloadPeaceHistory();renderAll();showToast("No pudimos completar el borrado. El historial fue actualizado.",true);}
     }
-
     function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=entries.slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=pauses.slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();}));}
     function renderHealingPath() {
       if (!els.healingCelebration) return;
@@ -2531,9 +2491,12 @@
         document.getElementById("openPeaceHistory").addEventListener("click",()=>setView("historial"));
       } else { els.healingCelebration.innerHTML=`<div class="notice">Cada paso de cuidado cuenta. Cuando completes los 21 días encontrarás aquí un cierre especial y la opción de iniciar nuevamente.</div>`; }
     }
-    function restartPeaceJourney() {
-      if (!window.confirm("¿Quieres iniciar nuevamente el camino de 21 días? Se reiniciará el progreso, pero se conservarán tus registros, pausas, límites, favoritos e historial.")) return;
-      completedDays=[]; selectedDay=1; saveLocalState(); renderAll(); setView("camino"); document.getElementById("viewCamino").scrollIntoView({behavior:"smooth",block:"start"}); showToast("Nuevo recorrido iniciado. Tu camino anterior permanece en tu historial.");
+    async function restartPeaceJourney() {
+      if(!window.confirm("¿Quieres iniciar un nuevo recorrido de 21 días? El recorrido actual, sus registros, pausas, límites y favoritos quedarán conservados en tu historial."))return;
+      const button=document.getElementById("restartPeaceJourney");setBusy(button,true,"Preparando nuevo recorrido...");
+      try{const {data,error}=await supabaseClient.rpc("start_new_peace_journey");if(error)throw error;const newJourney=Array.isArray(data)?data[0]:data;if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");currentJourney=newJourney;completedDays=[];favoriteDays=[];limits=[];selectedDay=1;historyJourneyFilter="actual";journeyArchive=await fetchJourneyArchive();renderAll();setView("camino");document.getElementById("viewCamino").scrollIntoView({behavior:"smooth",block:"start"});showToast("Nuevo recorrido iniciado. Tu historia anterior quedó guardada.");}
+      catch(error){console.error(error);const message=String(error?.message||"");showToast(message.includes("NOT_COMPLETE")?"Completa los 21 días antes de iniciar otro recorrido.":"No pudimos iniciar el nuevo recorrido.",true);}
+      finally{setBusy(button,false);}
     }
     function renderStats() {
       completedDays = uniqueNumbers(completedDays);
@@ -2614,56 +2577,61 @@
     }
 
     function persistSelectedDay() {
-      localStorage.setItem(storageKey("selected_day"), String(selectedDay));
-    }
-    function storageKey(name) {
-      const userPart = currentUser && currentUser.id
-        ? currentUser.id
-        : "local";
-
-      return `${BASE_PREFIX}_${userPart}_${name}`;
+      if(currentJourney)currentJourney.current_day=selectedDay;
+      queueJourneySummary();
     }
 
-    function progressSnapshotKey() {
-      const userPart = currentUser && currentUser.id
-        ? currentUser.id
-        : "local";
 
-      return `${STORAGE_PROGRESS_SNAPSHOT_PREFIX}_${userPart}`;
-    }
 
-    function loadLocalState() {
-      completedDays = readStorageArray(storageKey("completed_days"));
-      entries = readStorageArray(storageKey("registro_emocional"));
-      pauses = readStorageArray(storageKey("pausas"));
-      limits = readStorageArray(storageKey("limites"));
-      favoriteDays = readStorageArray(storageKey("favorite_days"));
-    }
 
-    function saveLocalState() {
-      completedDays = uniqueNumbers(completedDays);
-      limits = uniqueNumbers(limits);
-
-      localStorage.setItem(storageKey("completed_days"), JSON.stringify(completedDays));
-      localStorage.setItem(storageKey("registro_emocional"), JSON.stringify(entries));
-      localStorage.setItem(storageKey("pausas"), JSON.stringify(pauses));
-      localStorage.setItem(storageKey("limites"), JSON.stringify(limits));
-      localStorage.setItem(storageKey("favorite_days"), JSON.stringify(favoriteDays));
-      persistSelectedDay();
-    }
-
-    function saveProgressSnapshot(snapshot) {
-      localStorage.setItem(progressSnapshotKey(), JSON.stringify(snapshot));
-    }
-
-    function readStorageArray(key) {
-      try {
-        const value = JSON.parse(localStorage.getItem(key) || "[]");
-        return Array.isArray(value) ? value : [];
-      } catch {
-        return [];
+    async function loadPeaceData() {
+      const {data:active,error:activeError}=await supabaseClient.from("user_peace_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();
+      if(activeError)throw activeError;
+      currentJourney=active;
+      if(!currentJourney){
+        const {data:last,error:lastError}=await supabaseClient.from("user_peace_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);if(lastError)throw lastError;
+        const {data:created,error:createError}=await supabaseClient.from("user_peace_journeys").insert({user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Diario de Paz",current_day:1,is_active:true}).select().single();if(createError)throw createError;currentJourney=created;
       }
+      journeyArchive=await fetchJourneyArchive();
+      const [progressResult,entriesResult,pausesResult,limitsResult]=await Promise.all([
+        supabaseClient.from("user_peace_progress").select("*").eq("journey_id",currentJourney.id),
+        supabaseClient.from("user_peace_entries").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
+        supabaseClient.from("user_peace_pauses").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
+        supabaseClient.from("user_peace_limits").select("selected_limit_indexes").eq("journey_id",currentJourney.id).maybeSingle()
+      ]);
+      for(const result of [progressResult,entriesResult,pausesResult,limitsResult])if(result.error)throw result.error;
+      completedDays=(progressResult.data||[]).filter(x=>x.completed).map(x=>Number(x.day_number));favoriteDays=(progressResult.data||[]).filter(x=>x.favorite).map(x=>Number(x.day_number));
+      const cycleMap=Object.fromEntries(journeyArchive.map(j=>[j.id,Number(j.cycle_number)]));
+      entries=(entriesResult.data||[]).map(mapEntryRow);
+      pauses=(pausesResult.data||[]).map(mapPauseRow);
+      limits=uniqueNumbers(limitsResult.data?.selected_limit_indexes||[]);
     }
+    async function fetchJourneyArchive(){const {data,error}=await supabaseClient.from("user_peace_journeys").select("id,cycle_number,is_active,started_at,completed_at,archived_at").eq("user_id",currentUser.id).order("cycle_number",{ascending:false});if(error)throw error;return data||[];}
+    function formatRemoteDate(value){return new Date(value).toLocaleString("es-AR",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"});}
+    function renderJourneySelectors(){
+      const select=document.getElementById("historyJourneyFilter");if(select){select.innerHTML='<option value="actual">Recorrido actual</option>'+journeyArchive.filter(j=>!j.is_active).map(j=>`<option value="${j.id}">Recorrido ${j.cycle_number}</option>`).join("");select.value=[...select.options].some(o=>o.value===historyJourneyFilter)?historyJourneyFilter:"actual";}
+      const badge=document.getElementById("currentJourneyBadge");if(badge)badge.textContent=`Recorrido ${currentJourney?.cycle_number||1} · ${currentJourney?.is_active?"En curso":"Finalizado"}`;
+    }
+    function mapEntryRow(row){const cycle=Number(journeyArchive.find(j=>j.id===row.journey_id)?.cycle_number)||Number(currentJourney?.cycle_number)||1;return{id:row.id,createdAt:row.occurred_at,date:formatRemoteDate(row.occurred_at),day:Number(row.day_number),journeyId:row.journey_id,cycle,platform:row.platform,trigger:row.trigger_type,before:row.feeling_before,after:row.feeling_after,intensityBefore:Number(row.intensity_before),intensityAfter:Number(row.intensity_after),note:row.note||"",risk:!!row.risk_flag};}
+    function mapPauseRow(row){const cycle=Number(journeyArchive.find(j=>j.id===row.journey_id)?.cycle_number)||Number(currentJourney?.cycle_number)||1;return{id:row.id,createdAt:row.occurred_at,date:formatRemoteDate(row.occurred_at),day:Number(row.day_number),journeyId:row.journey_id,cycle,time:row.duration_label,action:row.action_label,reason:row.reason||""};}
+    async function persistProgressDay(day){
+      const completed=completedDays.includes(day),favorite=favoriteDays.includes(day);
+      if(!completed&&!favorite){const {error}=await supabaseClient.from("user_peace_progress").delete().eq("journey_id",currentJourney.id).eq("user_id",currentUser.id).eq("day_number",day);if(error)throw error;return;}
+      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed,favorite,completed_at:completed?new Date().toISOString():null};
+      const {error}=await supabaseClient.from("user_peace_progress").upsert(payload,{onConflict:"journey_id,day_number"});if(error)throw error;
+    }
+    async function updateJourneySummary(){
+      const percentage=Math.round((completedDays.length/days.length)*100),now=new Date().toISOString(),payload={current_day:selectedDay,completed_count:completedDays.length,progress_percentage:percentage,journey_stage:getStageNumber(),journey_level:getJourneyLevel(percentage).name,completed_at:completedDays.length===days.length?(currentJourney.completed_at||now):null};
+      const {data,error}=await supabaseClient.from("user_peace_journeys").update(payload).eq("id",currentJourney.id).eq("user_id",currentUser.id).select().single();if(error)throw error;currentJourney=data;
+    }
+    function queueJourneySummary(){summarySyncPending=true;clearTimeout(remoteSyncTimer);remoteSyncTimer=setTimeout(async()=>{if(remoteSyncRunning)return;remoteSyncRunning=true;try{while(summarySyncPending){summarySyncPending=false;await updateJourneySummary();}}catch(error){console.error(error);showToast("No pudimos sincronizar el recorrido. Revisa tu conexión.",true);}finally{remoteSyncRunning=false;}},180);}
+    function loadLocalState() {}
+    function saveLocalState(){persistSelectedDay();queueJourneySummary();}
+    async function reloadPeaceHistory(){const [entryResult,pauseResult]=await Promise.all([supabaseClient.from("user_peace_entries").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),supabaseClient.from("user_peace_pauses").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false})]);if(entryResult.error)throw entryResult.error;if(pauseResult.error)throw pauseResult.error;entries=(entryResult.data||[]).map(mapEntryRow);pauses=(pauseResult.data||[]).map(mapPauseRow);}
+    function saveProgressSnapshot(snapshot) { /* El progreso se conserva en Supabase. */
+    }
+
+
 
     function uniqueNumbers(values) {
       return [...new Set(values.map(Number))]
@@ -2679,6 +2647,7 @@
       return String(Date.now());
     }
 
+    function setBusy(button,busy,label){if(!button)return;if(busy){button.dataset.originalText=button.textContent;button.disabled=true;button.textContent=label||"Guardando...";}else{button.disabled=false;button.textContent=button.dataset.originalText||button.textContent;}}
     function showLoading() {
       els.loadingState.classList.remove("hide");
       els.errorState.classList.add("hide");
