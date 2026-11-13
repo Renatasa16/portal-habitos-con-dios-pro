@@ -1191,6 +1191,45 @@
       }
     }
 
+      /* Experiencia premium del Cofre: categoria primero, recorrido despues */
+      .cofre-intro { display:grid; gap:16px; margin-bottom:20px; }
+      .memory-category-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+      .memory-category { min-height:94px; border:1px solid var(--line); border-radius:22px; background:white; color:var(--green); padding:14px 10px; display:grid; place-items:center; align-content:center; gap:7px; font-weight:900; text-align:center; box-shadow:0 10px 24px rgba(63,74,53,.06); transition:transform .18s ease,box-shadow .18s ease,background .18s ease; }
+      .memory-category:hover { transform:translateY(-2px); box-shadow:var(--shadow-soft); }
+      .memory-category.active { background:linear-gradient(145deg,var(--green),var(--olive)); color:white; border-color:var(--green); }
+      .memory-category-icon { font-size:24px; line-height:1; }
+      .memory-category-count { font-size:11px; opacity:.78; }
+      .cofre-controls { display:grid; grid-template-columns:minmax(210px,.75fr) minmax(260px,1.25fr); gap:12px; align-items:end; padding:16px; border:1px solid var(--line); border-radius:24px; background:var(--cream); }
+      .cofre-filter-toggle { justify-self:start; margin-top:2px; }
+      .advanced-memory-filters { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:12px; }
+      .memory-results-head { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:23px 0 6px; }
+      .memory-results-head h3 { color:var(--green); font-size:24px; letter-spacing:-.035em; }
+      .memory-results-head p { color:var(--muted); font-size:13px; margin-top:4px; }
+      .memory-item { scroll-margin-top:18px; }
+      .memory-item p { margin-top:12px; }
+      .memory-empty { padding:24px; text-align:center; background:var(--cream); }
+      .mobile-nav { display:none; }
+      @media (max-width:960px){
+        .memory-category-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+        .sidebar { position:static; }
+      }
+      @media (max-width:760px){
+        .cofre-controls,.advanced-memory-filters { grid-template-columns:1fr; }
+        .memory-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        .memory-category { min-height:88px; }
+      }
+      @media (max-width:640px){
+        body { padding-bottom:78px; }
+        .sidebar { display:none; }
+        .mobile-nav { position:fixed; display:grid; grid-template-columns:repeat(4,1fr); left:10px; right:10px; bottom:10px; z-index:45; background:rgba(255,255,255,.96); border:1px solid var(--line); border-radius:22px; padding:7px; box-shadow:0 18px 48px rgba(47,57,41,.22); backdrop-filter:blur(16px); }
+        .mobile-nav button { min-width:0; min-height:52px; border:0; border-radius:16px; background:transparent; color:var(--muted); font-size:10px; font-weight:900; display:grid; place-items:center; gap:2px; }
+        .mobile-nav button span { font-size:19px; line-height:1; }
+        .mobile-nav button.active { background:var(--soft-green); color:var(--green); }
+        .panel-body,.panel-head { padding:18px; }
+        .memory-category-grid { gap:8px; }
+        .memory-category { border-radius:18px; padding:12px 8px; }
+        .toast { bottom:88px; border-radius:20px; }
+      }
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -1419,31 +1458,41 @@
             </div>
           </section>
 
-          <section id="viewCofre" class="panel hide">
-            <div class="panel-head">
-              <small>Recuerdos de fe</small>
-              <h2>Cofre de recuerdos</h2>
-              <p>Guarda frases, gratitudes, oraciones o pequeños recuerdos de lo vivido en familia.</p>
-            </div>
-
-            <div class="panel-body">
-              <div class="memory-toolbar">
-                <div class="field"><label for="memoryType">Tipo de recuerdo</label><select id="memoryType"><option value="gratitud">Gratitud</option><option value="oracion">Oración</option><option value="aprendizaje">Aprendizaje</option><option value="frase">Frase especial</option><option value="momento">Momento en familia</option></select></div>
-                <div class="field"><label for="memoryFilter">Mostrar</label><select id="memoryFilter"><option value="todos">Todos los recuerdos</option><option value="gratitud">Gratitudes</option><option value="oracion">Oraciones</option><option value="aprendizaje">Aprendizajes</option><option value="frase">Frases especiales</option><option value="momento">Momentos en familia</option></select></div>
-                <div class="field"><label for="memoryCycleFilter">Recorrido</label><select id="memoryCycleFilter"><option value="todos">Todos los recorridos</option><option value="actual">Recorrido actual</option></select></div>
+            <section id="viewCofre" class="panel hide">
+              <div class="panel-head">
+                <small>Recuerdos de fe</small>
+                <h2>Cofre de recuerdos</h2>
+                <p>Guarda frases, gratitudes, oraciones o pequeños recuerdos de lo vivido en familia.</p>
               </div>
-              <div class="field"><label for="memoryInput">Nuevo recuerdo</label><textarea id="memoryInput" maxlength="1200" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea></div>
-              <p class="adult-note">Tus recuerdos familiares se conservan en tu cuenta para acompañar a tu familia desde cualquier dispositivo donde inicien sesión.</p>
-
-              <div class="action-row">
-                <button class="btn" type="button" id="saveMemoryBtn">Guardar recuerdo</button>
-                <button class="btn-soft" type="button" id="clearMemoryInputBtn">Limpiar</button>
+              <div class="panel-body">
+                <div class="cofre-intro">
+                  <div class="memory-category-grid" id="memoryCategoryGrid" aria-label="Tipos de recuerdos">
+                    <button class="memory-category active" type="button" data-memory-category="gratitud"><span class="memory-category-icon">💛</span><span>Gratitudes</span><small class="memory-category-count" data-count-type="gratitud">0 recuerdos</small></button>
+                    <button class="memory-category" type="button" data-memory-category="oracion"><span class="memory-category-icon">🙏</span><span>Oraciones</span><small class="memory-category-count" data-count-type="oracion">0 recuerdos</small></button>
+                    <button class="memory-category" type="button" data-memory-category="aprendizaje"><span class="memory-category-icon">🌿</span><span>Aprendizajes</span><small class="memory-category-count" data-count-type="aprendizaje">0 recuerdos</small></button>
+                    <button class="memory-category" type="button" data-memory-category="frase"><span class="memory-category-icon">✨</span><span>Frases especiales</span><small class="memory-category-count" data-count-type="frase">0 recuerdos</small></button>
+                    <button class="memory-category" type="button" data-memory-category="momento"><span class="memory-category-icon">🏡</span><span>Momentos en familia</span><small class="memory-category-count" data-count-type="momento">0 recuerdos</small></button>
+                  </div>
+                  <div class="cofre-controls">
+                    <div class="field"><label for="memoryCycleFilter">Recorrido</label><select id="memoryCycleFilter"><option value="actual">Recorrido actual</option></select></div>
+                    <div class="field"><label for="memorySearch">Buscar en esta categoria</label><input id="memorySearch" type="search" maxlength="80" placeholder="Buscar por palabra o contenido..." autocomplete="off"></div>
+                    <button class="btn-soft cofre-filter-toggle" type="button" id="memoryFilterToggle" aria-expanded="false" aria-controls="advancedMemoryFilters">Filtrar por fecha</button>
+                  </div>
+                  <div class="advanced-memory-filters hide" id="advancedMemoryFilters">
+                    <div class="field"><label for="memoryYearFilter">Año</label><select id="memoryYearFilter"><option value="todos">Todos los años</option></select></div>
+                    <div class="field"><label for="memoryMonthFilter">Mes</label><select id="memoryMonthFilter"><option value="todos">Todos los meses</option></select></div>
+                  </div>
+                </div>
+                <div class="field"><label for="memoryInput">Nuevo recuerdo</label><textarea id="memoryInput" maxlength="1200" placeholder="Ejemplo: Hoy agradecimos por nuestra familia y oramos juntos antes de dormir."></textarea></div>
+                <p class="adult-note">Tus recuerdos familiares se conservan en tu cuenta para acompañar a tu familia desde cualquier dispositivo donde inicien sesión.</p>
+                <div class="action-row">
+                  <button class="btn" type="button" id="saveMemoryBtn">Guardar gratitud</button>
+                  <button class="btn-soft" type="button" id="clearMemoryInputBtn">Limpiar</button>
+                </div>
+                <div class="memory-results-head"><div><h3 id="memoryResultsTitle">Gratitudes</h3><p id="memoryResultsSummary">Recorrido actual</p></div></div>
+                <div id="memoryList" class="memory-list" aria-live="polite"></div>
               </div>
-
-              <div id="memoryList" class="memory-list"></div>
-            </div>
-          </section>
-
+            </section>
           <section id="viewLegal" class="panel hide">
             <div class="panel-head">
               <small>Aviso ético</small>
@@ -1464,6 +1513,12 @@
       </section>
     </section>
 
+      <nav class="mobile-nav" aria-label="Navegacion principal">
+        <button class="active" type="button" data-view="momento"><span>🌿</span>Hoy</button>
+        <button type="button" data-view="calendario"><span>🗺️</span>Camino</button>
+        <button type="button" data-view="cofre"><span>💛</span>Cofre</button>
+        <button type="button" data-view="tarjetas"><span>✨</span>Mas</button>
+      </nav>
     <footer class="footer">
       <strong>Hábitos con Dios Pro</strong><br />
       Momentos pequeños, recuerdos de fe para toda la vida.
@@ -1745,10 +1800,10 @@
     const els = {
       userPill: document.getElementById("userPill"), logoutBtn: document.getElementById("logoutBtn"), loadingState: document.getElementById("loadingState"), errorState: document.getElementById("errorState"), lockedState: document.getElementById("lockedState"), errorMessage: document.getElementById("errorMessage"), appContent: document.getElementById("appContent"),
       completedCount: document.getElementById("completedCount"), progressMessage: document.getElementById("progressMessage"), nextStepMessage: document.getElementById("nextStepMessage"), progressCircle: document.getElementById("progressCircle"), progressPercent: document.getElementById("progressPercent"), progressBar: document.getElementById("progressBar"), journeyLevel: document.getElementById("journeyLevel"), journeyFavorites: document.getElementById("journeyFavorites"), journeyMemories: document.getElementById("journeyMemories"), metricCompleted: document.getElementById("metricCompleted"), metricFavorites: document.getElementById("metricFavorites"), metricMemories: document.getElementById("metricMemories"), metricReward: document.getElementById("metricReward"),
-      momentTodayBtn: document.getElementById("momentTodayBtn"), goCalendarBtn: document.getElementById("goCalendarBtn"), kidModeBtn: document.getElementById("kidModeBtn"), momentContainer: document.getElementById("momentContainer"), calendarGrid: document.getElementById("calendarGrid"), kidCards: document.getElementById("kidCards"), memoryInput: document.getElementById("memoryInput"), memoryType: document.getElementById("memoryType"), memoryFilter: document.getElementById("memoryFilter"), memoryCycleFilter: document.getElementById("memoryCycleFilter"), saveMemoryBtn: document.getElementById("saveMemoryBtn"), clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"), memoryList: document.getElementById("memoryList"), toast: document.getElementById("toast")
+      momentTodayBtn: document.getElementById("momentTodayBtn"), goCalendarBtn: document.getElementById("goCalendarBtn"), kidModeBtn: document.getElementById("kidModeBtn"), momentContainer: document.getElementById("momentContainer"), calendarGrid: document.getElementById("calendarGrid"), kidCards: document.getElementById("kidCards"), memoryInput: document.getElementById("memoryInput"), memoryCycleFilter: document.getElementById("memoryCycleFilter"), memorySearch: document.getElementById("memorySearch"), memoryYearFilter: document.getElementById("memoryYearFilter"), memoryMonthFilter: document.getElementById("memoryMonthFilter"), memoryFilterToggle: document.getElementById("memoryFilterToggle"), advancedMemoryFilters: document.getElementById("advancedMemoryFilters"), memoryResultsTitle: document.getElementById("memoryResultsTitle"), memoryResultsSummary: document.getElementById("memoryResultsSummary"), saveMemoryBtn: document.getElementById("saveMemoryBtn"), clearMemoryInputBtn: document.getElementById("clearMemoryInputBtn"), memoryList: document.getElementById("memoryList"), toast: document.getElementById("toast")
     };
     let currentUser=null, currentJourney=null, journeyArchive=[];
-    let completed=[], favorites=[], memories=[], kidMode=false, selectedDay=1, editingMemoryId=null;
+    let completed=[], favorites=[], memories=[], kidMode=false, selectedDay=1, editingMemoryId=null, selectedMemoryType="gratitud";
 
     init();
 
@@ -1805,11 +1860,13 @@
       els.momentTodayBtn.addEventListener("click",async()=>{selectedDay=getNextRecommendedDay();await saveJourneySettings();setView("momento");renderAll();showToast("Momento del día preparado para tu familia.");});
       els.goCalendarBtn.addEventListener("click",()=>{setView("calendario");document.getElementById("viewCalendario").scrollIntoView({behavior:"smooth",block:"start"});});
       els.kidModeBtn.addEventListener("click",async()=>{kidMode=!kidMode;try{await saveJourneySettings();applyKidMode();renderMoment();showToast(kidMode?"Vista para compartir activada.":"Guía familiar activada.");}catch(error){kidMode=!kidMode;console.error(error);showToast("No pudimos actualizar la vista.",true);}});
-      els.saveMemoryBtn.addEventListener("click",saveMemory); els.memoryFilter.addEventListener("change",renderMemories); els.memoryCycleFilter?.addEventListener("change",renderMemories); els.clearMemoryInputBtn.addEventListener("click",resetMemoryForm);
+      els.saveMemoryBtn.addEventListener("click",saveMemory); els.memoryCycleFilter?.addEventListener("change",renderMemories); els.memorySearch?.addEventListener("input",renderMemories); els.memoryYearFilter?.addEventListener("change",renderMemories); els.memoryMonthFilter?.addEventListener("change",renderMemories); els.clearMemoryInputBtn.addEventListener("click",resetMemoryForm);
+        document.querySelectorAll("[data-memory-category]").forEach(button=>button.addEventListener("click",()=>selectMemoryCategory(button.dataset.memoryCategory)));
+        els.memoryFilterToggle?.addEventListener("click",()=>{const expanded=els.memoryFilterToggle.getAttribute("aria-expanded")==="true";els.memoryFilterToggle.setAttribute("aria-expanded",String(!expanded));els.advancedMemoryFilters.classList.toggle("hide",expanded);});
       els.logoutBtn.addEventListener("click",async()=>{els.logoutBtn.disabled=true;const {error}=await supabaseClient.auth.signOut();if(error){els.logoutBtn.disabled=false;showToast("No pudimos cerrar la sesión. Intenta nuevamente.",true);return;}window.location.href="../login.html";});
     }
 
-    function setView(name){const views={momento:document.getElementById("viewMomento"),calendario:document.getElementById("viewCalendario"),tarjetas:document.getElementById("viewTarjetas"),cofre:document.getElementById("viewCofre"),legal:document.getElementById("viewLegal")};Object.entries(views).forEach(([k,e])=>e.classList.toggle("hide",k!==name));document.querySelectorAll("[data-view]").forEach(b=>{const active=b.dataset.view===name;b.classList.toggle("active",active);active?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current");});}
+    function setView(name){const views={momento:document.getElementById("viewMomento"),calendario:document.getElementById("viewCalendario"),tarjetas:document.getElementById("viewTarjetas"),cofre:document.getElementById("viewCofre"),legal:document.getElementById("viewLegal")};Object.entries(views).forEach(([k,e])=>e.classList.toggle("hide",k!==name));document.querySelectorAll("[data-view]").forEach(b=>{const active=b.dataset.view===name;b.classList.toggle("active",active);active?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current");});if(name==="cofre")renderMemories();}
     function renderAll(){renderMoment();renderCalendar();renderKidCards();renderMemories();renderStats();}
     function renderMoment(){const selected=momentos.find(x=>x.day===selectedDay)||momentos[0];selectedDay=selected.day;kidMode?renderKidMoment(selected):renderFamilyMoment(selected);}
     function getThemeLabel(theme){return({amor:"Amor de Dios",oracion:"Oración",confianza:"Confianza",gratitud:"Gratitud",bondad:"Bondad",perdon:"Perdón",familia:"Familia"})[theme]||"Fe en familia";}
@@ -1835,19 +1892,41 @@
     }
     function renderKidCards(){els.kidCards.innerHTML="";kidCards.forEach(card=>{const a=document.createElement("article");a.className="kid-card";a.innerHTML=`<strong>${escapeHTML(card.title)}</strong><p>${escapeHTML(card.text)}</p>`;els.kidCards.appendChild(a);});}
 
-    function renderCycleOptions(){
-      if(!els.memoryCycleFilter)return; const previous=els.memoryCycleFilter.value||"todos";
-      els.memoryCycleFilter.innerHTML='<option value="todos">Todos los recorridos</option><option value="actual">Recorrido actual</option>'+journeyArchive.filter(j=>!j.is_active).map(j=>`<option value="${j.cycle_number}">Recorrido ${j.cycle_number}</option>`).join("");
-      if([...els.memoryCycleFilter.options].some(o=>o.value===previous))els.memoryCycleFilter.value=previous;
-    }
-    function renderMemories(){
-      els.memoryList.innerHTML="";const type=els.memoryFilter?.value||"todos",cycle=els.memoryCycleFilter?.value||"todos";
-      const visible=memories.filter(m=>(type==="todos"||m.type===type)&&(cycle==="todos"||(cycle==="actual"?m.journeyId===currentJourney.id:Number(cycle)===m.cycle)));
-      if(!visible.length){els.memoryList.innerHTML=`<div class="memory-item">${type==="todos"?"Todavía no guardaste recuerdos familiares. Puedes comenzar con una gratitud, oración o frase especial.":"No hay recuerdos en esta categoría todavía."}</div>`;return;}
-      visible.forEach(memory=>{const div=document.createElement("article");div.className="memory-item";div.innerHTML=`<div class="memory-head"><div><strong>${escapeHTML(memoryTypeLabel(memory.type))}</strong><div class="memory-meta">${escapeHTML(formatMemoryDate(memory.createdAt))}${memory.day?` · Día ${memory.day}`:""} · Recorrido ${memory.cycle}</div></div></div>${memory.title||memory.verse?`<div class="memory-context">${memory.title?`<strong>${escapeHTML(memory.title)}</strong>`:""}${memory.verse?`<br>${escapeHTML(memory.verse)}`:""}</div>`:""}<p>${escapeHTML(memory.text)}</p><div class="memory-actions"><button class="btn-mini" type="button" data-edit-memory="${escapeHTML(memory.id)}">Editar</button><button class="btn-mini" type="button" data-delete-memory="${escapeHTML(memory.id)}">Eliminar</button></div>`;els.memoryList.appendChild(div);});
-      document.querySelectorAll("[data-edit-memory]").forEach(b=>b.onclick=()=>editMemory(b.dataset.editMemory));document.querySelectorAll("[data-delete-memory]").forEach(b=>b.onclick=()=>deleteMemory(b.dataset.deleteMemory));
-    }
-
+      function renderCycleOptions(){
+        if(!els.memoryCycleFilter)return; const previous=els.memoryCycleFilter.value||"actual";
+        els.memoryCycleFilter.innerHTML='<option value="actual">Recorrido actual</option>'+journeyArchive.filter(j=>!j.is_active).map(j=>`<option value="${j.cycle_number}">Recorrido ${j.cycle_number}</option>`).join("");
+        els.memoryCycleFilter.value=[...els.memoryCycleFilter.options].some(o=>o.value===previous)?previous:"actual";
+        renderMemoryDateOptions();
+      }
+      function renderMemoryDateOptions(){
+        if(!els.memoryYearFilter)return;
+        const yearValue=els.memoryYearFilter.value||"todos";
+        const years=[...new Set(memories.map(m=>new Date(m.createdAt).getFullYear()).filter(Number.isFinite))].sort((a,b)=>b-a);
+        els.memoryYearFilter.innerHTML='<option value="todos">Todos los años</option>'+years.map(y=>`<option value="${y}">${y}</option>`).join("");
+        if(years.map(String).includes(yearValue))els.memoryYearFilter.value=yearValue;
+        if(els.memoryMonthFilter.options.length===1){
+          const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+          els.memoryMonthFilter.innerHTML='<option value="todos">Todos los meses</option>'+months.map((m,i)=>`<option value="${i}">${m}</option>`).join("");
+        }
+      }
+      function selectMemoryCategory(type){
+        selectedMemoryType=type;
+        document.querySelectorAll("[data-memory-category]").forEach(button=>{const active=button.dataset.memoryCategory===type;button.classList.toggle("active",active);button.setAttribute("aria-pressed",String(active));});
+        if(!editingMemoryId)els.memoryInput.value="";
+        els.saveMemoryBtn.textContent=editingMemoryId?"Actualizar recuerdo":`Guardar ${memoryTypeLabel(type).toLowerCase()}`;
+        renderMemories();
+      }
+      function renderMemories(){
+        els.memoryList.innerHTML="";
+        const cycle=els.memoryCycleFilter?.value||"actual",query=(els.memorySearch?.value||"").trim().toLocaleLowerCase("es"),year=els.memoryYearFilter?.value||"todos",month=els.memoryMonthFilter?.value||"todos";
+        document.querySelectorAll("[data-count-type]").forEach(el=>{const t=el.dataset.countType,count=memories.filter(m=>m.type===t&&(cycle==="actual"?m.journeyId===currentJourney.id:Number(cycle)===m.cycle)).length;el.textContent=`${count} ${count===1?"recuerdo":"recuerdos"}`;});
+        const visible=memories.filter(m=>{const d=new Date(m.createdAt);return m.type===selectedMemoryType&&(cycle==="actual"?m.journeyId===currentJourney.id:Number(cycle)===m.cycle)&&(year==="todos"||String(d.getFullYear())===year)&&(month==="todos"||String(d.getMonth())===month)&&(!query||`${m.text} ${m.title} ${m.verse}`.toLocaleLowerCase("es").includes(query));});
+        const label=memoryTypeLabel(selectedMemoryType);els.memoryResultsTitle.textContent=selectedMemoryType==="frase"?"Frases especiales":selectedMemoryType==="momento"?"Momentos en familia":`${label}s`;
+        els.memoryResultsSummary.textContent=`${cycle==="actual"?"Recorrido actual":`Recorrido ${cycle}`} · ${visible.length} ${visible.length===1?"recuerdo":"recuerdos"}`;
+        if(!visible.length){els.memoryList.innerHTML=`<div class="memory-item memory-empty">Todavia no hay ${escapeHTML(label.toLowerCase())} en este recorrido${query?" con esta busqueda":""}. Puedes guardar el primer recuerdo arriba.</div>`;return;}
+        visible.forEach(memory=>{const div=document.createElement("article");div.className="memory-item";div.innerHTML=`<div class="memory-head"><div><strong>${escapeHTML(memoryTypeLabel(memory.type))}</strong><div class="memory-meta">${escapeHTML(formatMemoryDate(memory.createdAt))}${memory.day?` · Dia ${memory.day}`:""} · Recorrido ${memory.cycle}</div></div></div>${memory.title||memory.verse?`<div class="memory-context">${memory.title?`<strong>${escapeHTML(memory.title)}</strong>`:""}${memory.verse?`<br>${escapeHTML(memory.verse)}`:""}</div>`:""}<p>${escapeHTML(memory.text)}</p><div class="memory-actions"><button class="btn-mini" type="button" data-edit-memory="${escapeHTML(memory.id)}">Editar</button><button class="btn-mini" type="button" data-delete-memory="${escapeHTML(memory.id)}">Eliminar</button></div>`;els.memoryList.appendChild(div);});
+        document.querySelectorAll("[data-edit-memory]").forEach(b=>b.onclick=()=>editMemory(b.dataset.editMemory));document.querySelectorAll("[data-delete-memory]").forEach(b=>b.onclick=()=>deleteMemory(b.dataset.deleteMemory));
+      }
     async function findEntryId(day){const {data,error}=await supabaseClient.from("user_family_entries").select("id").eq("journey_id",currentJourney.id).eq("day_number",day).limit(1);if(error)throw error;return data?.[0]?.id||null;}
     async function saveEntry(day){const id=await findEntryId(day),payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:completed.includes(day),favorite:favorites.includes(day),updated_at:new Date().toISOString()};const result=id?await supabaseClient.from("user_family_entries").update(payload).eq("id",id):await supabaseClient.from("user_family_entries").insert(payload);if(result.error)throw result.error;}
     async function saveJourneySettings(){const percentage=Math.round((completed.length/momentos.length)*100),level=getJourneyLevel(percentage).name,payload={current_day:selectedDay,completed_count:completed.length,progress_percentage:percentage,journey_level:level,kid_mode:kidMode,completed_at:percentage===100?(currentJourney.completed_at||new Date().toISOString()):null,updated_at:new Date().toISOString()};const {data,error}=await supabaseClient.from("user_family_journeys").update(payload).eq("id",currentJourney.id).select().single();if(error)throw error;currentJourney=data;}
@@ -1859,14 +1938,14 @@
       const text=els.memoryInput.value.trim();if(!text){showToast("Escribe un pequeño recuerdo antes de guardar.",true);return;}
       const selected=momentos.find(x=>x.day===selectedDay)||momentos[0],now=new Date().toISOString();setBusy(els.saveMemoryBtn,true,editingMemoryId?"Actualizando...":"Guardando...");
       try{
-        if(editingMemoryId){const {data,error}=await supabaseClient.from("user_family_memories").update({memory_type:els.memoryType.value,content:text,updated_at:now}).eq("id",editingMemoryId).select().single();if(error)throw error;const i=memories.findIndex(x=>x.id===editingMemoryId);if(i>=0)memories[i]={...memories[i],text:data.content,type:data.memory_type,updatedAt:data.updated_at};showToast("Recuerdo actualizado.");}
-        else{const payload={user_id:currentUser.id,journey_id:currentJourney.id,cycle_number:currentJourney.cycle_number,day_number:selected.day,memory_type:els.memoryType.value,devotional_title:selected.title,verse_reference:selected.verse,content:text,created_at:now,updated_at:now};const {data,error}=await supabaseClient.from("user_family_memories").insert(payload).select().single();if(error)throw error;memories.unshift({id:data.id,text:data.content,type:data.memory_type,day:Number(data.day_number),cycle:Number(data.cycle_number),title:data.devotional_title||"",verse:data.verse_reference||"",createdAt:data.created_at,updatedAt:data.updated_at,journeyId:data.journey_id});showToast("Recuerdo familiar guardado.");}
+        if(editingMemoryId){const {data,error}=await supabaseClient.from("user_family_memories").update({memory_type:selectedMemoryType,content:text,updated_at:now}).eq("id",editingMemoryId).select().single();if(error)throw error;const i=memories.findIndex(x=>x.id===editingMemoryId);if(i>=0)memories[i]={...memories[i],text:data.content,type:data.memory_type,updatedAt:data.updated_at};showToast("Recuerdo actualizado.");}
+        else{const payload={user_id:currentUser.id,journey_id:currentJourney.id,cycle_number:currentJourney.cycle_number,day_number:selected.day,memory_type:selectedMemoryType,devotional_title:selected.title,verse_reference:selected.verse,content:text,created_at:now,updated_at:now};const {data,error}=await supabaseClient.from("user_family_memories").insert(payload).select().single();if(error)throw error;memories.unshift({id:data.id,text:data.content,type:data.memory_type,day:Number(data.day_number),cycle:Number(data.cycle_number),title:data.devotional_title||"",verse:data.verse_reference||"",createdAt:data.created_at,updatedAt:data.updated_at,journeyId:data.journey_id});showToast("Recuerdo familiar guardado.");}
         resetMemoryForm();renderAll();
       }catch(error){console.error(error);showToast("No pudimos guardar el recuerdo.",true);}finally{setBusy(els.saveMemoryBtn,false);}
     }
-    function editMemory(id){const m=memories.find(x=>x.id===id);if(!m)return;editingMemoryId=id;els.memoryInput.value=m.text;els.memoryType.value=m.type||"momento";els.saveMemoryBtn.textContent="Actualizar recuerdo";els.memoryInput.focus();}
+    function editMemory(id){const m=memories.find(x=>x.id===id);if(!m)return;editingMemoryId=id;selectMemoryCategory(m.type||"momento");els.memoryInput.value=m.text;els.saveMemoryBtn.textContent="Actualizar recuerdo";els.memoryInput.focus();els.memoryInput.scrollIntoView({behavior:"smooth",block:"center"});}
     async function deleteMemory(id){if(!confirm("¿Quieres eliminar este recuerdo? Esta acción no se puede deshacer."))return;try{const {error}=await supabaseClient.from("user_family_memories").delete().eq("id",id);if(error)throw error;memories=memories.filter(x=>x.id!==id);renderAll();showToast("Recuerdo eliminado.");}catch(error){console.error(error);showToast("No pudimos eliminar el recuerdo.",true);}}
-    function resetMemoryForm(){editingMemoryId=null;els.memoryInput.value="";els.memoryType.value="gratitud";els.saveMemoryBtn.textContent="Guardar recuerdo";}
+    function resetMemoryForm(){editingMemoryId=null;els.memoryInput.value="";els.saveMemoryBtn.textContent=`Guardar ${memoryTypeLabel(selectedMemoryType).toLowerCase()}`;}
 
     function renderStats(){completed=uniqueNumbers(completed);favorites=uniqueNumbers(favorites);const total=momentos.length,c=completed.length,f=favorites.length,m=memories.length,p=Math.round((c/total)*100),degrees=Math.round((p/100)*360),reward=getReward(),level=getJourneyLevel(p),next=getNextRecommendedDay();els.completedCount.textContent=`${c}/${total}`;els.metricCompleted.textContent=c;els.metricFavorites.textContent=f;els.metricMemories.textContent=m;els.metricReward.textContent=reward.icon;els.progressPercent.textContent=`${p}%`;els.progressBar.style.width=`${p}%`;const wrap=els.progressBar.parentElement;wrap.setAttribute("role","progressbar");wrap.setAttribute("aria-valuemin","0");wrap.setAttribute("aria-valuemax",String(total));wrap.setAttribute("aria-valuenow",String(c));els.progressCircle.style.background=`conic-gradient(var(--gold) ${degrees}deg, rgba(255,255,255,.15) ${degrees}deg)`;els.progressMessage.textContent=p>0?`${p}% del camino familiar completado.`:"Cada pequeño momento cuenta.";els.nextStepMessage.textContent=p>=100?"Camino completado. Pueden volver a sus momentos favoritos.":`Tu próximo paso: Día ${next}`;els.journeyLevel.textContent=level.name;els.journeyFavorites.textContent=f;els.journeyMemories.textContent=m;}
     function getJourneyLevel(p){if(p>=100)return{name:"Completado"};if(p>=76)return{name:"Muy cerca"};if(p>=51)return{name:"Creciendo"};if(p>=26)return{name:"Avanzando"};if(p>0)return{name:"Comenzando"};return{name:"Inicio"};}
