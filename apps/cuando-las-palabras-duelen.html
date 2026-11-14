@@ -1172,7 +1172,20 @@
         .mobile-tools-sheet{display:block;position:fixed;left:10px;right:10px;bottom:78px;z-index:59;background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:24px;padding:14px;box-shadow:0 22px 60px rgba(47,57,41,.28);backdrop-filter:blur(16px)}
         .mobile-tools-sheet.hide{display:none!important}.mobile-tools-head{display:flex;align-items:center;justify-content:space-between;color:var(--green);margin-bottom:12px}.mobile-tools-head button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:white;color:var(--green);font-size:24px}.mobile-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mobile-tools-grid button{min-height:48px;border:1px solid var(--line);border-radius:16px;background:var(--cream);color:var(--green);font-weight:850;padding:10px;text-align:left}
       }
-</style>
+
+    /* Produccion V2: navegacion, biblioteca y overlays accesibles */
+    .mobile-primary-nav{display:none}
+    .mobile-tools-backdrop{position:fixed;inset:0;background:rgba(28,35,25,.48);z-index:1400;display:grid;align-items:end;padding:12px}
+    .mobile-tools-sheet{width:min(100%,560px);margin:0 auto;background:var(--cream);border:1px solid var(--line);border-radius:28px 28px 20px 20px;padding:18px;max-height:min(78vh,680px);overflow:auto;box-shadow:0 24px 70px rgba(32,42,29,.28)}
+    .sheet-head,.detail-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.sheet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.sheet-grid button{min-height:58px;text-align:left}
+    .library-toolbar{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;padding:14px;border:1px solid var(--line);border-radius:22px;background:var(--cream);margin:14px 0}.library-toolbar .field{margin:0}.library-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px}.library-summary strong{color:var(--green)}
+    .detail-backdrop{position:fixed;inset:0;background:rgba(28,35,25,.55);z-index:1500;display:grid;place-items:center;padding:16px}.detail-dialog{width:min(720px,100%);max-height:min(88vh,760px);overflow:auto;background:var(--cream);border-radius:26px;padding:22px;box-shadow:0 28px 80px rgba(25,31,23,.34)}.detail-body{white-space:pre-wrap;line-height:1.7;margin:18px 0}.historical-notice{padding:12px;border-radius:16px;background:var(--soft-gold);color:var(--olive);font-weight:800;margin-bottom:12px}
+    .edit-context{padding:12px 14px;border-radius:16px;background:var(--soft-gold);color:var(--green);font-weight:850;margin-bottom:12px}.hidden{display:none!important}
+    @media(max-width:960px){body{padding-bottom:calc(92px + env(safe-area-inset-bottom))}.mobile-primary-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1200;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,253,248,.97);border:1px solid var(--line);border-radius:22px;padding:7px;box-shadow:0 14px 42px rgba(45,56,40,.2);backdrop-filter:blur(14px)}.mobile-primary-nav button{min-width:0;min-height:52px;border:0;background:transparent;border-radius:16px;color:var(--muted);font-weight:900;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.mobile-primary-nav button span{font-size:19px}.mobile-primary-nav button.active,.mobile-primary-nav button[aria-current="page"]{background:var(--soft-gold);color:var(--green)}.library-toolbar{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.library-toolbar{grid-template-columns:1fr}.sheet-grid{grid-template-columns:1fr}.detail-backdrop{padding:8px}.detail-dialog{padding:17px;border-radius:22px}.library-tabs{flex-wrap:nowrap;overflow:auto;padding-bottom:6px}.library-tab{white-space:nowrap}.action-row>*{width:100%}}
+    @media(max-width:340px){.mobile-primary-nav{left:6px;right:6px;padding:5px}.mobile-primary-nav button{font-size:10px}.mobile-tools-backdrop{padding:6px}.mobile-tools-sheet{padding:15px}}
+
+  </style>
 </head>
 
 <body>
@@ -1350,7 +1363,7 @@
             <button class="nav-button" type="button" data-view="pausa">Plan de pausa <span>🌬️</span></button>
             <button class="nav-button" type="button" data-view="verdades">Muro de identidad <span>💛</span></button>
             <button class="nav-button" type="button" data-view="sanidad">Mi camino de sanidad <span>🌱</span></button>
-            <button class="nav-button" type="button" data-view="historial">Historial privado <span>📒</span></button>
+            <button class="nav-button" type="button" data-view="historial">Mi espacio personal <span>💛</span></button>
             <button class="nav-button" type="button" data-view="biblioteca">Mi biblioteca personal <span>⭐</span></button>
             <button class="nav-button" type="button" data-view="ayuda">Ayuda segura <span>🛟</span></button>
             <button class="nav-button" type="button" data-view="legal">Aviso importante <span>⚖️</span></button>
@@ -1558,8 +1571,8 @@
           <section id="viewSanidad" class="panel hide"><div class="panel-head"><small>Lo que estás construyendo</small><h2>Mi camino de sanidad</h2><p>Un resumen cuidadoso de los pasos, límites, pausas y verdades que has practicado.</p></div><div class="panel-body"><div id="healingCelebration"></div><div class="healing-summary"><div class="healing-card"><strong id="healingDays">0</strong><span>Días recorridos</span></div><div class="healing-card"><strong id="healingEntries">0</strong><span>Registros conscientes</span></div><div class="healing-card"><strong id="healingPauses">0</strong><span>Pausas realizadas</span></div><div class="healing-card"><strong id="healingLimits">0</strong><span>Límites activos</span></div></div><div class="notice">Este resumen acompaña tu proceso, pero no es una evaluación clínica. Si existe riesgo o dolor intenso, busca apoyo profesional o de una persona adulta responsable.</div></div></section>
           <section id="viewHistorial" class="panel hide">
             <div class="panel-head">
-              <small>Historial privado</small>
-              <h2>Mis registros seguros</h2>
+              <small>Espacio privado</small>
+              <h2>Mi espacio personal</h2>
               <p>Tus registros personales aparecen aquí. Puedes revisarlos, editarlos o eliminarlos cuando quieras.</p>
             </div>
 
@@ -1567,7 +1580,7 @@
               <div class="journey-context"><div class="field"><label for="historyJourneyFilter">Recorrido</label><select id="historyJourneyFilter"><option value="actual">Recorrido actual</option></select></div><span class="journey-badge" id="currentJourneyBadge">Recorrido 1 · En curso</span></div><div class="history-filters" aria-label="Filtrar historial"><button class="filter-btn active" type="button" data-history-filter="all">Todos</button><button class="filter-btn" type="button" data-history-filter="entry">Registros emocionales</button><button class="filter-btn" type="button" data-history-filter="pause">Pausas digitales</button><button class="filter-btn" type="button" data-history-filter="risk">Situaciones de riesgo</button></div>
               <div class="action-row" style="margin-top:0;">
                 <button class="btn-soft" type="button" id="refreshHistoryBtn">Actualizar historial</button>
-                <button class="btn-danger" type="button" id="clearHistoryBtn">Borrar historial</button>
+                <button class="btn-danger" type="button" id="clearHistoryBtn">Administrar historial</button>
               </div>
 
               <div class="privacy-note">Tus registros se conservan de forma privada en tu cuenta y se sincronizan entre tus dispositivos.</div>
@@ -1614,6 +1627,8 @@
     </section>
 
 
+    <div id="mobileToolsSheet" class="mobile-tools-backdrop hidden" aria-hidden="true"><section class="mobile-tools-sheet" role="dialog" aria-modal="true" aria-labelledby="mobileToolsTitle"><div class="sheet-head"><div><small>Herramientas</small><h2 id="mobileToolsTitle">Más opciones</h2></div><button class="btn-soft" id="closeMobileTools" type="button" aria-label="Cerrar panel">Cerrar</button></div><div class="sheet-grid"><button class="btn-soft" type="button" data-mobile-view="registro">Registro emocional</button><button class="btn-soft" type="button" data-mobile-view="limites">Límites digitales</button><button class="btn-soft" type="button" data-mobile-view="pausa">Plan de pausa</button><button class="btn-soft" type="button" data-mobile-view="verdades">Muro de identidad</button><button class="btn-soft" type="button" data-mobile-view="historial">Mi espacio personal</button><button class="btn-soft" type="button" data-mobile-view="ayuda">Ayuda segura</button><button class="btn-soft" type="button" data-mobile-view="legal">Aviso importante</button></div></section></div>
+    <div id="personalDetail" class="detail-backdrop hidden" aria-hidden="true"><section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="detail-head"><div><small id="detailMeta"></small><h2 id="detailTitle">Detalle</h2></div><button class="btn-soft" id="closePersonalDetail" type="button">Cerrar</button></div><div id="detailBody" class="detail-body"></div><div class="action-row"><button class="btn-soft" id="detailPrevious" type="button">← Anterior</button><button class="btn-soft" id="detailNext" type="button">Siguiente →</button><button class="btn-gold" id="detailOpenDay" type="button">Abrir día</button></div></section></div>
     <nav class="mobile-primary-nav" aria-label="Navegación principal">
       <button class="active" type="button" data-view="camino"><span>🌿</span>Hoy</button>
       <button type="button" data-view="sanidad"><span>🗺️</span>Camino</button>
@@ -1976,6 +1991,12 @@
     let selectedDay = 1;
     let editingEntryId = null;
     let editingPauseId = null;
+    let editingContext = null;
+    let allProgressRows = [];
+    let personalItems = [];
+    let detailIndex = -1;
+    let personalSearchTimer = null;
+    let libraryReturnContext = null;
     let completedDays = [];
     let entries = [];
     let pauses = [];
@@ -2159,6 +2180,7 @@
       renderResources();
       renderHistory();
       renderHealingPath();
+      renderJourneySelectors();
       renderPersonalLibrary();
       renderStats();
       updateRiskVisibility();
@@ -2284,14 +2306,15 @@
     }
     async function saveEntry() {
       const afterIntensity=Number(els.intensityAfter.value),hasRisk=els.riskInput.checked,now=new Date().toISOString();
-      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:selectedDay,platform:els.platformInput.value,trigger_type:els.triggerInput.value,feeling_before:els.beforeInput.value,feeling_after:els.afterInput.value,intensity_before:Number(els.intensityBefore.value),intensity_after:afterIntensity,note:els.noteInput.value.trim(),risk_flag:hasRisk,occurred_at:now};
+      const baseContext=editingContext?.type==="entry"?editingContext:null;
+      const payload={user_id:currentUser.id,journey_id:baseContext?.journeyId||currentJourney.id,day_number:baseContext?.day||selectedDay,platform:els.platformInput.value,trigger_type:els.triggerInput.value,feeling_before:els.beforeInput.value,feeling_after:els.afterInput.value,intensity_before:Number(els.intensityBefore.value),intensity_after:afterIntensity,note:els.noteInput.value.trim(),risk_flag:hasRisk,occurred_at:baseContext?.occurredAt||now};
       try{
         let data,error;
         if(editingEntryId)({data,error}=await supabaseClient.from("user_peace_entries").update(payload).eq("id",editingEntryId).eq("user_id",currentUser.id).select().single());
         else ({data,error}=await supabaseClient.from("user_peace_entries").insert(payload).select().single());
         if(error)throw error;
         const item=mapEntryRow(data);const index=entries.findIndex(x=>x.id===item.id);if(index>=0)entries[index]=item;else entries.unshift(item);
-        editingEntryId=null;renderAll();clearRegisterForm();
+        editingEntryId=null;editingContext=null;renderAll();clearRegisterForm();
         if(hasRisk||afterIntensity>=5){setView("ayuda");showToast("Registro guardado. Busca ayuda segura si estás en riesgo.",true);return;}
         showToast("Registro guardado con cuidado.");
       }catch(error){console.error(error);showToast("No pudimos guardar el registro.",true);}
@@ -2339,7 +2362,8 @@
     }
     async function savePause() {
       const now=new Date().toISOString();
-      const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:selectedDay,duration_label:els.pauseTime.value,action_label:els.pauseAction.value,reason:els.pauseReason.value.trim(),occurred_at:now};
+      const baseContext=editingContext?.type==="pause"?editingContext:null;
+      const payload={user_id:currentUser.id,journey_id:baseContext?.journeyId||currentJourney.id,day_number:baseContext?.day||selectedDay,duration_label:els.pauseTime.value,action_label:els.pauseAction.value,reason:els.pauseReason.value.trim(),occurred_at:baseContext?.occurredAt||now};
       try{
         let data,error;
         if(editingPauseId)({data,error}=await supabaseClient.from("user_peace_pauses").update(payload).eq("id",editingPauseId).eq("user_id",currentUser.id).select().single());
@@ -2444,6 +2468,7 @@
         const item = entries.find((row) => row.id === id);
         if (!item) return;
         editingEntryId = id;
+        editingContext={type:"entry",id:item.id,journeyId:item.journeyId,day:item.day,occurredAt:item.createdAt};
         els.platformInput.value = item.platform;
         els.triggerInput.value = item.trigger;
         els.beforeInput.value = item.before;
@@ -2462,6 +2487,7 @@
         const item = pauses.find((row) => row.id === id);
         if (!item) return;
         editingPauseId = id;
+        editingContext={type:"pause",id:item.id,journeyId:item.journeyId,day:item.day,occurredAt:item.createdAt};
         els.pauseTime.value = item.time;
         els.pauseAction.value = item.action;
         els.pauseReason.value = item.reason || "";
@@ -2476,12 +2502,12 @@
       try{const table=type==="entry"?"user_peace_entries":"user_peace_pauses";const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);if(error)throw error;if(type==="entry")entries=entries.filter(row=>row.id!==id);else pauses=pauses.filter(row=>row.id!==id);renderAll();showToast("Registro eliminado.");}
       catch(error){console.error(error);showToast("No pudimos eliminar el registro.",true);}
     }
-    async function clearHistory() {
-      if(!window.confirm("¿Quieres borrar todos tus registros emocionales y pausas guardadas?"))return;
-      try{const [entriesDelete,pausesDelete]=await Promise.all([supabaseClient.from("user_peace_entries").delete().eq("user_id",currentUser.id),supabaseClient.from("user_peace_pauses").delete().eq("user_id",currentUser.id)]);if(entriesDelete.error)throw entriesDelete.error;if(pausesDelete.error)throw pausesDelete.error;entries=[];pauses=[];renderAll();showToast("Historial privado borrado.");}
-      catch(error){console.error(error);await reloadPeaceHistory();renderAll();showToast("No pudimos completar el borrado. El historial fue actualizado.",true);}
+    async function clearHistory(){
+      const selected=historyJourneyFilter==="actual"?currentJourney?.id:historyJourneyFilter;
+      const count=[...entries,...pauses].filter(x=>!selected||x.journeyId===selected).length;
+      showToast(count?`Administra los ${count} elementos de este recorrido de forma individual.`:"Este recorrido no tiene registros para administrar.");
+      document.getElementById("historyList")?.scrollIntoView({behavior:"smooth",block:"start"});
     }
-    function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=entries.slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=pauses.slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();}));}
     function renderHealingPath() {
       if (!els.healingCelebration) return;
       els.healingDays.textContent=completedDays.length; els.healingEntries.textContent=entries.length; els.healingPauses.textContent=pauses.length; els.healingLimits.textContent=limits.length;
@@ -2594,7 +2620,7 @@
       }
       journeyArchive=await fetchJourneyArchive();
       const [progressResult,entriesResult,pausesResult,limitsResult]=await Promise.all([
-        supabaseClient.from("user_peace_progress").select("*").eq("journey_id",currentJourney.id),
+        supabaseClient.from("user_peace_progress").select("*").eq("user_id",currentUser.id),
         supabaseClient.from("user_peace_entries").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
         supabaseClient.from("user_peace_pauses").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
         supabaseClient.from("user_peace_limits").select("selected_limit_indexes").eq("journey_id",currentJourney.id).maybeSingle()
