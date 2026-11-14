@@ -1242,30 +1242,10 @@
         animation: none !important;
       }
     }
-
-    body.access-pending .app-shell,
-    body.access-pending .menu-float,
-    body.access-pending .mobile-drawer,
-    body.access-pending .mobile-primary-nav,
-    body.access-pending .mobile-tools { display:none !important; }
-    .access-gate { min-height:100vh; display:grid; place-items:center; padding:24px; background:linear-gradient(135deg,var(--navy),var(--navy-2)); color:#fff; text-align:center; }
-    .access-gate.hide { display:none !important; }
-    .access-gate-card { width:min(100%,560px); padding:28px; border-radius:30px; background:rgba(255,255,255,.09); border:1px solid rgba(227,185,95,.28); box-shadow:var(--shadow); }
-    .access-gate-card strong { display:block; color:var(--gold-2); font-size:1.35rem; margin-bottom:8px; }
-    .access-gate-card p { color:rgba(255,255,255,.78); line-height:1.6; }
-    .access-spinner { width:42px; height:42px; margin:0 auto 16px; border:4px solid rgba(255,255,255,.18); border-top-color:var(--gold-2); border-radius:50%; animation:accessSpin .8s linear infinite; }
-    @keyframes accessSpin { to { transform:rotate(360deg); } }
   </style>
 </head>
 
-<body class="access-pending">
-  <section class="access-gate" id="accessGate" role="status" aria-live="polite">
-    <div class="access-gate-card">
-      <div class="access-spinner" aria-hidden="true"></div>
-      <strong id="accessGateTitle">Validando tu acceso</strong>
-      <p id="accessGateMessage">Estamos preparando tu espacio privado.</p>
-    </div>
-  </section>
+<body>
   <div class="toast" id="toast">Guardado correctamente.</div>
 
   <button class="menu-float" type="button" id="menuFloat" aria-label="Abrir menú">☰</button>
@@ -1276,7 +1256,7 @@
       <h2>Acceso no disponible</h2>
       <p>
         Tu sesión está activa, pero no encontramos permiso para abrir esta aplicación.
-        Vuelve a Mi Espacio o compra el acceso correspondiente.
+        Vuelve a la Mi Espacio o compra el acceso correspondiente.
       </p>
 
       <div class="btn-row" style="justify-content:center;">
@@ -1293,7 +1273,7 @@
 
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="../dashboard.html" aria-label="Volver a Mi Espacio">
+      <a class="brand" href="..//dashboard.html" aria-label="Volver a Mi Espacio">
         <div class="app-logo" aria-hidden="true">✦</div>
 
         <div class="brand-text">
@@ -1306,7 +1286,7 @@
         <span class="pill" id="userPill">Validando sesión...</span>
 
         <a class="btn-soft" href="../dashboard.html">
-          Volver a Mi Espacio
+          Volver a la Mi Espacio
         </a>
 
         <button class="btn-danger" id="logoutBtn" type="button">
@@ -1457,8 +1437,7 @@ tu liderazgo y tus relaciones.
               </button>
             </div>
 
-            <div class="journey-context"><div class="field"><label for="journeyViewSelect">Recorrido</label><select id="journeyViewSelect"><option value="actual">Recorrido actual</option></select></div><span class="journey-status" id="journeyStatus">Recorrido 1 · En curso</span></div>
-              <div class="day-selector" id="daySelector"></div>
+            <div class="day-selector" id="daySelector"></div>
 
             <div class="devotional-card">
               <div class="devotional-top">
@@ -1514,10 +1493,8 @@ tu liderazgo y tus relaciones.
                   </div>
 
                   <div class="btn-row">
-                    <button class="btn" type="button" id="prevDayBtn">← Día anterior</button>
-                      <button class="btn primary" type="button" id="saveDayBtn">Guardar día</button>
+                    <button class="btn primary" type="button" id="saveDayBtn">Guardar día</button>
                     <button class="btn gold" type="button" id="markDoneBtn">Marcar completado</button>
-                      <button class="btn" type="button" id="favoriteDayBtn" aria-pressed="false">☆ Guardar favorito</button>
                     <button class="btn" type="button" id="nextDayBtn">Siguiente día</button>
                   </div>
                 </div>
@@ -1526,7 +1503,6 @@ tu liderazgo y tus relaciones.
           </article>
         </section>
 
-        <div id="completionArea" aria-live="polite"></div>
         <section class="panel" id="panel-radar">
           <article class="section-card">
             <div class="section-head">
@@ -1781,7 +1757,7 @@ tu liderazgo y tus relaciones.
     <footer class="footer">
       <strong>Hábitos con Dios Pro · Hombres</strong><br />
       Mi Hogar con Propósito · Complemento digital de El Hombre que Edifica su Hogar.<br />
-      Tus registros se guardan de forma privada en tu cuenta y se sincronizan entre tus dispositivos.
+      Tus registros se guardan localmente en este dispositivo.
     </footer>
   </main>
 
@@ -2137,91 +2113,825 @@ tu liderazgo y tus relaciones.
       }
     ];
 
-      const state = defaultState();
-      let currentJourney=null, journeyArchive=[], currentDay=1, viewedJourneyId="actual", editingDecisionId=null, editingTalkId=null;
-      function defaultState(){return{currentDay:1,completedDays:[],favorites:[],journals:{},actions:{},radar:{},decisions:[],talks:[],prayer:{checks:[],text:""},legacy:{values:"",home:"",letter:"",promise:""}};}
-      function toast(message,isError=false){const el=document.getElementById("toast");el.textContent=message;el.style.background=isError?"linear-gradient(135deg,#8f302c,#b2463d)":"linear-gradient(135deg,var(--navy),var(--navy-3))";el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2600);}
-      function escapeHTML(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
-      function setBusy(button,busy,label){if(!button)return;if(busy){button.dataset.originalText=button.textContent;button.disabled=true;button.textContent=label||"Guardando...";}else{button.disabled=false;button.textContent=button.dataset.originalText||button.textContent;}}
-      function formatDate(v){return new Date(v).toLocaleDateString("es-AR",{year:"numeric",month:"short",day:"numeric"});}
-      async function validateAccess(user){
-        if(!supabaseClient||!user)return false;
-        const now=new Date(),email=String(user.email||"").trim().toLowerCase();
-        let firstError=null,secondError=null;
-        const {data:userRows,error:userError}=await supabaseClient.from("user_entitlements").select("product_key,status,expires_at").eq("user_id",user.id).in("product_key",REQUIRED_PRODUCT_KEYS).limit(10);
-        if(userError)firstError=userError;
-        else if((userRows||[]).some(row=>{const status=String(row.status||"").toLowerCase();return status!=="inactive"&&status!=="revoked"&&(!row.expires_at||new Date(row.expires_at)>now)}))return true;
-        const {data:legacyRows,error:legacyError}=await supabaseClient.from("entitlements").select("email,permission_key,source_sku,active").eq("email",email).eq("active",true).limit(20);
-        if(legacyError)secondError=legacyError;
-        else if((legacyRows||[]).some(item=>{const permission=String(item.permission_key||""),sku=String(item.source_sku||"");return (permission===REQUIRED_PERMISSION&&sku===REQUIRED_SKU)||permission==="membership_all_access"||sku==="HCD_ALL_ACCESS"}))return true;
-        if(firstError&&secondError){const error=new Error("ACCESS_VALIDATION_UNAVAILABLE");error.cause={firstError,secondError};throw error;}
-        return false;
+    function storageKey() {
+      const userPart =
+        currentUser && currentUser.id
+          ? currentUser.id
+          : "local";
+
+      return `${STORAGE_KEY_BASE}_${userPart}`;
+    }
+
+    function snapshotKey() {
+      const userPart =
+        currentUser && currentUser.id
+          ? currentUser.id
+          : "local";
+
+      return `${STORAGE_PROGRESS_SNAPSHOT_PREFIX}_${userPart}`;
+    }
+
+    function defaultState() {
+      return {
+        currentDay: 1,
+        completedDays: [],
+        journals: {},
+        actions: {},
+        radar: {},
+        decisions: [],
+        talks: [],
+        prayer: {
+          checks: [],
+          text: ""
+        },
+        legacy: {
+          values: "",
+          home: "",
+          letter: "",
+          promise: ""
+        }
+      };
+    }
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(storageKey());
+
+        return saved
+          ? {
+              ...defaultState(),
+              ...JSON.parse(saved)
+            }
+          : defaultState();
+      } catch {
+        return defaultState();
       }
-      async function getOrCreateJourney(){const {data,error}=await supabaseClient.from("user_home_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();if(error)throw error;if(data)return data;const {data:last,error:lastError}=await supabaseClient.from("user_home_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);if(lastError)throw lastError;const {data:created,error:createError}=await supabaseClient.from("user_home_journeys").insert({user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"El Hombre que Edifica su Hogar",current_day:1,is_active:true}).select().single();if(createError)throw createError;return created;}
-      async function loadAppData(){currentJourney=await getOrCreateJourney();const [journeys,progress,radar,decisions,talks,prayer,profile]=await Promise.all([supabaseClient.from("user_home_journeys").select("id,cycle_number,is_active,started_at,completed_at,archived_at").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}),supabaseClient.from("user_home_progress").select("*").eq("journey_id",currentJourney.id),supabaseClient.from("user_home_radar").select("*").eq("journey_id",currentJourney.id).maybeSingle(),supabaseClient.from("user_home_decisions").select("*").eq("user_id",currentUser.id).order("decided_at",{ascending:false}),supabaseClient.from("user_home_talks").select("*").eq("user_id",currentUser.id).order("talked_at",{ascending:false}),supabaseClient.from("user_home_prayer").select("*").eq("journey_id",currentJourney.id).maybeSingle(),supabaseClient.from("user_home_profile").select("*").eq("user_id",currentUser.id).maybeSingle()]);for(const r of [journeys,progress,radar,decisions,talks,prayer,profile])if(r.error)throw r.error;journeyArchive=journeys.data||[];state.completedDays=(progress.data||[]).filter(x=>x.completed).map(x=>Number(x.day_number));state.favorites=(progress.data||[]).filter(x=>x.favorite).map(x=>Number(x.day_number));(progress.data||[]).forEach(x=>{state.journals[x.day_number]=x.journal_text||"";state.actions[x.day_number]=x.action_text||"";});state.radar=radar.data?.radar_values||{};state.decisions=(decisions.data||[]).map(mapDecision);state.talks=(talks.data||[]).map(mapTalk);state.prayer={checks:parseChecks(prayer.data?.prayer_focus),text:prayer.data?.prayer_text||""};state.legacy={values:profile.data?.values_text||"",home:profile.data?.home_vision||"",letter:profile.data?.family_letter||"",promise:profile.data?.commitment_before_god||""};currentDay=Math.min(21,Math.max(1,Number(currentJourney.current_day)||getNextRecommendedDay()));}
-      function parseChecks(v){try{const p=JSON.parse(v||"[]");return Array.isArray(p)?p:[]}catch{return[]}}
-      function mapDecision(r){return{id:r.id,journeyId:r.journey_id,day:r.day_number,title:r.situation,options:r.options_text,checks:[r.prayer_text,r.counsel_text,r.peace_text,r.honor_text].map((v,i)=>v?["ore","consejo","paz","honra"][i]:null).filter(Boolean),recommendation:r.recommendation,date:r.decided_at};}
-      function mapTalk(r){return{id:r.id,journeyId:r.journey_id,day:r.day_number,person:r.person_context,topic:r.topic,learning:r.learning,next:r.next_step,date:r.talked_at};}
-      function setAccessGate(title,message){document.getElementById("accessGateTitle").textContent=title;document.getElementById("accessGateMessage").textContent=message;document.getElementById("accessGate").classList.remove("hide");document.body.classList.add("access-pending");}
-      function grantAppAccess(){document.getElementById("accessGate").classList.add("hide");document.getElementById("lockedScreen").classList.remove("active");document.body.classList.remove("access-pending");}
-      function denyAppAccess(){document.getElementById("accessGate").classList.add("hide");document.body.classList.add("access-pending");document.getElementById("lockedScreen").classList.add("active");}
-      async function initAuth(){
-        document.getElementById("logoutBtn")?.addEventListener("click",logout);
-        document.getElementById("mobileLogout")?.addEventListener("click",logout);
-        setAccessGate("Validando tu acceso","Estamos comprobando tu sesión y permiso antes de abrir la aplicación.");
-        if(!supabaseClient){setAccessGate("No pudimos conectar con la aplicación","La conexión segura no está configurada. Vuelve a Mi Espacio e intenta nuevamente.");return;}
-        supabaseClient.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_OUT")location.replace(LOGIN_URL)});
-        let user=null;
-        try{const {data,error}=await supabaseClient.auth.getUser();if(error)throw error;user=data?.user||null;if(!user){location.replace(LOGIN_URL);return;}currentUser=user;}
-        catch(error){console.error("Error de sesión:",error);setAccessGate("No pudimos comprobar tu sesión","Vuelve a iniciar sesión desde Mi Espacio e intenta nuevamente.");return;}
-        let allowed=false;
-        try{allowed=await validateAccess(user);}
-        catch(error){console.error("Error consultando permisos:",error);setAccessGate("No pudimos comprobar tu permiso","Tu sesión está activa, pero no pudimos consultar el acceso. Intenta nuevamente.");return;}
-        if(!allowed){denyAppAccess();return;}
-        document.getElementById("userPill").textContent=currentUser.email||"Sesión activa";
-        try{await loadAppData();}
-        catch(error){console.error("Error cargando datos:",error);setAccessGate("No pudimos cargar tus datos","Tu acceso fue validado, pero ocurrió un problema al recuperar tu recorrido.");return;}
-        try{bindEvents();renderAll();grantAppAccess();}
-        catch(error){console.error("Error inicializando interfaz:",error);setAccessGate("No pudimos iniciar la aplicación","Tu acceso fue validado, pero ocurrió un problema en la interfaz. Actualiza la página.");}
+    }
+
+    let state = loadState();
+    let currentDay = state.currentDay || 1;
+
+    function saveState() {
+      localStorage.setItem(
+        storageKey(),
+        JSON.stringify(state)
+      );
+
+      updateMetrics();
+      renderBadges();
+    }
+
+    function toast(message) {
+      const toastEl =
+        document.getElementById("toast");
+
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+
+      window.clearTimeout(toast.timer);
+
+      toast.timer = window.setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2200);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function cssSafe(value) {
+      if (
+        window.CSS &&
+        typeof window.CSS.escape === "function"
+      ) {
+        return window.CSS.escape(value);
       }
-      async function logout(){try{await supabaseClient?.auth.signOut()}finally{location.href=LOGIN_URL}}
-      async function persistProgress(day){const completed=state.completedDays.includes(day),favorite=state.favorites.includes(day),journal=state.journals[day]||"",action=state.actions[day]||"";if(!completed&&!favorite&&!journal&&!action){const {error}=await supabaseClient.from("user_home_progress").delete().eq("journey_id",currentJourney.id).eq("user_id",currentUser.id).eq("day_number",day);if(error)throw error;return;}const {error}=await supabaseClient.from("user_home_progress").upsert({user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed,favorite,journal_text:journal,action_text:action,completed_at:completed?new Date().toISOString():null},{onConflict:"journey_id,day_number"});if(error)throw error;}
-      async function updateJourneySummary(){const completed=state.completedDays.length,pct=Math.round(completed/21*100),stage=completed>=15?3:completed>=8?2:1;const {data,error}=await supabaseClient.from("user_home_journeys").update({current_day:currentDay,completed_count:completed,progress_percentage:pct,journey_stage:stage,journey_level:getJourneyLevel(pct).name,completed_at:completed===21?(currentJourney.completed_at||new Date().toISOString()):null}).eq("id",currentJourney.id).eq("user_id",currentUser.id).select().single();if(error)throw error;currentJourney=data;}
-      function renderDaySelector(){const c=document.getElementById("daySelector");c.innerHTML="";DAYS.forEach(item=>{const b=document.createElement("button");b.type="button";b.className="day-dot"+(item.day===currentDay?" active":"")+(state.completedDays.includes(item.day)?" done":"");b.textContent=item.day;b.setAttribute("aria-label",`Abrir día ${item.day}`);b.onclick=()=>{currentDay=item.day;renderAll();switchView("camino")};c.appendChild(b);});}
-      function renderCurrentDay(){const item=DAYS[currentDay-1];for(const [id,val] of Object.entries({dayNumberTag:`Día ${item.day}`,daySectionTag:item.section,dayReferenceTag:item.reference,dayTitle:item.title,dayIdea:item.idea,dayReflection:item.reflection,dayPrayer:item.prayer,dayJournalQuestion:item.question,dayAction:item.action,dayIdentity:item.identity}))document.getElementById(id).textContent=val;document.getElementById("journalText").value=state.journals[currentDay]||"";document.getElementById("actionText").value=state.actions[currentDay]||"";const fav=state.favorites.includes(currentDay);const fb=document.getElementById("favoriteDayBtn");fb.textContent=fav?"★ Guardado en favoritos":"☆ Guardar favorito";fb.setAttribute("aria-pressed",String(fav));document.getElementById("prevDayBtn").disabled=currentDay===1;document.getElementById("nextDayBtn").textContent=currentDay===21?(state.completedDays.includes(21)?"Ver cierre del recorrido":"Completa el día para finalizar"):"Día siguiente →";renderCompletion();}
-      async function saveCurrentDay(show=true){state.journals[currentDay]=document.getElementById("journalText").value.trim();state.actions[currentDay]=document.getElementById("actionText").value.trim();try{await persistProgress(currentDay);await updateJourneySummary();if(show)toast(`Día ${currentDay} guardado.`);updateMetrics();}catch(e){console.error(e);toast("No pudimos guardar este día.",true);}}
-      async function markCurrentDayDone(){await saveCurrentDay(false);const was=state.completedDays.includes(currentDay);state.completedDays=was?state.completedDays.filter(x=>x!==currentDay):[...new Set([...state.completedDays,currentDay])].sort((a,b)=>a-b);try{await persistProgress(currentDay);await updateJourneySummary();renderAll();toast(was?"Día marcado como pendiente.":`Día ${currentDay} completado.`);}catch(e){state.completedDays=was?[...new Set([...state.completedDays,currentDay])]:state.completedDays.filter(x=>x!==currentDay);console.error(e);renderAll();toast("No pudimos actualizar el progreso.",true);}}
-      async function toggleFavorite(){const was=state.favorites.includes(currentDay);state.favorites=was?state.favorites.filter(x=>x!==currentDay):[...new Set([...state.favorites,currentDay])];try{await persistProgress(currentDay);renderAll();toast(was?"Día quitado de favoritos.":"Día guardado en favoritos.");}catch(e){state.favorites=was?[...new Set([...state.favorites,currentDay])]:state.favorites.filter(x=>x!==currentDay);renderAll();toast("No pudimos actualizar el favorito.",true);}}
-      async function goNextDay(){await saveCurrentDay(false);if(currentDay<21){currentDay++;await updateJourneySummary();renderAll();scrollToActivePanel("camino");}else if(state.completedDays.includes(21)){document.getElementById("completionArea").scrollIntoView({behavior:"smooth",block:"center"});}else toast("Completa el día 21 para finalizar el recorrido.",true);}
-      function renderCompletion(){const c=document.getElementById("completionArea");if(state.completedDays.length<21){c.innerHTML="";return;}c.innerHTML=`<div class="completion-card"><h3>Un hogar se edifica una decisión fiel a la vez ✦</h3><p>Completaste los 21 días. Tu recorrido, tu Radar y tus registros permanecen guardados. Puedes comenzar un nuevo camino sin borrar la historia que ya construiste.</p><div class="btn-row"><button class="btn gold" type="button" id="restartHomeJourneyBtn">Iniciar un nuevo recorrido</button><button class="btn" type="button" data-completion-view="legado">Revisar Mi Legado</button></div></div>`;document.getElementById("restartHomeJourneyBtn").onclick=restartJourney;c.querySelector("[data-completion-view]").onclick=()=>switchView("legado");}
-      async function restartJourney(){if(!confirm("¿Quieres iniciar un nuevo recorrido? Tu camino anterior y todos sus registros permanecerán guardados."))return;const b=document.getElementById("restartHomeJourneyBtn");setBusy(b,true,"Preparando recorrido...");try{const {data,error}=await supabaseClient.rpc("start_new_home_journey");if(error)throw error;const j=Array.isArray(data)?data[0]:data;if(!j?.id)throw new Error("La función no devolvió el nuevo recorrido");currentJourney=j;state.completedDays=[];state.favorites=[];state.journals={};state.actions={};state.radar={};state.decisions=[];state.talks=[];state.prayer={checks:[],text:""};currentDay=1;journeyArchive=await fetchJourneys();viewedJourneyId="actual";renderAll();switchView("camino");toast("Nuevo recorrido iniciado. Tu historia permanece guardada.");}catch(e){console.error(e);toast(String(e.message||"").includes("NOT_COMPLETE")?"Completa los 21 días antes de iniciar otro recorrido.":"No pudimos iniciar el nuevo recorrido.",true);}finally{setBusy(b,false)}}
-      async function fetchJourneys(){const {data,error}=await supabaseClient.from("user_home_journeys").select("id,cycle_number,is_active,started_at,completed_at,archived_at").eq("user_id",currentUser.id).order("cycle_number",{ascending:false});if(error)throw error;return data||[];}
-      function renderJourneySelector(){const sel=document.getElementById("journeyViewSelect");sel.innerHTML='<option value="actual">Recorrido actual</option>'+journeyArchive.filter(j=>!j.is_active).map(j=>`<option value="${j.id}">Recorrido ${j.cycle_number}</option>`).join("");sel.value=[...sel.options].some(o=>o.value===viewedJourneyId)?viewedJourneyId:"actual";document.getElementById("journeyStatus").textContent=`Recorrido ${currentJourney?.cycle_number||1} · ${currentJourney?.is_active?"En curso":"Completado"}`;}
-      async function loadJourneyView(id){if(id==="actual"){await loadAppData();viewedJourneyId="actual";renderAll();return;}const journey=journeyArchive.find(j=>j.id===id);if(!journey)return;const [progress,radar,prayer]=await Promise.all([supabaseClient.from("user_home_progress").select("*").eq("journey_id",id),supabaseClient.from("user_home_radar").select("*").eq("journey_id",id).maybeSingle(),supabaseClient.from("user_home_prayer").select("*").eq("journey_id",id).maybeSingle()]);for(const r of [progress,radar,prayer])if(r.error)throw r.error;state.completedDays=(progress.data||[]).filter(x=>x.completed).map(x=>Number(x.day_number));state.favorites=(progress.data||[]).filter(x=>x.favorite).map(x=>Number(x.day_number));state.journals={};state.actions={};(progress.data||[]).forEach(x=>{state.journals[x.day_number]=x.journal_text||"";state.actions[x.day_number]=x.action_text||""});state.radar=radar.data?.radar_values||{};state.prayer={checks:parseChecks(prayer.data?.prayer_focus),text:prayer.data?.prayer_text||""};currentDay=1;viewedJourneyId=id;renderAll();toast(`Recorrido ${journey.cycle_number} abierto en modo consulta.`);}
-      function isHistorical(){return viewedJourneyId!=="actual";}
-      function renderRadar(){const c=document.getElementById("radarRanges");c.innerHTML="";RADAR_AREAS.forEach(area=>{const value=Number(state.radar[area]||0),d=document.createElement("div");d.className="range-item";d.innerHTML=`<div class="range-top"><span>${escapeHTML(area)}</span><span>${value}</span></div><input type="range" min="0" max="10" value="${value}" data-radar="${escapeHTML(area)}" aria-label="${escapeHTML(area)}" ${isHistorical()?"disabled":""}>`;d.querySelector("input").oninput=e=>{state.radar[area]=Number(e.target.value);e.target.previousElementSibling.lastElementChild.textContent=e.target.value;updateRadarVisual()};c.appendChild(d)});updateRadarVisual();}
-      function getRadarAverage(){const v=RADAR_AREAS.map(a=>Number(state.radar[a]||0));return Math.round(v.reduce((a,b)=>a+b,0)/v.length)}
-      function updateRadarVisual(){const avg=getRadarAverage();document.getElementById("radarAverage").textContent=avg;document.getElementById("radarScoreRing").style.setProperty("--radar-percent",`${avg*10}%`);document.getElementById("radarLabel").textContent=avg>=8?"Hogar fortalecido":avg>=5?"Crecimiento activo":avg>=1?"Necesita atención":"En construcción";document.getElementById("metricRadar").textContent=avg;document.getElementById("journeyRadar").textContent=avg;}
-      async function saveRadar(){if(isHistorical())return toast("Los recorridos anteriores se consultan sin modificar.",true);try{const {error}=await supabaseClient.from("user_home_radar").upsert({user_id:currentUser.id,journey_id:currentJourney.id,radar_values:state.radar},{onConflict:"journey_id"});if(error)throw error;toast("Radar del Hogar guardado.");}catch(e){console.error(e);toast("No pudimos guardar el Radar.",true)}}
-      function renderBadges(){const c=document.getElementById("badgeGrid");c.innerHTML="";BADGES.forEach(b=>{const unlocked=state.completedDays.length>=b.min,d=document.createElement("article");d.className="badge-card"+(unlocked?"":" locked");d.innerHTML=`<span class="badge-state">${unlocked?"Desbloqueado":"Día "+b.min}</span><div class="badge-icon">${b.icon}</div><h3>${escapeHTML(b.title)}</h3><p>${escapeHTML(b.description)}</p>`;c.appendChild(d)})}
-      async function saveDecision(){if(isHistorical())return toast("Vuelve al recorrido actual para guardar.",true);const title=document.getElementById("decisionTitle").value.trim(),options=document.getElementById("decisionOptions").value.trim(),checks=[...document.querySelectorAll(".decision-check:checked")].map(x=>x.value);if(!title)return toast("Escribe la decisión o situación.",true);const recommendation=checks.length>=4?"Avanzar con paz":checks.length>=2?"Esperar y confirmar":"Orar antes de avanzar";const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:currentDay,situation:title,options_text:options,prayer_text:checks.includes("ore")?"Sí":"",counsel_text:checks.includes("consejo")?"Sí":"",peace_text:checks.includes("paz")?"Sí":"",honor_text:checks.includes("honra")?"Sí":"",recommendation};try{let data,error;if(editingDecisionId)({data,error}=await supabaseClient.from("user_home_decisions").update(payload).eq("id",editingDecisionId).eq("user_id",currentUser.id).select().single());else({data,error}=await supabaseClient.from("user_home_decisions").insert(payload).select().single());if(error)throw error;const item=mapDecision(data),i=state.decisions.findIndex(x=>x.id===item.id);if(i>=0)state.decisions[i]=item;else state.decisions.unshift(item);editingDecisionId=null;clearDecision();renderDecisions();toast("Decisión guardada.");}catch(e){console.error(e);toast("No pudimos guardar la decisión.",true)}}
-      function clearDecision(){document.getElementById("decisionTitle").value="";document.getElementById("decisionOptions").value="";document.querySelectorAll(".decision-check").forEach(x=>x.checked=false);document.getElementById("saveDecisionBtn").textContent="Guardar decisión";}
-      function renderDecisions(){const c=document.getElementById("decisionList"),items=state.decisions.filter(x=>x.journeyId===(isHistorical()?viewedJourneyId:currentJourney.id));c.innerHTML=items.length?"":'<div class="empty">Aún no hay decisiones guardadas en este recorrido.</div>';items.forEach(x=>{const d=document.createElement("div");d.className="record";d.innerHTML=`<strong>${escapeHTML(x.title)}</strong><small>${formatDate(x.date)} · ${escapeHTML(x.recommendation||"")}</small><small style="display:block;margin-top:6px">${escapeHTML(x.options||"")}</small>${isHistorical()?"":`<div class="record-actions"><button data-edit>Editar</button><button data-delete>Eliminar</button></div>`}`;d.querySelector("[data-edit]")?.addEventListener("click",()=>{editingDecisionId=x.id;document.getElementById("decisionTitle").value=x.title;document.getElementById("decisionOptions").value=x.options||"";document.querySelectorAll(".decision-check").forEach(k=>k.checked=x.checks.includes(k.value));document.getElementById("saveDecisionBtn").textContent="Actualizar decisión";document.getElementById("decisionTitle").focus()});d.querySelector("[data-delete]")?.addEventListener("click",()=>deleteRecord("decision",x.id));c.appendChild(d)})}
-      async function saveTalk(){if(isHistorical())return toast("Vuelve al recorrido actual para guardar.",true);const person=document.getElementById("talkPerson").value.trim(),topic=document.getElementById("talkTopic").value.trim(),learning=document.getElementById("talkLearning").value.trim(),next=document.getElementById("talkNext").value.trim();if(!person||!topic)return toast("Completa con quién fue y el tema.",true);const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:currentDay,person_context:person,topic,learning,next_step:next};try{let data,error;if(editingTalkId)({data,error}=await supabaseClient.from("user_home_talks").update(payload).eq("id",editingTalkId).eq("user_id",currentUser.id).select().single());else({data,error}=await supabaseClient.from("user_home_talks").insert(payload).select().single());if(error)throw error;const item=mapTalk(data),i=state.talks.findIndex(x=>x.id===item.id);if(i>=0)state.talks[i]=item;else state.talks.unshift(item);editingTalkId=null;clearTalk();renderTalks();updateMetrics();toast("Conversación guardada.");}catch(e){console.error(e);toast("No pudimos guardar la conversación.",true)}}
-      function clearTalk(){["talkPerson","talkTopic","talkLearning","talkNext"].forEach(id=>document.getElementById(id).value="");document.getElementById("saveTalkBtn").textContent="Guardar conversación";}
-      function renderTalks(){const c=document.getElementById("talkList"),items=state.talks.filter(x=>x.journeyId===(isHistorical()?viewedJourneyId:currentJourney.id));c.innerHTML=items.length?"":'<div class="empty">Aún no hay conversaciones guardadas en este recorrido.</div>';items.forEach(x=>{const d=document.createElement("div");d.className="record";d.innerHTML=`<strong>${escapeHTML(x.person)}: ${escapeHTML(x.topic)}</strong><small>${formatDate(x.date)}</small><small style="display:block;margin-top:6px">Aprendizaje: ${escapeHTML(x.learning||"Sin registro")}</small><small style="display:block;margin-top:4px">Próximo paso: ${escapeHTML(x.next||"Sin registro")}</small>${isHistorical()?"":`<div class="record-actions"><button data-edit>Editar</button><button data-delete>Eliminar</button></div>`}`;d.querySelector("[data-edit]")?.addEventListener("click",()=>{editingTalkId=x.id;document.getElementById("talkPerson").value=x.person;document.getElementById("talkTopic").value=x.topic;document.getElementById("talkLearning").value=x.learning||"";document.getElementById("talkNext").value=x.next||"";document.getElementById("saveTalkBtn").textContent="Actualizar conversación"});d.querySelector("[data-delete]")?.addEventListener("click",()=>deleteRecord("talk",x.id));c.appendChild(d)})}
-      async function deleteRecord(type,id){if(!confirm("¿Deseas eliminar este registro?"))return;const table=type==="decision"?"user_home_decisions":"user_home_talks";try{const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);if(error)throw error;if(type==="decision")state.decisions=state.decisions.filter(x=>x.id!==id);else state.talks=state.talks.filter(x=>x.id!==id);renderDecisions();renderTalks();updateMetrics();toast("Registro eliminado.");}catch(e){console.error(e);toast("No pudimos eliminar el registro.",true)}}
-      function renderPrayer(){const c=document.getElementById("prayerChecks");c.innerHTML="";PRAYER_ITEMS.forEach((x,i)=>{const l=document.createElement("label");l.className="check-item";l.innerHTML=`<input type="checkbox" data-prayer="${i}" ${state.prayer.checks.includes(i)?"checked":""} ${isHistorical()?"disabled":""}>${escapeHTML(x)}`;c.appendChild(l)});document.getElementById("familyPrayer").value=state.prayer.text||"";document.getElementById("familyPrayer").disabled=isHistorical();}
-      async function savePrayer(){if(isHistorical())return toast("Los recorridos anteriores se consultan sin modificar.",true);state.prayer={checks:[...document.querySelectorAll("#prayerChecks input:checked")].map(x=>Number(x.dataset.prayer)),text:document.getElementById("familyPrayer").value.trim()};try{const {error}=await supabaseClient.from("user_home_prayer").upsert({user_id:currentUser.id,journey_id:currentJourney.id,prayer_focus:JSON.stringify(state.prayer.checks),prayer_text:state.prayer.text},{onConflict:"journey_id"});if(error)throw error;toast("Plan de oración guardado.");}catch(e){console.error(e);toast("No pudimos guardar la oración.",true)}}
-      function renderLegacy(){document.getElementById("legacyValues").value=state.legacy.values;document.getElementById("legacyHome").value=state.legacy.home;document.getElementById("legacyLetter").value=state.legacy.letter;document.getElementById("legacyPromise").value=state.legacy.promise;}
-      async function saveLegacy(){state.legacy={values:document.getElementById("legacyValues").value.trim(),home:document.getElementById("legacyHome").value.trim(),letter:document.getElementById("legacyLetter").value.trim(),promise:document.getElementById("legacyPromise").value.trim()};try{const {error}=await supabaseClient.from("user_home_profile").upsert({user_id:currentUser.id,values_text:state.legacy.values,home_vision:state.legacy.home,family_letter:state.legacy.letter,commitment_before_god:state.legacy.promise},{onConflict:"user_id"});if(error)throw error;toast("Mi Legado fue guardado.");}catch(e){console.error(e);toast("No pudimos guardar Mi Legado.",true)}}
-      function getNextRecommendedDay(){return DAYS.find(d=>!state.completedDays.includes(d.day))?.day||21}function getJourneyLevel(p){return{name:p>=100?"Completado":p>=76?"Muy cerca":p>=51?"Edificando":p>=26?"Avanzando":p>0?"Comenzando":"Inicio"}}
-      function updateMetrics(){const completed=state.completedDays.length,pct=Math.round(completed/21*100),actions=Object.values(state.actions).filter(Boolean).length,talks=state.talks.filter(x=>x.journeyId===currentJourney?.id).length;document.getElementById("progressText").textContent=`${completed}/21`;document.getElementById("progressFill").style.width=`${pct}%`;document.getElementById("progressPercent").textContent=`${pct}%`;document.getElementById("progressCircle").style.background=`conic-gradient(var(--gold-2) ${pct*3.6}deg,rgba(255,255,255,.15) ${pct*3.6}deg)`;document.getElementById("metricDays").textContent=completed;document.getElementById("metricTalks").textContent=talks;document.getElementById("metricActions").textContent=actions;document.getElementById("journeyActions").textContent=actions;document.getElementById("journeyLevel").textContent=getJourneyLevel(pct).name;document.getElementById("nextStepMessage").textContent=pct===100?"Camino completado. Tu historia permanece guardada.":`Tu próximo paso: Día ${getNextRecommendedDay()}`;document.getElementById("growthMessage").textContent=completed>=21?"Misión completa: sigue edificando con fe, carácter y legado.":completed>=15?"Estás construyendo legado con pasos concretos y constantes.":completed>=8?"Tu liderazgo crece cuando amas, escuchas y honras.":completed>=3?"El carácter se forma en decisiones pequeñas y fieles.":"Todo hogar firme comienza con un corazón rendido a Dios.";updateRadarVisual();}
-      function switchView(view,opt={}){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".nav-btn,.mobile-primary-nav button").forEach(x=>x.classList.remove("active"));document.getElementById(`panel-${view}`)?.classList.add("active");document.querySelectorAll(`[data-view="${view}"],[data-primary-view="${view}"]`).forEach(x=>x.classList.add("active"));closeMobileTools();if(view==="radar")renderRadar();if(view==="decisiones")renderDecisions();if(view==="conversaciones")renderTalks();if(view==="oracion")renderPrayer();if(view==="legado")renderLegacy();if(view==="caracter")renderBadges();if(opt.scroll!==false)scrollToActivePanel(view)}
-      function scrollToActivePanel(v){document.getElementById(`panel-${v}`)?.scrollIntoView({behavior:"smooth",block:"start"})}function openMobileTools(){const x=document.getElementById("mobileTools")||document.getElementById("mobileDrawer");if(!x)return;x.classList.remove("hide");x.classList.add("active");x.setAttribute("aria-hidden","false");document.getElementById("closeMobileTools")?.focus()}function closeMobileTools(){const x=document.getElementById("mobileTools")||document.getElementById("mobileDrawer");if(!x)return;x.classList.add("hide");x.classList.remove("active");x.setAttribute("aria-hidden","true")}
-      function renderAll(){renderJourneySelector();renderDaySelector();renderCurrentDay();renderRadar();renderBadges();renderDecisions();renderTalks();renderPrayer();renderLegacy();updateMetrics();const historical=isHistorical();["saveDayBtn","markDoneBtn","markDoneTopBtn","favoriteDayBtn","saveRadarBtn","saveDecisionBtn","saveTalkBtn","savePrayerBtn"].forEach(id=>{const e=document.getElementById(id);if(e)e.disabled=historical});document.getElementById("journalText").disabled=historical;document.getElementById("actionText").disabled=historical;}
-      function bindEvents(){document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>switchView(b.dataset.view));document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>b.dataset.go==="continue"?(currentDay=getNextRecommendedDay(),renderAll(),switchView("camino")):switchView(b.dataset.go));document.getElementById("openToolsBtn")?.addEventListener("click",openMobileTools);document.getElementById("openMobileTools")?.addEventListener("click",openMobileTools);document.getElementById("closeMobileTools")?.addEventListener("click",closeMobileTools);document.querySelectorAll("[data-mobile-view]").forEach(b=>b.onclick=()=>switchView(b.dataset.mobileView));document.querySelectorAll("[data-primary-view]").forEach(b=>b.onclick=()=>{switchView(b.dataset.primaryView);if(b.dataset.openMap)document.getElementById("daySelector").scrollIntoView({behavior:"smooth",block:"center"})});document.getElementById("saveDayBtn").onclick=()=>saveCurrentDay();document.getElementById("markDoneBtn").onclick=markCurrentDayDone;document.getElementById("markDoneTopBtn").onclick=markCurrentDayDone;document.getElementById("favoriteDayBtn").onclick=toggleFavorite;document.getElementById("prevDayBtn").onclick=async()=>{if(currentDay>1){await saveCurrentDay(false);currentDay--;await updateJourneySummary();renderAll()}};document.getElementById("nextDayBtn").onclick=goNextDay;document.getElementById("saveRadarBtn").onclick=saveRadar;document.getElementById("saveDecisionBtn").onclick=saveDecision;document.getElementById("saveTalkBtn").onclick=saveTalk;document.getElementById("savePrayerBtn").onclick=savePrayer;document.getElementById("saveLegacyBtn").onclick=saveLegacy;document.getElementById("journeyViewSelect").onchange=e=>loadJourneyView(e.target.value).catch(err=>{console.error(err);toast("No pudimos abrir ese recorrido.",true)});}
-      initAuth();
+
+      return String(value).replace(
+        /"/g,
+        '\\"'
+      );
+         }
+
+    async function initAuth() {
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", async () => {
+          try {
+            if (supabaseClient) {
+              await supabaseClient.auth.signOut();
+            }
+          } catch (error) {
+            console.error(error);
+          }
+
+          window.location.href = LOGIN_URL;
+        });
+
+      if (!supabaseClient) {
+        document.getElementById("userPill").textContent = "Supabase no configurado";
+        return;
+      }
+
+      try {
+        const { data: sessionData, error } = await supabaseClient.auth.getSession();
+
+        if (error) {
+          throw error;
+        }
+
+        const session = sessionData && sessionData.session;
+
+        if (REQUIRE_LOGIN && (!session || !session.user)) {
+          window.location.href = LOGIN_URL;
+          return;
+        }
+
+        if (session && session.user) {
+          currentUser = session.user;
+          document.getElementById("userPill").textContent = session.user.email || "Sesión activa";
+
+          state = loadState();
+          currentDay = state.currentDay || 1;
+
+          renderAll();
+        }
+
+        const hasAccess = await validateAccess(session && session.user);
+
+        if (!hasAccess) {
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+
+        if (REQUIRE_LOGIN) {
+          window.location.href = LOGIN_URL;
+        }
+      }
+    }
+
+    async function validateAccess(user) {
+      if (!supabaseClient || !user) {
+        return true;
+      }
+
+      const now = new Date();
+      const normalizedEmail = String(user.email || "").trim().toLowerCase();
+
+      try {
+        const { data, error } = await supabaseClient
+          .from("user_entitlements")
+          .select("product_key,status,expires_at")
+          .eq("user_id", user.id)
+          .in("product_key", REQUIRED_PRODUCT_KEYS)
+          .limit(10);
+
+        if (!error) {
+          const active = (data || []).some((row) => {
+            const status = String(row.status || "").toLowerCase();
+            const expirationIsValid = !row.expires_at || new Date(row.expires_at) > now;
+
+            return status !== "inactive" && expirationIsValid;
+          });
+
+          if (active) {
+            return true;
+          }
+        }
+      } catch (error) {
+        console.warn("Validación user_entitlements omitida", error);
+      }
+
+      try {
+        const { data, error } = await supabaseClient
+          .from("entitlements")
+          .select("email,permission_key,source_sku,active")
+          .eq("email", normalizedEmail)
+          .eq("active", true)
+          .limit(20);
+
+        if (!error) {
+          const active = (data || []).some((item) => {
+            const permission = String(item.permission_key || "");
+            const sku = String(item.source_sku || "");
+
+            return (
+              (permission === REQUIRED_PERMISSION && sku === REQUIRED_SKU) ||
+              permission === "membership_all_access" ||
+              sku === "HCD_ALL_ACCESS"
+            );
+          });
+
+          if (active) {
+            return true;
+          }
+        }
+      } catch (error) {
+        console.warn("Validación entitlements omitida", error);
+      }
+
+      document.getElementById("lockedScreen").classList.add("active");
+      return false;
+    }
+
+    function renderDaySelector() {
+      const container = document.getElementById("daySelector");
+      container.innerHTML = "";
+
+      DAYS.forEach((item) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "day-dot";
+        button.textContent = item.day;
+        button.setAttribute("aria-label", "Abrir día " + item.day);
+
+        if (item.day === currentDay) {
+          button.classList.add("active");
+        }
+
+        if (state.completedDays.includes(item.day)) {
+          button.classList.add("done");
+        }
+
+        button.addEventListener("click", () => {
+          currentDay = item.day;
+          state.currentDay = currentDay;
+
+          saveState();
+          renderCurrentDay();
+          renderDaySelector();
+          switchView("camino");
+        });
+
+        container.appendChild(button);
+      });
+    }
+
+    function renderCurrentDay() {
+      const item = DAYS.find((day) => day.day === currentDay) || DAYS[0];
+
+      document.getElementById("dayNumberTag").textContent = "Día " + item.day;
+      document.getElementById("daySectionTag").textContent = item.section;
+      document.getElementById("dayReferenceTag").textContent = item.reference;
+      document.getElementById("dayTitle").textContent = item.title;
+      document.getElementById("dayIdea").textContent = item.idea;
+      document.getElementById("dayReflection").textContent = item.reflection;
+      document.getElementById("dayPrayer").textContent = item.prayer;
+      document.getElementById("dayJournalQuestion").textContent = item.question;
+      document.getElementById("dayAction").textContent = item.action;
+      document.getElementById("dayIdentity").textContent = item.identity;
+
+      document.getElementById("journalText").value = state.journals[item.day] || "";
+      document.getElementById("actionText").value = state.actions[item.day] || "";
+    }
+
+    function saveCurrentDay() {
+      state.journals[currentDay] = document.getElementById("journalText").value.trim();
+      state.actions[currentDay] = document.getElementById("actionText").value.trim();
+      state.currentDay = currentDay;
+
+      saveState();
+      toast("Día " + currentDay + " guardado.");
+    }
+
+    function markCurrentDayDone() {
+      saveCurrentDay();
+
+      if (!state.completedDays.includes(currentDay)) {
+        state.completedDays.push(currentDay);
+        state.completedDays.sort((a, b) => a - b);
+      }
+
+      saveState();
+      renderDaySelector();
+      updateMetrics();
+
+      toast("Día " + currentDay + " completado.");
+    }
+
+    function goNextDay() {
+      if (currentDay < 21) {
+        currentDay += 1;
+        state.currentDay = currentDay;
+
+        saveState();
+        renderCurrentDay();
+        renderDaySelector();
+        switchView("camino");
+
+        toast("Avanzaste al día " + currentDay + ".");
+      } else {
+        toast("Llegaste al día 21. Tu hogar pertenece a Dios.");
+      }
+    }
+
+    function getRadarAverage() {
+      const values = RADAR_AREAS.map((area) => Number(state.radar[area] || 0));
+
+      return values.length
+        ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length)
+        : 0;
+    }
+
+    function renderRadar() {
+      const container = document.getElementById("radarRanges");
+      container.innerHTML = "";
+
+      RADAR_AREAS.forEach((area) => {
+        const value = Number(state.radar[area] || 0);
+        const item = document.createElement("div");
+
+        item.className = "range-item";
+
+        item.innerHTML = `
+          <div class="range-top">
+            <span>${escapeHTML(area)}</span>
+            <span data-radar-value="${escapeHTML(area)}">${value}</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value="${value}"
+            data-radar="${escapeHTML(area)}"
+            aria-label="${escapeHTML(area)}"
+          />
+        `;
+
+        container.appendChild(item);
+      });
+
+      container.querySelectorAll("input[type='range']").forEach((range) => {
+        range.addEventListener("input", (event) => {
+          const area = event.target.dataset.radar;
+          const value = Number(event.target.value);
+
+          state.radar[area] = value;
+
+          const label = document.querySelector(`[data-radar-value="${cssSafe(area)}"]`);
+
+          if (label) {
+            label.textContent = value;
+          }
+
+          updateRadarVisual();
+          saveProgressSnapshot();
+        });
+      });
+
+      updateRadarVisual();
+    }
+
+    function updateRadarVisual() {
+      const average = getRadarAverage();
+
+      document.getElementById("radarAverage").textContent = average;
+
+      document.getElementById("radarScoreRing").style.setProperty(
+        "--radar-percent",
+        Math.min(100, average * 10) + "%"
+      );
+
+      document.getElementById("radarLabel").textContent =
+        average >= 8
+          ? "Hogar fortalecido"
+          : average >= 5
+            ? "Crecimiento activo"
+            : average >= 1
+              ? "Necesita atención"
+              : "En construcción";
+
+      document.getElementById("metricRadar").textContent = average;
+
+      const radarMetric = document.getElementById("journeyRadar");
+
+      if (radarMetric) {
+        radarMetric.textContent = average;
+      }
+    }
+
+    function saveRadar() {
+      saveState();
+      toast("Radar del Hogar guardado.");
+    }
+
+    function renderBadges() {
+      const container = document.getElementById("badgeGrid");
+      container.innerHTML = "";
+
+      const completed = state.completedDays.length;
+
+      BADGES.forEach((badge) => {
+        const unlocked = completed >= badge.min;
+        const card = document.createElement("article");
+
+        card.className = "badge-card" + (unlocked ? "" : " locked");
+
+        card.innerHTML = `
+          <span class="badge-state">${unlocked ? "Desbloqueado" : "Día " + badge.min}</span>
+          <div class="badge-icon">${badge.icon}</div>
+          <h3>${escapeHTML(badge.title)}</h3>
+          <p>${escapeHTML(badge.description)}</p>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function saveDecision() {
+      const title = document.getElementById("decisionTitle").value.trim();
+      const options = document.getElementById("decisionOptions").value.trim();
+
+      const checks = Array.from(document.querySelectorAll(".decision-check:checked"))
+        .map((item) => item.value);
+
+      if (!title && !options) {
+        toast("Escribe una decisión antes de guardar.");
+        return;
+      }
+
+      const recommendation =
+        checks.length >= 4
+          ? "Avanzar con paz"
+          : checks.length >= 2
+            ? "Esperar y confirmar"
+            : "Orar antes de avanzar";
+
+      state.decisions.unshift({
+        id: Date.now(),
+        title,
+        options,
+        checks,
+        recommendation,
+        date: new Date().toLocaleDateString("es-MX")
+      });
+
+      document.getElementById("decisionTitle").value = "";
+      document.getElementById("decisionOptions").value = "";
+
+      document.querySelectorAll(".decision-check").forEach((item) => {
+        item.checked = false;
+      });
+
+      saveState();
+      renderDecisions();
+      toast("Decisión guardada.");
+    }
+
+    function renderDecisions() {
+      const container = document.getElementById("decisionList");
+      container.innerHTML = "";
+
+      if (!state.decisions.length) {
+        container.innerHTML = '<div class="empty">Aún no hay decisiones guardadas.</div>';
+        return;
+      }
+
+      state.decisions.slice(0, 10).forEach((item) => {
+        const record = document.createElement("div");
+        record.className = "record";
+
+        record.innerHTML = `
+          <strong>${escapeHTML(item.title || "Decisión sin título")}</strong>
+          <small>${escapeHTML(item.date)} · Resultado sugerido: ${escapeHTML(item.recommendation)}</small>
+          <small style="display:block;margin-top:6px;">${escapeHTML(item.options || "")}</small>
+        `;
+
+        container.appendChild(record);
+      });
+    }
+
+    function saveTalk() {
+      const person = document.getElementById("talkPerson").value.trim();
+      const topic = document.getElementById("talkTopic").value.trim();
+      const learning = document.getElementById("talkLearning").value.trim();
+      const next = document.getElementById("talkNext").value.trim();
+
+      if (!person && !topic && !learning) {
+        toast("Escribe una conversación antes de guardar.");
+        return;
+      }
+
+      state.talks.unshift({
+        id: Date.now(),
+        person,
+        topic,
+        learning,
+        next,
+        date: new Date().toLocaleDateString("es-MX")
+      });
+
+      ["talkPerson", "talkTopic", "talkLearning", "talkNext"].forEach((id) => {
+        document.getElementById(id).value = "";
+      });
+
+      saveState();
+      renderTalks();
+      toast("Conversación guardada.");
+    }
+
+    function renderTalks() {
+      const container = document.getElementById("talkList");
+      container.innerHTML = "";
+
+      if (!state.talks.length) {
+        container.innerHTML = '<div class="empty">Aún no hay conversaciones guardadas.</div>';
+        return;
+      }
+
+      state.talks.slice(0, 10).forEach((item) => {
+        const record = document.createElement("div");
+        record.className = "record";
+
+        record.innerHTML = `
+          <strong>${escapeHTML(item.person || "Conversación")}: ${escapeHTML(item.topic || "Sin tema")}</strong>
+          <small>${escapeHTML(item.date)}</small>
+          <small style="display:block;margin-top:6px;">Aprendizaje: ${escapeHTML(item.learning || "Sin registro")}</small>
+          <small style="display:block;margin-top:4px;">Próximo paso: ${escapeHTML(item.next || "Sin registro")}</small>
+        `;
+
+        container.appendChild(record);
+      });
+    }
+
+    function renderPrayer() {
+      const container = document.getElementById("prayerChecks");
+      container.innerHTML = "";
+
+      PRAYER_ITEMS.forEach((item, index) => {
+        const checked = state.prayer.checks.includes(index);
+        const label = document.createElement("label");
+
+        label.className = "check-item";
+
+        label.innerHTML = `
+          <input type="checkbox" data-prayer="${index}" ${checked ? "checked" : ""} />
+          ${escapeHTML(item)}
+        `;
+
+        container.appendChild(label);
+      });
+
+      document.getElementById("familyPrayer").value = state.prayer.text || "";
+
+      container.querySelectorAll("input").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          state.prayer.checks = Array.from(container.querySelectorAll("input:checked"))
+            .map((item) => Number(item.dataset.prayer));
+        });
+      });
+    }
+
+    function savePrayer() {
+      state.prayer.text = document.getElementById("familyPrayer").value.trim();
+
+      state.prayer.checks = Array.from(document.querySelectorAll("#prayerChecks input:checked"))
+        .map((item) => Number(item.dataset.prayer));
+
+      saveState();
+      toast("Plan de oración guardado.");
+    }
+
+    function renderLegacy() {
+      document.getElementById("legacyValues").value = state.legacy.values || "";
+      document.getElementById("legacyHome").value = state.legacy.home || "";
+      document.getElementById("legacyLetter").value = state.legacy.letter || "";
+      document.getElementById("legacyPromise").value = state.legacy.promise || "";
+    }
+
+    function saveLegacy() {
+      state.legacy.values = document.getElementById("legacyValues").value.trim();
+      state.legacy.home = document.getElementById("legacyHome").value.trim();
+      state.legacy.letter = document.getElementById("legacyLetter").value.trim();
+      state.legacy.promise = document.getElementById("legacyPromise").value.trim();
+
+      saveState();
+      toast("Mi Legado fue guardado.");
+    }
+
+    function getNextRecommendedDay() {
+      const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
+      return nextIncomplete ? nextIncomplete.day : 21;
+    }
+
+    function getJourneyLevel(percentage) {
+      if (percentage >= 100) return { name: "Completado" };
+      if (percentage >= 76) return { name: "Muy cerca" };
+      if (percentage >= 51) return { name: "Edificando" };
+      if (percentage >= 26) return { name: "Avanzando" };
+      if (percentage > 0) return { name: "Comenzando" };
+      return { name: "Inicio" };
+    }
+
+    function saveProgressSnapshot() {
+      const completed = state.completedDays.length;
+      const total = DAYS.length;
+      const percentage = Math.round((completed / total) * 100);
+      const actionsCount = Object.values(state.actions).filter(Boolean).length;
+
+      const snapshot = {
+        slug: "hombre-hogar",
+        title: "El Hombre que Edifica su Hogar",
+        appTitle: "Mi Hogar con Propósito",
+        completed,
+        total,
+        percentage,
+        radarAverage: getRadarAverage(),
+        talks: state.talks.length,
+        actions: actionsCount,
+        nextDay: getNextRecommendedDay(),
+        level: getJourneyLevel(percentage).name,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(snapshotKey(), JSON.stringify(snapshot));
+    }
+
+    function updateMetrics() {
+      const completed = state.completedDays.length;
+      const percent = Math.round((completed / 21) * 100);
+      const degrees = Math.round((percent / 100) * 360);
+      const actionsCount = Object.values(state.actions).filter(Boolean).length;
+
+      document.getElementById("progressText").textContent = completed + "/21";
+      document.getElementById("progressFill").style.width = percent + "%";
+      document.getElementById("progressPercent").textContent = percent + "%";
+
+      document.getElementById("progressCircle").style.background =
+        `conic-gradient(var(--gold-2) ${degrees}deg, rgba(255,255,255,.15) ${degrees}deg)`;
+
+      document.getElementById("metricDays").textContent = completed;
+      document.getElementById("metricTalks").textContent = state.talks.length;
+      document.getElementById("metricActions").textContent = actionsCount;
+
+      document.getElementById("journeyActions").textContent = actionsCount;
+      document.getElementById("journeyLevel").textContent = getJourneyLevel(percent).name;
+
+      document.getElementById("nextStepMessage").textContent =
+        percent >= 100
+          ? "Camino completado. Puedes volver a cualquier día cuando lo necesites."
+          : "Tu próximo paso: Día " + getNextRecommendedDay();
+
+      document.getElementById("growthMessage").textContent =
+        completed >= 21
+          ? "Misión completa: sigue edificando tu hogar con fe, carácter y legado."
+          : completed >= 15
+            ? "Estás construyendo legado con pasos concretos y constantes."
+            : completed >= 8
+              ? "Tu liderazgo crece cuando amas, escuchas y honras."
+              : completed >= 3
+                ? "El carácter se forma en decisiones pequeñas y fieles."
+                : "Todo hogar firme comienza con un corazón rendido a Dios.";
+
+      updateRadarVisual();
+      saveProgressSnapshot();
+    }
+
+    function scrollToActivePanel(view) {
+      const panel = document.getElementById("panel-" + view);
+
+      if (!panel) {
+        return;
+      }
+
+      panel.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    function switchView(view, options = {}) {
+      if (view === "continue") {
+        continueDay();
+        return;
+      }
+
+      document.querySelectorAll(".panel").forEach((panel) => {
+        panel.classList.remove("active");
+      });
+
+      document.querySelectorAll(".nav-btn, .drawer-btn").forEach((button) => {
+        button.classList.remove("active");
+      });
+
+      const panel = document.getElementById("panel-" + view);
+
+      if (panel) {
+        panel.classList.add("active");
+      }
+
+      document.querySelectorAll(`[data-view="${view}"]`).forEach((button) => {
+        button.classList.add("active");
+      });
+
+      document.getElementById("mobileDrawer").classList.remove("open");
+
+      if (view === "camino") {
+        renderCurrentDay();
+        renderDaySelector();
+      }
+
+      if (view === "radar") renderRadar();
+      if (view === "caracter") renderBadges();
+      if (view === "decisiones") renderDecisions();
+      if (view === "conversaciones") renderTalks();
+      if (view === "oracion") renderPrayer();
+      if (view === "legado") renderLegacy();
+
+      if (options.scroll !== false) {
+        scrollToActivePanel(view);
+      }
+    }
+
+    function continueDay() {
+      const nextIncomplete = DAYS.find((day) => !state.completedDays.includes(day.day));
+
+      currentDay = nextIncomplete ? nextIncomplete.day : 21;
+      state.currentDay = currentDay;
+
+      saveState();
+      renderCurrentDay();
+      renderDaySelector();
+      switchView("camino", { scroll: true });
+    }
+
+    function buildMobileDrawer() {
+      const drawer = document.getElementById("mobileDrawer");
+      drawer.innerHTML = "";
+
+      document.querySelectorAll("#navList .nav-btn").forEach((navButton) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "drawer-btn" + (navButton.classList.contains("active") ? " active" : "");
+        button.dataset.view = navButton.dataset.view;
+        button.textContent = navButton.textContent.trim();
+
+        button.addEventListener("click", () => {
+          switchView(button.dataset.view);
+        });
+
+        drawer.appendChild(button);
+      });
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".nav-btn").forEach((button) => {
+        button.addEventListener("click", () => switchView(button.dataset.view));
+      });
+
+      document.querySelectorAll("[data-go]").forEach((button) => {
+        button.addEventListener("click", () => switchView(button.dataset.go));
+      });
+
+      document.getElementById("menuFloat").addEventListener("click", () => {
+        buildMobileDrawer();
+        document.getElementById("mobileDrawer").classList.toggle("open");
+      });
+      const openToolsBtn = document.getElementById("openToolsBtn");
+
+if (openToolsBtn) {
+  openToolsBtn.addEventListener("click", () => {
+    buildMobileDrawer();
+
+    document
+      .getElementById("mobileDrawer")
+      .classList.add("open");
+  });
+}
+
+      document.getElementById("saveDayBtn").addEventListener("click", saveCurrentDay);
+      document.getElementById("markDoneBtn").addEventListener("click", markCurrentDayDone);
+      document.getElementById("markDoneTopBtn").addEventListener("click", markCurrentDayDone);
+      document.getElementById("nextDayBtn").addEventListener("click", goNextDay);
+      document.getElementById("saveRadarBtn").addEventListener("click", saveRadar);
+      document.getElementById("saveDecisionBtn").addEventListener("click", saveDecision);
+      document.getElementById("saveTalkBtn").addEventListener("click", saveTalk);
+      document.getElementById("savePrayerBtn").addEventListener("click", savePrayer);
+      document.getElementById("saveLegacyBtn").addEventListener("click", saveLegacy);
+    }
+
+    function renderAll() {
+      renderDaySelector();
+      renderCurrentDay();
+      renderRadar();
+      renderBadges();
+      renderDecisions();
+      renderTalks();
+      renderPrayer();
+      renderLegacy();
+      updateMetrics();
+      buildMobileDrawer();
+    }
+
+    bindEvents();
+    renderAll();
+    initAuth();
   </script>
 </body>
 </html>
