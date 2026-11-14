@@ -2619,14 +2619,24 @@
         const {data:created,error:createError}=await supabaseClient.from("user_peace_journeys").insert({user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Diario de Paz",current_day:1,is_active:true}).select().single();if(createError)throw createError;currentJourney=created;
       }
       journeyArchive=await fetchJourneyArchive();
+      allProgressRows=[];
       const [progressResult,entriesResult,pausesResult,limitsResult]=await Promise.all([
-        supabaseClient.from("user_peace_progress").select("*").eq("user_id",currentUser.id),
+        supabaseClient.from("user_peace_progress").select("*").eq("journey_id",currentJourney.id),
         supabaseClient.from("user_peace_entries").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
         supabaseClient.from("user_peace_pauses").select("*").eq("user_id",currentUser.id).order("occurred_at",{ascending:false}),
         supabaseClient.from("user_peace_limits").select("selected_limit_indexes").eq("journey_id",currentJourney.id).maybeSingle()
       ]);
       for(const result of [progressResult,entriesResult,pausesResult,limitsResult])if(result.error)throw result.error;
       completedDays=(progressResult.data||[]).filter(x=>x.completed).map(x=>Number(x.day_number));favoriteDays=(progressResult.data||[]).filter(x=>x.favorite).map(x=>Number(x.day_number));
+      allProgressRows=progressResult.data||[];
+      try{
+        const journeyIds=journeyArchive.map(j=>j.id).filter(Boolean);
+        if(journeyIds.length){
+          const {data:historicalProgress,error:historicalProgressError}=await supabaseClient.from("user_peace_progress").select("*").in("journey_id",journeyIds);
+          if(!historicalProgressError)allProgressRows=historicalProgress||allProgressRows;
+          else console.warn("Favoritos históricos no disponibles; se conserva el recorrido actual.",historicalProgressError);
+        }
+      }catch(error){console.warn("No se pudieron cargar favoritos históricos; la app continuará con el recorrido actual.",error);}
       const cycleMap=Object.fromEntries(journeyArchive.map(j=>[j.id,Number(j.cycle_number)]));
       entries=(entriesResult.data||[]).map(mapEntryRow);
       pauses=(pausesResult.data||[]).map(mapPauseRow);
