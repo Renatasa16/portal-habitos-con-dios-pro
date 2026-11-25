@@ -1171,7 +1171,7 @@
       <h1>Acceso no disponible</h1>
       <p>
         Este recurso forma parte del bundle 21 Días Más Cerca de Dios.
-        Para acceder, necesitas tener una compra activa asociada a este correo.
+        Tu acceso a esta experiencia se valida con la compra asociada a tu cuenta.
       </p>
 
       <div class="actions-row" style="justify-content:center;">
@@ -1278,12 +1278,12 @@
 
           <div class="dashboard-card">
             <span>Oraciones guardadas</span>
-            <strong id="badgeCountMetric">0</strong>
+            <strong id="prayerCountMetric">0</strong>
           </div>
 
           <div class="dashboard-card">
             <span>Gratitudes guardadas</span>
-            <strong id="favoriteCountMetric">0</strong>
+            <strong id="gratitudeCountMetric">0</strong>
           </div>
         </div>
       </section>
@@ -1853,8 +1853,8 @@
     const celebrationPanel = document.getElementById("celebrationPanel");
     const currentDayMetric = document.getElementById("currentDayMetric");
     const currentLevelMetric = document.getElementById("currentLevelMetric");
-    const badgeCountMetric = document.getElementById("badgeCountMetric");
-    const favoriteCountMetric = document.getElementById("favoriteCountMetric");
+    const prayerCountMetric = document.getElementById("prayerCountMetric");
+    const gratitudeCountMetric = document.getElementById("gratitudeCountMetric");
     const badgesGrid = document.getElementById("badgesGrid");
     const toast = document.getElementById("toast");
     const collectionList = document.getElementById("collectionList");
@@ -1929,8 +1929,22 @@
       const cycle=(last?.[0]?.cycle_number||0)+1;
       const payload={user_id:currentUser.id,cycle_number:cycle,title:"21 Días Más Cerca de Dios",current_day:1,completed_days:0,progress_percentage:0,streak_days:0,level_name:"Semilla",is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
       const {data,error:insertError}=await supabaseClient.from("user_journeys").insert(payload).select().single();
-      if(insertError) throw insertError;
-      return data;
+      if(!insertError) return data;
+      // Si otra pestaña o dispositivo creó el recorrido al mismo tiempo,
+      // recuperamos el recorrido activo que Supabase ya protegió como único.
+      if(insertError.code === "23505") {
+        const {data:createdElsewhere,error:refetchError}=await supabaseClient
+          .from("user_journeys")
+          .select("*")
+          .eq("user_id",currentUser.id)
+          .eq("is_active",true)
+          .order("cycle_number",{ascending:false})
+          .limit(1)
+          .maybeSingle();
+        if(refetchError) throw refetchError;
+        if(createdElsewhere) return createdElsewhere;
+      }
+      throw insertError;
     }
 
     async function loadCloudState() {
@@ -1947,18 +1961,13 @@
       historyItems=(history||[]).map(row=>({id:row.id,cycle:row.cycle_number,day:row.day_number,title:row.devotional_title||row.title||`Día ${row.day_number}`,kind:row.kind,text:row.content,date:row.event_date,verse:row.verse_reference||""}));
     }
 
-    async function findEntryRow(day) {
-      const {data,error}=await supabaseClient.from("user_devotional_entries").select("id").eq("journey_id",currentJourney.id).eq("day_number",day).limit(1);
-      if(error) throw error;
-      return data?.[0]?.id || null;
-    }
-
     async function saveEntry(day) {
       const entry=state[day] || getDefaultEntry();
       const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:Boolean(entry.completed),favorite:Boolean(entry.favorite),checks:entry.checks||{},prayer:entry.prayer||"",gratitude:entry.gratitude||"",notes:entry.notes||"",updated_at:new Date().toISOString()};
-      const id=await findEntryRow(day);
-      const result=id ? await supabaseClient.from("user_devotional_entries").update(payload).eq("id",id) : await supabaseClient.from("user_devotional_entries").insert(payload);
-      if(result.error) throw result.error;
+      const {error}=await supabaseClient
+        .from("user_devotional_entries")
+        .upsert(payload,{onConflict:"user_id,journey_id,day_number"});
+      if(error) throw error;
       entry.updatedAt=payload.updated_at;
     }
 
@@ -1983,7 +1992,7 @@
       completedDays.textContent=completed; streakDays.textContent=streak; progressBar.style.width=percentage+"%";
       const pw=progressBar.parentElement; pw.setAttribute("role","progressbar"); pw.setAttribute("aria-valuemin","0"); pw.setAttribute("aria-valuemax","21"); pw.setAttribute("aria-valuenow",String(completed));
       progressPercent.textContent=percentage+"%"; progressCircle.style.background=`conic-gradient(var(--gold) ${degrees}deg, rgba(255,255,255,.14) ${degrees}deg)`;
-      levelPill.textContent=`${level.icon} Nivel ${level.name}`; currentLevelMetric.textContent=level.name; currentDayMetric.textContent=`${currentDay} de 21`; badgeCountMetric.textContent=prayers; favoriteCountMetric.textContent=gratitudes;
+      levelPill.textContent=`${level.icon} Nivel ${level.name}`; currentLevelMetric.textContent=level.name; currentDayMetric.textContent=`${currentDay} de 21`; prayerCountMetric.textContent=prayers; gratitudeCountMetric.textContent=gratitudes;
       renderAchievements(completed,streak); renderBadges(completed,streak,favorites,prayers,gratitudes); celebrationPanel.classList.toggle("hidden",completed<21);
     }
 
@@ -2136,10 +2145,12 @@
         if(error)throw error;
         const newJourney=Array.isArray(data)?data[0]:data;
         if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");
-        currentJourney=newJourney;currentDay=1;initializeState();
         let historyWarning=false;
-        try{await archiveJourneyHistory(previousJourney,previousState);await reloadJournalHistory();}
+        try{await archiveJourneyHistory(previousJourney,previousState);}
         catch(historyError){historyWarning=true;console.error("El nuevo recorrido se creó, pero no pudimos actualizar la vista histórica:",historyError);}
+        // Volvemos a leer Supabase como fuente de verdad después del cambio de ciclo.
+        await loadCloudState();
+        currentDay=1;
         renderApp();document.getElementById("hoy").scrollIntoView({behavior:"smooth",block:"start"});
         showToast(historyWarning?"Nuevo recorrido iniciado. Tu recorrido anterior permanece guardado.":"Nuevo recorrido iniciado. Tu historia fue conservada.");
       }catch(error){
