@@ -1867,7 +1867,24 @@
     }
 
     function bindEvents(){
-      document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
+      document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{
+  const view = b.dataset.view;
+
+  setView(view);
+
+  const target = {
+    momento: "viewMomento",
+    calendario: "viewCalendario",
+    cofre: "viewCofre",
+    tarjetas: "viewTarjetas",
+    legal: "viewLegal"
+  }[view];
+
+  document.getElementById(target)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}));
       els.momentTodayBtn.addEventListener("click",async()=>{selectedDay=getNextRecommendedDay();await saveJourneySettings();setView("momento");renderAll();showToast("Momento del día preparado para tu familia.");});
       els.goCalendarBtn.addEventListener("click",()=>{setView("calendario");document.getElementById("viewCalendario").scrollIntoView({behavior:"smooth",block:"start"});});
       els.kidModeBtn.addEventListener("click",async()=>{kidMode=!kidMode;try{await saveJourneySettings();applyKidMode();renderMoment();showToast(kidMode?"Vista para compartir activada.":"Guía familiar activada.");}catch(error){kidMode=!kidMode;console.error(error);showToast("No pudimos actualizar la vista.",true);}});
