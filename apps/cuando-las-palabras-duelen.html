@@ -1172,7 +1172,90 @@
         .mobile-tools-sheet{display:block;position:fixed;left:10px;right:10px;bottom:78px;z-index:59;background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:24px;padding:14px;box-shadow:0 22px 60px rgba(47,57,41,.28);backdrop-filter:blur(16px)}
         .mobile-tools-sheet.hide{display:none!important}.mobile-tools-head{display:flex;align-items:center;justify-content:space-between;color:var(--green);margin-bottom:12px}.mobile-tools-head button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:white;color:var(--green);font-size:24px}.mobile-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mobile-tools-grid button{min-height:48px;border:1px solid var(--line);border-radius:16px;background:var(--cream);color:var(--green);font-weight:850;padding:10px;text-align:left}
       }
-</style>
+
+
+    /* Navegacion inferior premium: oculta en tablet/escritorio y activa en movil */
+    .mobile-primary-nav {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: calc(86px + env(safe-area-inset-bottom));
+      }
+
+      .app-shell {
+        padding-bottom: calc(118px + env(safe-area-inset-bottom));
+      }
+
+      .mobile-primary-nav {
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        z-index: 60;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        padding: 8px;
+        border: 1px solid rgba(201, 166, 90, .32);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, .96);
+        box-shadow: 0 18px 48px rgba(47, 57, 41, .22);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+      }
+
+      .mobile-primary-nav button {
+        appearance: none;
+        -webkit-appearance: none;
+        min-width: 0;
+        min-height: 56px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        margin: 0;
+        padding: 7px 4px;
+        border: 0;
+        border-radius: 17px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 11px;
+        font-weight: 850;
+        line-height: 1.1;
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background .2s ease, color .2s ease, transform .2s ease;
+      }
+
+      .mobile-primary-nav button span {
+        display: block;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .mobile-primary-nav button.active,
+      .mobile-primary-nav button[aria-current="page"] {
+        background: linear-gradient(145deg, var(--green), var(--green-dark));
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(63, 74, 53, .24);
+      }
+
+      .mobile-primary-nav button:active {
+        transform: translateY(1px);
+      }
+
+      .mobile-primary-nav button:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 2px;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
@@ -2064,7 +2147,15 @@
     function bindEvents() {
       document.querySelectorAll("[data-view]").forEach((button) => {
         button.addEventListener("click", () => {
-          setView(button.dataset.view);
+          const view = button.dataset.view;
+          setView(view);
+          const target = {
+            camino: "viewCamino", registro: "viewRegistro", limites: "viewLimites",
+            pausa: "viewPausa", verdades: "viewVerdades", sanidad: "viewSanidad",
+            historial: "viewHistorial", biblioteca: "viewBiblioteca",
+            ayuda: "viewAyuda", legal: "viewLegal"
+          }[view];
+          document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
       });
 
@@ -2152,6 +2243,7 @@
     }
 
     function renderAll() {
+      renderJourneySelectors();
       renderGuidedDay();
       renderDayGrid();
       renderLimits();
@@ -2476,15 +2568,27 @@
       try{const table=type==="entry"?"user_peace_entries":"user_peace_pauses";const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);if(error)throw error;if(type==="entry")entries=entries.filter(row=>row.id!==id);else pauses=pauses.filter(row=>row.id!==id);renderAll();showToast("Registro eliminado.");}
       catch(error){console.error(error);showToast("No pudimos eliminar el registro.",true);}
     }
+    function getCurrentJourneyEntries(){return entries.filter((item)=>item.journeyId===currentJourney?.id);}
+    function getCurrentJourneyPauses(){return pauses.filter((item)=>item.journeyId===currentJourney?.id);}
+
     async function clearHistory() {
-      if(!window.confirm("¿Quieres borrar todos tus registros emocionales y pausas guardadas?"))return;
-      try{const [entriesDelete,pausesDelete]=await Promise.all([supabaseClient.from("user_peace_entries").delete().eq("user_id",currentUser.id),supabaseClient.from("user_peace_pauses").delete().eq("user_id",currentUser.id)]);if(entriesDelete.error)throw entriesDelete.error;if(pausesDelete.error)throw pausesDelete.error;entries=[];pauses=[];renderAll();showToast("Historial privado borrado.");}
-      catch(error){console.error(error);await reloadPeaceHistory();renderAll();showToast("No pudimos completar el borrado. El historial fue actualizado.",true);}
+      const selectedJourneyId=historyJourneyFilter==="actual"?currentJourney?.id:historyJourneyFilter;
+      if(!selectedJourneyId){showToast("Selecciona un recorrido antes de borrar su historial.",true);return;}
+      const selectedCycle=journeyArchive.find((item)=>item.id===selectedJourneyId)?.cycle_number||currentJourney?.cycle_number||1;
+      if(!window.confirm(`¿Quieres borrar los registros emocionales y pausas del Recorrido ${selectedCycle}? Los demás recorridos permanecerán guardados.`))return;
+      try{
+        const [entriesDelete,pausesDelete]=await Promise.all([
+          supabaseClient.from("user_peace_entries").delete().eq("user_id",currentUser.id).eq("journey_id",selectedJourneyId),
+          supabaseClient.from("user_peace_pauses").delete().eq("user_id",currentUser.id).eq("journey_id",selectedJourneyId)
+        ]);
+        if(entriesDelete.error)throw entriesDelete.error;if(pausesDelete.error)throw pausesDelete.error;
+        await reloadPeaceHistory();renderAll();showToast(`Historial del Recorrido ${selectedCycle} borrado.`);
+      }catch(error){console.error(error);await reloadPeaceHistory();renderAll();showToast("No pudimos completar el borrado. El historial fue actualizado.",true);}
     }
-    function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=entries.slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=pauses.slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();}));}
+    function renderPersonalLibrary(){if(!els.personalLibraryList)return;let items=[];if(activeLibraryTab==="favorites")items=favoriteDays.map((n)=>{const d=days.find((x)=>x.day===n);return d?{title:`Día ${d.day} · ${d.title}`,label:d.stage,text:d.identity,day:d.day}:null}).filter(Boolean);else if(activeLibraryTab==="entries")items=getCurrentJourneyEntries().slice().reverse().map((x)=>({title:`Registro emocional · Día ${x.day||"-"}`,label:x.date,text:x.note||`${x.before} → ${x.after}`}));else if(activeLibraryTab==="pauses")items=getCurrentJourneyPauses().slice().reverse().map((x)=>({title:`Pausa digital · Día ${x.day||"-"}`,label:x.date,text:`${x.time} · ${x.action}${x.reason?"\n"+x.reason:""}`}));else if(activeLibraryTab==="limits")items=limits.map((i)=>({title:"Límite activo",label:"Cuidado digital",text:limitOptions[i]})).filter((x)=>x.text);else items=days.map((d)=>({title:`Día ${d.day} · ${d.title}`,label:"Verdad de identidad",text:d.identity,day:d.day}));if(!items.length){els.personalLibraryList.innerHTML='<div class="empty-library">Todavía no hay contenido guardado en esta sección.</div>';return;}els.personalLibraryList.innerHTML=items.map((x)=>`<article class="library-item"><div class="library-item-head"><div><strong>${escapeHTML(x.title)}</strong><small>${escapeHTML(x.label||"")}</small></div>${x.day?`<button type="button" class="btn-soft open-library-day" data-day="${x.day}">Abrir día</button>`:""}</div><p>${escapeHTML(x.text||"")}</p></article>`).join("");els.personalLibraryList.querySelectorAll(".open-library-day").forEach((b)=>b.addEventListener("click",()=>{selectedDay=Number(b.dataset.day);persistSelectedDay();setView("camino");renderAll();document.getElementById("viewCamino")?.scrollIntoView({behavior:"smooth",block:"start"});}));}
     function renderHealingPath() {
       if (!els.healingCelebration) return;
-      els.healingDays.textContent=completedDays.length; els.healingEntries.textContent=entries.length; els.healingPauses.textContent=pauses.length; els.healingLimits.textContent=limits.length;
+      els.healingDays.textContent=completedDays.length; els.healingEntries.textContent=getCurrentJourneyEntries().length; els.healingPauses.textContent=getCurrentJourneyPauses().length; els.healingLimits.textContent=limits.length;
       if (completedDays.length >= days.length) {
         els.healingCelebration.innerHTML=`<div class="final-celebration"><h3>Tu camino continúa 🌿</h3><p>Completaste los 21 días y construiste pasos de cuidado, límites y pausas conscientes. Este recorrido puede comenzar nuevamente sin borrar tu historial personal.</p><div class="action-row"><button class="btn-gold" type="button" id="restartPeaceJourney">Iniciar un nuevo recorrido</button><button class="btn-soft" type="button" id="openPeaceHistory">Revisar mi historial</button></div></div>`;
         document.getElementById("restartPeaceJourney").addEventListener("click", restartPeaceJourney);
@@ -2494,7 +2598,7 @@
     async function restartPeaceJourney() {
       if(!window.confirm("¿Quieres iniciar un nuevo recorrido de 21 días? El recorrido actual, sus registros, pausas, límites y favoritos quedarán conservados en tu historial."))return;
       const button=document.getElementById("restartPeaceJourney");setBusy(button,true,"Preparando nuevo recorrido...");
-      try{const {data,error}=await supabaseClient.rpc("start_new_peace_journey");if(error)throw error;const newJourney=Array.isArray(data)?data[0]:data;if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");currentJourney=newJourney;completedDays=[];favoriteDays=[];limits=[];selectedDay=1;historyJourneyFilter="actual";journeyArchive=await fetchJourneyArchive();renderAll();setView("camino");document.getElementById("viewCamino").scrollIntoView({behavior:"smooth",block:"start"});showToast("Nuevo recorrido iniciado. Tu historia anterior quedó guardada.");}
+      try{const {data,error}=await supabaseClient.rpc("start_new_peace_journey");if(error)throw error;const newJourney=Array.isArray(data)?data[0]:data;if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");historyJourneyFilter="actual";await loadPeaceData();selectedDay=1;renderAll();setView("camino");document.getElementById("viewCamino").scrollIntoView({behavior:"smooth",block:"start"});showToast("Nuevo recorrido iniciado. Tu historia anterior quedó guardada.");}
       catch(error){console.error(error);const message=String(error?.message||"");showToast(message.includes("NOT_COMPLETE")?"Completa los 21 días antes de iniciar otro recorrido.":"No pudimos iniciar el nuevo recorrido.",true);}
       finally{setBusy(button,false);}
     }
@@ -2590,7 +2694,12 @@
       currentJourney=active;
       if(!currentJourney){
         const {data:last,error:lastError}=await supabaseClient.from("user_peace_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);if(lastError)throw lastError;
-        const {data:created,error:createError}=await supabaseClient.from("user_peace_journeys").insert({user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Diario de Paz",current_day:1,is_active:true}).select().single();if(createError)throw createError;currentJourney=created;
+        const {data:created,error:createError}=await supabaseClient.from("user_peace_journeys").insert({user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Diario de Paz",current_day:1,is_active:true}).select().single();
+        if(!createError)currentJourney=created;
+        else if(createError.code==="23505"){
+          const {data:createdElsewhere,error:refetchError}=await supabaseClient.from("user_peace_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();
+          if(refetchError)throw refetchError;if(!createdElsewhere)throw createError;currentJourney=createdElsewhere;
+        }else throw createError;
       }
       journeyArchive=await fetchJourneyArchive();
       const [progressResult,entriesResult,pausesResult,limitsResult]=await Promise.all([
