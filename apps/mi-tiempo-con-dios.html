@@ -2019,6 +2019,7 @@
       reflectionText.innerHTML=formattedReflection; verseText.textContent=devotional.verse; focusText.textContent=devotional.focus; shortPrayerText.textContent=devotional.prayer; actionText.textContent=devotional.action; journalPromptText.textContent=devotional.journal; declarationText.textContent=devotional.declaration;
       favoriteButton.textContent=entry.favorite?"★ Favorito guardado":"☆ Guardar favorito"; favoriteButton.classList.toggle("active",entry.favorite); favoriteButton.setAttribute("aria-pressed",String(entry.favorite));
       document.querySelectorAll("[data-check]").forEach(c=>{c.checked=Boolean(entry.checks[c.dataset.check]);}); prayerInput.value=entry.prayer||""; gratitudeInput.value=entry.gratitude||""; notesInput.value=entry.notes||"";
+      completeDayButton.textContent = entry.completed ? "✓ Completado" : "Marcar día como completado";
       nextDayButton.textContent=currentDay===21?(entry.completed?"Ver cierre del recorrido":"Completa el día para finalizar"):"Siguiente día";
     }
 
