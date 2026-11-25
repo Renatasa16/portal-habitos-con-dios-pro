@@ -1842,8 +1842,13 @@
       if(lastError)throw lastError;
       const payload={user_id:currentUser.id,cycle_number:(last?.[0]?.cycle_number||0)+1,title:"Momentos con Dios en Familia",current_day:1,completed_count:0,progress_percentage:0,journey_level:"Inicio",kid_mode:false,is_active:true,started_at:new Date().toISOString(),updated_at:new Date().toISOString()};
       const {data,error:insertError}=await supabaseClient.from("user_family_journeys").insert(payload).select().single();
-      if(insertError)throw insertError;
-      return data;
+      if(!insertError)return data;
+      if(insertError.code==="23505"){
+        const {data:createdElsewhere,error:refetchError}=await supabaseClient.from("user_family_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();
+        if(refetchError)throw refetchError;
+        if(createdElsewhere)return createdElsewhere;
+      }
+      throw insertError;
     }
 
     async function loadCloudState(){
@@ -1966,8 +1971,7 @@
         if(journeyId&&journeyId!==currentJourney.id)showToast("Estás viendo un momento de un recorrido anterior.");
       }
       function restoreCofreState(){if(!cofreReturnState){setView("cofre");return;}const state=cofreReturnState;selectedMemoryType=state.category;els.memoryCycleFilter.value=state.cycle;els.memorySearch.value=state.query;els.memoryYearFilter.value=state.year;els.memoryMonthFilter.value=state.month;selectMemoryCategory(state.category);setView("cofre");requestAnimationFrame(()=>window.scrollTo({top:state.scrollY,behavior:"smooth"}));cofreReturnState=null;}
-    async function findEntryId(day){const {data,error}=await supabaseClient.from("user_family_entries").select("id").eq("journey_id",currentJourney.id).eq("day_number",day).limit(1);if(error)throw error;return data?.[0]?.id||null;}
-    async function saveEntry(day){const id=await findEntryId(day),payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:completed.includes(day),favorite:favorites.includes(day),updated_at:new Date().toISOString()};const result=id?await supabaseClient.from("user_family_entries").update(payload).eq("id",id).eq("user_id",currentUser.id):await supabaseClient.from("user_family_entries").insert(payload);if(result.error)throw result.error;}
+    async function saveEntry(day){const payload={user_id:currentUser.id,journey_id:currentJourney.id,day_number:day,completed:completed.includes(day),favorite:favorites.includes(day),updated_at:new Date().toISOString()};const {error}=await supabaseClient.from("user_family_entries").upsert(payload,{onConflict:"user_id,journey_id,day_number"});if(error)throw error;}
     async function saveJourneySettings(){const percentage=Math.round((completed.length/momentos.length)*100),level=getJourneyLevel(percentage).name,payload={current_day:selectedDay,completed_count:completed.length,progress_percentage:percentage,journey_level:level,kid_mode:kidMode,completed_at:percentage===100?(currentJourney.completed_at||new Date().toISOString()):null,updated_at:new Date().toISOString()};const {data,error}=await supabaseClient.from("user_family_journeys").update(payload).eq("id",currentJourney.id).eq("user_id",currentUser.id).select().single();if(error)throw error;currentJourney=data;}
 
     async function toggleCompleted(day){const was=completed.includes(day);completed=was?completed.filter(x=>x!==day):[...completed,day];try{await saveEntry(day);await saveJourneySettings();renderAll();showToast(was?"Momento marcado como pendiente.":(kidMode?"¡Estrella de fe ganada! ⭐":"Momento completado. Qué lindo paso familiar."));}catch(error){completed=was?[...completed,day]:completed.filter(x=>x!==day);console.error(error);renderAll();showToast("No pudimos actualizar este momento.",true);}}
@@ -2001,8 +2005,8 @@
         if(error)throw error;
         const newJourney=Array.isArray(data)?data[0]:data;
         if(!newJourney?.id)throw new Error("La función no devolvió el nuevo recorrido.");
-        currentJourney=newJourney;selectedDay=1;completed=[];favorites=[];kidMode=Boolean(newJourney.kid_mode);
-        journeyArchive=await reloadJourneyArchive();renderCycleOptions();applyKidMode();renderAll();setView("momento");
+        await loadCloudState();selectedDay=1;
+        renderCycleOptions();applyKidMode();renderAll();setView("momento");
         document.getElementById("viewMomento").scrollIntoView({behavior:"smooth",block:"start"});
         showToast("Nuevo recorrido iniciado. El Cofre conserva todos sus recuerdos.");
       }catch(error){
