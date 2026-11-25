@@ -1,21 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Mi Hogar con Propósito | Hábitos con Dios Pro</title>
-
-  <meta
-    name="description"
-    content="App premium de 21 días para hombres cristianos que desean edificar su hogar con carácter, discernimiento, oración y propósito."
-  />
-
-  <meta name="theme-color" content="#111D35" />
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mi Hogar con Propósito | Hábitos con Dios Pro</title>
+<meta content="App premium de 21 días para hombres cristianos que desean edificar su hogar con carácter, discernimiento, oración y propósito." name="description"/>
+<meta content="#111D35" name="theme-color"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
     :root {
       --navy: #111D35;
       --navy-2: #172846;
@@ -1250,553 +1243,470 @@
     .history-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:12px;align-items:end;margin:18px 0}.history-toolbar label{font-weight:900;color:var(--navy)}.history-toolbar select{width:100%;margin-top:7px;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--navy);font:inherit}.history-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.history-metric{padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--soft)}.history-metric small{display:block;color:var(--muted);font-weight:800;margin-bottom:8px}.history-metric strong{font-size:28px;color:var(--navy)}.history-list{display:grid;gap:12px}.history-item{padding:18px;border:1px solid var(--line);border-radius:20px;background:#fff}.history-item h3{margin:0 0 7px;color:var(--navy)}.history-item p{margin:4px 0;color:var(--muted);line-height:1.55}.history-empty{padding:24px;border:1px dashed var(--line);border-radius:20px;text-align:center;color:var(--muted);background:var(--soft)}@media(max-width:720px){.history-toolbar{grid-template-columns:1fr}.history-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:420px){.history-summary{grid-template-columns:1fr}}
 .history-filters{display:grid;grid-template-columns:1.2fr repeat(4,minmax(130px,.7fr));gap:10px;margin:18px 0}.history-filters label{font-size:.77rem;font-weight:900;color:var(--navy)}.history-filters input,.history-filters select{margin-top:7px}.history-results-count{color:var(--muted);font-weight:800;margin:8px 0 14px}.history-card{padding:18px;border:1px solid var(--line);border-radius:20px;background:#fff}.history-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:9px}.history-card h3{margin:0;color:var(--navy);font-size:1.02rem}.history-card-badge{padding:6px 9px;border-radius:999px;background:var(--gold-soft);color:var(--navy);font-size:.72rem;font-weight:900}.history-card p{margin:5px 0;color:var(--muted);line-height:1.55}.history-date{font-size:.75rem;color:var(--muted);font-weight:800}.history-card.favorite{border-color:rgba(201,154,61,.65);background:linear-gradient(180deg,#fff,var(--gold-soft))}@media(max-width:980px){.history-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.history-filters{grid-template-columns:1fr}.history-card-head{flex-direction:column}}</style>
 </head>
-
 <body>
-  <div id="loadingScreen" class="loading-screen">
-    <div class="status-card">
-      <div class="status-icon">🛡</div>
-      <h1>Preparando tu espacio</h1>
-      <p>Estamos validando tu sesión y tu acceso a Mi Hogar con Propósito.</p>
-    </div>
-  </div>
-  <div class="toast app-only" id="toast">Guardado correctamente.</div>
-
-  <button class="menu-float app-only" type="button" id="menuFloat" aria-label="Abrir menú">☰</button>
-  <div class="mobile-drawer app-only" id="mobileDrawer" aria-label="Navegación móvil"></div>
-
-  <section class="locked-screen hidden" id="lockedScreen">
-    <div class="locked-card">
-      <h2>Acceso no disponible</h2>
-      <p>
+<div class="loading-screen" id="loadingScreen">
+<div class="status-card">
+<div class="status-icon">🛡</div>
+<h1>Preparando tu espacio</h1>
+<p>Estamos validando tu sesión y tu acceso a Mi Hogar con Propósito.</p>
+</div>
+</div>
+<div class="toast app-only" id="toast">Guardado correctamente.</div>
+<button aria-label="Abrir menú" class="menu-float app-only" id="menuFloat" type="button">☰</button>
+<div aria-label="Navegación móvil" class="mobile-drawer app-only" id="mobileDrawer"></div>
+<section class="locked-screen hidden" id="lockedScreen">
+<div class="locked-card">
+<h2>Acceso no disponible</h2>
+<p>
         Tu sesión está activa, pero no encontramos permiso para abrir esta aplicación.
-        Vuelve a la Mi Espacio o compra el acceso correspondiente.
+        Vuelve a Mi Espacio o compra el acceso correspondiente.
       </p>
-
-      <div class="btn-row" style="justify-content:center;">
-        <button class="btn gold" type="button" onclick="window.location.href='../dashboard.html'">
+<div class="btn-row" style="justify-content:center;">
+<button class="btn gold" onclick="window.location.href='../dashboard.html'" type="button">
           Volver a Mi Espacio
         </button>
-
-        <button class="btn primary" type="button" onclick="window.location.href='https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar'">
+<button class="btn primary" onclick="window.location.href='https://skoolrenovae.store/products/el-hombre-que-edifica-su-hogar'" type="button">
           Comprar acceso
         </button>
-      </div>
-    </div>
-  </section>
-
-  <main id="appShell" class="app-shell app-only">
-    <header class="topbar">
-      <a class="brand" href="..//dashboard.html" aria-label="Volver a Mi Espacio">
-        <div class="app-logo" aria-hidden="true">✦</div>
-
-        <div class="brand-text">
-          <strong>Hábitos con Dios Pro</strong>
-          <span>Mi Hogar con Propósito</span>
-        </div>
-      </a>
-
-      <div class="top-actions">
-        <span class="pill" id="userPill">Validando sesión...</span>
-
-        <a class="btn-soft" href="../dashboard.html">
+</div>
+</div>
+</section>
+<main class="app-shell app-only" id="appShell">
+<header class="topbar">
+<a aria-label="Volver a Mi Espacio" class="brand" href="..//dashboard.html">
+<div aria-hidden="true" class="app-logo">✦</div>
+<div class="brand-text">
+<strong>Hábitos con Dios Pro</strong>
+<span>Mi Hogar con Propósito</span>
+</div>
+</a>
+<div class="top-actions">
+<span class="pill" id="userPill">Validando sesión...</span>
+<a class="btn-soft" href="../dashboard.html">
           Volver a Mi Espacio
         </a>
-
-        <button class="btn-danger" id="logoutBtn" type="button">
+<button class="btn-danger" id="logoutBtn" type="button">
           Cerrar sesión
         </button>
-      </div>
-    </header>
-
-    <section class="hero" id="inicio">
-      <div class="hero-inner">
-        <div>
-          <div class="eyebrow">App HOMBRES · misión de 21 días</div>
-
-          <h1>
+</div>
+</header>
+<section class="hero" id="inicio">
+<div class="hero-inner">
+<div>
+<div class="eyebrow">App HOMBRES · misión de 21 días</div>
+<h1>
             Mi Hogar
             <span>con Propósito</span>
-          </h1>
-
-          <p>
+</h1>
+<p>
             Una experiencia digital para hombres que desean fortalecer su carácter,
             orar por su familia, tomar decisiones con discernimiento y construir
             un legado de fe desde la humildad, la presencia y el amor práctico.
           </p>
-
-          <div class="hero-actions">
-            <button class="hero-card" type="button" data-go="continue">
-              <strong>🛡 Comenzar día de hoy</strong>
-              <small>Abre el próximo día pendiente del camino de 21 días.</small>
-            </button>
-
-            <button class="hero-card" type="button" data-go="radar">
-              <strong>📍 Radar del Hogar</strong>
-              <small>Evalúa el estado espiritual y relacional de tu casa.</small>
-            </button>
-
-            <button class="hero-card" type="button" data-go="legado">
-              <strong>🏛 Mi Legado</strong>
-              <small>Escribe la huella espiritual que deseas dejar.</small>
-            </button>
-            
-            <button class="hero-card" type="button" id="openToolsBtn">
-  <strong>☰ Explorar herramientas</strong>
+<div class="hero-actions">
+<button class="hero-card" data-go="continue" type="button">
+<strong>🛡 Comenzar día de hoy</strong>
+<small>Abre el próximo día pendiente del camino de 21 días.</small>
+</button>
+<button class="hero-card" data-go="radar" type="button">
+<strong>📍 Radar del Hogar</strong>
+<small>Evalúa el estado espiritual y relacional de tu casa.</small>
+</button>
+<button class="hero-card" data-go="legado" type="button">
+<strong>🏛 Mi Legado</strong>
+<small>Escribe la huella espiritual que deseas dejar.</small>
+</button>
+<button class="hero-card" id="openToolsBtn" type="button">
+<strong>☰ Explorar herramientas</strong>
 <small>
 Descubre recursos para fortalecer tu hogar,
 tu liderazgo y tus relaciones.
 </small>
 </button>
-          </div>
-        </div>
-
-        <aside class="journey-card" aria-label="Tu recorrido de edificación">
-          <span class="journey-kicker">Tu recorrido</span>
-
-          <div class="journey-title">
-            <h2>Camino de edificación</h2>
-          </div>
-
-          <div class="progress-circle-wrap">
-            <div class="progress-circle" id="progressCircle">
-              <strong id="progressPercent">0%</strong>
-              <span>avance</span>
-            </div>
-
-            <div class="journey-copy">
-              <strong id="progressText">0/21</strong>
-              <span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
-              <span id="nextStepMessage">Tu próximo paso: Día 1</span>
-            </div>
-          </div>
-
-          <div class="journey-progress-wrap" aria-label="Progreso de 21 días">
-            <div class="journey-progress-fill" id="progressFill"></div>
-          </div>
-
-          <div class="journey-metrics">
-            <div class="journey-metric">
-              <small>Etapa</small>
-              <strong id="journeyLevel">Inicio</strong>
-            </div>
-
-            <div class="journey-metric">
-              <small>Radar</small>
-              <strong id="journeyRadar">0</strong>
-            </div>
-
-            <div class="journey-metric">
-              <small>Acciones</small>
-              <strong id="journeyActions">0</strong>
-            </div>
-          </div>
-          <div class="cycle-tools"><span class="cycle-badge" id="cycleBadge">Recorrido 1 · En curso</span><button class="btn gold hide" type="button" id="restartJourneyBtn">Comenzar un nuevo recorrido</button></div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="summary-grid" aria-label="Resumen de avance">
-      <article class="metric">
-        <small>Días completados</small>
-        <strong id="metricDays">0</strong>
-      </article>
-
-      <article class="metric">
-        <small>Radar promedio</small>
-        <strong id="metricRadar">0</strong>
-      </article>
-
-      <article class="metric">
-        <small>Conversaciones</small>
-        <strong id="metricTalks">0</strong>
-      </article>
-
-      <article class="metric">
-        <small>Acciones guardadas</small>
-        <strong id="metricActions">0</strong>
-      </article>
-    </section>
-
-    <section class="layout">
-      <aside class="sidebar" id="sidebar">
-        <h2>Navegación</h2>
-
-        <div class="nav-list" id="navList">
-          <button class="nav-btn active" type="button" data-view="camino">Camino 21 días <span>🛡</span></button>
-          <button class="nav-btn" type="button" data-view="radar">Radar del Hogar <span>📍</span></button>
-          <button class="nav-btn" type="button" data-view="caracter">Pasos de Carácter <span>⭐</span></button>
-          <button class="nav-btn" type="button" data-view="decisiones">Decisiones Sabias <span>🧭</span></button>
-          <button class="nav-btn" type="button" data-view="conversaciones">Conversaciones Clave <span>💬</span></button>
-          <button class="nav-btn" type="button" data-view="oracion">Oración Familiar <span>🙏</span></button>
-          <button class="nav-btn" type="button" data-view="legado">Mi Legado <span>🏛</span></button>
-          <button class="nav-btn" type="button" data-view="historial">Mis recorridos <span>🗂️</span></button>
-          <button class="nav-btn" type="button" data-view="legal">Aviso importante <span>⚖️</span></button>
-        </div>
-      </aside>
-
-      <div class="main-panels">
-        <section class="panel active" id="panel-camino">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Camino principal</div>
-                <h2>21 días para edificar tu hogar con Dios</h2>
-                <p>
+</div>
+</div>
+<aside aria-label="Tu recorrido de edificación" class="journey-card">
+<span class="journey-kicker">Tu recorrido</span>
+<div class="journey-title">
+<h2>Camino de edificación</h2>
+</div>
+<div class="progress-circle-wrap">
+<div class="progress-circle" id="progressCircle">
+<strong id="progressPercent">0%</strong>
+<span>avance</span>
+</div>
+<div class="journey-copy">
+<strong id="progressText">0/21</strong>
+<span id="growthMessage">Todo hogar firme comienza con un corazón rendido a Dios.</span>
+<span id="nextStepMessage">Tu próximo paso: Día 1</span>
+</div>
+</div>
+<div aria-label="Progreso de 21 días" class="journey-progress-wrap">
+<div class="journey-progress-fill" id="progressFill"></div>
+</div>
+<div class="journey-metrics">
+<div class="journey-metric">
+<small>Etapa</small>
+<strong id="journeyLevel">Inicio</strong>
+</div>
+<div class="journey-metric">
+<small>Radar</small>
+<strong id="journeyRadar">0</strong>
+</div>
+<div class="journey-metric">
+<small>Acciones</small>
+<strong id="journeyActions">0</strong>
+</div>
+</div>
+<div class="cycle-tools"><span class="cycle-badge" id="cycleBadge">Recorrido 1 · En curso</span><button class="btn gold hide" id="restartJourneyBtn" type="button">Comenzar un nuevo recorrido</button></div>
+</aside>
+</div>
+</section>
+<section aria-label="Resumen de avance" class="summary-grid">
+<article class="metric">
+<small>Días completados</small>
+<strong id="metricDays">0</strong>
+</article>
+<article class="metric">
+<small>Radar promedio</small>
+<strong id="metricRadar">0</strong>
+</article>
+<article class="metric">
+<small>Conversaciones</small>
+<strong id="metricTalks">0</strong>
+</article>
+<article class="metric">
+<small>Acciones guardadas</small>
+<strong id="metricActions">0</strong>
+</article>
+</section>
+<section class="layout">
+<aside class="sidebar" id="sidebar">
+<h2>Navegación</h2>
+<div class="nav-list" id="navList">
+<button class="nav-btn active" data-view="camino" type="button">Camino 21 días <span>🛡</span></button>
+<button class="nav-btn" data-view="radar" type="button">Radar del Hogar <span>📍</span></button>
+<button class="nav-btn" data-view="caracter" type="button">Pasos de Carácter <span>⭐</span></button>
+<button class="nav-btn" data-view="decisiones" type="button">Decisiones Sabias <span>🧭</span></button>
+<button class="nav-btn" data-view="conversaciones" type="button">Conversaciones Clave <span>💬</span></button>
+<button class="nav-btn" data-view="oracion" type="button">Oración Familiar <span>🙏</span></button>
+<button class="nav-btn" data-view="legado" type="button">Mi Legado <span>🏛</span></button>
+<button class="nav-btn" data-view="historial" type="button">Mis recorridos <span>🗂️</span></button>
+<button class="nav-btn" data-view="legal" type="button">Aviso importante <span>⚖️</span></button>
+</div>
+</aside>
+<div class="main-panels">
+<section class="panel active" id="panel-camino">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Camino principal</div>
+<h2>21 días para edificar tu hogar con Dios</h2>
+<p>
                   Cada día incluye referencia bíblica, idea central, reflexión breve,
                   oración, journaling, acción práctica y declaración de identidad.
                 </p>
-              </div>
-
-              <button class="btn gold" type="button" id="markDoneTopBtn">
+</div>
+<button class="btn gold" id="markDoneTopBtn" type="button">
                 Marcar día completado
               </button>
-            </div>
-
-            <div class="day-selector" id="daySelector"></div>
-
-            <div class="devotional-card">
-              <div class="devotional-top">
-                <div class="day-meta">
-                  <span class="tag" id="dayNumberTag">Día 1</span>
-                  <span class="tag" id="daySectionTag">Identidad</span>
-                  <span class="tag" id="dayReferenceTag">Mateo 6:33</span>
-                </div>
-
-                <h3 id="dayTitle">Dios antes que todo</h3>
-                <p id="dayIdea">Todo liderazgo saludable comienza bajo el gobierno de Dios.</p>
-              </div>
-
-              <div class="devotional-body">
-                <div class="content-box">
-                  <h4>📖 Reflexión devocional</h4>
-                  <p id="dayReflection"></p>
-                </div>
-
-                <div class="content-box">
-                  <h4>🙏 Oración breve</h4>
-                  <p id="dayPrayer"></p>
-                </div>
-
-                <div class="journal-grid">
-                  <div class="content-box">
-                    <h4>✍️ Pregunta de journaling</h4>
-                    <p id="dayJournalQuestion"></p>
-                  </div>
-
-                  <div class="content-box">
-                    <h4>✅ Acción práctica</h4>
-                    <p id="dayAction"></p>
-                  </div>
-                </div>
-
-                <div class="content-box">
-                  <h4>🛡 Declaración de identidad</h4>
-                  <p id="dayIdentity"></p>
-                </div>
-
-                <div class="content-box">
-                  <h4>📝 Mi registro del día</h4>
-
-                  <div class="field">
-                    <label for="journalText">Qué me mostró Dios hoy</label>
-                    <textarea id="journalText" placeholder="Escribe una reflexión honesta y privada..."></textarea>
-                  </div>
-
-                  <div class="field">
-                    <label for="actionText">Mi acción concreta de hoy</label>
-                    <textarea id="actionText" placeholder="Ejemplo: escuchar con calma, pedir perdón, orar con mi familia..."></textarea>
-                  </div>
-
-                  <div class="btn-row">
-                    <button class="btn primary" type="button" id="saveDayBtn">Guardar día</button>
-                      <button class="btn" type="button" id="favoriteDayBtn">☆ Guardar en favoritos</button>
-                    <button class="btn gold" type="button" id="markDoneBtn">Marcar completado</button>
-                    <button class="btn" type="button" id="nextDayBtn">Siguiente día</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-radar">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Diagnóstico devocional</div>
-                <h2>Radar del Hogar</h2>
-                <p>
+</div>
+<div class="day-selector" id="daySelector"></div>
+<div class="devotional-card">
+<div class="devotional-top">
+<div class="day-meta">
+<span class="tag" id="dayNumberTag">Día 1</span>
+<span class="tag" id="daySectionTag">Identidad</span>
+<span class="tag" id="dayReferenceTag">Mateo 6:33</span>
+</div>
+<h3 id="dayTitle">Dios antes que todo</h3>
+<p id="dayIdea">Todo liderazgo saludable comienza bajo el gobierno de Dios.</p>
+</div>
+<div class="devotional-body">
+<div class="content-box">
+<h4>📖 Reflexión devocional</h4>
+<p id="dayReflection"></p>
+</div>
+<div class="content-box">
+<h4>🙏 Oración breve</h4>
+<p id="dayPrayer"></p>
+</div>
+<div class="journal-grid">
+<div class="content-box">
+<h4>✍️ Pregunta de journaling</h4>
+<p id="dayJournalQuestion"></p>
+</div>
+<div class="content-box">
+<h4>✅ Acción práctica</h4>
+<p id="dayAction"></p>
+</div>
+</div>
+<div class="content-box">
+<h4>🛡 Declaración de identidad</h4>
+<p id="dayIdentity"></p>
+</div>
+<div class="content-box">
+<h4>📝 Mi registro del día</h4>
+<div class="field">
+<label for="journalText">Qué me mostró Dios hoy</label>
+<textarea id="journalText" placeholder="Escribe una reflexión honesta y privada..."></textarea>
+</div>
+<div class="field">
+<label for="actionText">Mi acción concreta de hoy</label>
+<textarea id="actionText" placeholder="Ejemplo: escuchar con calma, pedir perdón, orar con mi familia..."></textarea>
+</div>
+<div class="btn-row">
+<button class="btn primary" id="saveDayBtn" type="button">Guardar día</button>
+<button class="btn" id="favoriteDayBtn" type="button">☆ Guardar en favoritos</button>
+<button class="btn gold" id="markDoneBtn" type="button">Marcar completado</button>
+<button class="btn" id="nextDayBtn" type="button">Siguiente día</button>
+</div>
+</div>
+</div>
+</div>
+</article>
+</section>
+<section class="panel" id="panel-radar">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Diagnóstico devocional</div>
+<h2>Radar del Hogar</h2>
+<p>
                   Evalúa con honestidad áreas clave de tu hogar. No es para condenarte,
                   sino para ayudarte a identificar dónde dar el próximo paso.
                 </p>
-              </div>
-
-              <button class="btn gold" type="button" id="saveRadarBtn">Guardar radar</button>
-            </div>
-
-            <div class="radar-grid">
-              <div class="radar-visual">
-                <div class="radar-score" id="radarScoreRing">
-                  <div class="radar-score-inner">
-                    <strong id="radarAverage">0</strong>
-                    <span id="radarLabel">En construcción</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="range-list" id="radarRanges"></div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-caracter">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Estados visuales de crecimiento</div>
-                <h2>Pasos de Carácter</h2>
-                <p>Estas insignias se desbloquean con tu avance en el camino de 21 días.</p>
-              </div>
-            </div>
-
-            <div class="badge-grid" id="badgeGrid"></div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-decisiones">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Discernimiento</div>
-                <h2>Decisiones con Sabiduría</h2>
-                <p>
+</div>
+<button class="btn gold" id="saveRadarBtn" type="button">Guardar radar</button>
+</div>
+<div class="radar-grid">
+<div class="radar-visual">
+<div class="radar-score" id="radarScoreRing">
+<div class="radar-score-inner">
+<strong id="radarAverage">0</strong>
+<span id="radarLabel">En construcción</span>
+</div>
+</div>
+</div>
+<div class="range-list" id="radarRanges"></div>
+</div>
+</article>
+</section>
+<section class="panel" id="panel-caracter">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Estados visuales de crecimiento</div>
+<h2>Pasos de Carácter</h2>
+<p>Estas insignias se desbloquean con tu avance en el camino de 21 días.</p>
+</div>
+</div>
+<div class="badge-grid" id="badgeGrid"></div>
+</article>
+</section>
+<section class="panel" id="panel-decisiones">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Discernimiento</div>
+<h2>Decisiones con Sabiduría</h2>
+<p>
                   Antes de avanzar bajo presión, detente, ora, busca consejo
                   y evalúa si la decisión honra a Dios y cuida tu hogar.
                 </p>
-              </div>
-            </div>
-
-            <div class="cards-grid">
-              <div class="mini-card">
-                <h3>Nueva decisión</h3>
-
-                <div class="field">
-                  <label for="decisionTitle">Decisión o situación</label>
-                  <input id="decisionTitle" type="text" placeholder="Cambio laboral, conversación difícil, compra importante..." />
-                </div>
-
-                <div class="field">
-                  <label for="decisionOptions">Opciones que estoy considerando</label>
-                  <textarea id="decisionOptions" placeholder="Escribe las opciones posibles..."></textarea>
-                </div>
-
-                <div class="check-grid">
-                  <label class="check-item"><input type="checkbox" class="decision-check" value="ore" />Ya oré por esta decisión.</label>
-                  <label class="check-item"><input type="checkbox" class="decision-check" value="consejo" />Pedí consejo sabio o profesional si corresponde.</label>
-                  <label class="check-item"><input type="checkbox" class="decision-check" value="paz" />La decisión trae paz, no solo alivio inmediato.</label>
-                  <label class="check-item"><input type="checkbox" class="decision-check" value="honra" />La decisión honra a Dios y cuida a mi familia.</label>
-                </div>
-
-                <div class="btn-row">
-                  <button class="btn primary" type="button" id="saveDecisionBtn">Guardar decisión</button>
-                </div>
-              </div>
-
-              <div class="mini-card">
-                <h3>Historial</h3>
-                <div class="list" id="decisionList"></div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-conversaciones">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Escucha y honra</div>
-                <h2>Conversaciones Clave</h2>
-                <p>
+</div>
+</div>
+<div class="cards-grid">
+<div class="mini-card">
+<h3>Nueva decisión</h3>
+<div class="field">
+<label for="decisionTitle">Decisión o situación</label>
+<input id="decisionTitle" placeholder="Cambio laboral, conversación difícil, compra importante..." type="text"/>
+</div>
+<div class="field">
+<label for="decisionOptions">Opciones que estoy considerando</label>
+<textarea id="decisionOptions" placeholder="Escribe las opciones posibles..."></textarea>
+</div>
+<div class="check-grid">
+<label class="check-item"><input class="decision-check" type="checkbox" value="ore"/>Ya oré por esta decisión.</label>
+<label class="check-item"><input class="decision-check" type="checkbox" value="consejo"/>Pedí consejo sabio o profesional si corresponde.</label>
+<label class="check-item"><input class="decision-check" type="checkbox" value="paz"/>La decisión trae paz, no solo alivio inmediato.</label>
+<label class="check-item"><input class="decision-check" type="checkbox" value="honra"/>La decisión honra a Dios y cuida a mi familia.</label>
+</div>
+<div class="btn-row">
+<button class="btn primary" id="saveDecisionBtn" type="button">Guardar decisión</button>
+</div>
+</div>
+<div class="mini-card">
+<h3>Historial</h3>
+<div class="list" id="decisionList"></div>
+</div>
+</div>
+</article>
+</section>
+<section class="panel" id="panel-conversaciones">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Escucha y honra</div>
+<h2>Conversaciones Clave</h2>
+<p>
                   Registra conversaciones importantes para crecer en escucha,
                   honra, calma y seguimiento práctico.
                 </p>
-              </div>
-            </div>
-
-            <div class="cards-grid">
-              <div class="mini-card">
-                <h3>Nueva conversación</h3>
-
-                <div class="field">
-                  <label for="talkPerson">Con quién fue</label>
-                  <input id="talkPerson" type="text" placeholder="Esposa, hijo, familiar, mentor..." />
-                </div>
-
-                <div class="field">
-                  <label for="talkTopic">Tema</label>
-                  <input id="talkTopic" type="text" placeholder="Perdón, finanzas, crianza, planes..." />
-                </div>
-
-                <div class="field">
-                  <label for="talkLearning">Qué aprendí</label>
-                  <textarea id="talkLearning" placeholder="Qué escuchaste o qué necesitas mejorar..."></textarea>
-                </div>
-
-                <div class="field">
-                  <label for="talkNext">Próximo paso</label>
-                  <textarea id="talkNext" placeholder="Acción concreta de seguimiento..."></textarea>
-                </div>
-
-                <div class="btn-row">
-                  <button class="btn primary" type="button" id="saveTalkBtn">Guardar conversación</button>
-                </div>
-              </div>
-
-              <div class="mini-card">
-                <h3>Registro</h3>
-                <div class="list" id="talkList"></div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-oracion">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Intercesión familiar</div>
-                <h2>Mi Plan de Oración Familiar</h2>
-                <p>
+</div>
+</div>
+<div class="cards-grid">
+<div class="mini-card">
+<h3>Nueva conversación</h3>
+<div class="field">
+<label for="talkPerson">Con quién fue</label>
+<input id="talkPerson" placeholder="Esposa, hijo, familiar, mentor..." type="text"/>
+</div>
+<div class="field">
+<label for="talkTopic">Tema</label>
+<input id="talkTopic" placeholder="Perdón, finanzas, crianza, planes..." type="text"/>
+</div>
+<div class="field">
+<label for="talkLearning">Qué aprendí</label>
+<textarea id="talkLearning" placeholder="Qué escuchaste o qué necesitas mejorar..."></textarea>
+</div>
+<div class="field">
+<label for="talkNext">Próximo paso</label>
+<textarea id="talkNext" placeholder="Acción concreta de seguimiento..."></textarea>
+</div>
+<div class="btn-row">
+<button class="btn primary" id="saveTalkBtn" type="button">Guardar conversación</button>
+</div>
+</div>
+<div class="mini-card">
+<h3>Registro</h3>
+<div class="list" id="talkList"></div>
+</div>
+</div>
+</article>
+</section>
+<section class="panel" id="panel-oracion">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Intercesión familiar</div>
+<h2>Mi Plan de Oración Familiar</h2>
+<p>
                   Ora por tu corazón, por sabiduría, por tu familia,
                   por decisiones, provisión integral y entrega del hogar a Dios.
                 </p>
-              </div>
-
-              <button class="btn gold" type="button" id="savePrayerBtn">Guardar oración</button>
-            </div>
-
-            <div class="cards-grid">
-              <div class="mini-card">
-                <h3>Enfoques de oración</h3>
-                <div class="check-grid" id="prayerChecks"></div>
-              </div>
-
-              <div class="mini-card">
-                <h3>Mi oración de hoy</h3>
-
-                <div class="field">
-                  <label for="familyPrayer">Escribe tu oración</label>
-                  <textarea id="familyPrayer" placeholder="Padre, guía mi corazón, mi familia y mis decisiones..."></textarea>
-                </div>
-
-                <div class="notice">
+</div>
+<button class="btn gold" id="savePrayerBtn" type="button">Guardar oración</button>
+</div>
+<div class="cards-grid">
+<div class="mini-card">
+<h3>Enfoques de oración</h3>
+<div class="check-grid" id="prayerChecks"></div>
+</div>
+<div class="mini-card">
+<h3>Mi oración de hoy</h3>
+<div class="field">
+<label for="familyPrayer">Escribe tu oración</label>
+<textarea id="familyPrayer" placeholder="Padre, guía mi corazón, mi familia y mis decisiones..."></textarea>
+</div>
+<div class="notice">
                   La oración no reemplaza conversación, responsabilidad, consejería o ayuda profesional cuando corresponde.
                   La fe y la sabiduría práctica pueden caminar juntas.
                 </div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-legado">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Visión de hogar</div>
-                <h2>Mi Legado</h2>
-                <p>
+</div>
+</div>
+</article>
+</section>
+<section class="panel" id="panel-legado">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Visión de hogar</div>
+<h2>Mi Legado</h2>
+<p>
                   Escribe con intención la huella espiritual,
                   relacional y práctica que deseas dejar en tu familia.
                 </p>
-              </div>
+</div>
+<button class="btn gold" id="saveLegacyBtn" type="button">Guardar legado</button>
+</div>
+<div class="journal-grid">
+<div class="field">
+<label for="legacyValues">Valores que quiero transmitir</label>
+<textarea id="legacyValues" placeholder="Fe, honra, verdad, humildad, servicio..."></textarea>
+</div>
+<div class="field">
+<label for="legacyHome">La visión de hogar que quiero construir</label>
+<textarea id="legacyHome" placeholder="Cómo quieres que se viva la fe, el amor y la paz en casa..."></textarea>
+</div>
+<div class="field">
+<label for="legacyLetter">Carta a mi familia</label>
+<textarea id="legacyLetter" placeholder="Querida familia, deseo que recuerden de mí..."></textarea>
+</div>
+<div class="field">
+<label for="legacyPromise">Mi compromiso delante de Dios</label>
+<textarea id="legacyPromise" placeholder="Señor, hoy decido edificar mi hogar con..."></textarea>
+</div>
+</div>
 
-              <button class="btn gold" type="button" id="saveLegacyBtn">Guardar legado</button>
-            </div>
-
-            <div class="journal-grid">
-              <div class="field">
-                <label for="legacyValues">Valores que quiero transmitir</label>
-                <textarea id="legacyValues" placeholder="Fe, honra, verdad, humildad, servicio..."></textarea>
-              </div>
-
-              <div class="field">
-                <label for="legacyHome">La visión de hogar que quiero construir</label>
-                <textarea id="legacyHome" placeholder="Cómo quieres que se viva la fe, el amor y la paz en casa..."></textarea>
-              </div>
-
-              <div class="field">
-                <label for="legacyLetter">Carta a mi familia</label>
-                <textarea id="legacyLetter" placeholder="Querida familia, deseo que recuerden de mí..."></textarea>
-              </div>
-
-              <div class="field">
-                <label for="legacyPromise">Mi compromiso delante de Dios</label>
-                <textarea id="legacyPromise" placeholder="Señor, hoy decido edificar mi hogar con..."></textarea>
-              </div>
-            </div>
-          <section class="panel" id="panel-historial">
-            <article class="section-card">
-              <div class="section-head"><div><div class="section-kicker">Historia de edificación</div><h2>Mi Historia</h2><p>Busca y vuelve a tus favoritos, reflexiones, acciones, decisiones, conversaciones y oraciones de cada recorrido.</p></div></div>
-              <div class="history-filters">
-                <label>Buscar<input id="historySearch" type="search" placeholder="Buscar en mi historia..."></label>
-                <label>Recorrido<select id="historyJourneySelect"><option value="all">Todos</option></select></label>
-                <label>Contenido<select id="historyTypeSelect"><option value="all">Todos</option><option value="favorite">⭐ Favoritos</option><option value="reflection">📝 Reflexiones</option><option value="action">🎯 Acciones</option><option value="decision">🧭 Decisiones</option><option value="talk">💬 Conversaciones</option><option value="prayer">🙏 Oración familiar</option></select></label>
-                <label>Año<select id="historyYearSelect"><option value="all">Todos</option></select></label>
-                <label>Mes<select id="historyMonthSelect"><option value="all">Todos</option><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select></label>
-              </div>
-              <div id="historyStatus" class="history-empty">Cargando tu historia...</div><div id="historySummary" class="history-summary hide"></div><div id="historyResultsCount" class="history-results-count"></div><div id="historyDetails" class="history-list"></div>
-            </article>
-          </section>
-          </article>
-        </section>
-
-        <section class="panel" id="panel-legal">
-          <article class="section-card">
-            <div class="section-head">
-              <div>
-                <div class="section-kicker">Aviso importante</div>
-                <h2>Acompañamiento devocional responsable</h2>
-                <p>Esta app fue creada como apoyo espiritual y práctico para el crecimiento personal y familiar.</p>
-              </div>
-            </div>
-
-            <div class="notice">
-              <p>
+</article>
+</section>
+<section class="panel" id="panel-historial">
+<article class="section-card">
+<div class="section-head"><div><div class="section-kicker">Historia de edificación</div><h2>Mi Historia</h2><p>Busca y vuelve a tus favoritos, reflexiones, acciones, decisiones, conversaciones y oraciones de cada recorrido.</p></div></div>
+<div class="history-filters">
+<label>Buscar<input id="historySearch" placeholder="Buscar en mi historia..." type="search"/></label>
+<label>Recorrido<select id="historyJourneySelect"><option value="all">Todos</option></select></label>
+<label>Contenido<select id="historyTypeSelect"><option value="all">Todos</option><option value="favorite">⭐ Favoritos</option><option value="reflection">📝 Reflexiones</option><option value="action">🎯 Acciones</option><option value="decision">🧭 Decisiones</option><option value="talk">💬 Conversaciones</option><option value="prayer">🙏 Oración familiar</option></select></label>
+<label>Año<select id="historyYearSelect"><option value="all">Todos</option></select></label>
+<label>Mes<select id="historyMonthSelect"><option value="all">Todos</option><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select></label>
+</div>
+<div class="history-empty" id="historyStatus">Cargando tu historia...</div><div class="history-summary hide" id="historySummary"></div><div class="history-results-count" id="historyResultsCount"></div><div class="history-list" id="historyDetails"></div>
+</article>
+</section><section class="panel" id="panel-legal">
+<article class="section-card">
+<div class="section-head">
+<div>
+<div class="section-kicker">Aviso importante</div>
+<h2>Acompañamiento devocional responsable</h2>
+<p>Esta app fue creada como apoyo espiritual y práctico para el crecimiento personal y familiar.</p>
+</div>
+</div>
+<div class="notice">
+<p>
                 Este recurso es una guía devocional de acompañamiento y no reemplaza consejería pastoral,
                 terapia, acompañamiento psicológico, atención médica, consejería matrimonial,
                 asesoría financiera profesional ni apoyo especializado.
               </p>
-              <br />
-              <p>
+<br/>
+<p>
                 Si existe violencia, adicción, crisis familiar, pensamientos de hacerte daño,
                 conflicto grave en el matrimonio, presión financiera severa o una situación que pone
                 en riesgo a alguien del hogar, busca ayuda inmediata de un profesional calificado,
                 líder pastoral responsable, autoridad correspondiente o línea de emergencia local.
               </p>
-              <br />
-              <p>
+<br/>
+<p>
                 Ser un hombre de Dios también implica reconocer cuándo necesitas ayuda y recibir acompañamiento sabio.
               </p>
-            </div>
-          </article>
-        </section>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <strong>Hábitos con Dios Pro · Hombres</strong><br />
-      Mi Hogar con Propósito · Complemento digital de El Hombre que Edifica su Hogar.<br />
+</div>
+</article>
+</section>
+</div>
+</section>
+<footer class="footer">
+<strong>Hábitos con Dios Pro · Hombres</strong><br/>
+      Mi Hogar con Propósito · Complemento digital de El Hombre que Edifica su Hogar.<br/>
       Tus registros se guardan de forma privada en tu cuenta para que puedas continuar desde tus dispositivos.
     </footer>
-  </main>
-
-  
-  <nav class="mobile-primary-nav app-only" aria-label="Navegación principal">
-    <button class="active" type="button" data-mobile-main="camino"><span>🛡</span>Hoy</button>
-    <button type="button" data-mobile-main="radar"><span>📍</span>Radar</button>
-    <button type="button" data-mobile-main="legado"><span>🏛</span>Mi legado</button>
-    <button type="button" id="openMobileTools"><span>✨</span>Más</button>
-  </nav>
+</main>
+<nav aria-label="Navegación principal" class="mobile-primary-nav app-only">
+<button class="active" data-mobile-main="camino" type="button"><span>🛡</span>Hoy</button>
+<button data-mobile-main="radar" type="button"><span>📍</span>Radar</button>
+<button data-mobile-main="legado" type="button"><span>🏛</span>Mi legado</button>
+<button id="openMobileTools" type="button"><span>✨</span>Más</button>
+</nav>
 <script>
     const LOGIN_URL = "../login.html";
     const LIBRARY_URL = "../dashboard.html";
