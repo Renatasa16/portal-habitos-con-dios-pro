@@ -1242,16 +1242,29 @@
         animation: none !important;
       }
     }
-  </style>
+  
+    .cycle-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.cycle-badge{padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(227,185,95,.28);color:var(--gold-soft);font-weight:900;font-size:.8rem}.mobile-primary-nav{display:none}@media(max-width:720px){body{padding-bottom:calc(88px + env(safe-area-inset-bottom))}.app-shell{padding-bottom:calc(120px + env(safe-area-inset-bottom))}.menu-float{display:none!important}.mobile-primary-nav{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:96;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px;border:1px solid rgba(201,154,61,.34);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 18px 48px rgba(17,29,53,.24);backdrop-filter:blur(18px)}.mobile-primary-nav button{appearance:none;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:17px;background:transparent;color:var(--muted);font:inherit;font-size:11px;font-weight:900}.mobile-primary-nav button span{font-size:20px}.mobile-primary-nav button.active,.mobile-primary-nav button[aria-current="page"]{background:linear-gradient(145deg,var(--navy),var(--navy-3));color:#fff}.mobile-drawer{inset:auto 10px calc(88px + env(safe-area-inset-bottom)) 10px;max-height:62vh;overflow:auto}}
+
+    .loading-screen,.locked-screen{min-height:100vh;display:grid;place-items:center;padding:32px 20px}.status-card{width:min(660px,100%);background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:32px;padding:36px;box-shadow:var(--shadow);text-align:center}.status-icon{width:64px;height:64px;border-radius:24px;display:grid;place-items:center;margin:0 auto 18px;background:var(--gold-soft);color:var(--navy);font-size:28px;font-weight:950}.status-card h1{color:var(--navy);font-size:clamp(32px,6vw,52px);line-height:1;margin:0 0 14px}.status-card p{color:var(--muted);line-height:1.7;font-size:16px;margin:0 0 24px}.hidden{display:none!important}body:not(.auth-ready) .app-only{display:none!important}
+
+    .history-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:12px;align-items:end;margin:18px 0}.history-toolbar label{font-weight:900;color:var(--navy)}.history-toolbar select{width:100%;margin-top:7px;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--navy);font:inherit}.history-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.history-metric{padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--soft)}.history-metric small{display:block;color:var(--muted);font-weight:800;margin-bottom:8px}.history-metric strong{font-size:28px;color:var(--navy)}.history-list{display:grid;gap:12px}.history-item{padding:18px;border:1px solid var(--line);border-radius:20px;background:#fff}.history-item h3{margin:0 0 7px;color:var(--navy)}.history-item p{margin:4px 0;color:var(--muted);line-height:1.55}.history-empty{padding:24px;border:1px dashed var(--line);border-radius:20px;text-align:center;color:var(--muted);background:var(--soft)}@media(max-width:720px){.history-toolbar{grid-template-columns:1fr}.history-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:420px){.history-summary{grid-template-columns:1fr}}
+</style>
 </head>
 
 <body>
-  <div class="toast" id="toast">Guardado correctamente.</div>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="status-card">
+      <div class="status-icon">🛡</div>
+      <h1>Preparando tu espacio</h1>
+      <p>Estamos validando tu sesión y tu acceso a Mi Hogar con Propósito.</p>
+    </div>
+  </div>
+  <div class="toast app-only" id="toast">Guardado correctamente.</div>
 
-  <button class="menu-float" type="button" id="menuFloat" aria-label="Abrir menú">☰</button>
-  <div class="mobile-drawer" id="mobileDrawer" aria-label="Navegación móvil"></div>
+  <button class="menu-float app-only" type="button" id="menuFloat" aria-label="Abrir menú">☰</button>
+  <div class="mobile-drawer app-only" id="mobileDrawer" aria-label="Navegación móvil"></div>
 
-  <section class="locked-screen" id="lockedScreen">
+  <section class="locked-screen hidden" id="lockedScreen">
     <div class="locked-card">
       <h2>Acceso no disponible</h2>
       <p>
@@ -1271,7 +1284,7 @@
     </div>
   </section>
 
-  <main class="app-shell">
+  <main id="appShell" class="app-shell app-only">
     <header class="topbar">
       <a class="brand" href="..//dashboard.html" aria-label="Volver a Mi Espacio">
         <div class="app-logo" aria-hidden="true">✦</div>
@@ -1286,7 +1299,7 @@
         <span class="pill" id="userPill">Validando sesión...</span>
 
         <a class="btn-soft" href="../dashboard.html">
-          Volver a la Mi Espacio
+          Volver a Mi Espacio
         </a>
 
         <button class="btn-danger" id="logoutBtn" type="button">
@@ -1377,6 +1390,7 @@ tu liderazgo y tus relaciones.
               <strong id="journeyActions">0</strong>
             </div>
           </div>
+          <div class="cycle-tools"><span class="cycle-badge" id="cycleBadge">Recorrido 1 · En curso</span><button class="btn gold hide" type="button" id="restartJourneyBtn">Comenzar un nuevo recorrido</button></div>
         </aside>
       </div>
     </section>
@@ -1415,6 +1429,7 @@ tu liderazgo y tus relaciones.
           <button class="nav-btn" type="button" data-view="conversaciones">Conversaciones Clave <span>💬</span></button>
           <button class="nav-btn" type="button" data-view="oracion">Oración Familiar <span>🙏</span></button>
           <button class="nav-btn" type="button" data-view="legado">Mi Legado <span>🏛</span></button>
+          <button class="nav-btn" type="button" data-view="historial">Mis recorridos <span>🗂️</span></button>
           <button class="nav-btn" type="button" data-view="legal">Aviso importante <span>⚖️</span></button>
         </div>
       </aside>
@@ -1721,6 +1736,27 @@ tu liderazgo y tus relaciones.
           </article>
         </section>
 
+        <section class="panel" id="panel-historial">
+          <article class="section-card">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">Historia de edificación</div>
+                <h2>Mis recorridos</h2>
+                <p>Consulta tus recorridos anteriores sin modificar el camino que estás viviendo hoy.</p>
+              </div>
+            </div>
+            <div class="history-toolbar">
+              <label for="historyJourneySelect">Recorrido
+                <select id="historyJourneySelect" aria-label="Seleccionar recorrido"></select>
+              </label>
+              <button class="btn secondary" type="button" id="loadHistoryJourneyBtn">Ver recorrido</button>
+            </div>
+            <div id="historyStatus" class="history-empty">Selecciona un recorrido para recordar lo que construiste.</div>
+            <div id="historySummary" class="history-summary hide" aria-live="polite"></div>
+            <div id="historyDetails" class="history-list"></div>
+          </article>
+        </section>
+
         <section class="panel" id="panel-legal">
           <article class="section-card">
             <div class="section-head">
@@ -1757,27 +1793,24 @@ tu liderazgo y tus relaciones.
     <footer class="footer">
       <strong>Hábitos con Dios Pro · Hombres</strong><br />
       Mi Hogar con Propósito · Complemento digital de El Hombre que Edifica su Hogar.<br />
-      Tus registros se guardan localmente en este dispositivo.
+      Tus registros se guardan de forma privada en tu cuenta para que puedas continuar desde tus dispositivos.
     </footer>
   </main>
 
-  <script>
-    const STORAGE_KEY_BASE = "hcd_mi_hogar_con_proposito_v5";
-    const STORAGE_PROGRESS_SNAPSHOT_PREFIX = "hcd_hombre_hogar_progress_snapshot";
-
+  
+  <nav class="mobile-primary-nav app-only" aria-label="Navegación principal">
+    <button class="active" type="button" data-mobile-main="camino"><span>🛡</span>Hoy</button>
+    <button type="button" data-mobile-main="radar"><span>📍</span>Radar</button>
+    <button type="button" data-mobile-main="legado"><span>🏛</span>Mi legado</button>
+    <button type="button" id="openMobileTools"><span>✨</span>Más</button>
+  </nav>
+<script>
     const LOGIN_URL = "../login.html";
     const LIBRARY_URL = "../dashboard.html";
     const REQUIRE_LOGIN = true;
 
     const SUPABASE_URL = "https://cianhgmqhdnvwvjxtuji.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
-
-    const REQUIRED_PRODUCT_KEYS = [
-      "el-hombre-que-edifica-su-hogar",
-      "mi-hogar-con-proposito",
-      "hombres",
-      "all_access"
-    ];
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_07ZFJ9Y7Y_hJEPCG9tpzzw_GChxwVmz";
 
     const REQUIRED_PERMISSION = "access_hombre_edifica";
     const REQUIRED_SKU = "HCD_HOMBRE_EDIFICA_BUNDLE";
@@ -1785,18 +1818,10 @@ tu liderazgo y tus relaciones.
 
     let currentUser = null;
 
-    const supabaseClient = (() => {
-      const hasRealConfig =
-        SUPABASE_URL.startsWith("https://") &&
-        SUPABASE_ANON_KEY.length > 30 &&
-        !SUPABASE_URL.includes("PEGA_AQUI");
-
-      if (window.supabase && hasRealConfig) {
-        return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      }
-
-      return null;
-    })();
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 
     const DAYS = [
       {
@@ -2172,11 +2197,6 @@ tu liderazgo y tus relaciones.
     let currentDay = state.currentDay || 1;
 
     function saveState() {
-      localStorage.setItem(
-        storageKey(),
-        JSON.stringify(state)
-      );
-
       updateMetrics();
       renderBadges();
     }
@@ -2217,128 +2237,6 @@ tu liderazgo y tus relaciones.
         '\\"'
       );
          }
-
-    async function initAuth() {
-      document
-        .getElementById("logoutBtn")
-        .addEventListener("click", async () => {
-          try {
-            if (supabaseClient) {
-              await supabaseClient.auth.signOut();
-            }
-          } catch (error) {
-            console.error(error);
-          }
-
-          window.location.href = LOGIN_URL;
-        });
-
-      if (!supabaseClient) {
-        document.getElementById("userPill").textContent = "Supabase no configurado";
-        return;
-      }
-
-      try {
-        const { data: sessionData, error } = await supabaseClient.auth.getSession();
-
-        if (error) {
-          throw error;
-        }
-
-        const session = sessionData && sessionData.session;
-
-        if (REQUIRE_LOGIN && (!session || !session.user)) {
-          window.location.href = LOGIN_URL;
-          return;
-        }
-
-        if (session && session.user) {
-          currentUser = session.user;
-          document.getElementById("userPill").textContent = session.user.email || "Sesión activa";
-
-          state = loadState();
-          currentDay = state.currentDay || 1;
-
-          renderAll();
-        }
-
-        const hasAccess = await validateAccess(session && session.user);
-
-        if (!hasAccess) {
-          return;
-        }
-      } catch (error) {
-        console.error(error);
-
-        if (REQUIRE_LOGIN) {
-          window.location.href = LOGIN_URL;
-        }
-      }
-    }
-
-    async function validateAccess(user) {
-      if (!supabaseClient || !user) {
-        return true;
-      }
-
-      const now = new Date();
-      const normalizedEmail = String(user.email || "").trim().toLowerCase();
-
-      try {
-        const { data, error } = await supabaseClient
-          .from("user_entitlements")
-          .select("product_key,status,expires_at")
-          .eq("user_id", user.id)
-          .in("product_key", REQUIRED_PRODUCT_KEYS)
-          .limit(10);
-
-        if (!error) {
-          const active = (data || []).some((row) => {
-            const status = String(row.status || "").toLowerCase();
-            const expirationIsValid = !row.expires_at || new Date(row.expires_at) > now;
-
-            return status !== "inactive" && expirationIsValid;
-          });
-
-          if (active) {
-            return true;
-          }
-        }
-      } catch (error) {
-        console.warn("Validación user_entitlements omitida", error);
-      }
-
-      try {
-        const { data, error } = await supabaseClient
-          .from("entitlements")
-          .select("email,permission_key,source_sku,active")
-          .eq("email", normalizedEmail)
-          .eq("active", true)
-          .limit(20);
-
-        if (!error) {
-          const active = (data || []).some((item) => {
-            const permission = String(item.permission_key || "");
-            const sku = String(item.source_sku || "");
-
-            return (
-              (permission === REQUIRED_PERMISSION && sku === REQUIRED_SKU) ||
-              permission === "membership_all_access" ||
-              sku === "HCD_ALL_ACCESS"
-            );
-          });
-
-          if (active) {
-            return true;
-          }
-        }
-      } catch (error) {
-        console.warn("Validación entitlements omitida", error);
-      }
-
-      document.getElementById("lockedScreen").classList.add("active");
-      return false;
-    }
 
     function renderDaySelector() {
       const container = document.getElementById("daySelector");
@@ -2750,7 +2648,7 @@ tu liderazgo y tus relaciones.
         updatedAt: new Date().toISOString()
       };
 
-      localStorage.setItem(snapshotKey(), JSON.stringify(snapshot));
+      return snapshot;
     }
 
     function updateMetrics() {
@@ -2925,13 +2823,130 @@ if (openToolsBtn) {
       renderTalks();
       renderPrayer();
       renderLegacy();
+      renderHistorySelector();
       updateMetrics();
       buildMobileDrawer();
     }
 
+    // PRODUCCION: Supabase es la fuente de verdad.
+    let currentJourney = null;
+    let journeyArchive = [];
+    function cloudDefaultState(){return {currentDay:1,completedDays:[],favorites:[],journals:{},actions:{},radar:{},decisions:[],talks:[],prayer:{checks:[],text:""},legacy:{values:"",home:"",letter:"",promise:"",notes:""}};}
+    function safeJSON(v,f){try{return typeof v==="string"?JSON.parse(v):(v??f);}catch{return f;}}
+    async function validateAccess(user){
+      if(!user)return false;
+      const email=String(user.email||"").trim().toLowerCase();
+      const {data,error}=await supabaseClient.from("entitlements").select("permission_key,source_sku,active").eq("email",email).eq("active",true).limit(20);
+      if(error)throw error;
+      return (data||[]).some(item=>(item.permission_key===REQUIRED_PERMISSION&&item.source_sku===REQUIRED_SKU)||item.permission_key==="membership_all_access"||item.source_sku==="HCD_ALL_ACCESS");
+    }
+    async function getOrCreateHomeJourney(){
+      const q=await supabaseClient.from("user_home_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();if(q.error)throw q.error;if(q.data)return q.data;
+      const last=await supabaseClient.from("user_home_journeys").select("cycle_number").eq("user_id",currentUser.id).order("cycle_number",{ascending:false}).limit(1);if(last.error)throw last.error;
+      const payload={user_id:currentUser.id,cycle_number:(last.data?.[0]?.cycle_number||0)+1,title:"El Hombre que Edifica su Hogar",current_day:1,completed_count:0,progress_percentage:0,journey_stage:1,journey_level:"Inicio",is_active:true};
+      const created=await supabaseClient.from("user_home_journeys").insert(payload).select().single();if(!created.error)return created.data;
+      if(created.error.code==="23505"){const again=await supabaseClient.from("user_home_journeys").select("*").eq("user_id",currentUser.id).eq("is_active",true).order("cycle_number",{ascending:false}).limit(1).maybeSingle();if(again.error)throw again.error;if(again.data)return again.data;}throw created.error;
+    }
+    async function loadCloudState(){
+      state=cloudDefaultState();currentJourney=await getOrCreateHomeJourney();currentDay=Math.min(21,Math.max(1,Number(currentJourney.current_day)||1));state.currentDay=currentDay;
+      const rs=await Promise.all([
+        supabaseClient.from("user_home_progress").select("*").eq("user_id",currentUser.id).eq("journey_id",currentJourney.id).order("day_number"),
+        supabaseClient.from("user_home_radar").select("*").eq("user_id",currentUser.id).eq("journey_id",currentJourney.id).maybeSingle(),
+        supabaseClient.from("user_home_decisions").select("*").eq("user_id",currentUser.id).eq("journey_id",currentJourney.id).order("decided_at",{ascending:false}),
+        supabaseClient.from("user_home_talks").select("*").eq("user_id",currentUser.id).eq("journey_id",currentJourney.id).order("talked_at",{ascending:false}),
+        supabaseClient.from("user_home_prayer").select("*").eq("user_id",currentUser.id).eq("journey_id",currentJourney.id).maybeSingle(),
+        supabaseClient.from("user_home_profile").select("*").eq("user_id",currentUser.id).maybeSingle(),
+        supabaseClient.from("user_home_journeys").select("id,cycle_number,is_active,completed_at,archived_at").eq("user_id",currentUser.id).order("cycle_number")
+      ]);rs.forEach(r=>{if(r.error)throw r.error;});
+      (rs[0].data||[]).forEach(r=>{if(r.completed)state.completedDays.push(+r.day_number);if(r.favorite)state.favorites.push(+r.day_number);state.journals[r.day_number]=r.journal_text||"";state.actions[r.day_number]=r.action_text||"";});
+      if(rs[1].data)state.radar=rs[1].data.radar_values||{};
+      state.decisions=(rs[2].data||[]).map(r=>({id:r.id,title:r.situation,options:r.options_text,checks:[r.prayer_text&&"ore",r.counsel_text&&"consejo",r.peace_text&&"paz",r.honor_text&&"honra"].filter(Boolean),recommendation:r.recommendation,date:new Date(r.decided_at).toLocaleDateString("es-AR")}));
+      state.talks=(rs[3].data||[]).map(r=>({id:r.id,person:r.person_context,topic:r.topic,learning:r.learning,next:r.next_step,date:new Date(r.talked_at).toLocaleDateString("es-AR")}));
+      if(rs[4].data)state.prayer={checks:safeJSON(rs[4].data.prayer_focus,[]),text:rs[4].data.prayer_text||""};
+      if(rs[5].data)state.legacy={values:rs[5].data.values_text||"",home:rs[5].data.home_vision||"",letter:rs[5].data.family_letter||"",promise:rs[5].data.commitment_before_god||"",notes:rs[5].data.legacy_notes||""};
+      journeyArchive=rs[6].data||[];renderAll();
+    }
+    async function saveJourneyProgress(){const c=state.completedDays.length,p=Math.round(c/21*100),l=getJourneyLevel(p).name;const r=await supabaseClient.from("user_home_journeys").update({current_day:currentDay,completed_count:c,progress_percentage:p,journey_stage:p>=100?3:p>=51?2:1,journey_level:l}).eq("id",currentJourney.id).eq("user_id",currentUser.id);if(r.error)throw r.error;}
+    async function saveCurrentDay(show=true){state.journals[currentDay]=document.getElementById("journalText").value.trim();state.actions[currentDay]=document.getElementById("actionText").value.trim();const done=state.completedDays.includes(currentDay);const r=await supabaseClient.from("user_home_progress").upsert({user_id:currentUser.id,journey_id:currentJourney.id,day_number:currentDay,completed:done,favorite:state.favorites.includes(currentDay),journal_text:state.journals[currentDay]||"",action_text:state.actions[currentDay]||"",completed_at:done?new Date().toISOString():null},{onConflict:"journey_id,day_number"});if(r.error)throw r.error;await saveJourneyProgress();updateMetrics();if(show)toast("Día "+currentDay+" guardado.");}
+    async function markCurrentDayDone(){if(!state.completedDays.includes(currentDay))state.completedDays.push(currentDay);state.completedDays.sort((a,b)=>a-b);try{await saveCurrentDay(false);renderDaySelector();renderCurrentDay();toast("Día "+currentDay+" completado.");}catch(e){console.error(e);state.completedDays=state.completedDays.filter(d=>d!==currentDay);toast("No pudimos completar el día.");}}
+    function renderCurrentDay(){const item=DAYS.find(d=>d.day===currentDay)||DAYS[0];document.getElementById("dayNumberTag").textContent="Día "+item.day;document.getElementById("daySectionTag").textContent=item.section;document.getElementById("dayReferenceTag").textContent=item.reference;document.getElementById("dayTitle").textContent=item.title;document.getElementById("dayIdea").textContent=item.idea;document.getElementById("dayReflection").textContent=item.reflection;document.getElementById("dayPrayer").textContent=item.prayer;document.getElementById("dayJournalQuestion").textContent=item.question;document.getElementById("dayAction").textContent=item.action;document.getElementById("dayIdentity").textContent=item.identity;document.getElementById("journalText").value=state.journals[item.day]||"";document.getElementById("actionText").value=state.actions[item.day]||"";const done=state.completedDays.includes(item.day);document.getElementById("markDoneBtn").textContent=done?"✓ Completado":"Marcar completado";document.getElementById("markDoneTopBtn").textContent=done?"✓ Completado":"Marcar día completado";}
+    async function saveRadar(){const r=await supabaseClient.from("user_home_radar").upsert({user_id:currentUser.id,journey_id:currentJourney.id,radar_values:state.radar,reflection:""},{onConflict:"journey_id"});if(r.error){console.error(r.error);toast("No pudimos guardar el Radar.");return;}updateMetrics();toast("Radar del Hogar guardado.");}
+    async function saveDecision(){const title=document.getElementById("decisionTitle").value.trim(),options=document.getElementById("decisionOptions").value.trim(),checks=Array.from(document.querySelectorAll(".decision-check:checked")).map(x=>x.value);if(!title&&!options){toast("Escribe una decisión antes de guardar.");return;}const recommendation=checks.length>=4?"Avanzar con paz":checks.length>=2?"Esperar y confirmar":"Orar antes de avanzar";const r=await supabaseClient.from("user_home_decisions").insert({user_id:currentUser.id,journey_id:currentJourney.id,day_number:currentDay,situation:title,options_text:options,prayer_text:checks.includes("ore")?"Sí":"",counsel_text:checks.includes("consejo")?"Sí":"",peace_text:checks.includes("paz")?"Sí":"",honor_text:checks.includes("honra")?"Sí":"",recommendation,status:"abierta"}).select().single();if(r.error){console.error(r.error);toast("No pudimos guardar la decisión.");return;}state.decisions.unshift({id:r.data.id,title,options,checks,recommendation,date:new Date(r.data.decided_at).toLocaleDateString("es-AR")});document.getElementById("decisionTitle").value="";document.getElementById("decisionOptions").value="";document.querySelectorAll(".decision-check").forEach(x=>x.checked=false);renderDecisions();toast("Decisión guardada.");}
+    async function saveTalk(){const person=document.getElementById("talkPerson").value.trim(),topic=document.getElementById("talkTopic").value.trim(),learning=document.getElementById("talkLearning").value.trim(),next=document.getElementById("talkNext").value.trim();if(!person&&!topic&&!learning){toast("Escribe una conversación antes de guardar.");return;}const r=await supabaseClient.from("user_home_talks").insert({user_id:currentUser.id,journey_id:currentJourney.id,day_number:currentDay,person_context:person,topic,learning,next_step:next,notes:""}).select().single();if(r.error){console.error(r.error);toast("No pudimos guardar la conversación.");return;}state.talks.unshift({id:r.data.id,person,topic,learning,next,date:new Date(r.data.talked_at).toLocaleDateString("es-AR")});["talkPerson","talkTopic","talkLearning","talkNext"].forEach(id=>document.getElementById(id).value="");renderTalks();updateMetrics();toast("Conversación guardada.");}
+    async function savePrayer(){state.prayer.text=document.getElementById("familyPrayer").value.trim();state.prayer.checks=Array.from(document.querySelectorAll("#prayerChecks input:checked")).map(x=>+x.dataset.prayer);const r=await supabaseClient.from("user_home_prayer").upsert({user_id:currentUser.id,journey_id:currentJourney.id,prayer_focus:JSON.stringify(state.prayer.checks),prayer_text:state.prayer.text,people_text:"",commitment_text:"",answered_prayer:""},{onConflict:"journey_id"});if(r.error){console.error(r.error);toast("No pudimos guardar la oración.");return;}toast("Plan de oración guardado.");}
+    async function saveLegacy(){state.legacy={...state.legacy,values:document.getElementById("legacyValues").value.trim(),home:document.getElementById("legacyHome").value.trim(),letter:document.getElementById("legacyLetter").value.trim(),promise:document.getElementById("legacyPromise").value.trim()};const r=await supabaseClient.from("user_home_profile").upsert({user_id:currentUser.id,values_text:state.legacy.values,home_vision:state.legacy.home,family_letter:state.legacy.letter,commitment_before_god:state.legacy.promise,legacy_notes:state.legacy.notes||""},{onConflict:"user_id"});if(r.error){console.error(r.error);toast("No pudimos guardar Mi Legado.");return;}toast("Mi Legado fue guardado.");}
+    function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));}
+    function renderHistorySelector(){
+      const select=document.getElementById("historyJourneySelect");if(!select)return;
+      const previous=select.value;
+      select.innerHTML=(journeyArchive||[]).slice().reverse().map(journey=>`<option value="${journey.id}">Recorrido ${journey.cycle_number}${journey.is_active?" · En curso":" · Completado"}</option>`).join("");
+      if(previous&&journeyArchive.some(j=>j.id===previous))select.value=previous;
+      else{const archived=(journeyArchive||[]).filter(j=>!j.is_active).sort((a,b)=>b.cycle_number-a.cycle_number)[0];select.value=(archived||currentJourney||{}).id||"";}
+    }
+    async function loadJourneyHistory(){
+      const journeyId=document.getElementById("historyJourneySelect")?.value;
+      const status=document.getElementById("historyStatus"),summary=document.getElementById("historySummary"),details=document.getElementById("historyDetails");
+      if(!journeyId)return;status.classList.remove("hide");status.textContent="Cargando este recorrido...";summary.classList.add("hide");details.innerHTML="";
+      try{
+        const journey=journeyArchive.find(item=>item.id===journeyId);if(!journey)throw new Error("Recorrido no encontrado");
+        const results=await Promise.all([
+          supabaseClient.from("user_home_progress").select("day_number,completed,favorite,journal_text,action_text,completed_at").eq("user_id",currentUser.id).eq("journey_id",journeyId).order("day_number"),
+          supabaseClient.from("user_home_radar").select("radar_values,reflection").eq("user_id",currentUser.id).eq("journey_id",journeyId).maybeSingle(),
+          supabaseClient.from("user_home_decisions").select("id,situation,recommendation,decided_at").eq("user_id",currentUser.id).eq("journey_id",journeyId).order("decided_at",{ascending:false}),
+          supabaseClient.from("user_home_talks").select("id,person_context,topic,learning,talked_at").eq("user_id",currentUser.id).eq("journey_id",journeyId).order("talked_at",{ascending:false}),
+          supabaseClient.from("user_home_prayer").select("prayer_text").eq("user_id",currentUser.id).eq("journey_id",journeyId).maybeSingle()
+        ]);results.forEach(result=>{if(result.error)throw result.error;});
+        const progress=results[0].data||[],radar=results[1].data?.radar_values||{},decisions=results[2].data||[],talks=results[3].data||[],prayer=results[4].data?.prayer_text||"";
+        const completed=progress.filter(item=>item.completed).length,radarValues=Object.values(radar).map(Number).filter(Number.isFinite),radarAverage=radarValues.length?Math.round(radarValues.reduce((a,b)=>a+b,0)/radarValues.length):0;
+        summary.innerHTML=`<div class="history-metric"><small>Días completados</small><strong>${completed}/21</strong></div><div class="history-metric"><small>Radar promedio</small><strong>${radarAverage}</strong></div><div class="history-metric"><small>Decisiones</small><strong>${decisions.length}</strong></div><div class="history-metric"><small>Conversaciones</small><strong>${talks.length}</strong></div>`;
+        summary.classList.remove("hide");status.classList.add("hide");
+        const entries=progress.filter(item=>(item.journal_text||item.action_text));
+        const blocks=[];
+        if(entries.length)blocks.push(`<div class="history-item"><h3>Aprendizajes y acciones</h3>${entries.map(item=>`<p><strong>Día ${item.day_number}</strong>${item.journal_text?` · ${escapeHTML(item.journal_text)}`:""}${item.action_text?` · Acción: ${escapeHTML(item.action_text)}`:""}</p>`).join("")}</div>`);
+        if(decisions.length)blocks.push(`<div class="history-item"><h3>Decisiones sabias</h3>${decisions.map(item=>`<p><strong>${escapeHTML(item.situation||"Decisión")}</strong>${item.recommendation?` · ${escapeHTML(item.recommendation)}`:""}</p>`).join("")}</div>`);
+        if(talks.length)blocks.push(`<div class="history-item"><h3>Conversaciones clave</h3>${talks.map(item=>`<p><strong>${escapeHTML(item.person_context||"Conversación")}</strong>${item.topic?` · ${escapeHTML(item.topic)}`:""}${item.learning?` · ${escapeHTML(item.learning)}`:""}</p>`).join("")}</div>`);
+        if(prayer)blocks.push(`<div class="history-item"><h3>Oración familiar</h3><p>${escapeHTML(prayer)}</p></div>`);
+        details.innerHTML=blocks.join("")||`<div class="history-empty">Este recorrido todavía no tiene registros personales para mostrar.</div>`;
+      }catch(error){console.error(error);status.classList.remove("hide");status.textContent="No pudimos cargar este recorrido. Intenta nuevamente.";summary.classList.add("hide");details.innerHTML="";}
+    }
+
+    async function restartHomeJourney(){if(!confirm("¿Quieres comenzar un nuevo recorrido? Tu recorrido anterior y todos sus registros permanecerán guardados."))return;const b=document.getElementById("restartJourneyBtn");b.disabled=true;b.textContent="Creando recorrido...";try{const r=await supabaseClient.rpc("start_new_home_journey");if(r.error)throw r.error;await loadCloudState();currentDay=1;switchView("camino");toast("Tu nuevo recorrido comenzó. Tu historia anterior sigue guardada.");}catch(e){console.error(e);toast("No pudimos iniciar el nuevo recorrido.");}finally{b.disabled=false;b.textContent="Comenzar un nuevo recorrido";}}
+    function productionMetrics(){const c=state.completedDays.length,p=Math.round(c/21*100);document.getElementById("cycleBadge").textContent=`Recorrido ${currentJourney?.cycle_number||1} · ${p>=100?"Completado":"En curso"}`;document.getElementById("restartJourneyBtn").classList.toggle("hide",p<100);}
+    saveProgressSnapshot=function(){return null;};
+    saveState=function(){updateMetrics();renderBadges();};
+    const originalUpdateMetrics=updateMetrics;updateMetrics=function(){originalUpdateMetrics();productionMetrics();};
+    const originalSwitchView=switchView;switchView=function(view,options={}){originalSwitchView(view,options);document.querySelectorAll("[data-mobile-main]").forEach(button=>{const active=button.dataset.mobileMain===view;button.classList.toggle("active",active);if(active)button.setAttribute("aria-current","page");else button.removeAttribute("aria-current");});if(view==="historial"){renderHistorySelector();loadJourneyHistory();}};
+    function openTools(){buildMobileDrawer();document.getElementById("mobileDrawer").classList.add("open");}
+    async function productionInitAuth(){
+      const loading=document.getElementById("loadingScreen");
+      const locked=document.getElementById("lockedScreen");
+      try{
+        const {data:{session},error}=await supabaseClient.auth.getSession();
+        if(error)throw error;
+        if(!session?.user){location.href=LOGIN_URL;return;}
+        currentUser=session.user;
+        const allowed=await validateAccess(currentUser);
+        if(!allowed){loading.classList.add("hidden");locked.classList.remove("hidden");return;}
+        await loadCloudState();
+        document.getElementById("userPill").textContent=currentUser.email||"Sesión activa";
+        document.body.classList.add("auth-ready");
+        loading.classList.add("hidden");
+      }catch(error){
+        console.error("No se pudo preparar la aplicación:",error);
+        loading.querySelector("h1").textContent="No pudimos preparar tu espacio";
+        loading.querySelector("p").textContent="Intenta nuevamente en unos instantes o vuelve a iniciar sesión.";
+      }
+    }
+
     bindEvents();
-    renderAll();
-    initAuth();
+    document.getElementById("logoutBtn")?.addEventListener("click",async()=>{try{await supabaseClient.auth.signOut();}finally{location.href=LOGIN_URL;}});
+    document.getElementById("openToolsBtn")?.addEventListener("click",openTools);
+    document.getElementById("openMobileTools")?.addEventListener("click",openTools);
+    document.querySelectorAll("[data-mobile-main]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.mobileMain)));
+    document.getElementById("restartJourneyBtn")?.addEventListener("click",restartHomeJourney);
+    document.getElementById("loadHistoryJourneyBtn")?.addEventListener("click",loadJourneyHistory);
+    document.getElementById("historyJourneySelect")?.addEventListener("change",loadJourneyHistory);
+    productionInitAuth();
   </script>
 </body>
 </html>
