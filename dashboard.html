@@ -1243,6 +1243,18 @@
         const labels = { manual: "Guía de tu App", ebook: "Ebook digital", bonus: "Bono digital", printable: "Versión imprimible", audio: "Audio", video: "Video", resource: "Recurso" };
         return labels[file.file_type] || labels[file.category] || "Recurso";
       }
+      const APP_GUIDE_TITLES = {
+        "21dias": "Guía de App Mi Tiempo con Dios",
+        "familias": "Guía de App Pequeños Momentos con Dios",
+        "palabras-duelen": "Guía de App Diario de Paz Digital",
+        "hombre-edifica": "Guía de App Mi Hogar con Propósito",
+      };
+      function resourceDisplayTitle(file, experience, isManual = false) {
+        if (isManual) {
+          return APP_GUIDE_TITLES[experience.productSlug] || file.file_title || "Guía de tu App";
+        }
+        return file.file_title || "Recurso de la colección";
+      }
       function normalizeDownloadName(title) {
         const slug = String(title || "recurso").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
         return `${slug || "recurso"}.pdf`;
@@ -1262,7 +1274,7 @@
           const description = isManual && info.description
             ? `<p class="resource-group-description">${escapeHTML(info.description)}</p>`
             : "";
-          return `<section class="resource-group${isManual ? " resource-group-manual" : ""}"><h5>${info.icon} ${info.title}</h5>${description}<div class="resource-list">${items.map((file) => `<article class="resource-item"><div class="resource-item-copy"><small>${escapeHTML(readableFileType(file))}</small><strong>${escapeHTML(file.file_title || "Recurso de la colección")}</strong></div><button class="resource-download" type="button" data-file-id="${escapeHTML(String(file.id || file.storage_path || ""))}">${isManual ? "Descargar guía" : "Descargar PDF"}</button></article>`).join("")}</div></section>`;
+          return `<section class="resource-group${isManual ? " resource-group-manual" : ""}"><h5>${info.icon} ${info.title}</h5>${description}<div class="resource-list">${items.map((file) => `<article class="resource-item"><div class="resource-item-copy"><small>${escapeHTML(readableFileType(file))}</small><strong>${escapeHTML(resourceDisplayTitle(file, experience, isManual))}</strong></div><button class="resource-download" type="button" data-file-id="${escapeHTML(String(file.id || file.storage_path || ""))}">${isManual ? "Descargar guía" : "Descargar PDF"}</button></article>`).join("")}</div></section>`;
         }).join("");
         container.querySelectorAll("[data-file-id]").forEach((button) => {
           button.addEventListener("click", () => {
@@ -1416,4 +1428,4 @@
       window.addEventListener("load", loadDashboard);
     </script>
   </body>
-</
+</html>
