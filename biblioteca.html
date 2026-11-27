@@ -725,6 +725,23 @@
       gap: 9px;
     }
 
+    .resource-group-description {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin: -4px 0 14px;
+    }
+
+    .resource-group-manual .file-card {
+      border-color: rgba(201, 166, 90, 0.34);
+      background: linear-gradient(180deg, rgba(255, 252, 244, 0.98), rgba(247, 234, 199, 0.56));
+    }
+
+    .resource-group-manual .download-btn {
+      background: var(--gold);
+      color: var(--green);
+    }
+
     .resource-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1413,6 +1430,11 @@
     };
     const CATEGORY_LABELS = {
       app: { title: "App principal", icon: "📱" },
+      manual: {
+        title: "La guía de tu App exclusiva",
+        icon: "📱",
+        description: "Conoce sus funciones y aprovecha mejor tu experiencia."
+      },
       ebook: { title: "Ebook principal", icon: "📖" },
       bonus: { title: "Bonos incluidos", icon: "🎁" },
       printable: { title: "Versiones imprimibles", icon: "🖨️" },
@@ -1421,7 +1443,14 @@
       resource: { title: "Recursos", icon: "✨" }
     };
 
-    const CATEGORY_ORDER = ["app", "ebook", "bonus", "printable", "audio", "video", "resource"];
+    const CATEGORY_ORDER = ["app", "manual", "ebook", "bonus", "printable", "audio", "video", "resource"];
+
+    const APP_GUIDE_TITLES = {
+      "21dias": "Guía de App Mi Tiempo con Dios",
+      "familias": "Guía de App Pequeños Momentos con Dios",
+      "palabras-duelen": "Guía de App Diario de Paz Digital",
+      "hombre-edifica": "Guía de App Mi Hogar con Propósito"
+    };
 
     const PRODUCT_META = {
       "21dias": {
@@ -1901,10 +1930,14 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
 
         const groupInfo = CATEGORY_LABELS[category] || CATEGORY_LABELS.resource;
         const section = document.createElement("section");
-        section.className = "resource-group";
+        section.className = `resource-group${category === "manual" ? " resource-group-manual" : ""}`;
+        const groupDescription = category === "manual" && groupInfo.description
+          ? `<p class="resource-group-description">${escapeHTML(groupInfo.description)}</p>`
+          : "";
 
         section.innerHTML = `
           <h3>${groupInfo.icon} ${groupInfo.title}</h3>
+          ${groupDescription}
           <div class="resource-list"></div>
         `;
 
@@ -1915,7 +1948,7 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
         }
 
         groupFiles.forEach((file) => {
-          list.appendChild(createFileCard(product, file));
+          list.appendChild(createFileCard(product, file, category));
         });
 
         els.resourceGroups.appendChild(section);
@@ -1943,16 +1976,22 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
       return card;
     }
 
-    function createFileCard(product, file) {
+    function createFileCard(product, file, category = "resource") {
       const card = document.createElement("article");
-      card.className = "file-card";
+      const isManual = category === "manual";
+      card.className = `file-card${isManual ? " file-card-manual" : ""}`;
 
-      const label = file.is_printable ? "Versión imprimible" : readableFileType(file.file_type);
+      const label = isManual
+        ? "Guía de tu App"
+        : (file.is_printable ? "Versión imprimible" : readableFileType(file.file_type));
+      const title = isManual
+        ? (APP_GUIDE_TITLES[product.slug] || file.file_title || "Guía de tu App")
+        : file.file_title;
 
       card.innerHTML = `
         <span>${escapeHTML(label)}</span>
-        <strong>${escapeHTML(file.file_title)}</strong>
-        <button class="download-btn" type="button">Descargar PDF</button>
+        <strong>${escapeHTML(title)}</strong>
+        <button class="download-btn" type="button">${isManual ? "Descargar guía" : "Descargar PDF"}</button>
       `;
 
       const button = card.querySelector("button");
@@ -2035,7 +2074,9 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
 
     function groupFilesByCategory(files) {
       return files.reduce((acc, file) => {
-        const category = file.category || "resource";
+        const category = file.file_type === "manual"
+          ? "manual"
+          : (file.category || file.file_type || "resource");
 
         if (!acc[category]) {
           acc[category] = [];
@@ -2053,6 +2094,7 @@ const statusLabel = isActive ? "Disponible" : readableStatus(product.status);
         bonus: "Bono digital",
         printable: "Versión imprimible",
         app: "App",
+        manual: "Guía de tu App",
         audio: "Audio",
         video: "Video",
         resource: "Recurso"
