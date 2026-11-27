@@ -508,6 +508,23 @@
         font-size: .9rem;
         margin-bottom: 9px;
       }
+      .resource-group-description {
+        margin: -2px 0 10px;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+      .resource-group-manual {
+        padding: 14px;
+        border-radius: 18px;
+        background: linear-gradient(145deg, rgba(247, 234, 199, 0.72), rgba(255, 255, 255, 0.84));
+        border: 1px solid rgba(201, 166, 90, 0.34);
+      }
+      .resource-group-manual .resource-item { background: white; }
+      .resource-group-manual .resource-download {
+        color: var(--green);
+        background: var(--gold);
+      }
       .resource-list { display: grid; gap: 9px; }
       .resource-item {
         display: flex;
@@ -1074,6 +1091,11 @@
       const BUCKET_NAME = "hcd-resources";
       const SIGNED_URL_SECONDS = 300;
       const CATEGORY_LABELS = {
+        manual: {
+          title: "La guía de tu App exclusiva",
+          icon: "📱",
+          description: "Conoce sus funciones y aprovecha mejor tu experiencia.",
+        },
         ebook: { title: "Ebook principal", icon: "📖" },
         bonus: { title: "Bonos incluidos", icon: "🎁" },
         printable: { title: "Versiones imprimibles", icon: "🖨️" },
@@ -1082,7 +1104,7 @@
         video: { title: "Videos", icon: "🎬" },
         resource: { title: "Recursos", icon: "✨" },
       };
-      const CATEGORY_ORDER = ["ebook", "bonus", "printable", "resource", "audio", "video", "app"];
+      const CATEGORY_ORDER = ["manual", "ebook", "bonus", "printable", "resource", "audio", "video", "app"];
       let dashboardClient = null;
       let productFiles = [];
       const $ = (id) => document.getElementById(id);
@@ -1218,7 +1240,7 @@
       }
       function readableFileType(file) {
         if (file.is_printable) return "Versión imprimible";
-        const labels = { ebook: "Ebook digital", bonus: "Bono digital", printable: "Versión imprimible", audio: "Audio", video: "Video", resource: "Recurso" };
+        const labels = { manual: "Guía de tu App", ebook: "Ebook digital", bonus: "Bono digital", printable: "Versión imprimible", audio: "Audio", video: "Video", resource: "Recurso" };
         return labels[file.file_type] || labels[file.category] || "Recurso";
       }
       function normalizeDownloadName(title) {
@@ -1236,7 +1258,11 @@
           const items = grouped[category] || [];
           if (!items.length) return "";
           const info = CATEGORY_LABELS[category] || CATEGORY_LABELS.resource;
-          return `<section class="resource-group"><h5>${info.icon} ${info.title}</h5><div class="resource-list">${items.map((file) => `<article class="resource-item"><div class="resource-item-copy"><small>${escapeHTML(readableFileType(file))}</small><strong>${escapeHTML(file.file_title || "Recurso de la colección")}</strong></div><button class="resource-download" type="button" data-file-id="${escapeHTML(String(file.id || file.storage_path || ""))}">Descargar PDF</button></article>`).join("")}</div></section>`;
+          const isManual = category === "manual";
+          const description = isManual && info.description
+            ? `<p class="resource-group-description">${escapeHTML(info.description)}</p>`
+            : "";
+          return `<section class="resource-group${isManual ? " resource-group-manual" : ""}"><h5>${info.icon} ${info.title}</h5>${description}<div class="resource-list">${items.map((file) => `<article class="resource-item"><div class="resource-item-copy"><small>${escapeHTML(readableFileType(file))}</small><strong>${escapeHTML(file.file_title || "Recurso de la colección")}</strong></div><button class="resource-download" type="button" data-file-id="${escapeHTML(String(file.id || file.storage_path || ""))}">${isManual ? "Descargar guía" : "Descargar PDF"}</button></article>`).join("")}</div></section>`;
         }).join("");
         container.querySelectorAll("[data-file-id]").forEach((button) => {
           button.addEventListener("click", () => {
@@ -1390,4 +1416,4 @@
       window.addEventListener("load", loadDashboard);
     </script>
   </body>
-</html>
+</
